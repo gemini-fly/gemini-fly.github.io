@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="scrapy_redis 爬虫," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="content{:toc}  前言该文档针对爬虫系统设计目标中相应的场景给出技术方案 设计目标1、代码复用，功能模块化。可以支持上千个网站的数据爬取； 2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换； 3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善； 4、后续扩">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2021/04/25/hello-world/index.html">
+<meta property="og:title" content="News_scrapy_redis 框架系统">
+<meta property="og:url" content="http://example.com/2021/05/07/2018-01-09-python_crawl_words/index.html">
 <meta property="og:site_name" content="私人运维知识">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="content{:toc}  前言该文档针对爬虫系统设计目标中相应的场景给出技术方案 设计目标1、代码复用，功能模块化。可以支持上千个网站的数据爬取； 2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换； 3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善； 4、后续扩">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-04-25T08:41:39.400Z">
-<meta property="article:modified_time" content="2021-04-25T08:41:39.400Z">
+<meta property="article:published_time" content="2021-05-07T10:10:47.396Z">
+<meta property="article:modified_time" content="2021-05-07T10:10:47.397Z">
 <meta property="article:author" content="Dong ops">
+<meta property="article:tag" content="scrapy_redis 爬虫">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/04/25/hello-world/"/>
+  <link rel="canonical" href="http://example.com/2021/05/07/2018-01-09-python_crawl_words/"/>
 
 
 
 
 
-  <title>Hello World | 私人运维知识</title>
+  <title>News_scrapy_redis 框架系统 | 私人运维知识</title>
   
 
 
@@ -282,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/25/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/2018-01-09-python_crawl_words/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -299,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">News_scrapy_redis 框架系统</h1>
         
 
         <div class="post-meta">
@@ -311,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-25T16:41:39+08:00">
-                2021-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T18:10:47+08:00">
+                2021-05-07
               </time>
             
 
@@ -321,6 +322,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -349,19 +372,97 @@
       
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
+<h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>1、代码复用，功能模块化。可以支持上千个网站的数据爬取；</p>
+<p>2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换；</p>
+<p>3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善；</p>
+<p>4、后续扩展为分布式结构；</p>
+<p>5、支持功能模块的易调整；</p>
+<h2 id="框架使用说明"><a href="#框架使用说明" class="headerlink" title="框架使用说明"></a>框架使用说明</h2><p><strong>News_scrapy_redis4. <a target="_blank" rel="noopener" href="https://github.com/xudailong/News_scrapy_redis.git">github地址</a></strong></p>
+<ol>
+<li><p><code>News_scrapy_redis</code> 基于<code>scrapy_redis</code>实现数据的增量爬取（含去重），支持分布式，支持异常日志等输出，功能模块化。</p>
+</li>
+<li><p>树结构：</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├─.idea</span><br><span class="line">├─Daily_crawler</span><br><span class="line">├─ETL</span><br><span class="line">├─log</span><br><span class="line">├─News_scrapy</span><br><span class="line">│  ├─spiders</span><br><span class="line">│  │  └─__pycache__</span><br><span class="line">│  └─__pycache__</span><br><span class="line">├─News_simhash</span><br><span class="line">└─News_statistics</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<ol start="3">
+<li>各模块说明：<blockquote>
+<p>Daily_crawler：    </p>
+</blockquote>
+<ul>
+<li><code>daily_crawler.cron crontab</code>的定时文件, 定时运行<code>start_crawl.sh</code>脚本</li>
+<li><code>start_crawl.sh</code> 启动爬虫模块，并将每次爬取所花费的时间 写入 log/run_time.txt</li>
+<li><code>push_urls.py</code> 每次在爬虫之前运行，清空调度队列，并将start_url push到调度队列中</li>
+<li><code>news_crawl.sh</code> 执行爬虫模块（增量爬取）， 并自动进行相似文档去重，ETL, 存入mongodb</li>
+</ul>
+<blockquote>
+<p>ETL:（暂时用不到）</p>
+</blockquote>
+<ul>
+<li><code>/Model</code> 存放训练好的词典，语料，TF-IDF，LDA， word2vec模型</li>
+<li><code>auto_embedding.py</code> 新闻语料的清洗，以及自动化生成新闻的标题和内容embedding</li>
+<li><code>auto_embedding_simhash.py</code> 增加了自动化相似文档的去重</li>
+<li><code>stop_words</code> 常用的中文停留词</li>
+<li><code>train_step1</code> 训练LDA模型</li>
+<li><code>train_step2</code> 训练LDA模型</li>
+</ul>
+<blockquote>
+<p>log:</p>
+</blockquote>
+<ul>
+<li><code>auto_embedding_simhash.log</code> 执行auto_embedding_simhash.py的日志文件</li>
+<li><code>crawler.log</code> 执行scrapy-redis爬虫模块的日志文件</li>
+<li><code>news_count.log</code> 执行news_statistics.py的日志文件</li>
+<li><code>run_time.txt</code> 每次执行爬虫脚本的运行时间</li>
+</ul>
+<blockquote>
+<p>News_data:</p>
+</blockquote>
+<ul>
+<li>每个文件夹是抓每天从各个网站抓取到的新闻</li>
+</ul>
+<blockquote>
+<p>News_scrapy:</p>
+</blockquote>
+<ul>
+<li>基于scrapy-redis的爬虫模块，在scrapy的基础上修改得到</li>
+<li>各大网站数据的爬取解析工作主要在该文件中进行</li>
+</ul>
+<blockquote>
+<p>News_simhash（此处只需要进行title的去重）:</p>
+</blockquote>
+<ul>
+<li>实现相似文档的去重</li>
+<li>automatic_simhash.py 自动实现相似文档的去重（仅基于新闻内容）</li>
+<li>content_index.pkl 序列化的新闻内容SimhashIndex类，相当于所有新闻sinhash_value的一张表，并且随着抓取的新闻越来越多，该表会不断增大title_index.pkl 序列化的新闻标题SimhashIndex类， 未使用</li>
+<li><code>generate_simhash_index.py</code> 初始化这张Simhash_index，生成content和title的Simhash_index</li>
+<li><code>near_duplicates.py</code> 对初始化的Simhash_index进行相似新闻内容的去重</li>
+<li>test.py 测试content_index.pkl中content_index类新闻的数量</li>
+</ul>
+<blockquote>
+<p>News_statistics:</p>
+</blockquote>
+<ul>
+<li><code>news_count.json</code> 每天从各个网站抓取的新闻数量</li>
+<li><code>news_statistics.py</code> 统计新闻增量的脚本</li>
+</ul>
+</li>
+</ol>
+<h2 id="框架环境"><a href="#框架环境" class="headerlink" title="框架环境"></a>框架环境</h2><ol>
+<li>Redis环境环境</li>
+<li>scrapy框架环境</li>
+<li>python3环境环境</li>
+</ol>
+<h2 id="框架完善"><a href="#框架完善" class="headerlink" title="框架完善"></a>框架完善</h2><ol>
+<li>IP代理池</li>
+<li>cookies池 </li>
+<li>其他</li>
+</ol>
 
       
     </div>
@@ -377,6 +478,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/scrapy-redis-%E7%88%AC%E8%99%AB/" rel="tag"># scrapy_redis 爬虫</a>
+          
+        </div>
+      
 
       
       
@@ -386,14 +493,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2021/05/07/2018-01-04-scrapy-setup-in-win/" rel="next" title="window下python3环境安装scrapy">
+                <i class="fa fa-chevron-left"></i> window下python3环境安装scrapy
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/05/07/2016-06-08-JavaScript-good-parts-note2/" rel="prev" title="JavaScript 语言精粹笔记2-继承、数组、正则表达式">
-                JavaScript 语言精粹笔记2-继承、数组、正则表达式 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/05/07/2018-01-13-setup-mysql-inubuntu/" rel="prev" title="Ubuntu 16.04 下MySQL的安装">
+                Ubuntu 16.04 下MySQL的安装 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">设计目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">框架使用说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E7%8E%AF%E5%A2%83"><span class="nav-number">4.</span> <span class="nav-text">框架环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E5%AE%8C%E5%96%84"><span class="nav-number">5.</span> <span class="nav-text">框架完善</span></a></li></ol></div>
             
 
           </div>
