@@ -67,7 +67,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript 闭包 慕课网 ife," />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -78,17 +78,17 @@
 
 
 
-<meta name="description" content="本文为慕课网 JavaScript深入浅出 JavaScript 中的闭包笔记。 闭包的例子function outer() &amp;#123;     var localVal &#x3D; 30;     return localVal; &amp;#125;  console.log(outer()); &#x2F;&#x2F;30  function outer2() &amp;#123;     var localVal &#x3D; 30;">
+<meta name="description" content="闭包的例子function outer() &amp;#123;     var localVal &#x3D; 30;     return localVal; &amp;#125;  console.log(outer()); &#x2F;&#x2F;30  function outer2() &amp;#123;     var localVal &#x3D; 30;     return function() &amp;#123;         return">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 中的闭包">
-<meta property="og:url" content="http://example.com/2015/06/14/2015-06-14-JavaScript-closure/index.html">
+<meta property="og:url" content="https://running-dpf.github.io/2015/06/14/2015-06-14-JavaScript-closure/index.html">
 <meta property="og:site_name" content="私人运维知识">
-<meta property="og:description" content="本文为慕课网 JavaScript深入浅出 JavaScript 中的闭包笔记。 闭包的例子function outer() &amp;#123;     var localVal &#x3D; 30;     return localVal; &amp;#125;  console.log(outer()); &#x2F;&#x2F;30  function outer2() &amp;#123;     var localVal &#x3D; 30;">
+<meta property="og:description" content="闭包的例子function outer() &amp;#123;     var localVal &#x3D; 30;     return localVal; &amp;#125;  console.log(outer()); &#x2F;&#x2F;30  function outer2() &amp;#123;     var localVal &#x3D; 30;     return function() &amp;#123;         return">
 <meta property="og:locale">
 <meta property="article:published_time" content="2015-06-14T06:06:05.000Z">
-<meta property="article:modified_time" content="2021-05-08T06:59:04.631Z">
+<meta property="article:modified_time" content="2021-05-08T08:13:37.135Z">
 <meta property="article:author" content="Dong ops">
-<meta property="article:tag" content="JavaScript 闭包 慕课网 ife">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2015/06/14/2015-06-14-JavaScript-closure/"/>
+  <link rel="canonical" href="https://running-dpf.github.io/2015/06/14/2015-06-14-JavaScript-closure/"/>
 
 
 
@@ -306,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/14/2015-06-14-JavaScript-closure/">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/2015/06/14/2015-06-14-JavaScript-closure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -395,8 +395,7 @@
       
 
       
-        <p>本文为慕课网 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的闭包笔记。</p>
-<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+        <h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
     var localVal = 30;
     return localVal;
 &#125;
@@ -415,6 +414,7 @@ console.log(func()); //30
 </code></pre>
 <p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
 <p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<span id="more"></span>
 <hr>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
 <li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
@@ -534,7 +534,7 @@ console.log(converter); //Uncaught ReferenceError: converter is not defined
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript-%E9%97%AD%E5%8C%85-%E6%85%95%E8%AF%BE%E7%BD%91-ife/" rel="tag"># JavaScript 闭包 慕课网 ife</a>
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
@@ -641,7 +641,7 @@ console.log(converter); //Uncaught ReferenceError: converter is not defined
                 <!-- a href="/archives/%7C%7C%20archive"> -->
 				<a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -652,7 +652,7 @@ console.log(converter); //Uncaught ReferenceError: converter is not defined
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -663,7 +663,7 @@ console.log(converter); //Uncaught ReferenceError: converter is not defined
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
