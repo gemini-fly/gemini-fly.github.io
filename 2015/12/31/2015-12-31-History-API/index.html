@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+google-site-verification: google34ebd7ac08fbf8db.html
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript Ajax URL HistoryApi pushState pjax," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="content{:toc}  起因起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：  webpack 自动构建 AMD 模块化 js Sass 预处理 CSS 使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题  但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端处理动态 url 和 pushStatus 的使用">
+<meta property="og:url" content="http://example.com/2015/12/31/2015-12-31-History-API/index.html">
+<meta property="og:site_name" content="私人运维知识">
+<meta property="og:description" content="content{:toc}  起因起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：  webpack 自动构建 AMD 模块化 js Sass 预处理 CSS 使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题  但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使">
+<meta property="og:locale">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg">
+<meta property="article:published_time" content="2015-12-31T15:06:05.000Z">
+<meta property="article:modified_time" content="2021-05-08T03:17:39.370Z">
+<meta property="article:author" content="Dong ops">
+<meta property="article:tag" content="JavaScript Ajax URL HistoryApi pushState pjax">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2015/12/31/2015-12-31-History-API/"/>
+
+
+
+
+
+  <title>前端处理动态 url 和 pushStatus 的使用 | 私人运维知识</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">私人运维知识</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小运维</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/31/2015-12-31-History-API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="私人运维知识">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端处理动态 url 和 pushStatus 的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-31T23:06:05+08:00">
+                2015-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
+<ul>
+<li>webpack 自动构建</li>
+<li>AMD 模块化 js</li>
+<li>Sass 预处理 CSS</li>
+<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
+</ul>
+<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
+<p>这里我将问题描述如下：</p>
+<blockquote>
+<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
+<p>纯前端怎么处理？用hash吗，如下:<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
+<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
+</blockquote>
+<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
+<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
+<p>下面就来研究和实践一下吧。</p>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
+<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
+<p>如下图，Chrome的历史记录：</p>
+<p><img src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
+<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
+<ul>
+<li><p><code>back()</code></p>
+<p>  在历史记录中后退</p>
+<pre><code>  history.back();
+</code></pre>
+</li>
+<li><p><code>forward()</code></p>
+<p>  在历史记录中前进</p>
+<pre><code>  history.forward();
+</code></pre>
+</li>
+<li><p><code>go()</code></p>
+<p>  移动到指定的历史记录点</p>
+<pre><code>  history.go(-1);
+</code></pre>
+<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
+<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
+</li>
+<li><p><code>length</code></p>
+<p>  <code>length</code>为history的属性，显示history长度。</p>
+</li>
+</ul>
+<p>本节在线demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
+<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
+<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
+<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
+<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
+<ul>
+<li><p><code>pushState(any data, string title, [string url])</code></p>
+<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
+<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
+<p>  例如，我们有这样一段代码：</p>
+<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
+
+  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
+      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
+      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
+  &#125;);
+</code></pre>
+<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
+</li>
+</ul>
+<ul>
+<li><p><code>replaceState(any data, string title, [string url])</code></p>
+<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
+</li>
+</ul>
+<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
+<p>本节demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
+<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
+<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
+<p>Pjax的原理十分简单。</p>
+<ol>
+<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
+<li>使用 Ajax 请求新页面。</li>
+<li>将返回的 Html 替换到页面中。</li>
+<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
+</ol>
+<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
+<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
+<pre><code>window.onpopstate = function(event) &#123;
+    console.log(event.state);
+    console.log(location);
+&#125;;
+</code></pre>
+<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
+<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a target="_blank" rel="noopener" href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
+<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
+<li><a target="_blank" rel="noopener" href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
+<li><a target="_blank" rel="noopener" href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/browserstate/history.js">History.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/defunkt/jquery-pjax">defunkt/jquery-pjax GitHub</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/welefen/pjax">welefen/pjax</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript-Ajax-URL-HistoryApi-pushState-pjax/" rel="tag"># JavaScript Ajax URL HistoryApi pushState pjax</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/09/2015-07-09-JavaScript-Net/" rel="next" title="JavaScript 阶段总结">
+                <i class="fa fa-chevron-left"></i> JavaScript 阶段总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/12/2016-03-12-jekyll-theme-version-2.0/" rel="prev" title="对这个 jekyll 博客主题的改版和重构">
+                对这个 jekyll 博客主题的改版和重构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- a href="/archives/%7C%7C%20archive"> -->
+				<a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#History"><span class="nav-number">2.</span> <span class="nav-text">History</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#back-forward-go-length"><span class="nav-number">2.1.</span> <span class="nav-text">back(), forward(), go(), length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pushState-replaceState"><span class="nav-number">2.2.</span> <span class="nav-text">pushState(), replaceState()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pjax"><span class="nav-number">3.</span> <span class="nav-text">pjax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dong ops</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
