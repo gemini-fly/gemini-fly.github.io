@@ -95,7 +95,7 @@
         <category>jekyll</category>
       </categories>
       <tags>
-        <tag>jekyll RubyGems</tag>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -228,7 +228,7 @@
         <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>JavaScript Array 算法 慕课网</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -389,7 +389,7 @@
         <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>JavaScript 作用域 慕课网 ife</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1050,7 +1050,7 @@ moduleA = function() &#123;
         <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>JavaScript 面向对象 慕课网 ife</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1604,7 +1604,7 @@ moduleA = function() &#123;
         <category>jekyll</category>
       </categories>
       <tags>
-        <tag>jekyll 端口 markdown Foxit RubyGems HTML CSS</tag>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -2060,10 +2060,10 @@ moduleA = function() &#123;
 <h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">将/usr/share/applications/pycharm.desktop文件拷贝到桌面，双击即可运行。</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>ddpf</category>
+        <category>python</category>
       </categories>
       <tags>
-        <tag>Ubuntu Pycharm</tag>
+        <tag>Ubuntu Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2104,7 +2104,7 @@ moduleA = function() &#123;
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>scrapy 爬虫</tag>
+        <tag>scrapy</tag>
       </tags>
   </entry>
   <entry>
@@ -2201,7 +2201,7 @@ moduleA = function() &#123;
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>scrapy_redis 爬虫</tag>
+        <tag>scrapy</tag>
       </tags>
   </entry>
   <entry>
