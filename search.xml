@@ -23,10 +23,12 @@
   <entry>
     <title>Jekyll 搭建静态博客</title>
     <url>/2015/02/15/2015-02-12-create-my-blog-with-jekyll/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>一直以来都想搭建一个自己的博客，但是近半年做项目太忙，再加上教研室的网络很坑爹，所以也一直没顾得上。之前用过 WordPress 托管在免费的京东云擎上，但是速度太慢。在知乎上看到一些相关的内容，于是选择了在github上用jekyll搭建博客。</p>
+    <content><![CDATA[<p>一直以来都想搭建一个自己的博客，但是近半年做项目太忙，再加上教研室的网络很坑爹，所以也一直没顾得上。之前用过 WordPress 托管在免费的京东云擎上，但是速度太慢。在知乎上看到一些相关的内容，于是选择了在github上用jekyll搭建博客。</p>
+<span id="more"></span>
+
+
+
+
 <h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><p>在jekyll的官网上 <a href="http://jekyllrb.com/">http://jekyllrb.com/</a> 其实已经说得比较明白了，我在这里还是简单的说一下吧。我用的是Windows系统。<br>主要环节有：安装Ruby，安装RubyGems，安装jekyll，安装代码高亮插件，安装node.js</p>
 <h3 id="安装Ruby"><a href="#安装Ruby" class="headerlink" title="安装Ruby"></a>安装Ruby</h3><p>ruby官网下载安装：<a href="https://www.ruby-lang.org/en/downloads/">https://www.ruby-lang.org/en/downloads/</a></p>
 <p>安装完成后配置环境变量</p>
@@ -99,10 +101,7 @@
   <entry>
     <title>Teach Girlfriend to make a Web Pages like Zhihu</title>
     <url>/2015/03/21/2015-03-21-teach-girlfriend-html-css/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>My girlfriend is learning html and css recently. I told her to follow the video. Here, I recommend a video in Chinese that suite for fresh learners. The name of course is Getting HTML web pages dev in 8 hours ( 8小时学会HTML网页开发 ) . I watched this video at very first time. The teacher named Eighteen Swallows ( 燕十八 ) . He teached very clear even himself being on screen to show what is float or box-model.    </p>
+    <content><![CDATA[<p>My girlfriend is learning html and css recently. I told her to follow the video. Here, I recommend a video in Chinese that suite for fresh learners. The name of course is Getting HTML web pages dev in 8 hours ( 8小时学会HTML网页开发 ) . I watched this video at very first time. The teacher named Eighteen Swallows ( 燕十八 ) . He teached very clear even himself being on screen to show what is float or box-model.    </p>
 <!-- ![燕十八](http://7q5cdt.com1.z0.glb.clouddn.com/teach-girlfriend-html-18swallows.png) -->
 
 <p>Here is the site of the free online video.<br><a href="http://study.163.com/course/courseMain.htm?courseId=432008">http://study.163.com/course/courseMain.htm?courseId=432008</a>    </p>
@@ -125,10 +124,7 @@
   <entry>
     <title>代码校验工具 SublimeLinter 的安装与使用</title>
     <url>/2015/03/26/2015-03-26-sublimeLinter/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文我将讲述一下 SublimeLinter 的安装过程。其组件 jshint 的安装与使用。其组件 csslint 的安装与使用。我将基于 <a href="http://sublimetext.com/3">Sublime Text 3</a> 来安装。使用 Sublime Text 2 的用户阅读本文是没有帮助的。</p>
+    <content><![CDATA[<p>本文我将讲述一下 SublimeLinter 的安装过程。其组件 jshint 的安装与使用。其组件 csslint 的安装与使用。我将基于 <a href="http://sublimetext.com/3">Sublime Text 3</a> 来安装。使用 Sublime Text 2 的用户阅读本文是没有帮助的。</p>
 <p>SublimeLinter 是 Sublime 的插件，它的作用是检查代码语法是否有错误，并提示。习惯了 IDE 下写代码的人一定需要一款在 Sublime 上类似的语法检查工具。下面我们开始。   </p>
 <h2 id="安装-SublimeLinter"><a href="#安装-SublimeLinter" class="headerlink" title="安装 SublimeLinter"></a>安装 SublimeLinter</h2><p>如同其他插件一样使用 Package Control 来安装。   </p>
 <ol>
@@ -214,10 +210,7 @@
   <entry>
     <title>判断两个数组是否相似 (arraysSimilar)</title>
     <url>/2015/04/06/2015-04-06-arrays-similar/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>题目来自 <a href="http://imooc.com/code/5760">慕课网 JavaScript 深入浅出 1-6 编程练习</a>    </p>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>题目来自 <a href="http://imooc.com/code/5760">慕课网 JavaScript 深入浅出 1-6 编程练习</a>    </p>
 <p>请在 index.html 文件中，编写 arraysSimilar 函数，实现判断传入的两个数组是否相似。具体需求：   </p>
 <ol>
 <li>数组中的成员类型相同，顺序可以不同。例如 [1, true] 与 [false, 2] 是相似的。</li>
@@ -226,7 +219,7 @@
 </ol>
 <p>当以上全部满足，则返回**”判定结果:通过”<strong>，否则返回</strong>“判定结果:不通过”**。    </p>
 <p>题目给出了 index.html 如下：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=gb18030&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Untitled Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span>   </span><br><span class="line">        /*</span><br><span class="line"><span class="javascript">         * param1 <span class="built_in">Array</span></span></span><br><span class="line"><span class="javascript">         * param2 <span class="built_in">Array</span></span></span><br><span class="line"><span class="javascript">         * <span class="keyword">return</span> <span class="literal">true</span> or <span class="literal">false</span></span></span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">arraysSimilar</span>(<span class="params">arr1, arr2</span>)</span>&#123;</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;testData.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Untitled Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span>   </span><br><span class="line">        /*</span><br><span class="line"><span class="javascript">         * param1 <span class="built_in">Array</span></span></span><br><span class="line"><span class="javascript">         * param2 <span class="built_in">Array</span></span></span><br><span class="line"><span class="javascript">         * <span class="keyword">return</span> <span class="literal">true</span> or <span class="literal">false</span></span></span><br><span class="line">         */</span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">arraysSimilar</span>(<span class="params">arr1, arr2</span>)</span>&#123;</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;testData.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>其中 testData.js 是测试用例，代码如下</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//以下为多组测试数据</span></span><br><span class="line">    <span class="keyword">var</span> cases = [&#123;</span><br><span class="line">        arr1: [<span class="number">1</span>, <span class="literal">true</span>, <span class="literal">null</span>],</span><br><span class="line">        arr2: [<span class="literal">null</span>, <span class="literal">false</span>, <span class="number">100</span>],</span><br><span class="line">        expect: <span class="literal">true</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">            <span class="number">100</span></span><br><span class="line">        ],</span><br><span class="line">        arr2: [<span class="number">100</span>, &#123;&#125;],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="literal">null</span>, <span class="number">999</span>],</span><br><span class="line">        arr2: [&#123;&#125;,</span><br><span class="line">            <span class="number">444</span></span><br><span class="line">        ],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="built_in">window</span>, <span class="number">1</span>, <span class="literal">true</span>, <span class="keyword">new</span> <span class="built_in">Date</span>(), <span class="string">&quot;hahaha&quot;</span>, (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;), <span class="literal">undefined</span>],</span><br><span class="line">        arr2: [<span class="literal">undefined</span>, (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;), <span class="string">&quot;okokok&quot;</span>, <span class="keyword">new</span> <span class="built_in">Date</span>(), <span class="literal">false</span>, <span class="number">2</span>, <span class="built_in">window</span>],</span><br><span class="line">        expect: <span class="literal">true</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="keyword">new</span> <span class="built_in">Date</span>()],</span><br><span class="line">        arr2: [&#123;&#125;],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="built_in">window</span>],</span><br><span class="line">        arr2: [&#123;&#125;],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="literal">undefined</span>, <span class="number">1</span>],</span><br><span class="line">        arr2: [<span class="literal">null</span>, <span class="number">2</span>],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [<span class="keyword">new</span> <span class="built_in">Object</span>, <span class="keyword">new</span> <span class="built_in">Object</span>, <span class="keyword">new</span> <span class="built_in">Object</span>],</span><br><span class="line">        arr2: [&#123;&#125;, &#123;&#125;,</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        ],</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: <span class="literal">null</span>,</span><br><span class="line">        arr2: <span class="literal">null</span>,</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: [],</span><br><span class="line">        arr2: <span class="literal">undefined</span>,</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        arr1: <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">        arr2: <span class="string">&quot;cba&quot;</span>,</span><br><span class="line">        expect: <span class="literal">false</span></span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用for循环, 通过arraysSimilar函数验证以上数据是否相似，如相似显示“通过”,否则&quot;不通过&quot;,所以大家要完成arraysSimilar函数,具体要求，详见任务要求。    </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; cases.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arraysSimilar(cases[i].arr1, cases[i].arr2) !== cases[i].expect) &#123;</span><br><span class="line">            <span class="built_in">document</span>.write(<span class="string">&quot;不通过！case&quot;</span> + (i + <span class="number">1</span>) + <span class="string">&quot;不正确！arr1=&quot;</span> + <span class="built_in">JSON</span>.stringify(cases[i].arr1) + <span class="string">&quot;, arr2=&quot;</span> + <span class="built_in">JSON</span>.stringify(cases[i].arr2) + <span class="string">&quot; 的判断结果不是&quot;</span> + cases[i].expect);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;();</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;判定结果:&quot;</span> + (result ? <span class="string">&quot;通过&quot;</span> : <span class="string">&quot;不通过&quot;</span>));</span><br></pre></td></tr></table></figure>
@@ -264,10 +257,7 @@
   <entry>
     <title>同步一个 fork</title>
     <url>/2015/04/12/2015-04-12-Syncing-a-fork/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>fork 了别人的仓库后，原作者又更新了仓库，如何将自己的代码和原仓库保持一致？本文将给你解答。</p>
+    <content><![CDATA[<p>fork 了别人的仓库后，原作者又更新了仓库，如何将自己的代码和原仓库保持一致？本文将给你解答。</p>
 <h2 id="如何使用搜索引擎"><a href="#如何使用搜索引擎" class="headerlink" title="如何使用搜索引擎"></a>如何使用搜索引擎</h2><p>其实这个问题并不难，我又被坑了。百度搜的东西不靠谱啊，以后这种问题一定要用<strong>英文</strong>在 <a href="http://www.google.com/">Google</a> 或者 <a href="http://cn.bing.com/">Bing</a> 上搜索，这样才能搜到原汁原味的答案。就当是一个教训吧。   </p>
 <p>搜索 fork sync，就可以看到 GitHub 自己的帮助文档 <a href="https://help.github.com/articles/syncing-a-fork/">Syncing a fork</a> 点进去看这篇的时候，注意到有一个 Tip: Before you can sync your fork with an upstream repository, you must <a href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">configure a remote that points to the upstream repository</a> in Git.   </p>
 <p>根据这两篇文章，问题迎刃而解！   </p>
@@ -319,10 +309,7 @@
   <entry>
     <title>JavaScript 作用域和作用域链</title>
     <url>/2015/05/20/2015-05-20-scope/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="JavaScript-作用域"><a href="#JavaScript-作用域" class="headerlink" title="JavaScript 作用域"></a>JavaScript 作用域</h2><p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
+    <content><![CDATA[<h2 id="JavaScript-作用域"><a href="#JavaScript-作用域" class="headerlink" title="JavaScript 作用域"></a>JavaScript 作用域</h2><p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
 <hr>
 <h3 id="全局作用域-Global-Scope"><a href="#全局作用域-Global-Scope" class="headerlink" title="全局作用域(Global Scope)"></a>全局作用域(Global Scope)</h3><p>在代码中任何地方都能访问到的对象拥有全局作用域，一般来说以下 3 种情形拥有全局作用域。</p>
 <ol>
@@ -426,10 +413,7 @@
   <entry>
     <title>JavaScript 函数</title>
     <url>/2015/06/11/2015-06-11-JavaScript-function/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 函数笔记。</p>
+    <content><![CDATA[<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 函数笔记。</p>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>函数是一块JavaScript代码，被定义一次，但可执行和调用多次。</p>
 <p>JS中的函数也是对象，所以JS函数可以像其它对象那样操作和传递。</p>
 <p>所以我们也常叫JS中的函数为函数对象。</p>
@@ -573,10 +557,7 @@
   <entry>
     <title>JavaScript 中的 this</title>
     <url>/2015/06/12/2015-06-12-JavaScript-this/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的 this笔记。</p>
+    <content><![CDATA[<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的 this笔记。</p>
 <h2 id="全局的-this"><a href="#全局的-this" class="headerlink" title="全局的 this"></a>全局的 this</h2><p>全局 this 一般指向全局对象，浏览器中的全局对象就是 <code>window</code>。</p>
 <p>例如：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">this</span>.document === <span class="built_in">document</span>); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">this</span> === <span class="built_in">window</span>); <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">this</span>.a = <span class="number">91</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.a); <span class="comment">//91</span></span><br></pre></td></tr></table></figure>
@@ -623,10 +604,7 @@
   <entry>
     <title>JavaScript 中的闭包</title>
     <url>/2015/06/14/2015-06-14-JavaScript-closure/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的闭包笔记。</p>
+    <content><![CDATA[<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a> JavaScript 中的闭包笔记。</p>
 <h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
     var localVal = 30;
     return localVal;
@@ -759,10 +737,7 @@ console.log(converter); //Uncaught ReferenceError: converter is not defined
   <entry>
     <title>JavaScript 面向对象</title>
     <url>/2015/06/15/2015-06-15-JavaScript-Object-Oriented/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a>  JavaScript 面向对象笔记。</p>
+    <content><![CDATA[<p>本文为慕课网 <a href="http://www.imooc.com/learn/277">JavaScript深入浅出</a>  JavaScript 面向对象笔记。</p>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
 <p>面向对象程序设计（Object-oriented programming，OOP）是一种程序设计范型，同时也是一种程序开发的方法。对象指的是类的实例。它将对象作为程序的基本单元，将程序和数据封装其中，以提高软件的重用性、灵活性和扩展性。</p>
 <p>——维基百科</p>
@@ -1098,10 +1073,7 @@ moduleA = function() &#123;
   <entry>
     <title>Weinre --WebApp 调试工具</title>
     <url>/2015/06/18/2015-06-18-weinre/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="什么是-weinre？"><a href="#什么是-weinre？" class="headerlink" title="什么是 weinre？"></a>什么是 weinre？</h2><p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre官网</a> 上有两句有意思的介绍：</p>
+    <content><![CDATA[<h2 id="什么是-weinre？"><a href="#什么是-weinre？" class="headerlink" title="什么是 weinre？"></a>什么是 weinre？</h2><p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre官网</a> 上有两句有意思的介绍：</p>
 <blockquote>
 <p><strong>weinre</strong> is <strong>WE</strong>b <strong>IN</strong>spector <strong>RE</strong>mote. Pronounced like the word “winery”. Or maybe like the word “weiner”. Who knows, really.</p>
 <p><strong>weinre</strong> is a debugger for web pages, like FireBug (for FireFox) and Web Inspector (for WebKit-based browsers), except it’s designed to work remotely, and in particular, to allow you debug web pages on a mobile device such as a phone.</p>
@@ -1239,10 +1211,7 @@ moduleA = function() &#123;
   <entry>
     <title>对这个 jekyll 博客主题的改版和重构</title>
     <url>/2016/03/12/2016-03-12-jekyll-theme-version-2.0/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对<code>Jekyll</code>也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时<code>Jekyll</code>如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。</p>
+    <content><![CDATA[<p>本文主要说明对这个博客主题的改版和代码重构的过程。这个简洁高雅的博客主题受到了很多朋友的喜欢。在写第一版界面时，我对前端并不是很熟悉，对<code>Jekyll</code>也不熟悉。现在距离当时也一年了，对自己当时写的代码也不太满意了，同时<code>Jekyll</code>如今也已经升级了，目前最新版为3.1.2。因此我在临近毕业尚未入职前做一下博客主题的代码重构和改版吧。</p>
 <p>主要想做这些事情有：添加归档，添加标签，添加分类页面，主页显示文章摘要，代码去除 jQuery 和 BootStrap，优化移动端显示，将所有变量写入配置文件<code>_config.yml</code>中等。再优化一些细节吧。希望更多人会喜欢。</p>
 <h2 id="改版重构说明"><a href="#改版重构说明" class="headerlink" title="改版重构说明"></a>改版重构说明</h2><ul>
 <li><p><strong>使用 GitHub 风格的代码块 Markdown 写法 (Fenced code blocks)。</strong></p>
@@ -1337,10 +1306,7 @@ moduleA = function() &#123;
   <entry>
     <title>前端处理动态 url 和 pushStatus 的使用</title>
     <url>/2015/12/31/2015-12-31-History-API/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
 <ul>
 <li>webpack 自动构建</li>
 <li>AMD 模块化 js</li>
@@ -1455,11 +1421,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>JavaScript 语言精粹笔记1-语法、对象、函数</title>
-    <url>/2021/05/07/2016-06-07-JavaScript-good-parts-note1/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>记录一下阅读蝴蝶书的笔记，本篇为第一部分包含书中前三章内容：语法、对象和函数。</p>
+    <url>/2021/05/08/2016-06-07-JavaScript-good-parts-note1/</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为第一部分包含书中前三章内容：语法、对象和函数。</p>
 <p><img src="https://img3.doubanio.com/lpic/s3651235.jpg"></p>
 <p>原书中第一章为精华，做了一些周边介绍，略去。</p>
 <h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="空白"><a href="#空白" class="headerlink" title="空白"></a>空白</h3><p>这里说一下JavaScript的注释，一种是 <code>/* */</code> 包围的块注释，另一种是 <code>//</code> 开头的行注释。</p>
@@ -1632,7 +1595,7 @@ moduleA = function() &#123;
 
 <p>JavaScript 原型继承是动态的，因此新的方法立刻被赋予到所有的对象实例上，即使对象实例是在方法被增加之前就创建好了。</p>
 <h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>递归函数就是会直接或者间接地调用自身的一种函数。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> walkTheDom = <span class="function"><span class="keyword">function</span> <span class="title">walk</span>(<span class="params">node, func</span>) </span>&#123;</span><br><span class="line">    func(node)</span><br><span class="line">    node = node.firstChild</span><br><span class="line">    <span class="keyword">while</span> (node) &#123;</span><br><span class="line">        walk(node, func)</span><br><span class="line">        node = node.nextSibling</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getElementsByAttribute = <span class="function"><span class="keyword">function</span>(<span class="params">att, value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> results = []</span><br><span class="line">    walkTheDom(<span class="built_in">document</span>.body, <span class="function"><span class="keyword">function</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> actual = node.nodeType === <span class="number">1</span> &amp;&amp; node.getAttribute(att)</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> actual === <span class="string">&#x27;string&#x27;</span> &amp;&amp; (actual === value || <span class="keyword">typeof</span> value !== <span class="string">&#x27;string&#x27;</span>)) &#123;</span><br><span class="line">            results.push(node)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> results</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在知乎主页上操作</span></span><br><span class="line"><span class="built_in">console</span>.log(getElementsByAttribute(<span class="string">&#x27;data-za-module&#x27;</span>, <span class="string">&#x27;AnswerItem&#x27;</span>))</span><br><span class="line"><span class="comment">//得到下列数据</span></span><br><span class="line"><span class="comment">//[div.feed-content, div.feed-content, div.feed-content, div.feed-content, div.feed-content, div.feed-content, div.feed-content]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> walkTheDom = <span class="function"><span class="keyword">function</span> <span class="title">walk</span>(<span class="params">node, func</span>) </span>&#123;</span><br><span class="line">    func(node)</span><br><span class="line">    node = node.firstChild</span><br><span class="line">    <span class="keyword">while</span> (node) &#123;</span><br><span class="line">        walk(node, func)</span><br><span class="line">        node = node.nextSibling</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getElementsByAttribute = <span class="function"><span class="keyword">function</span>(<span class="params">att, value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> results = []</span><br><span class="line">    walkTheDom(<span class="built_in">document</span>.body, <span class="function"><span class="keyword">function</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> actual = node.nodeType === <span class="number">1</span> &amp;&amp; node.getAttribute(att)</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> actual === <span class="string">&#x27;string&#x27;</span> &amp;&amp; (actual === value || <span class="keyword">typeof</span> value !== <span class="string">&#x27;string&#x27;</span>)) &#123;</span><br><span class="line">            results.push(node)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> results</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在知乎主页上操作</span></span><br><span class="line"><span class="built_in">console</span>.log(getElementsByAttribute(<span class="string">&#x27;data-za-module&#x27;</span>, <span class="string">&#x27;AnswerItem&#x27;</span>))</span><br><span class="line"><span class="comment">//得到下列数据</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>作用域控制着变量与参数的可见性及生命周期。它减少了名称冲突，并提供了自动内存管理。</p>
 <p>无块级作用域。</p>
@@ -1661,11 +1624,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
-    <url>/2021/05/07/2016-06-08-JavaScript-good-parts-note2/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
+    <url>/2021/05/08/2016-06-08-JavaScript-good-parts-note2/</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承的两大好处：代码重用，引入一套类型系统的规范。</p>
 <h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>JavaScript 通过构造器函数产生对象。</p>
 <p>构造器调用模式，即用<code>new</code>前缀去调用一个函数。</p>
@@ -1732,11 +1692,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
-    <url>/2021/05/07/2016-06-10-JavaScript-good-parts-note3/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>记录一下阅读蝴蝶书的笔记，本篇为书中最后一部分：方法、代码风格、优美的特性、毒瘤、糟粕等。</p>
+    <url>/2021/05/08/2016-06-10-JavaScript-good-parts-note3/</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中最后一部分：方法、代码风格、优美的特性、毒瘤、糟粕等。</p>
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>这一章主要介绍了一些方法集。这里写几个我不太熟悉的方法和要点吧。</p>
 <ul>
 <li><p><code>array.join()</code></p>
@@ -1794,11 +1751,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>如何使用 babel</title>
-    <url>/2021/05/07/2016-06-14-how-to-use-babel/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p><a href="https://babeljs.io/">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
+    <url>/2021/05/08/2016-06-14-how-to-use-babel/</url>
+    <content><![CDATA[<p><a href="https://babeljs.io/">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
 <p><img src="https://babeljs.io/images/logo.svg"></p>
 <p>学习 Babel 可以通过其手册 Babel handbook。</p>
 <ul>
@@ -1874,11 +1828,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>Git 如何 clone 非 master 分支的代码</title>
-    <url>/2021/05/07/2016-07-07-git-clone-not-master-branch/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
+    <url>/2021/05/08/2016-07-07-git-clone-not-master-branch/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone git@gitlab.xxx.com:xxxxx.git</span><br></pre></td></tr></table></figure>
 
 <p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p>
@@ -1921,11 +1872,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>Fisher–Yates shuffle 洗牌算法</title>
-    <url>/2021/05/07/2016-10-16-shuffle-algorithm/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
+    <url>/2021/05/08/2016-10-16-shuffle-algorithm/</url>
+    <content><![CDATA[<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
 <p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
 <h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
@@ -2024,12 +1972,9 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>使用 JavaScript 创建并下载文件</title>
-    <url>/2021/05/07/2016-11-22-js-create-file-and-download/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
-<h2 id="先上代码"><a href="#先上代码" class="headerlink" title="先上代码"></a>先上代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建并下载文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;String&#125;</span> </span>fileName 文件名</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;String&#125;</span> </span>content  文件内容</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createAndDownloadFile</span>(<span class="params">fileName, content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> aTag = <span class="built_in">document</span>.createElement(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    <span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([content]);</span><br><span class="line">    aTag.download = fileName;</span><br><span class="line">    aTag.href = URL.createObjectURL(blob);</span><br><span class="line">    aTag.click();</span><br><span class="line">    URL.revokeObjectURL(blob);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <url>/2021/05/08/2016-11-22-js-create-file-and-download/</url>
+    <content><![CDATA[<p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
+<h2 id="先上代码"><a href="#先上代码" class="headerlink" title="先上代码"></a>先上代码</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建并下载文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;String&#125;</span> </span>fileName 文件名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="keyword">var</span> aTag = <span class="built_in">document</span>.createElement(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    aTag.download = fileName;</span><br><span class="line">    aTag.href = URL.createObjectURL(blob);</span><br><span class="line">    aTag.click();</span><br><span class="line">    URL.revokeObjectURL(blob);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>很简单对吧，直接调用这个方法，传入文件名和文件内容，程序新建 a 标签，新建 Blob 对象，将文件名赋给 a 标签，同时将 Blob 对象作为 Url 也赋给 a 标签，模拟点击事件，自动下载成功，最后再回收内存。下面我们来看看具体是怎么操作的。</p>
 <p><img src="https://img.alicdn.com/tfs/TB16.GnOpXXXXXdapXXXXXXXXXX-307-134.png"></p>
@@ -2037,20 +1982,7 @@ moduleA = function() &#123;
 <p>拥有 2 个只读状态 <code>OPEND</code> 和 <code>CLOSED。</code></p>
 <p>Blob 对象属于 JavaScript Web APIs 中的 File API 规定的部分，可以参考 W3C 文档中的 <a href="https://www.w3.org/TR/2015/WD-FileAPI-20150421/#blob"> The Blob Interface and Binary Data</a></p>
 <p>再回来看看我们的代码里是这么写的，使用了 Blob 的构造函数：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([content]);</span><br></pre></td></tr></table></figure>
-
-<p>使用方括号的原因是，其构造函数的参数为以下4中：</p>
-<ul>
-<li>ArrayBuffer [TypedArrays] elements.</li>
-<li>ArrayBufferView [TypedArrays] elements.</li>
-<li>Blob elements.</li>
-<li>DOMString [WebIDL] elements.</li>
-</ul>
-<p>所谓 <code>ArrayBuffer</code> 是一种用于呈现通用、固定长度的二进制数据的类型。详情可以参考 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer -MDN</a> 以及 <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-arraybuffer-objects">ECMAScript2015 标准中的 ArrayBuffer</a>。</p>
-<h2 id="Blob-URLs"><a href="#Blob-URLs" class="headerlink" title="Blob URLs"></a>Blob URLs</h2><p>Blob URLs 被创建或注销是使用 <code>URL</code> 对象上的方法。这个 <code>URL</code> 对象被挂在 <code>Window</code> (HTML) 对象下，或者 <code>WorkerGlobalScope</code> (Web Workers)对象下。</p>
-<p>拥有以下静态方法 <code>createObjectURL</code> 和 <code>revokeObjectURL</code>，用于创建一个 blob 对象的 url 和注销这个 blob url。</p>
-<p>详情可查看 <a href="https://www.w3.org/TR/2015/WD-FileAPI-20150421/#creating-revoking">关于创建和注销 Blob URL 的 W3C 标准文档</a></p>
-<h2 id="模拟-click"><a href="#模拟-click" class="headerlink" title="模拟 click"></a>模拟 click</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">element.click();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">使用方括号的原因是，其构造函数的参数为以下4中：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">- ArrayBuffer [TypedArrays] elements.</span></span><br><span class="line"><span class="string">- ArrayBufferView [TypedArrays] elements.</span></span><br><span class="line"><span class="string">- Blob elements.</span></span><br><span class="line"><span class="string">- DOMString [WebIDL] elements.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">所谓 `</span><span class="built_in">ArrayBuffer</span><span class="string">` 是一种用于呈现通用、固定长度的二进制数据的类型。详情可以参考 [ArrayBuffer -MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) 以及 [ECMAScript2015 标准中的 ArrayBuffer](http://www.ecma-international.org/ecma-262/6.0/#sec-arraybuffer-objects)。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## Blob URLs</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Blob URLs 被创建或注销是使用 `</span>URL<span class="string">` 对象上的方法。这个 `</span>URL<span class="string">` 对象被挂在 `</span>Window<span class="string">` (HTML) 对象下，或者 `</span>WorkerGlobalScope<span class="string">` (Web Workers)对象下。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">拥有以下静态方法 `</span>createObjectURL<span class="string">` 和 `</span>revokeObjectURL<span class="string">`，用于创建一个 blob 对象的 url 和注销这个 blob url。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">详情可查看 [关于创建和注销 Blob URL 的 W3C 标准文档]( https://www.w3.org/TR/2015/WD-FileAPI-20150421/#creating-revoking)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 模拟 click</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">element.click();</span><br></pre></td></tr></table></figure>
 
 <p>在 W3C 中很早就有这个<a href="https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-2651361">规范</a>，不需要写繁琐的模拟事件触发的代码。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>目前我将这个技术使用在 天猫双十一技术和UED庆功会 的摇火箭大屏游戏中。最后的游戏结果排名，在请求了接口后，在前端直接生成并下载到了本地，作为记录保存。主要也是因为服务端暂时没有提供这个一张表去记录游戏结果，于是采用了前端记录的解决方案。</p>
@@ -2068,11 +2000,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>前端如何写一个精确的倒计时</title>
-    <url>/2021/05/07/2016-11-25-how-to-write-a-count-down/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
+    <url>/2021/05/08/2016-11-25-how-to-write-a-count-down/</url>
+    <content><![CDATA[<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
 <p><img src="https://img.alicdn.com/tfs/TB18QnlOpXXXXcVXpXXXXXXXXXX-388-256.png"></p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>众所周知 setTimeout 或者 setInterval 调用的时候会有微小的误差。有人做了一个 <a href="https://bl.ocks.org/kenpenn/raw/92ebaa71696b4c4c3acd672b1bb3f49a/">demo</a> 来观察这个现象并对其做了修正。短时间的误差倒也可以接受，但是作为一个长时间的倒计时，误差累计就会导致倒计时不准确。</p>
 <p>因此我们可以在获取剩余时间的时候，每次 new 一个设备时间，因为设备时间的流逝相对是准确的，并且如果设备打开了网络时间同步，也会解决这个问题。</p>
@@ -2103,43 +2032,12 @@ moduleA = function() &#123;
       </categories>
       <tags>
         <tag>countdown JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>这是徐代龙进行的第二篇文章</title>
-    <url>/2021/05/07/2017-12-07-git-push-github/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="目的："><a href="#目的：" class="headerlink" title="目的："></a>目的：</h2><p>写这篇文章的目的主要是为了测试在本地进行md文件的编写是否能使用hexo进行html生成，然后上传到github上，通过访问<a href="https://day21.top/">https://day21.top</a> 这个网站查看能否看到最新的文章</p>
-<h2 id="操作步骤："><a href="#操作步骤：" class="headerlink" title="操作步骤："></a>操作步骤：</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 &#x2F;f&#x2F;myself&#x2F;643435675.github.io (master)</span><br><span class="line">$ gem install jekyll</span><br><span class="line">Successfully installed jekyll-3.6.2</span><br><span class="line">Parsing documentation for jekyll-3.6.2</span><br><span class="line">Done installing documentation for jekyll after 2 seconds</span><br><span class="line">1 gem installed</span><br><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 &#x2F;f&#x2F;myself&#x2F;643435675.github.io (master)</span><br><span class="line">$ jekyll s</span><br><span class="line">Configuration file: F:&#x2F;myself&#x2F;643435675.github.io&#x2F;_config.yml</span><br><span class="line">            Source: F:&#x2F;myself&#x2F;643435675.github.io</span><br><span class="line">       Destination: F:&#x2F;myself&#x2F;643435675.github.io&#x2F;_site</span><br><span class="line"> Incremental build: disabled. Enable with --incremental</span><br><span class="line">      Generating...</span><br><span class="line">                    done in 5.499 seconds.</span><br><span class="line">  Please add the following to your Gemfile to avoid polling for changes:</span><br><span class="line">    gem &#39;wdm&#39;, &#39;&gt;&#x3D; 0.1.0&#39; if Gem.win_platform?</span><br><span class="line"> Auto-regeneration: enabled for &#39;F:&#x2F;myself&#x2F;643435675.github.io&#39;</span><br><span class="line">    Server address: http:&#x2F;&#x2F;127.0.0.1:4001&#x2F;</span><br><span class="line">  Server running... press ctrl-c to stop.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 &#x2F;f&#x2F;myself&#x2F;643435675.github.io (master)</span><br><span class="line">$ jekyll serve</span><br><span class="line">Configuration file: F:&#x2F;myself&#x2F;643435675.github.io&#x2F;_config.yml</span><br><span class="line">            Source: F:&#x2F;myself&#x2F;643435675.github.io</span><br><span class="line">       Destination: F:&#x2F;myself&#x2F;643435675.github.io&#x2F;_site</span><br><span class="line"> Incremental build: disabled. Enable with --incremental</span><br><span class="line">      Generating...</span><br><span class="line">                    done in 2.859 seconds.</span><br><span class="line">  Please add the following to your Gemfile to avoid polling for changes:</span><br><span class="line">    gem &#39;wdm&#39;, &#39;&gt;&#x3D; 0.1.0&#39; if Gem.win_platform?</span><br><span class="line"> Auto-regeneration: enabled for &#39;F:&#x2F;myself&#x2F;643435675.github.io&#39;</span><br><span class="line">    Server address: http:&#x2F;&#x2F;127.0.0.1:4001&#x2F;</span><br><span class="line">  Server running... press ctrl-c to stop.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>主要进行了以上操作：<br>cd 643435675.github.io  文件夹下</p>
-<p>执行命令：</p>
-<p><code>gem install jekyll </code></p>
-<p>下一步：<br><code>jekyll s</code></p>
-<p>接下来：<br><code>jekyll serve</code></p>
-<p>然后这样就可以在浏览器中输入：<a href="http://127.0.0.1:4001/">http://127.0.0.1:4001/</a> 进行刚刚文章的访问了。</p>
-<p>补充：</p>
-<p>因为首页与详情页显示某篇文章的内容是不一样的，在首页中进行文章的裁剪显示：<br>需要进行加入四个空行：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">## 目的：</span><br><span class="line"></span><br><span class="line">写这篇文章的目的主要是为了测试在本地进行md文件的编写是否能使用hexo进行html生成，然后上传到github上，通过访问https:&#x2F;&#x2F;day21.top 这个网站查看能否看到最新的文章</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 操作步骤：</span><br></pre></td></tr></table></figure>
-
-<p>不进行添加的话，首页会把整篇文章完全展示出来，添加了四个空行之后就只会显示部分了，当然了，这篇文章在首页是显示的部分，也就是<strong>目的下的内容</strong></p>
-]]></content>
-      <categories>
-        <category>ddpf</category>
-      </categories>
-      <tags>
-        <tag>hexo JavaScript</tag>
       </tags>
   </entry>
   <entry>
     <title>这是我自己来测试的md页面</title>
-    <url>/2021/05/07/2017-12-04-test-my-webapp/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
+    <url>/2021/05/08/2017-12-04-test-my-webapp/</url>
+    <content><![CDATA[<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
 <p><img src="https://img.alicdn.com/tfs/TB18QnlOpXXXXcVXpXXXXXXXXXX-388-256.png"></p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>众所周知 setTimeout 或者 setInterval 调用的时候会有微小的误差。有人做了一个 <a href="https://bl.ocks.org/kenpenn/raw/92ebaa71696b4c4c3acd672b1bb3f49a/">demo</a> 来观察这个现象并对其做了修正。短时间的误差倒也可以接受，但是作为一个长时间的倒计时，误差累计就会导致倒计时不准确。</p>
 <p>因此我们可以在获取剩余时间的时候，每次 new 一个设备时间，因为设备时间的流逝相对是准确的，并且如果设备打开了网络时间同步，也会解决这个问题。</p>
@@ -2174,11 +2072,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>这是徐代龙进行的第二篇文章</title>
-    <url>/2021/05/07/2017-12-07-test-my-webapp/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="目的："><a href="#目的：" class="headerlink" title="目的："></a>目的：</h2><p>写这篇文章的目的主要是为了测试在本地进行md文件的编写是否能使用hexo进行html生成，然后上传到github上，通过访问<a href="https://day21.top/">https://day21.top</a> 这个网站查看能否看到最新的文章</p>
+    <url>/2021/05/08/2017-12-07-test-my-webapp/</url>
+    <content><![CDATA[<h2 id="目的："><a href="#目的：" class="headerlink" title="目的："></a>目的：</h2><p>写这篇文章的目的主要是为了测试在本地进行md文件的编写是否能使用hexo进行html生成，然后上传到github上，通过访问<a href="https://day21.top/">https://day21.top</a> 这个网站查看能否看到最新的文章</p>
 <h2 id="操作步骤："><a href="#操作步骤：" class="headerlink" title="操作步骤："></a>操作步骤：</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 /f/myself/<span class="number">643435675.</span>github.io (master)</span><br><span class="line">$ gem install jekyll</span><br><span class="line">Successfully installed jekyll-<span class="number">3.6</span><span class="number">.2</span></span><br><span class="line">Parsing documentation <span class="keyword">for</span> jekyll-<span class="number">3.6</span><span class="number">.2</span></span><br><span class="line">Done installing documentation <span class="keyword">for</span> jekyll after <span class="number">2</span> seconds</span><br><span class="line"><span class="number">1</span> gem installed</span><br><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 /f/myself/<span class="number">643435675.</span>github.io (master)</span><br><span class="line">$ jekyll s</span><br><span class="line">Configuration file: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io/_config.yml</span><br><span class="line">            Source: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io</span><br><span class="line">       Destination: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io/_site</span><br><span class="line"> Incremental build: disabled. Enable <span class="keyword">with</span> --incremental</span><br><span class="line">      Generating...</span><br><span class="line">                    done <span class="keyword">in</span> <span class="number">5.499</span> seconds.</span><br><span class="line">  Please add the following to your Gemfile to avoid polling <span class="keyword">for</span> changes:</span><br><span class="line">    gem <span class="string">&#x27;wdm&#x27;</span>, <span class="string">&#x27;&gt;= 0.1.0&#x27;</span> <span class="keyword">if</span> Gem.win_platform?</span><br><span class="line"> Auto-regeneration: enabled <span class="keyword">for</span> <span class="string">&#x27;F:/myself/643435675.github.io&#x27;</span></span><br><span class="line">    Server address: http:<span class="comment">//127.0.0.1:4001/</span></span><br><span class="line">  Server running... press ctrl-c to stop.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spencer@spencer-it1 MINGW64 /f/myself/<span class="number">643435675.</span>github.io (master)</span><br><span class="line">$ jekyll serve</span><br><span class="line">Configuration file: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io/_config.yml</span><br><span class="line">            Source: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io</span><br><span class="line">       Destination: F:<span class="regexp">/myself/</span><span class="number">643435675.</span>github.io/_site</span><br><span class="line"> Incremental build: disabled. Enable <span class="keyword">with</span> --incremental</span><br><span class="line">      Generating...</span><br><span class="line">                    done <span class="keyword">in</span> <span class="number">2.859</span> seconds.</span><br><span class="line">  Please add the following to your Gemfile to avoid polling <span class="keyword">for</span> changes:</span><br><span class="line">    gem <span class="string">&#x27;wdm&#x27;</span>, <span class="string">&#x27;&gt;= 0.1.0&#x27;</span> <span class="keyword">if</span> Gem.win_platform?</span><br><span class="line"> Auto-regeneration: enabled <span class="keyword">for</span> <span class="string">&#x27;F:/myself/643435675.github.io&#x27;</span></span><br><span class="line">    Server address: http:<span class="comment">//127.0.0.1:4001/</span></span><br><span class="line">  Server running... press ctrl-c to stop.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>主要进行了以上操作：<br>cd 643435675.github.io  文件夹下</p>
@@ -2202,14 +2097,12 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <url>/2021/05/07/2017-12-13-Ubuntu16.04-pycharm-icon-setting/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">/usr/share/applications</span><br></pre></td></tr></table></figure>
+    <url>/2021/05/08/2017-12-13-Ubuntu16.04-pycharm-icon-setting/</url>
+    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">/usr/share/applications</span><br></pre></td></tr></table></figure>
 
 <h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
 <p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
+<span id="more"></span>
 <h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sudo vi  /usr/share/applications/pycharm.desktop</span><br></pre></td></tr></table></figure>
 
@@ -2238,11 +2131,8 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>window下python3环境安装scrapy</title>
-    <url>/2021/05/07/2018-01-04-scrapy-setup-in-win/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>目录：</p>
+    <url>/2021/05/08/2018-01-04-scrapy-setup-in-win/</url>
+    <content><![CDATA[<p>目录：</p>
 <p>[TOC]</p>
 <h2 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h2><blockquote>
 <p>python3  3.6.4， win7 64位  </p>
@@ -2282,11 +2172,9 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>News_scrapy_redis 框架系统</title>
-    <url>/2021/05/07/2018-01-09-python_crawl_words/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
+    <url>/2021/05/08/2018-01-09-python_crawl_words/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
+<span id="more"></span>
 <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><p>1、代码复用，功能模块化。可以支持上千个网站的数据爬取；</p>
 <p>2、易扩展。爬虫框架易扩展，爬取规则、解析规则、入库规则易扩展，支持框架切换；</p>
 <p>3、健壮性、可维护性。对数据爬取过程中的各种异常，例如：断网、反爬升级、爬“脏数据”等，需要实时的监控，以及给出准确的定位。异常处理以及降级措施需要完善；</p>
@@ -2350,10 +2238,7 @@ moduleA = function() &#123;
 <ul>
 <li>实现相似文档的去重</li>
 <li>automatic_simhash.py 自动实现相似文档的去重（仅基于新闻内容）</li>
-<li>content_index.pkl 序列化的新闻内容SimhashIndex类，相当于所有新闻sinhash_value的一张表，并且随着抓取的新闻越来越多，该表会不断增大title_index.pkl 序列化的新闻标题SimhashIndex类， 未使用</li>
-<li><code>generate_simhash_index.py</code> 初始化这张Simhash_index，生成content和title的Simhash_index</li>
 <li><code>near_duplicates.py</code> 对初始化的Simhash_index进行相似新闻内容的去重</li>
-<li>test.py 测试content_index.pkl中content_index类新闻的数量</li>
 </ul>
 <blockquote>
 <p>News_statistics:</p>
@@ -2384,11 +2269,9 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>win10 关闭更新</title>
-    <url>/2021/05/07/2018-01-13-close-win10-update/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
+    <url>/2021/05/08/2018-01-13-close-win10-update/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
+<span id="more"></span>
 <p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
 <h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
 <p><img src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
@@ -2410,14 +2293,12 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>Ubuntu 16.04 下MySQL的安装</title>
-    <url>/2021/05/07/2018-01-13-setup-mysql-inubuntu/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>1， 打开终端：</p>
+    <url>/2021/05/08/2018-01-13-setup-mysql-inubuntu/</url>
+    <content><![CDATA[<p>1， 打开终端：</p>
 <blockquote>
 <p> sudo apt-get install mysql-server</p>
 </blockquote>
+<span id="more"></span>
 <p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
 <p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
 <p>4 ，接下来，会继续让我们输入一次密码</p>
@@ -2476,11 +2357,9 @@ moduleA = function() &#123;
   </entry>
   <entry>
     <title>CentOS7定时任务详解</title>
-    <url>/2021/05/07/2018-02-10-centos-crontab/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
+    <url>/2021/05/08/2018-02-10-centos-crontab/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
+<span id="more"></span>
 <h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
 <p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
 <h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
@@ -2530,30 +2409,9 @@ moduleA = function() &#123;
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/04/25/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>百度Web前端技术学院(1)-HTML, CSS基础</title>
     <url>/2015/04/15/2015-04-15-baidu-ife-1/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>百度前端学院的第一次任务笔记，HTML、CSS 基础。主要有 CSS 工作原理，选择器的使用，常用属性，行高属性，盒模型与定位，最后根据设计图实现4个页面。</p>
+    <content><![CDATA[<p>百度前端学院的第一次任务笔记，HTML、CSS 基础。主要有 CSS 工作原理，选择器的使用，常用属性，行高属性，盒模型与定位，最后根据设计图实现4个页面。</p>
 <h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p><strong>任务：</strong> <a href="https://github.com/Gaohaoyang/ife/tree/master/task/task0001">HTML、CSS基础</a>   </p>
 <p>有人问到提交作业 fork 同步的问题，真心觉得官方 GitHub 的帮助文档讲的很好，我上一篇博客 <a href="http://gaohaoyang.github.io/2015/04/12/Syncing-a-fork/">同步一个 fork</a> 就是翻译的这个官方文档，如果懒得看英文可以参考我的博客。   </p>
 <p>写点东西记录一下我的做题过程吧。   </p>
@@ -2726,7 +2584,7 @@ moduleA = function() &#123;
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;close-float.css&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row clearfix&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h1</span>&gt;</span>left<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span>&gt;</span>Content or Something<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span>right<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row2&quot;</span>&gt;</span>Row2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>css</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.row</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span>:after &#123;</span><br><span class="line">    content: <span class="string">&quot;\200B&quot;</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">    *zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.row2</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#aaa</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.row</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span>:after &#123;</span><br><span class="line">    display: block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">    *zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.row2</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#aaa</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>其中<code>*zoom: 1</code>是为了触发<code>hasLayout</code></p>
 <p>还有另一种解决方案！</p>
@@ -2821,7 +2679,6 @@ moduleA = function() &#123;
 <li><a href="http://zh.learnlayout.com/">学习CSS布局</a></li>
 <li><a href="http://mediaqueri.es/">Media Queries</a></li>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Using_CSS_gradients">使用CSS渐变</a></li>
-<li><a href="http://www.w3cplus.com/content/css3-gradient">CSS3 Gradient</a></li>
 <li><a href="http://www.colorzilla.com/gradient-editor/">CSS渐变生成器</a></li>
 </ul>
 ]]></content>
@@ -2835,10 +2692,7 @@ moduleA = function() &#123;
   <entry>
     <title>Web App 相关技术</title>
     <url>/2015/06/17/2015-06-17-web-app/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<blockquote>
+    <content><![CDATA[<blockquote>
 <p>往前推2到3年，前端工程师还在忧心忡忡地想，移动互联网时代下，前端是不是没有生存空间了。但今天一看，在我们团队，前端工程师超过一半的工作都是在做移动端的Web或者APP的开发。移动Web或者APP在技术本质上是和做桌面端Web没有本质区别，但是移动端的坑那是非常的多，通过学习这部分内容，让你成为一名桌面移动通吃的前端开发工程师。</p>
 </blockquote>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
@@ -2930,24 +2784,20 @@ moduleA = function() &#123;
 <p>  <code>viewport</code> 可以让布局在移动浏览器上显示的更好。 通常会写</p>
 </li>
 </ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span> =<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span> =<span class="string">&quot;initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz --&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz --&gt;</span></span><br></pre></td></tr></table></figure>
 
+<pre><code>* width viewport 宽度(数值/device-width)
+* height viewport 高度(数值/device-height)
+* initial-scale 初始缩放比例
+* maximum-scale 最大缩放比例
+* minimum-scale 最小缩放比例
+* user-scalable 是否允许用户缩放(yes/no)
+</code></pre>
 <ul>
-<li><p>content 参数：</p>
-<ul>
-<li>width viewport 宽度(数值/device-width)</li>
-<li>height viewport 高度(数值/device-height)</li>
-<li>initial-scale 初始缩放比例</li>
-<li>maximum-scale 最大缩放比例</li>
-<li>minimum-scale 最小缩放比例</li>
-<li>user-scalable 是否允许用户缩放(yes/no)</li>
-</ul>
-</li>
-<li><p>ios 设备，iOS 图标，Android，Windows 8</p>
-</li>
+<li>ios 设备，iOS 图标，Android，Windows 8</li>
 </ul>
 <p><strong>总结：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span> <span class="comment">&lt;!-- 使用 HTML5 doctype，不区分大小写 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-cmn-Hans&quot;</span>&gt;</span> <span class="comment">&lt;!-- 更加标准的 lang 属性写法 http://zhi.hu/XyIa --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 声明文档使用的字符编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&#x27;utf-8&#x27;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 优先使用 IE 最新版本和 Chrome --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge,chrome=1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 页面描述 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;不超过150个字符&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 页面关键词 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 网页作者 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;name, email@gmail.com&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 搜索引擎抓取 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;robots&quot;</span> <span class="attr">content</span>=<span class="string">&quot;index,follow&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 为移动设备添加 viewport --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 设备 begin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-title&quot;</span> <span class="attr">content</span>=<span class="string">&quot;标题&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加到主屏后的标题（iOS 6 新增） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-capable&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-itunes-app&quot;</span> <span class="attr">content</span>=<span class="string">&quot;app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加智能 App 广告条 Smart App Banner（iOS 6+ Safari） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;apple-mobile-web-app-status-bar-style&quot;</span> <span class="attr">content</span>=<span class="string">&quot;black&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置苹果工具栏颜色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;format-detection&quot;</span> <span class="attr">content</span>=<span class="string">&quot;telphone=no, email=no&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 忽略页面中的数字识别为电话，忽略email识别 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 启用360浏览器的极速模式(webkit) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;webkit&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 避免IE使用兼容模式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;HandheldFriendly&quot;</span> <span class="attr">content</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 微软的老式浏览器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;MobileOptimized&quot;</span> <span class="attr">content</span>=<span class="string">&quot;320&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- uc强制竖屏 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;screen-orientation&quot;</span> <span class="attr">content</span>=<span class="string">&quot;portrait&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ强制竖屏 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;x5-orientation&quot;</span> <span class="attr">content</span>=<span class="string">&quot;portrait&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- UC强制全屏 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;full-screen&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ强制全屏 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;x5-fullscreen&quot;</span> <span class="attr">content</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- UC应用模式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;browsermode&quot;</span> <span class="attr">content</span>=<span class="string">&quot;application&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ应用模式 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;x5-page-mode&quot;</span> <span class="attr">content</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- windows phone 点击无高光 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;msapplication-tap-highlight&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 图标 begin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-57x57-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone 和 iTouch，默认 57x57 像素，必须有 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;114x114&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-114x114-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Retina iPhone 和 Retina iTouch，114x114 像素，可以没有，但推荐有 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;144x144&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-144x144-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Retina iPad，144x144 像素，可以没有，但推荐有 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 图标 end --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 启动画面 begin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;768x1004&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-768x1004.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 竖屏 768 x 1004（标准分辨率） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;1536x2008&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-1536x2008.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 竖屏 1536x2008（Retina） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;1024x748&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/Default-Portrait-1024x748.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 横屏 1024x748（标准分辨率） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;2048x1496&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-2048x1496.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 横屏 2048x1496（Retina） --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-320x480.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone/iPod Touch 竖屏 320x480 (标准分辨率) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;640x960&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-640x960.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone/iPod Touch 竖屏 640x960 (Retina) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;640x1136&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-640x1136.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone 5/iPod Touch 5 竖屏 640x1136 (Retina) --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 启动画面 end --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 设备 end --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;msapplication-TileColor&quot;</span> <span class="attr">content</span>=<span class="string">&quot;#000&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Windows 8 磁贴颜色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;msapplication-TileImage&quot;</span> <span class="attr">content</span>=<span class="string">&quot;icon.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Windows 8 磁贴图标 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alternate&quot;</span> <span class="attr">type</span>=<span class="string">&quot;application/rss+xml&quot;</span> <span class="attr">title</span>=<span class="string">&quot;RSS&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/rss.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加 RSS 订阅 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;shortcut icon&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/ico&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/favicon.ico&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加 favicon icon --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span> <span class="comment">&lt;!-- 使用 HTML5 doctype，不区分大小写 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-cmn-Hans&quot;</span>&gt;</span> <span class="comment">&lt;!-- 更加标准的 lang 属性写法 http://zhi.hu/XyIa --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 声明文档使用的字符编码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&#x27;utf-8&#x27;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 优先使用 IE 最新版本和 Chrome --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 页面描述 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 页面关键词 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 网页作者 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 搜索引擎抓取 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 为移动设备添加 viewport --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 设备 begin --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加到主屏后的标题（iOS 6 新增） --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 添加智能 App 广告条 Smart App Banner（iOS 6+ Safari） --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置苹果工具栏颜色 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 忽略页面中的数字识别为电话，忽略email识别 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 启用360浏览器的极速模式(webkit) --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 避免IE使用兼容模式 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 微软的老式浏览器 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- uc强制竖屏 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ强制竖屏 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- UC强制全屏 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ强制全屏 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- UC应用模式 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- QQ应用模式 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- windows phone 点击无高光 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 图标 begin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-57x57-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone 和 iTouch，默认 57x57 像素，必须有 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;114x114&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-114x114-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Retina iPhone 和 Retina iTouch，114x114 像素，可以没有，但推荐有 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-icon-precomposed&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;144x144&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/apple-touch-icon-144x144-precomposed.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Retina iPad，144x144 像素，可以没有，但推荐有 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 图标 end --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 启动画面 begin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;768x1004&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-768x1004.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 竖屏 768 x 1004（标准分辨率） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;1536x2008&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-1536x2008.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 竖屏 1536x2008（Retina） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;1024x748&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/Default-Portrait-1024x748.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 横屏 1024x748（标准分辨率） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;2048x1496&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-2048x1496.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPad 横屏 2048x1496（Retina） --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-320x480.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone/iPod Touch 竖屏 320x480 (标准分辨率) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;640x960&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-640x960.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone/iPod Touch 竖屏 640x960 (Retina) --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;apple-touch-startup-image&quot;</span> <span class="attr">sizes</span>=<span class="string">&quot;640x1136&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/splash-screen-640x1136.png&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iPhone 5/iPod Touch 5 竖屏 640x1136 (Retina) --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- iOS 启动画面 end --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- iOS 设备 end --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Windows 8 磁贴颜色 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Windows 8 磁贴图标 --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;alternate&quot;</span> <span class="attr">type</span>=<span class="string">&quot;application/rss+xml&quot;</span> <span class="attr">title</span>=<span class="string">&quot;RSS&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/rss.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加 RSS 订阅 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;shortcut icon&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/ico&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/favicon.ico&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 添加 favicon icon --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="页面切换动画"><a href="#页面切换动画" class="headerlink" title="页面切换动画"></a>页面切换动画</h2><ul>
 <li><a href="http://www.w3cplus.com/mobile/mobile-terminal-refactoring-slider.html">移动端重构系列13——页面切换</a></li>
@@ -3038,7 +2888,6 @@ $ gem install sass
 </ul>
 </li>
 <li>始终遵循白名单优于黑名单的做法</li>
-<li>使用 UTF-8 为默认的字符编码以及设置 content 为 text/html</li>
 <li>不要将用户可以控制的文本放在<meta>标签前。通过使用不同的字符集注射可以导致 XSS。</li>
 <li>使用 <!DOCTYPE html></li>
 <li>使用推荐的 HTTP 响应头进行 XSS 防护</li>
@@ -3245,7 +3094,6 @@ $ gem install sass
 
    任务表 task
    ----------------------------------------------
-   id* | pid(FK) | finish | name | date | content
    ----------------------------------------------
 </code></pre>
 </li>
@@ -3307,10 +3155,7 @@ $ gem install sass
   <entry>
     <title>百度Web前端技术学院(2)-JavaScript 基础</title>
     <url>/2015/04/22/2015-04-22-baidu-ife-2-javascript/</url>
-    <content><![CDATA[<ul>
-<li>content<br>{:toc}</li>
-</ul>
-<p>百度前端学院的第二次任务笔记，JavaScript 基础。主要有JavaScript的定义，数据类型，对象，数组，字符串，正则表达式，DOM，事件，BOM，Ajax 等知识。</p>
+    <content><![CDATA[<p>百度前端学院的第二次任务笔记，JavaScript 基础。主要有JavaScript的定义，数据类型，对象，数组，字符串，正则表达式，DOM，事件，BOM，Ajax 等知识。</p>
 <h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p>掌握JavaScript基础知识，能够使用JavaScript编写一些复杂度不大的交互功能。</p>
 <p><strong>任务：</strong> <a href="https://github.com/Gaohaoyang/ife/tree/master/task/task0002">JavaScript基础</a>   </p>
 <p>做完任务一的时候深深地感觉到自己的基础非常的薄弱，在这里再次感谢一下百度前端技术学院，做任务的时候深刻理解了自己平时掌握不牢固的内容，比如浮动、BFC、等高布局等。继续加油吧！</p>
@@ -3690,7 +3535,7 @@ $ gem install sass
 <li>得到节点的 Element 对象后，以这个对象为父节点，继续下一层的判断。</li>
 </ol>
 <p><strong>实现：</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//多个选择器有点难到我了，看了一些资料觉得思路应该如下：</span></span><br><span class="line"><span class="comment">//1.如果存在#，直接从#开始向后查</span></span><br><span class="line"><span class="comment">//2.如果存在tag直接找到所有的tag然后向后查</span></span><br><span class="line"><span class="comment">//3.样式类，属性，从后向前查，得到它所有的父节点名称，去筛选匹配</span></span><br><span class="line"><span class="comment">//以上的做法有点太复杂，我还是做一个简单的正向匹配吧。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">$</span>(<span class="params">selector</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!selector) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (selector == <span class="built_in">document</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">document</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    selector = selector.trim();</span><br><span class="line">    <span class="keyword">if</span> (selector.indexOf(<span class="string">&quot; &quot;</span>) !== -<span class="number">1</span>) &#123; <span class="comment">//若存在空格</span></span><br><span class="line">        <span class="keyword">var</span> selectorArr = selector.split(<span class="regexp">/\s+/</span>); <span class="comment">//拆成数组</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> rootScope = myQuery(selectorArr[<span class="number">0</span>]); <span class="comment">//第一次的查找范围</span></span><br><span class="line">        <span class="keyword">var</span> i = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> j = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> result = [];</span><br><span class="line">        <span class="comment">//循环选择器中的每一个元素</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; selectorArr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; rootScope.length; j++) &#123;</span><br><span class="line">                result.push(myQuery(selectorArr[i], rootScope[j]));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// rootScope = result;</span></span><br><span class="line">            <span class="comment">// 目前这个方法还有bug</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//只有一个，直接查询</span></span><br><span class="line">        <span class="keyword">return</span> myQuery(selector, <span class="built_in">document</span>)[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 针对一个内容查找结果 success</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;String&#125;</span> </span>selector 选择器内容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Element&#125;</span> </span>root    根节点元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;NodeList数组&#125;</span>    </span>节点列表，可能是多个节点也可能是一个</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myQuery</span>(<span class="params">selector, root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> signal = selector[<span class="number">0</span>]; <span class="comment">//</span></span><br><span class="line">    <span class="keyword">var</span> allChildren = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">var</span> content = selector.substr(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> currAttr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">var</span> result = [];</span><br><span class="line">    root = root || <span class="built_in">document</span>; <span class="comment">//若没有给root，赋值document</span></span><br><span class="line">    <span class="keyword">switch</span> (signal) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;#&quot;</span>:</span><br><span class="line">            result.push(<span class="built_in">document</span>.getElementById(content));</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;.&quot;</span>:</span><br><span class="line">            allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">            <span class="comment">// var pattern0 = new RegExp(&quot;\\b&quot; + content + &quot;\\b&quot;);</span></span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                currAttr = allChildren[i].getAttribute(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span> (currAttr !== <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">var</span> currAttrsArr = currAttr.split(<span class="regexp">/\s+/</span>);</span><br><span class="line">                    <span class="built_in">console</span>.log(currAttr);</span><br><span class="line">                    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; currAttrsArr.length; j++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (content === currAttrsArr[j]) &#123;</span><br><span class="line">                            result.push(allChildren[i]);</span><br><span class="line">                            <span class="built_in">console</span>.log(result);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;[&quot;</span>: <span class="comment">//属性选择</span></span><br><span class="line">            <span class="keyword">if</span> (content.search(<span class="string">&quot;=&quot;</span>) == -<span class="number">1</span>) &#123; <span class="comment">//只有属性，没有值</span></span><br><span class="line">                allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">                <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (allChildren[i].getAttribute(selector.slice(<span class="number">1</span>, -<span class="number">1</span>)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">                        result.push(allChildren[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//既有属性，又有值</span></span><br><span class="line">                allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">                <span class="keyword">var</span> pattern = <span class="regexp">/\[(\w+)\s*\=\s*(\w+)\]/</span>; <span class="comment">//为了分离等号前后的内容</span></span><br><span class="line">                <span class="keyword">var</span> cut = selector.match(pattern); <span class="comment">//分离后的结果，为数组</span></span><br><span class="line">                <span class="keyword">var</span> key = cut[<span class="number">1</span>]; <span class="comment">//键</span></span><br><span class="line">                <span class="keyword">var</span> value = cut[<span class="number">2</span>]; <span class="comment">//值</span></span><br><span class="line">                <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (allChildren[i].getAttribute(key) == value) &#123;</span><br><span class="line">                        result.push(allChildren[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">//tag</span></span><br><span class="line">            result = root.getElementsByTagName(selector);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//多个选择器有点难到我了，看了一些资料觉得思路应该如下：</span></span><br><span class="line"><span class="comment">//1.如果存在#，直接从#开始向后查</span></span><br><span class="line"><span class="comment">//2.如果存在tag直接找到所有的tag然后向后查</span></span><br><span class="line"><span class="comment">//3.样式类，属性，从后向前查，得到它所有的父节点名称，去筛选匹配</span></span><br><span class="line"><span class="comment">//以上的做法有点太复杂，我还是做一个简单的正向匹配吧。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">$</span>(<span class="params">selector</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!selector) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (selector == <span class="built_in">document</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">document</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    selector = selector.trim();</span><br><span class="line">    <span class="keyword">if</span> (selector.indexOf(<span class="string">&quot; &quot;</span>) !== -<span class="number">1</span>) &#123; <span class="comment">//若存在空格</span></span><br><span class="line">        <span class="keyword">var</span> selectorArr = selector.split(<span class="regexp">/\s+/</span>); <span class="comment">//拆成数组</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> rootScope = myQuery(selectorArr[<span class="number">0</span>]); <span class="comment">//第一次的查找范围</span></span><br><span class="line">        <span class="keyword">var</span> i = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> j = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> result = [];</span><br><span class="line">        <span class="comment">//循环选择器中的每一个元素</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; selectorArr.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; rootScope.length; j++) &#123;</span><br><span class="line">                result.push(myQuery(selectorArr[i], rootScope[j]));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// rootScope = result;</span></span><br><span class="line">            <span class="comment">// 目前这个方法还有bug</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//只有一个，直接查询</span></span><br><span class="line">        <span class="keyword">return</span> myQuery(selector, <span class="built_in">document</span>)[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 针对一个内容查找结果 success</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;String&#125;</span> </span>selector 选择器内容</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Element&#125;</span> </span>root    根节点元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;NodeList数组&#125;</span>    </span>节点列表，可能是多个节点也可能是一个</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myQuery</span>(<span class="params">selector, root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> signal = selector[<span class="number">0</span>]; <span class="comment">//</span></span><br><span class="line">    <span class="keyword">var</span> allChildren = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">var</span> currAttr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">var</span> result = [];</span><br><span class="line">    root = root || <span class="built_in">document</span>; <span class="comment">//若没有给root，赋值document</span></span><br><span class="line">    <span class="keyword">switch</span> (signal) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;#&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;.&quot;</span>:</span><br><span class="line">            allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                currAttr = allChildren[i].getAttribute(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span> (currAttr !== <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">var</span> currAttrsArr = currAttr.split(<span class="regexp">/\s+/</span>);</span><br><span class="line">                    <span class="built_in">console</span>.log(currAttr);</span><br><span class="line">                    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; currAttrsArr.length; j++) &#123;</span><br><span class="line">                            result.push(allChildren[i]);</span><br><span class="line">                            <span class="built_in">console</span>.log(result);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;[&quot;</span>: <span class="comment">//属性选择</span></span><br><span class="line">                allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">                <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (allChildren[i].getAttribute(selector.slice(<span class="number">1</span>, -<span class="number">1</span>)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">                        result.push(allChildren[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">//既有属性，又有值</span></span><br><span class="line">                allChildren = root.getElementsByTagName(<span class="string">&quot;*&quot;</span>);</span><br><span class="line">                <span class="keyword">var</span> pattern = <span class="regexp">/\[(\w+)\s*\=\s*(\w+)\]/</span>; <span class="comment">//为了分离等号前后的内容</span></span><br><span class="line">                <span class="keyword">var</span> cut = selector.match(pattern); <span class="comment">//分离后的结果，为数组</span></span><br><span class="line">                <span class="keyword">var</span> key = cut[<span class="number">1</span>]; <span class="comment">//键</span></span><br><span class="line">                <span class="keyword">var</span> value = cut[<span class="number">2</span>]; <span class="comment">//值</span></span><br><span class="line">                <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; allChildren.length; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (allChildren[i].getAttribute(key) == value) &#123;</span><br><span class="line">                        result.push(allChildren[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: <span class="comment">//tag</span></span><br><span class="line">            result = root.getElementsByTagName(selector);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="绑定注册事件与移除事件"><a href="#绑定注册事件与移除事件" class="headerlink" title="绑定注册事件与移除事件"></a>绑定注册事件与移除事件</h3><p><strong>任务与实现：</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 给一个element绑定一个针对event事件的响应，响应函数为listener</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addEvent</span>(<span class="params">element, event, listener</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (element.addEventListener) &#123;</span><br><span class="line">        element.addEventListener(event,listener);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(element.attachEvent)&#123;</span><br><span class="line">        element.attachEvent(<span class="string">&quot;on&quot;</span>+event,listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 移除element对象对于event事件发生时执行listener的响应</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeEvent</span>(<span class="params">element, event, listener</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (element.removeEventListenr) &#123;</span><br><span class="line">        element.removeEventListenr(event,listener);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(element.detachEvent)&#123;</span><br><span class="line">        element.detachEvent(<span class="string">&quot;on&quot;</span>+event,listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
