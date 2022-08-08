@@ -6,7 +6,7 @@
   <link href="https://running-dpf.github.io/atom.xml" rel="self"/>
   
   <link href="https://running-dpf.github.io/"/>
-  <updated>2022-08-08T06:48:40.623Z</updated>
+  <updated>2022-08-08T06:50:14.865Z</updated>
   <id>https://running-dpf.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://running-dpf.github.io/2022/08/08/This%20will%20install%20the%20Istio%201/"/>
     <id>https://running-dpf.github.io/2022/08/08/This%20will%20install%20the%20Istio%201/</id>
     <published>2022-08-08T06:30:13.618Z</published>
-    <updated>2022-08-08T06:48:40.623Z</updated>
+    <updated>2022-08-08T06:50:14.865Z</updated>
     
     <content type="html"><![CDATA[<p>This will install the Istio 1.12.1 demo profile with [“Istio core” “Istiod” “Ingress gateways” “Egress gateways”] components into the cluster. Proceed? (y/N) y<br>✔ Istio core installed<br>✔ Istiod installed</p><p>✘ Egress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-egressgateway (containers with unready status: [istio-proxy])<br>✘ Ingress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-ingressgateway (containers with unready status: [istio-proxy])</p><p>Pruning removed resources                                                                                                          Error: failed to install manifests: errors occurred during operation</p><p><img data-src="/Users/dongpengfei/github/source/img/image-20220422181156616.png" alt="image-20220422181156616"></p>]]></content>
     
