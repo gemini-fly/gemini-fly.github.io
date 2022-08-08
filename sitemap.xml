@@ -614,14 +614,14 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
+    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -677,13 +677,6 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/centos7-php/</loc>
-    <lastmod>2022-08-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://running-dpf.github.io/tags/centos7-crontab-linux-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -692,6 +685,13 @@
   
   <url>
     <loc>https://running-dpf.github.io/tags/win10-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2022-08-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/tags/centos7-php/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -805,14 +805,14 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
+    <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
     <lastmod>2022-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

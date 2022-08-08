@@ -335,7 +335,7 @@
 <p>  <code>length</code>为history的属性，显示history长度。</p>
 </li>
 </ul>
-<p>本节在线demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
+<p>本节在线demo见：<a target="_blank" rel="noopener" href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href></a></p>
 <p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
 <p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
 <h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>

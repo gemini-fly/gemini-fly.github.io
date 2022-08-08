@@ -313,7 +313,7 @@ pm.max_requests &#x3D; 128
 ;pm.max_requests &#x3D; 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>1、pm = dynamic 或 pm = static 表示使用哪种进程数量管理方式，dynamic表示php-fpm进程数是动态的，最开始是pm.start_servers指定的数量，如果请求较多，则会自动增加，保证空闲的进程数不小于pm.min_spare_servers，如果进程数较多，也会进行相应清理，保证多余的进程数不多于pm.max_spare_servers；</p>
-<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color='red'>这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
+<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color="red">这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
 <p>区别：</p>
 <p>如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。</p>
 <p>如果dm设置为dynamic，那么pm.max_children参数失效，后面3个参数生效。系统会在php-fpm运行开始的时候启动pm.start_servers个php-fpm进程，然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数。</p>

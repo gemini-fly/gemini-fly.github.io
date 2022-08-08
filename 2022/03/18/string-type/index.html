@@ -301,7 +301,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#FF000>哈哈哈哈，hello world</font></p>
+<p><font color="#FF000">哈哈哈哈，hello world</font></p>
 <h2 id="1-2-string-使用注意事项和细"><a href="#1-2-string-使用注意事项和细" class="headerlink" title="1.2 string 使用注意事项和细"></a>1.2 string 使用注意事项和细</h2><h3 id="1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员"><a href="#1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员" class="headerlink" title="1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员"></a>1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员</h3><h3 id="1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的"><a href="#1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的" class="headerlink" title="1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的"></a>1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的</h3><pre class="line-numbers language-none"><code class="language-none">package main
 
 import (
@@ -314,7 +314,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#FF0000>229</font></p>
+<p><font color="#FF0000">229</font></p>
 <pre class="line-numbers language-none"><code class="language-none">package main
 
 import (
@@ -328,7 +328,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#ff0000>cannot assign to ssr[0]</font>，标识无法重新给ssr的第0个元素进行修改</p>
+<p><font color="#ff0000">cannot assign to ssr[0]</font>，标识无法重新给ssr的第0个元素进行修改</p>
 <h3 id="1-2-3-字符串的两种表示形式"><a href="#1-2-3-字符串的两种表示形式" class="headerlink" title="1.2.3 字符串的两种表示形式"></a>1.2.3 字符串的两种表示形式</h3><p>(1) 双引号, 会识别转义字符 </p>
 <p>(2) 反引号，以字符串的原生形式输出，包括换行和特殊字符，可以实现防止攻击、输出源代码等效果</p>
 <pre class="line-numbers language-none"><code class="language-none">package main
@@ -354,15 +354,15 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#ff0000>package main</font></p>
-<p><font color=#ff0000>import (</font></p>
-<p><font color=#ff0000>    “fmt”</font></p>
-<p><font color=#ff0000>)</font></p>
-<p><font color=#ff0000>func main() {</font></p>
-<p><font color=#ff0000>    var ssr string = “哈哈哈哈，hello world”</font></p>
-<p><font color=#ff0000>    ssr[0] = ‘a’</font></p>
-<p><font color=#ff0000>    fmt.Println(ssr[0])</font></p>
-<p><font color=#ff0000>}</font></p>
+<p><font color="#ff0000">package main</font></p>
+<p><font color="#ff0000">import (</font></p>
+<p><font color="#ff0000">    “fmt”</font></p>
+<p><font color="#ff0000">)</font></p>
+<p><font color="#ff0000">func main() {</font></p>
+<p><font color="#ff0000">    var ssr string = “哈哈哈哈，hello world”</font></p>
+<p><font color="#ff0000">    ssr[0] = ‘a’</font></p>
+<p><font color="#ff0000">    fmt.Println(ssr[0])</font></p>
+<p><font color="#ff0000">}</font></p>
 <h3 id="1-2-4-字符串的拼接方式"><a href="#1-2-4-字符串的拼接方式" class="headerlink" title="1.2.4 字符串的拼接方式"></a>1.2.4 字符串的拼接方式</h3><pre class="line-numbers language-none"><code class="language-none">package main
 
 import &quot;fmt&quot;
@@ -374,7 +374,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#ff0000>helloworldnayaur!</font></p>
+<p><font color="#ff0000">helloworldnayaur!</font></p>
 <p>发现其实是没有空格的，这样可以在每个字符串中间加空格，拼接的字符串就会有空格</p>
 <pre class="line-numbers language-none"><code class="language-none">package main
 
@@ -387,7 +387,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#ff0000>hello world nayaur!</font></p>
+<p><font color="#ff0000">hello world nayaur!</font></p>
 <h3 id="1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理"><a href="#1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理" class="headerlink" title="1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理"></a>1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理</h3><pre class="line-numbers language-none"><code class="language-none">package main
 
 import &quot;fmt&quot;
@@ -399,7 +399,7 @@ func main() &#123;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果</p>
-<p><font color=#ff0000>hello worldhello world</font></p>
+<p><font color="#ff0000">hello worldhello world</font></p>
 
     </div>
 
