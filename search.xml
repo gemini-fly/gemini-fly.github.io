@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JavaScript 阶段总结</title>
-    <url>/2015/07/09/JavaScript-Net/</url>
-    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
-<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端处理动态 url 和 pushStatus 的使用</title>
     <url>/2015/12/31/History-API/</url>
     <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
@@ -142,6 +129,19 @@
       </categories>
       <tags>
         <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 阶段总结</title>
+    <url>/2015/07/09/JavaScript-Net/</url>
+    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
+<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -481,6 +481,139 @@ moduleA = function() &#123;
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 中的闭包</title>
+    <url>/2015/06/14/JavaScript-closure/</url>
+    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+    var localVal = 30;
+    return localVal;
+&#125;
+
+console.log(outer()); //30
+
+function outer2() &#123;
+    var localVal = 30;
+    return function() &#123;
+        return localVal;
+    &#125;;
+&#125;
+
+var func = outer2();
+console.log(func()); //30
+</code></pre>
+<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
+<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<span id="more"></span>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
+<pre><code>  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      document.addEventListener(&#39;click&#39;,
+          function() &#123;
+              console.log(localData); //这里访问外部数据
+          &#125;);
+  &#125;();
+
+  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      var url = &quot;http://www.baidu.com/&quot;;
+      $.ajax(&#123;
+          url: url,
+          success: function() &#123;
+              // do sth...
+              console.log(localData); //这里访问外部数据
+          &#125;
+      &#125;);
+  &#125;()
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    document.getElementById(&#39;div&#39; + i).
+    addEventListener(&#39;click&#39;, function() &#123;
+        alert(i); // all are 4!
+    &#125;);
+&#125;
+</code></pre>
+<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
+<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    ! function(i) &#123;
+        document.getElementById(&#39;div&#39; + i).
+        addEventListener(&#39;click&#39;, function() &#123;
+            alert(i); // 1, 2, 3
+        &#125;);
+    &#125;(i);
+&#125;
+</code></pre>
+<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
+<hr>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
+    var _userId = 9527;
+    var _typeId = &quot;item&quot;;
+    var exp = &#123;&#125;;
+
+    function converter(userId) &#123;
+        return +userId;
+    &#125;
+
+    exp.getUserId = function() &#123;
+        return converter(_userId);
+    &#125;;
+
+    exp.getTypeId = function() &#123;
+        return _typeId;
+    &#125;;
+
+    window.a = exp;
+&#125;)();
+
+console.log(a.getUserId()); //9527
+console.log(a.getTypeId()); //item
+
+console.log(a._userId); //undefined
+console.log(a._typeId); //undefined
+console.log(converter); //Uncaught ReferenceError: converter is not defined
+</code></pre>
+<p>上面的代码通过闭包实现了一个封装。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<ul>
+<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
+</li>
+<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
+</li>
+</ul>
+<p>from 维基百科</p>
+</blockquote>
+<ul>
+<li><p>闭包的优点</p>
+<ul>
+<li>灵活和方便</li>
+<li>封装</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>空间浪费</li>
+<li>内存泄露</li>
+<li>性能消耗</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 函数</title>
     <url>/2015/06/11/JavaScript-function/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>函数是一块JavaScript代码，被定义一次，但可执行和调用多次。</p>
@@ -709,139 +842,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <p>对于使用了 <code>new func()</code> 这种方式创建对象，其返回值为一个对象。</p>
 <p>而原函数 foo 的返回值不是对象，所以会直接忽视这个 return 方法。而是变为 <code>return this;</code>。并且 this 会被初始化为一个空对象，这个空对象的原型指向 foo.prototype。所以后面的 bind 是不起作用的。</p>
 <p>这里面这个 this 对象包含一个属性 <code>b = 100</code>。所以返回的是对象 <code>&#123;b: 100&#125;</code>。</p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 中的闭包</title>
-    <url>/2015/06/14/JavaScript-closure/</url>
-    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
-    var localVal = 30;
-    return localVal;
-&#125;
-
-console.log(outer()); //30
-
-function outer2() &#123;
-    var localVal = 30;
-    return function() &#123;
-        return localVal;
-    &#125;;
-&#125;
-
-var func = outer2();
-console.log(func()); //30
-</code></pre>
-<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
-<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
-<span id="more"></span>
-<hr>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
-<pre><code>  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      document.addEventListener(&#39;click&#39;,
-          function() &#123;
-              console.log(localData); //这里访问外部数据
-          &#125;);
-  &#125;();
-
-  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      var url = &quot;http://www.baidu.com/&quot;;
-      $.ajax(&#123;
-          url: url,
-          success: function() &#123;
-              // do sth...
-              console.log(localData); //这里访问外部数据
-          &#125;
-      &#125;);
-  &#125;()
-</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    document.getElementById(&#39;div&#39; + i).
-    addEventListener(&#39;click&#39;, function() &#123;
-        alert(i); // all are 4!
-    &#125;);
-&#125;
-</code></pre>
-<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
-<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    ! function(i) &#123;
-        document.getElementById(&#39;div&#39; + i).
-        addEventListener(&#39;click&#39;, function() &#123;
-            alert(i); // 1, 2, 3
-        &#125;);
-    &#125;(i);
-&#125;
-</code></pre>
-<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
-<hr>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
-    var _userId = 9527;
-    var _typeId = &quot;item&quot;;
-    var exp = &#123;&#125;;
-
-    function converter(userId) &#123;
-        return +userId;
-    &#125;
-
-    exp.getUserId = function() &#123;
-        return converter(_userId);
-    &#125;;
-
-    exp.getTypeId = function() &#123;
-        return _typeId;
-    &#125;;
-
-    window.a = exp;
-&#125;)();
-
-console.log(a.getUserId()); //9527
-console.log(a.getTypeId()); //item
-
-console.log(a._userId); //undefined
-console.log(a._typeId); //undefined
-console.log(converter); //Uncaught ReferenceError: converter is not defined
-</code></pre>
-<p>上面的代码通过闭包实现了一个封装。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<ul>
-<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
-</li>
-<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
-</li>
-</ul>
-<p>from 维基百科</p>
-</blockquote>
-<ul>
-<li><p>闭包的优点</p>
-<ul>
-<li>灵活和方便</li>
-<li>封装</li>
-</ul>
-</li>
-<li><p>缺点</p>
-<ul>
-<li>空间浪费</li>
-<li>内存泄露</li>
-<li>性能消耗</li>
-</ul>
-</li>
-</ul>
 ]]></content>
       <categories>
         <category>JavaScript</category>
@@ -1437,40 +1437,6 @@ myValue <span class="token operator">===</span> <span class="token keyword">null
       </tags>
   </entry>
   <entry>
-    <title>NGINX禁止解析IP访问</title>
-    <url>/2021/05/20/NGINX-Prohibit-IP-access/</url>
-    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
-<span id="more"></span>
-
-
-<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
-listen 80 default; 
-server_name _; 
-return 404; 
-&#125;
-
-server &#123;
-listen 80;
-server_name xxx;
-rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
-&#125;
-
-server &#123;
-listen 443;
-server_name xxx;
-    #ssl_certificate ;
-    #ssl_certificate_key ;
-
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>nginx</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 中的 this</title>
     <url>/2015/06/12/JavaScript-this/</url>
     <content><![CDATA[<h2 id="全局的-this"><a href="#全局的-this" class="headerlink" title="全局的 this"></a>全局的 this</h2><p>全局 this 一般指向全局对象，浏览器中的全局对象就是 <code>window</code>。</p>
@@ -1602,107 +1568,37 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </tags>
   </entry>
   <entry>
-    <title>Write-Ahead Log（WAL）的工作原理</title>
-    <url>/2021/05/13/WAL/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
-<span id="more"></span>
-
-<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
-<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
-<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
-<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
-<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
-<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
-<p>上述WAL细节过程如下图:</p>
-<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
-<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
-<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
-]]></content>
-      <categories>
-        <category>分布式系统</category>
-      </categories>
-      <tags>
-        <tag>WAL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>工作填坑之内网与外网</title>
-    <url>/2022/08/08/about-inner-outer-ip/</url>
-    <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>内网：</p>
-<blockquote>
-<p>内网也就是局域网，内网的计算机以NAT（<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">网络地址转换</a>）协议，通过一个公共的<a href="https://baike.baidu.com/item/%E7%BD%91%E5%85%B3">网关</a>访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。</p>
-</blockquote>
-<blockquote>
-<p>最直观的就是像网吧，公司内部的电脑用交换机，HUB，路由连起来的</p>
-</blockquote>
+    <title>NGINX禁止解析IP访问</title>
+    <url>/2021/05/20/NGINX-Prohibit-IP-access/</url>
+    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
 <span id="more"></span>
 
 
+<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
+listen 80 default; 
+server_name _; 
+return 404; 
+&#125;
 
+server &#123;
+listen 80;
+server_name xxx;
+rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
+&#125;
 
+server &#123;
+listen 443;
+server_name xxx;
+    #ssl_certificate ;
+    #ssl_certificate_key ;
 
-
-
-
-
-<p>外网：</p>
-<blockquote>
-<p>外网IP包括：ADSL拨号的动态IP用动态<a href="https://baike.baidu.com/item/%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D">解析域名</a>来绑定IP，又叫<a href="https://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E5%9F%9F%E5%90%8D">动态域名</a>；固定的外网IP(这种多半为网吧的IP)即，整个网吧的那个主IP。外网IP指的是：打开ADSL<a href="https://baike.baidu.com/item/%E8%B7%AF%E7%94%B1">路由</a>功能的用户你的外网IP就应该是ADSL设备的IP，网吧里的外网IP是指整个网吧的主IP，校园网的外网IP就是整个校园网的那个主IP，小区网的外网IP与校园网同理，长宽的用户就要试下了，可以上论坛，看看你的IP是多少，那么那个IP就是你要绑定的，所有的内网用户都可以这样查的，论坛<br>上的IP就是你要绑定的IP</p>
-</blockquote>
-<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>第一次搭建服务器相关项目，因为第一次直接使用的是一台服务器，外网的ip，在自己的windows 是可以用mongodb 客户端与redis 客户端进行服务器上的mongodb服务端与redis服务端相连接的，并没有遇到什么困难</p>
-<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>因为后台与爬虫用的同一个mongodb与redis，而那台服务器又是单核的，2g运行内存。导致mongodb老是因为连接池开得过多而被挂掉，后来就买了内网的mongodb与redis服务，一开始啥都不懂，也不知道这是一个坑，在自己本机上进行mongodb，redis测试，一直连接不上去，代码是改了又改，</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>后来老大过来了，你这是内网的，外网的当然连接不上去了，你得在腾讯云服务器上进行连接</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>后来就直接在腾讯云服务器上测试连接，然后就连好了。这个问题搞到我们三到晚上12点，确实菜，然后预料到的确实少，回过头来看下代码，一点毛病都没有啊！不知道有句mmp，该不该讲。</p>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>工具软件</category>
+        <category>nginx</category>
       </categories>
       <tags>
-        <tag>MongoDB Redis 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <url>/2022/08/08/Ubuntu16-04-pycharm-icon-setting/</url>
-    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
-<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
-<span id="more"></span>
-<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二（使用gedit）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<p>然后就会弹出一个新框：</p>
-<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>
-Type<span class="token operator">=</span>Application
-Name<span class="token operator">=</span>Pycharm
-GenericName<span class="token operator">=</span>Pycharm3
-Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>
-Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>f
-Icon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>png
-Terminal<span class="token operator">=</span>pycharm
-Categories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
-<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>Ubuntu Python</tag>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -1780,6 +1676,110 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </categories>
       <tags>
         <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
+    <url>/2022/08/08/Ubuntu16-04-pycharm-icon-setting/</url>
+    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
+<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
+<span id="more"></span>
+<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法二（使用gedit）：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+<p>然后就会弹出一个新框：</p>
+<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>
+Type<span class="token operator">=</span>Application
+Name<span class="token operator">=</span>Pycharm
+GenericName<span class="token operator">=</span>Pycharm3
+Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>
+Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>f
+Icon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>png
+Terminal<span class="token operator">=</span>pycharm
+Categories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
+<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工作填坑之内网与外网</title>
+    <url>/2022/08/08/about-inner-outer-ip/</url>
+    <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>内网：</p>
+<blockquote>
+<p>内网也就是局域网，内网的计算机以NAT（<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">网络地址转换</a>）协议，通过一个公共的<a href="https://baike.baidu.com/item/%E7%BD%91%E5%85%B3">网关</a>访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。</p>
+</blockquote>
+<blockquote>
+<p>最直观的就是像网吧，公司内部的电脑用交换机，HUB，路由连起来的</p>
+</blockquote>
+<span id="more"></span>
+
+
+
+
+
+
+
+
+
+<p>外网：</p>
+<blockquote>
+<p>外网IP包括：ADSL拨号的动态IP用动态<a href="https://baike.baidu.com/item/%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D">解析域名</a>来绑定IP，又叫<a href="https://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E5%9F%9F%E5%90%8D">动态域名</a>；固定的外网IP(这种多半为网吧的IP)即，整个网吧的那个主IP。外网IP指的是：打开ADSL<a href="https://baike.baidu.com/item/%E8%B7%AF%E7%94%B1">路由</a>功能的用户你的外网IP就应该是ADSL设备的IP，网吧里的外网IP是指整个网吧的主IP，校园网的外网IP就是整个校园网的那个主IP，小区网的外网IP与校园网同理，长宽的用户就要试下了，可以上论坛，看看你的IP是多少，那么那个IP就是你要绑定的，所有的内网用户都可以这样查的，论坛<br>上的IP就是你要绑定的IP</p>
+</blockquote>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>第一次搭建服务器相关项目，因为第一次直接使用的是一台服务器，外网的ip，在自己的windows 是可以用mongodb 客户端与redis 客户端进行服务器上的mongodb服务端与redis服务端相连接的，并没有遇到什么困难</p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>因为后台与爬虫用的同一个mongodb与redis，而那台服务器又是单核的，2g运行内存。导致mongodb老是因为连接池开得过多而被挂掉，后来就买了内网的mongodb与redis服务，一开始啥都不懂，也不知道这是一个坑，在自己本机上进行mongodb，redis测试，一直连接不上去，代码是改了又改，</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>后来老大过来了，你这是内网的，外网的当然连接不上去了，你得在腾讯云服务器上进行连接</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>后来就直接在腾讯云服务器上测试连接，然后就连好了。这个问题搞到我们三到晚上12点，确实菜，然后预料到的确实少，回过头来看下代码，一点毛病都没有啊！不知道有句mmp，该不该讲。</p>
+]]></content>
+      <categories>
+        <category>工具软件</category>
+      </categories>
+      <tags>
+        <tag>MongoDB Redis 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Write-Ahead Log（WAL）的工作原理</title>
+    <url>/2021/05/13/WAL/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
+<span id="more"></span>
+
+<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
+<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
+<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
+<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
+<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
+<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
+<p>上述WAL细节过程如下图:</p>
+<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
+<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
+<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
+]]></content>
+      <categories>
+        <category>分布式系统</category>
+      </categories>
+      <tags>
+        <tag>WAL</tag>
       </tags>
   </entry>
   <entry>
@@ -4850,6 +4850,15 @@ $ systemctl status loki<span aria-hidden="true" class="line-numbers-rows"><span>
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2022/08/08/This%20will%20install%20the%20Istio%201/</url>
+    <content><![CDATA[<p>This will install the Istio 1.12.1 demo profile with [“Istio core” “Istiod” “Ingress gateways” “Egress gateways”] components into the cluster. Proceed? (y/N) y<br>✔ Istio core installed<br>✔ Istiod installed</p>
+<p>✘ Egress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-egressgateway (containers with unready status: [istio-proxy])<br>✘ Ingress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-ingressgateway (containers with unready status: [istio-proxy])</p>
+<p>Pruning removed resources                                                                                                          Error: failed to install manifests: errors occurred during operation</p>
+<p><img data-src="/Users/dongpengfei/github/source/img/image-20220422181156616.png" alt="image-20220422181156616"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>布尔类型</title>
     <url>/2022/03/18/bool-type/</url>
     <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
@@ -4872,32 +4881,6 @@ func main() &#123;
 <p>结果</p>
 <p><font color=#FF000>n1= false</font></p>
 <p><font color=#FF0000>n1占用空间： 1</font></p>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2022/08/08/This%20will%20install%20the%20Istio%201/</url>
-    <content><![CDATA[<p>This will install the Istio 1.12.1 demo profile with [“Istio core” “Istiod” “Ingress gateways” “Egress gateways”] components into the cluster. Proceed? (y/N) y<br>✔ Istio core installed<br>✔ Istiod installed</p>
-<p>✘ Egress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-egressgateway (containers with unready status: [istio-proxy])<br>✘ Ingress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-ingressgateway (containers with unready status: [istio-proxy])</p>
-<p>Pruning removed resources                                                                                                          Error: failed to install manifests: errors occurred during operation</p>
-<p><img data-src="/Users/dongpengfei/github/source/img/image-20220422181156616.png" alt="image-20220422181156616"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>data-type</title>
-    <url>/2022/03/16/data-type/</url>
-    <content><![CDATA[<h1 id="1-数据类型的基本介绍"><a href="#1-数据类型的基本介绍" class="headerlink" title="1.数据类型的基本介绍"></a>1.数据类型的基本介绍</h1><p>每一种数据都定义了明确的数据类型，在内存中分配了不同大小的内存空间</p>
-<span id="more"></span>
-
-<h2 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h2><p>数据类型分为：基本数据类型、复杂数据类型</p>
-<h3 id="1-1-1基本数据类型"><a href="#1-1-1基本数据类型" class="headerlink" title="1.1.1基本数据类型"></a>1.1.1基本数据类型</h3><p>基本数据类型：整数类型（int、int8、int16、int32、int64、uint、uint8、uint16、uint32、uint64，byte）、浮点类型（float32、float64）、字符型（没有专门的字符型，使用byte来保存单个字幕字符）、布尔型（bool）、字符串（string）。</p>
-<h3 id="1-1-2复杂数据类型"><a href="#1-1-2复杂数据类型" class="headerlink" title="1.1.2复杂数据类型"></a>1.1.2复杂数据类型</h3><p>复杂数据类型：指针（pointer）、数组、结构体（struct）、管道（channel）、函数、切片（slice）、接口（interface）、map</p>
 ]]></content>
       <categories>
         <category>go</category>
@@ -4956,6 +4939,23 @@ func main() &#123;
 <li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
 <li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
 </ol>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>data-type</title>
+    <url>/2022/03/16/data-type/</url>
+    <content><![CDATA[<h1 id="1-数据类型的基本介绍"><a href="#1-数据类型的基本介绍" class="headerlink" title="1.数据类型的基本介绍"></a>1.数据类型的基本介绍</h1><p>每一种数据都定义了明确的数据类型，在内存中分配了不同大小的内存空间</p>
+<span id="more"></span>
+
+<h2 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h2><p>数据类型分为：基本数据类型、复杂数据类型</p>
+<h3 id="1-1-1基本数据类型"><a href="#1-1-1基本数据类型" class="headerlink" title="1.1.1基本数据类型"></a>1.1.1基本数据类型</h3><p>基本数据类型：整数类型（int、int8、int16、int32、int64、uint、uint8、uint16、uint32、uint64，byte）、浮点类型（float32、float64）、字符型（没有专门的字符型，使用byte来保存单个字幕字符）、布尔型（bool）、字符串（string）。</p>
+<h3 id="1-1-2复杂数据类型"><a href="#1-1-2复杂数据类型" class="headerlink" title="1.1.2复杂数据类型"></a>1.1.2复杂数据类型</h3><p>复杂数据类型：指针（pointer）、数组、结构体（struct）、管道（channel）、函数、切片（slice）、接口（interface）、map</p>
 ]]></content>
       <categories>
         <category>go</category>
