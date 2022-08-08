@@ -481,139 +481,6 @@ moduleA = function() &#123;
       </tags>
   </entry>
   <entry>
-    <title>JavaScript 中的闭包</title>
-    <url>/2015/06/14/JavaScript-closure/</url>
-    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
-    var localVal = 30;
-    return localVal;
-&#125;
-
-console.log(outer()); //30
-
-function outer2() &#123;
-    var localVal = 30;
-    return function() &#123;
-        return localVal;
-    &#125;;
-&#125;
-
-var func = outer2();
-console.log(func()); //30
-</code></pre>
-<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
-<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
-<span id="more"></span>
-<hr>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
-<pre><code>  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      document.addEventListener(&#39;click&#39;,
-          function() &#123;
-              console.log(localData); //这里访问外部数据
-          &#125;);
-  &#125;();
-
-  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      var url = &quot;http://www.baidu.com/&quot;;
-      $.ajax(&#123;
-          url: url,
-          success: function() &#123;
-              // do sth...
-              console.log(localData); //这里访问外部数据
-          &#125;
-      &#125;);
-  &#125;()
-</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    document.getElementById(&#39;div&#39; + i).
-    addEventListener(&#39;click&#39;, function() &#123;
-        alert(i); // all are 4!
-    &#125;);
-&#125;
-</code></pre>
-<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
-<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    ! function(i) &#123;
-        document.getElementById(&#39;div&#39; + i).
-        addEventListener(&#39;click&#39;, function() &#123;
-            alert(i); // 1, 2, 3
-        &#125;);
-    &#125;(i);
-&#125;
-</code></pre>
-<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
-<hr>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
-    var _userId = 9527;
-    var _typeId = &quot;item&quot;;
-    var exp = &#123;&#125;;
-
-    function converter(userId) &#123;
-        return +userId;
-    &#125;
-
-    exp.getUserId = function() &#123;
-        return converter(_userId);
-    &#125;;
-
-    exp.getTypeId = function() &#123;
-        return _typeId;
-    &#125;;
-
-    window.a = exp;
-&#125;)();
-
-console.log(a.getUserId()); //9527
-console.log(a.getTypeId()); //item
-
-console.log(a._userId); //undefined
-console.log(a._typeId); //undefined
-console.log(converter); //Uncaught ReferenceError: converter is not defined
-</code></pre>
-<p>上面的代码通过闭包实现了一个封装。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<ul>
-<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
-</li>
-<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
-</li>
-</ul>
-<p>from 维基百科</p>
-</blockquote>
-<ul>
-<li><p>闭包的优点</p>
-<ul>
-<li>灵活和方便</li>
-<li>封装</li>
-</ul>
-</li>
-<li><p>缺点</p>
-<ul>
-<li>空间浪费</li>
-<li>内存泄露</li>
-<li>性能消耗</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 函数</title>
     <url>/2015/06/11/JavaScript-function/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>函数是一块JavaScript代码，被定义一次，但可执行和调用多次。</p>
@@ -848,6 +715,278 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 中的闭包</title>
+    <url>/2015/06/14/JavaScript-closure/</url>
+    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+    var localVal = 30;
+    return localVal;
+&#125;
+
+console.log(outer()); //30
+
+function outer2() &#123;
+    var localVal = 30;
+    return function() &#123;
+        return localVal;
+    &#125;;
+&#125;
+
+var func = outer2();
+console.log(func()); //30
+</code></pre>
+<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
+<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<span id="more"></span>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
+<pre><code>  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      document.addEventListener(&#39;click&#39;,
+          function() &#123;
+              console.log(localData); //这里访问外部数据
+          &#125;);
+  &#125;();
+
+  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      var url = &quot;http://www.baidu.com/&quot;;
+      $.ajax(&#123;
+          url: url,
+          success: function() &#123;
+              // do sth...
+              console.log(localData); //这里访问外部数据
+          &#125;
+      &#125;);
+  &#125;()
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    document.getElementById(&#39;div&#39; + i).
+    addEventListener(&#39;click&#39;, function() &#123;
+        alert(i); // all are 4!
+    &#125;);
+&#125;
+</code></pre>
+<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
+<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    ! function(i) &#123;
+        document.getElementById(&#39;div&#39; + i).
+        addEventListener(&#39;click&#39;, function() &#123;
+            alert(i); // 1, 2, 3
+        &#125;);
+    &#125;(i);
+&#125;
+</code></pre>
+<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
+<hr>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
+    var _userId = 9527;
+    var _typeId = &quot;item&quot;;
+    var exp = &#123;&#125;;
+
+    function converter(userId) &#123;
+        return +userId;
+    &#125;
+
+    exp.getUserId = function() &#123;
+        return converter(_userId);
+    &#125;;
+
+    exp.getTypeId = function() &#123;
+        return _typeId;
+    &#125;;
+
+    window.a = exp;
+&#125;)();
+
+console.log(a.getUserId()); //9527
+console.log(a.getTypeId()); //item
+
+console.log(a._userId); //undefined
+console.log(a._typeId); //undefined
+console.log(converter); //Uncaught ReferenceError: converter is not defined
+</code></pre>
+<p>上面的代码通过闭包实现了一个封装。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<ul>
+<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
+</li>
+<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
+</li>
+</ul>
+<p>from 维基百科</p>
+</blockquote>
+<ul>
+<li><p>闭包的优点</p>
+<ul>
+<li>灵活和方便</li>
+<li>封装</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>空间浪费</li>
+<li>内存泄露</li>
+<li>性能消耗</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
+    <url>/2022/08/08/JavaScript-good-parts-note2/</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承的两大好处：代码重用，引入一套类型系统的规范。</p>
+<span id="more"></span>
+<h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>JavaScript 通过构造器函数产生对象。</p>
+<p>构造器调用模式，即用<code>new</code>前缀去调用一个函数。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">Mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mammal</span><span class="token punctuation">(</span><span class="token string">'Herb'</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>书中不推荐这样的写法。有很多风险。若忘记添加<code>new</code>前缀，<code>this</code>无法绑定到新的对象上。而是绑定到了全局对象上，破坏了全局变量环境。</p>
+<h3 id="对象说明符"><a href="#对象说明符" class="headerlink" title="对象说明符"></a>对象说明符</h3><p>上一节中的构造器可能要接受一大串参数。我们可以这样写：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myObject <span class="token operator">=</span> <span class="token function">Maker</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">first</span><span class="token operator">:</span> f<span class="token punctuation">,</span>
+    <span class="token literal-property property">middle</span><span class="token operator">:</span> m<span class="token punctuation">,</span>
+    <span class="token literal-property property">last</span><span class="token operator">:</span> l<span class="token punctuation">,</span>
+    <span class="token literal-property property">state</span><span class="token operator">:</span> s<span class="token punctuation">,</span>
+    <span class="token literal-property property">city</span><span class="token operator">:</span> c
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将JSON对象传递给构造器，而它返回一个构造完全的对象。</p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>在一个纯粹的原型模式中，我们将摒弃类，转而专注于对象。一个新对象可以继承一个就对象的属性。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'MM'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">getName</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">says</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> myCat <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">)</span>
+myCat<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Kitty'</span>
+myCat<span class="token punctuation">.</span>saying <span class="token operator">=</span> <span class="token string">'meow'</span>
+myCat<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token string">'Kitty is running'</span>
+<span class="token punctuation">&#125;</span>
+myCat<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这是一种差异化继承。</p>
+<h3 id="函数化"><a href="#函数化" class="headerlink" title="函数化"></a>函数化</h3><p>前文看到的继承模式没法保护隐私。对象的所有属性都是可见的。无法得到私有变量和私有函数。为了解决这一问题，我们有模块模式。</p>
+<p>构造一个生成对象的函数需要4步骤：</p>
+<ol>
+<li>创建一个新对象。</li>
+<li>有选择的定义私有变量和方法。</li>
+<li>给这个新对象扩充方法。</li>
+<li>返回那个新对象。</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">spec</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+    that<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>name
+    <span class="token punctuation">&#125;</span>
+    that<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> that
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token function">mammal</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Herb'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">saying</span><span class="token operator">:</span> <span class="token string">'Cheers!'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">says</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Cheers!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也可以参考上一篇文章，<a href="http://gaohaoyang.github.io/2016/06/07/JavaScript-good-parts-note1/#section-34">JavaScript 语言精粹笔记1-语法、对象、函数 之模块部分</a>。</p>
+<h3 id="部件"><a href="#部件" class="headerlink" title="部件"></a>部件</h3><p>这一部分看的不是特别懂，我想等我学完ES2015中的类和模块部分后再看看吧。</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="数组字面量"><a href="#数组字面量" class="headerlink" title="数组字面量"></a>数组字面量</h3><p>一个数组字面量是在一对方括号中包围零个或多个用逗号分隔的值的表达式。</p>
+<p>再大多数语言中，一个数组的多有元素都要求是相同的类型。JavaScript 允许数组包含任意混合类型的值。</p>
+<h3 id="长度"><a href="#长度" class="headerlink" title="长度"></a>长度</h3><p>JavaScript 数组的<code>length</code>属性是没有上界的。如果用大于或等于当前<code>length</code>的数字作为下标来存储一个元素，那么<code>length</code>值会被增大以容纳新元素，不会发生数组越界错误。</p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>数组也是对象，可以用<code>delete</code>来删除元素</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'one'</span><span class="token punctuation">,</span> <span class="token string">'two'</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'four'</span><span class="token punctuation">,</span> <span class="token string">'wu'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">delete</span> numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//undefined</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以使用<code>splice</code>方法，进行删除和修改操作。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">numbers<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//two</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>使用常规<code>for</code>循环即可，可以保证数组的顺序。</p>
+<h3 id="容易混淆的地方"><a href="#容易混淆的地方" class="headerlink" title="容易混淆的地方"></a>容易混淆的地方</h3><p>当属性名是小而连续的整数时，应该使用数组，否则使用对象。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//object</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>返回数组的类型是<code>object</code>，没有任何意义。</p>
+<p>判断数组类型的方法</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>ECMAScript 5.1 (ECMA-262) 和 ECMAScript 2015 (6th Edition, ECMA-262) 标准中的方法。</p>
+<p>或者下面这个方法。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">is_array</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Array]'</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">is_array</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>数组的方法被存储在<code>Array.prototype</code>中的函数。</p>
+<p>数组是对象，因此<code>Array.prototype</code>也是可扩充的。</p>
+<h3 id="指定初始值"><a href="#指定初始值" class="headerlink" title="指定初始值"></a>指定初始值</h3><p>JavaScript 的数组不会预制值。</p>
+<p>JavaScript 没有多维数组，单项大多数类 C 语言一样，支持元素为数组的数组。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> matrix <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>关于正则表达式，以前的博文写的比较多了，详情见：</p>
+<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-10">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分1</a></p>
+<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-12">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分2</a></p>
+<p><a href="http://gaohaoyang.github.io/2016/05/06/regular-expression-group/">浅谈正则表达式中的分组和引用</a></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>继承 对象 原型 Array 正则</tag>
       </tags>
   </entry>
   <entry>
@@ -1232,145 +1371,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </tags>
   </entry>
   <entry>
-    <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
-    <url>/2022/08/08/JavaScript-good-parts-note2/</url>
-    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承的两大好处：代码重用，引入一套类型系统的规范。</p>
-<span id="more"></span>
-<h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>JavaScript 通过构造器函数产生对象。</p>
-<p>构造器调用模式，即用<code>new</code>前缀去调用一个函数。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">Mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-<span class="token punctuation">&#125;</span>
-
-<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
-<span class="token punctuation">&#125;</span>
-
-<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mammal</span><span class="token punctuation">(</span><span class="token string">'Herb'</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>书中不推荐这样的写法。有很多风险。若忘记添加<code>new</code>前缀，<code>this</code>无法绑定到新的对象上。而是绑定到了全局对象上，破坏了全局变量环境。</p>
-<h3 id="对象说明符"><a href="#对象说明符" class="headerlink" title="对象说明符"></a>对象说明符</h3><p>上一节中的构造器可能要接受一大串参数。我们可以这样写：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myObject <span class="token operator">=</span> <span class="token function">Maker</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">first</span><span class="token operator">:</span> f<span class="token punctuation">,</span>
-    <span class="token literal-property property">middle</span><span class="token operator">:</span> m<span class="token punctuation">,</span>
-    <span class="token literal-property property">last</span><span class="token operator">:</span> l<span class="token punctuation">,</span>
-    <span class="token literal-property property">state</span><span class="token operator">:</span> s<span class="token punctuation">,</span>
-    <span class="token literal-property property">city</span><span class="token operator">:</span> c
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>将JSON对象传递给构造器，而它返回一个构造完全的对象。</p>
-<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>在一个纯粹的原型模式中，我们将摒弃类，转而专注于对象。一个新对象可以继承一个就对象的属性。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'MM'</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">getName</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">says</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">var</span> myCat <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">)</span>
-myCat<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Kitty'</span>
-myCat<span class="token punctuation">.</span>saying <span class="token operator">=</span> <span class="token string">'meow'</span>
-myCat<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token string">'Kitty is running'</span>
-<span class="token punctuation">&#125;</span>
-myCat<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这是一种差异化继承。</p>
-<h3 id="函数化"><a href="#函数化" class="headerlink" title="函数化"></a>函数化</h3><p>前文看到的继承模式没法保护隐私。对象的所有属性都是可见的。无法得到私有变量和私有函数。为了解决这一问题，我们有模块模式。</p>
-<p>构造一个生成对象的函数需要4步骤：</p>
-<ol>
-<li>创建一个新对象。</li>
-<li>有选择的定义私有变量和方法。</li>
-<li>给这个新对象扩充方法。</li>
-<li>返回那个新对象。</li>
-</ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">spec</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-
-    that<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>name
-    <span class="token punctuation">&#125;</span>
-    that<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">return</span> that
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token function">mammal</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Herb'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">saying</span><span class="token operator">:</span> <span class="token string">'Cheers!'</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">says</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Cheers!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>也可以参考上一篇文章，<a href="http://gaohaoyang.github.io/2016/06/07/JavaScript-good-parts-note1/#section-34">JavaScript 语言精粹笔记1-语法、对象、函数 之模块部分</a>。</p>
-<h3 id="部件"><a href="#部件" class="headerlink" title="部件"></a>部件</h3><p>这一部分看的不是特别懂，我想等我学完ES2015中的类和模块部分后再看看吧。</p>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="数组字面量"><a href="#数组字面量" class="headerlink" title="数组字面量"></a>数组字面量</h3><p>一个数组字面量是在一对方括号中包围零个或多个用逗号分隔的值的表达式。</p>
-<p>再大多数语言中，一个数组的多有元素都要求是相同的类型。JavaScript 允许数组包含任意混合类型的值。</p>
-<h3 id="长度"><a href="#长度" class="headerlink" title="长度"></a>长度</h3><p>JavaScript 数组的<code>length</code>属性是没有上界的。如果用大于或等于当前<code>length</code>的数字作为下标来存储一个元素，那么<code>length</code>值会被增大以容纳新元素，不会发生数组越界错误。</p>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>数组也是对象，可以用<code>delete</code>来删除元素</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'one'</span><span class="token punctuation">,</span> <span class="token string">'two'</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'four'</span><span class="token punctuation">,</span> <span class="token string">'wu'</span><span class="token punctuation">]</span>
-
-<span class="token keyword">delete</span> numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//undefined</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以使用<code>splice</code>方法，进行删除和修改操作。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">numbers<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//two</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>使用常规<code>for</code>循环即可，可以保证数组的顺序。</p>
-<h3 id="容易混淆的地方"><a href="#容易混淆的地方" class="headerlink" title="容易混淆的地方"></a>容易混淆的地方</h3><p>当属性名是小而连续的整数时，应该使用数组，否则使用对象。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//object</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>返回数组的类型是<code>object</code>，没有任何意义。</p>
-<p>判断数组类型的方法</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>ECMAScript 5.1 (ECMA-262) 和 ECMAScript 2015 (6th Edition, ECMA-262) 标准中的方法。</p>
-<p>或者下面这个方法。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">is_array</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Array]'</span>
-<span class="token punctuation">&#125;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">is_array</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>数组的方法被存储在<code>Array.prototype</code>中的函数。</p>
-<p>数组是对象，因此<code>Array.prototype</code>也是可扩充的。</p>
-<h3 id="指定初始值"><a href="#指定初始值" class="headerlink" title="指定初始值"></a>指定初始值</h3><p>JavaScript 的数组不会预制值。</p>
-<p>JavaScript 没有多维数组，单项大多数类 C 语言一样，支持元素为数组的数组。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> matrix <span class="token operator">=</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-<span class="token punctuation">]</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>关于正则表达式，以前的博文写的比较多了，详情见：</p>
-<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-10">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分1</a></p>
-<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-12">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分2</a></p>
-<p><a href="http://gaohaoyang.github.io/2016/05/06/regular-expression-group/">浅谈正则表达式中的分组和引用</a></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>继承 对象 原型 Array 正则</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
     <url>/2022/08/08/JavaScript-good-parts-note3/</url>
     <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中最后一部分：方法、代码风格、优美的特性、毒瘤、糟粕等。</p>
@@ -1723,6 +1723,30 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </tags>
   </entry>
   <entry>
+    <title>Write-Ahead Log（WAL）的工作原理</title>
+    <url>/2021/05/13/WAL/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
+<span id="more"></span>
+
+<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
+<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
+<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
+<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
+<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
+<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
+<p>上述WAL细节过程如下图:</p>
+<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
+<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
+<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
+]]></content>
+      <categories>
+        <category>分布式系统</category>
+      </categories>
+      <tags>
+        <tag>WAL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>工作填坑之内网与外网</title>
     <url>/2022/08/08/about-inner-outer-ip/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>内网：</p>
@@ -1756,30 +1780,6 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </categories>
       <tags>
         <tag>MongoDB Redis 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Write-Ahead Log（WAL）的工作原理</title>
-    <url>/2021/05/13/WAL/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
-<span id="more"></span>
-
-<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
-<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
-<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
-<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
-<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
-<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
-<p>上述WAL细节过程如下图:</p>
-<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
-<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
-<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
-]]></content>
-      <categories>
-        <category>分布式系统</category>
-      </categories>
-      <tags>
-        <tag>WAL</tag>
       </tags>
   </entry>
   <entry>
@@ -2407,30 +2407,6 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </tags>
   </entry>
   <entry>
-    <title>win10 关闭更新</title>
-    <url>/2022/08/08/close-win10-update/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
-<span id="more"></span>
-<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>2 在运行处输入 “services.msc”   点击确定。</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>3 在弹出来的服务中，找到“Windows Update”</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>4 选择禁用</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>会多出这两个位置，这样子就设置成功了。</p>
-]]></content>
-      <categories>
-        <category>win10</category>
-      </categories>
-      <tags>
-        <tag>win10 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>du</title>
     <url>/2021/09/18/du-md/</url>
     <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
@@ -2504,6 +2480,30 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10 关闭更新</title>
+    <url>/2022/08/08/close-win10-update/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
+<span id="more"></span>
+<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>2 在运行处输入 “services.msc”   点击确定。</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>3 在弹出来的服务中，找到“Windows Update”</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>4 选择禁用</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>会多出这两个位置，这样子就设置成功了。</p>
+]]></content>
+      <categories>
+        <category>win10</category>
+      </categories>
+      <tags>
+        <tag>win10 工具软件</tag>
       </tags>
   </entry>
   <entry>
@@ -3020,23 +3020,6 @@ drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
       </tags>
   </entry>
   <entry>
-    <title>php进程不及时释放进程导致CPU跑满</title>
-    <url>/2021/06/01/php-cpu/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
-<span id="more"></span>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
-<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
-<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
-<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
-]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>php-fpm配置文件详解</title>
     <url>/2021/06/01/php-fpm-conf/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php一直都搞不懂，今天彻底把php-fpm的配置文件解释一下</p>
@@ -3488,6 +3471,23 @@ x <span class="token operator">=</span> <span class="token number">20</span><spa
       </tags>
   </entry>
   <entry>
+    <title>php进程不及时释放进程导致CPU跑满</title>
+    <url>/2021/06/01/php-cpu/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
+<span id="more"></span>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
+<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
+<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
+<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>window下python3环境安装scrapy</title>
     <url>/2022/08/08/scrapy-setup-in-win/</url>
     <content><![CDATA[<p>目录：</p>
@@ -3526,170 +3526,6 @@ x <span class="token operator">=</span> <span class="token number">20</span><spa
       </categories>
       <tags>
         <tag>scrapy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu 16.04 下MySQL的安装</title>
-    <url>/2022/08/08/setup-mysql-inubuntu/</url>
-    <content><![CDATA[<p>1， 打开终端：</p>
-<blockquote>
-<p> sudo apt-get install mysql-server</p>
-</blockquote>
-<span id="more"></span>
-<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
-<p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
-<p>4 ，接下来，会继续让我们输入一次密码</p>
-<p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
-<p>6， 这时候已经安装完成了，我们需要验证一下是否安装上了mysql-server</p>
-<blockquote>
-<p> mysql -u root -p</p>
-</blockquote>
-<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-snakeson@snakeson<span class="token operator">-</span>Inspiron<span class="token operator">-</span><span class="token number">5421</span><span class="token operator">:</span><span class="token operator">~</span>$ mysql <span class="token operator">-</span>u root <span class="token operator">-</span>p
-Enter password<span class="token operator">:</span> 
-Welcome to the MySQL monitor<span class="token punctuation">.</span>  Commands end <span class="token keyword">with</span> <span class="token punctuation">;</span> or \g<span class="token punctuation">.</span>
-Your MySQL connection id is <span class="token number">5</span>
-Server version<span class="token operator">:</span> <span class="token number">5.7</span><span class="token number">.20</span><span class="token operator">-</span>0ubuntu0<span class="token punctuation">.</span><span class="token number">16.04</span><span class="token number">.1</span> <span class="token punctuation">(</span>Ubuntu<span class="token punctuation">)</span>
-
-<span class="token function">Copyright</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span><span class="token punctuation">,</span> <span class="token number">2017</span><span class="token punctuation">,</span> Oracle and<span class="token operator">/</span>or its affiliates<span class="token punctuation">.</span> All rights reserved<span class="token punctuation">.</span>
-
-Oracle is a registered trademark <span class="token keyword">of</span> Oracle Corporation and<span class="token operator">/</span>or its
-affiliates<span class="token punctuation">.</span> Other names may be trademarks <span class="token keyword">of</span> their respective
-owners<span class="token punctuation">.</span>
-
-Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help<span class="token punctuation">.</span> Type <span class="token string">'\c'</span> to clear the current input statement<span class="token punctuation">.</span>
-
-mysql<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux ubuntu16.04 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Fisher–Yates shuffle 洗牌算法</title>
-    <url>/2022/08/08/shuffle-algorithm/</url>
-    <content><![CDATA[<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
-<span id="more"></span>
-<p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
-<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
-<p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
-<ol>
-<li>写下从 1 到 N 的数字</li>
-<li>取一个从 1 到剩下的数字（包括这个数字）的随机数 k</li>
-<li>从低位开始，得到第 k 个数字（这个数字还没有被取出），把它写在独立的一个列表的最后一位</li>
-<li>重复第 2 步，直到所有的数字都被取出</li>
-<li>第 3 步写出的这个序列，现在就是原始数字的随机排列</li>
-</ol>
-<p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
-<h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
-<p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 **O(n)**。算法的伪代码如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">-- To shuffle an array a of n elements (indices 0..n-1):
-for i from n−1 downto 1 do
-     j ← random integer such that 0 ≤ j ≤ i
-     exchange a[j] and a[i]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
-<table>
-<thead>
-<tr>
-<th align="left">随机数取值范围</th>
-<th align="left">随机数</th>
-<th align="right">原始数据</th>
-<th align="left">结果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">1 2 3 4 5 6 7 8</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">1-8</td>
-<td align="left">6</td>
-<td align="right">1 2 3 4 5 7 8</td>
-<td align="left">6</td>
-</tr>
-<tr>
-<td align="left">1-7</td>
-<td align="left">2</td>
-<td align="right">1 7 3 4 5 8</td>
-<td align="left">2 6</td>
-</tr>
-<tr>
-<td align="left">1–6</td>
-<td align="left">6</td>
-<td align="right">1 7 3 4 5</td>
-<td align="left">8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–5</td>
-<td align="left">1</td>
-<td align="right">5 7 3 4</td>
-<td align="left">1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–4</td>
-<td align="left">3</td>
-<td align="right">5 7 4</td>
-<td align="left">3 1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–3</td>
-<td align="left">3</td>
-<td align="right">5 7</td>
-<td align="left">4 3 1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–2</td>
-<td align="left">1</td>
-<td align="right">7</td>
-<td align="left">5 4 3 1 8 2 6</td>
-</tr>
-</tbody></table>
-<h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
-<iframe height='317' scrolling='no' src='//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/haoyang/pen/jrvrQq/'>Fisher–Yates shuffle</a> by Chuan shi (<a href='http://codepen.io/haoyang'>@haoyang</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
-
-<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
- * Fisher–Yates shuffle
- */</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">shuffle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> input <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> input<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        <span class="token keyword">var</span> randomIndex <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">var</span> itemAtIndex <span class="token operator">=</span> input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-        input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span> <span class="token operator">=</span> input<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        input<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> itemAtIndex<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> input<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>使用方式也很简单，直接用数组调用这个方法即可</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">shuffle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle From Wikipedia</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>算法 shuffle 乱序 洗牌</tag>
       </tags>
   </entry>
   <entry>
@@ -3831,6 +3667,49 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </tags>
   </entry>
   <entry>
+    <title>Ubuntu 16.04 下MySQL的安装</title>
+    <url>/2022/08/08/setup-mysql-inubuntu/</url>
+    <content><![CDATA[<p>1， 打开终端：</p>
+<blockquote>
+<p> sudo apt-get install mysql-server</p>
+</blockquote>
+<span id="more"></span>
+<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
+<p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
+<p>4 ，接下来，会继续让我们输入一次密码</p>
+<p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
+<p>6， 这时候已经安装完成了，我们需要验证一下是否安装上了mysql-server</p>
+<blockquote>
+<p> mysql -u root -p</p>
+</blockquote>
+<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+snakeson@snakeson<span class="token operator">-</span>Inspiron<span class="token operator">-</span><span class="token number">5421</span><span class="token operator">:</span><span class="token operator">~</span>$ mysql <span class="token operator">-</span>u root <span class="token operator">-</span>p
+Enter password<span class="token operator">:</span> 
+Welcome to the MySQL monitor<span class="token punctuation">.</span>  Commands end <span class="token keyword">with</span> <span class="token punctuation">;</span> or \g<span class="token punctuation">.</span>
+Your MySQL connection id is <span class="token number">5</span>
+Server version<span class="token operator">:</span> <span class="token number">5.7</span><span class="token number">.20</span><span class="token operator">-</span>0ubuntu0<span class="token punctuation">.</span><span class="token number">16.04</span><span class="token number">.1</span> <span class="token punctuation">(</span>Ubuntu<span class="token punctuation">)</span>
+
+<span class="token function">Copyright</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span><span class="token punctuation">,</span> <span class="token number">2017</span><span class="token punctuation">,</span> Oracle and<span class="token operator">/</span>or its affiliates<span class="token punctuation">.</span> All rights reserved<span class="token punctuation">.</span>
+
+Oracle is a registered trademark <span class="token keyword">of</span> Oracle Corporation and<span class="token operator">/</span>or its
+affiliates<span class="token punctuation">.</span> Other names may be trademarks <span class="token keyword">of</span> their respective
+owners<span class="token punctuation">.</span>
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help<span class="token punctuation">.</span> Type <span class="token string">'\c'</span> to clear the current input statement<span class="token punctuation">.</span>
+
+mysql<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux ubuntu16.04 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>swap分区介绍</title>
     <url>/2021/05/20/swap/</url>
     <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
@@ -3864,6 +3743,127 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fisher–Yates shuffle 洗牌算法</title>
+    <url>/2022/08/08/shuffle-algorithm/</url>
+    <content><![CDATA[<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
+<span id="more"></span>
+<p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
+<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
+<p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
+<ol>
+<li>写下从 1 到 N 的数字</li>
+<li>取一个从 1 到剩下的数字（包括这个数字）的随机数 k</li>
+<li>从低位开始，得到第 k 个数字（这个数字还没有被取出），把它写在独立的一个列表的最后一位</li>
+<li>重复第 2 步，直到所有的数字都被取出</li>
+<li>第 3 步写出的这个序列，现在就是原始数字的随机排列</li>
+</ol>
+<p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
+<h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
+<p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 **O(n)**。算法的伪代码如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">-- To shuffle an array a of n elements (indices 0..n-1):
+for i from n−1 downto 1 do
+     j ← random integer such that 0 ≤ j ≤ i
+     exchange a[j] and a[i]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
+<table>
+<thead>
+<tr>
+<th align="left">随机数取值范围</th>
+<th align="left">随机数</th>
+<th align="right">原始数据</th>
+<th align="left">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">1 2 3 4 5 6 7 8</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">1-8</td>
+<td align="left">6</td>
+<td align="right">1 2 3 4 5 7 8</td>
+<td align="left">6</td>
+</tr>
+<tr>
+<td align="left">1-7</td>
+<td align="left">2</td>
+<td align="right">1 7 3 4 5 8</td>
+<td align="left">2 6</td>
+</tr>
+<tr>
+<td align="left">1–6</td>
+<td align="left">6</td>
+<td align="right">1 7 3 4 5</td>
+<td align="left">8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–5</td>
+<td align="left">1</td>
+<td align="right">5 7 3 4</td>
+<td align="left">1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–4</td>
+<td align="left">3</td>
+<td align="right">5 7 4</td>
+<td align="left">3 1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–3</td>
+<td align="left">3</td>
+<td align="right">5 7</td>
+<td align="left">4 3 1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–2</td>
+<td align="left">1</td>
+<td align="right">7</td>
+<td align="left">5 4 3 1 8 2 6</td>
+</tr>
+</tbody></table>
+<h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
+<iframe height='317' scrolling='no' src='//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/haoyang/pen/jrvrQq/'>Fisher–Yates shuffle</a> by Chuan shi (<a href='http://codepen.io/haoyang'>@haoyang</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+
+<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * Fisher–Yates shuffle
+ */</span>
+<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">shuffle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> input <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> input<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token keyword">var</span> randomIndex <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> itemAtIndex <span class="token operator">=</span> input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+        input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span> <span class="token operator">=</span> input<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        input<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> itemAtIndex<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> input<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用方式也很简单，直接用数组调用这个方法即可</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">shuffle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle From Wikipedia</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>算法 shuffle 乱序 洗牌</tag>
       </tags>
   </entry>
   <entry>
@@ -4648,6 +4648,106 @@ $ gem install sass
       </tags>
   </entry>
   <entry>
+    <title>基本数据类型的相互转换</title>
+    <url>/2022/04/07/Interconversion-of-basic-data-types/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>布尔类型</title>
+    <url>/2022/03/18/bool-type/</url>
+    <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
+<p>2、bool 类型占1个字节</p>
+<p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p>
+<h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;unsafe&quot;
+)
+
+func main() &#123;
+	var n1 &#x3D; false
+	fmt.Println(&quot;n1&#x3D;&quot;, n1)
+	fmt.Println(&quot;n1占用空间：&quot;, unsafe.Sizeof(n1))
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color=#FF000>n1= false</font></p>
+<p><font color=#FF0000>n1占用空间： 1</font></p>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符类型</title>
+    <url>/2022/03/17/byte-type/</url>
+    <content><![CDATA[<h1 id="1-字符类型"><a href="#1-字符类型" class="headerlink" title="1.字符类型"></a>1.字符类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Golang 中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存。字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。也就是说对于传统的字符串是由字符组成的，而 Go 的字符串不同，它是由字节组成的。</p>
+<span id="more"></span>
+
+<h2 id="1-1-字符类型使用细节"><a href="#1-1-字符类型使用细节" class="headerlink" title="1.1 字符类型使用细节"></a>1.1 字符类型使用细节</h2><ol>
+<li>字符常量是用单引号(‘’)括起来的单个字符。例如：var c1 byte = ‘a’ var c2 int = ‘中’ var c3 byte = ‘9’ </li>
+<li>Go 中允许使用转义字符 ‘\’来将其后的字符转变为特殊字符型常量。例如：var c3 char = ‘\n’ // ‘\n’表示换行符 </li>
+<li>Go 语言的字符使用 UTF-8 编码 ，如果想查询字符对应 的 utf8 码 值 <a href="http://www.mytju.com/classcode/tools/encode_utf8.asp">http://www.mytju.com/classcode/tools/encode_utf8.asp</a> 英文字母-1 个字节 汉字-3 个字节 </li>
+<li>在 Go 中，字符的本质是一个整数，直接输出时，是该字符对应的 UTF-8 编码的码值。</li>
+<li>可以直接给某个变量赋一个数字，然后按格式化输出时%c，会输出该数字对应的 unicode 字符</li>
+<li>字符类型是可以进行运算的，相当于一个整数，因为它都对应有 Unicode 码</li>
+</ol>
+<h2 id="1-2-字符类型本质探讨"><a href="#1-2-字符类型本质探讨" class="headerlink" title="1.2 字符类型本质探讨"></a>1.2 字符类型本质探讨</h2><ol>
+<li>   字符型存储到计算机中，需要将字符对应的码值（整数）找出来 存储：字符—&gt;对应码值—-&gt;二进制–&gt;存储读取：二进制 —-&gt; 码值 —-&gt; 字符 –&gt; 读取 </li>
+</ol>
+<ol start="2">
+<li>字符和码值的对应关系是通过字符编码表决定的(是规定好) </li>
+<li>Go 语言的编码都统一成了 utf-8。非常的方便，很统一，再也没有编码乱码的困扰了</li>
+</ol>
+<h2 id="1-3-案例演示"><a href="#1-3-案例演示" class="headerlink" title="1.3 案例演示"></a>1.3 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
+
+import (
+	&quot;fmt&quot;
+)
+
+func main() &#123;
+	var n1 byte &#x3D; &#39;a&#39;
+	var n2 byte &#x3D; &#39;8&#39;
+	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
+	fmt.Printf(&quot;n1&#x3D;%c,n2&#x3D;%c\n&quot;, n1, n2)
+	&#x2F;&#x2F; var n3 byte &#x3D; &#39;董&#39;
+	&#x2F;&#x2F; fmt.Println(&quot;n3&#x3D;&quot;, n3)
+	var n4 int &#x3D; &#39;董&#39;
+	&#x2F;&#x2F; fmt.Println(&quot;n4&#x3D;&quot;, n4)
+	fmt.Printf(&quot;n4&#x3D;%c,n4&#x3D;%d&quot;, n4, n4)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color=#FF0000> n1= 97 n2= 56</p>
+<p>n1=a,n2=8</p>
+<p>n4=董,n4=33891</p>
+</font>
+
+<ol>
+<li>如果我们保存的字符在 ASCII 表的,比如[0-1, a-z,A-Z..]直接可以保存到 byte </li>
+<li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
+<li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
+</ol>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>loki</title>
     <url>/2021/09/22/loki/</url>
     <content><![CDATA[<h1 id="简-介"><a href="#简-介" class="headerlink" title="简 介"></a>简 介</h1><p>Loki是受Prometheus启发由Grafana Labs团队开源的水平可扩展，高度可用的多租户日志聚合系统。 开发语言: Google Go。它的设计具有很高的成本效益，并且易于操作。使用标签来作为索引，而不是对全文进行检索，也就是说，你通过这些标签既可以查询日志的内容也可以查询到监控的数据签，极大地降低了日志索引的存储。系统架构十分简单，由以下3个部分组成 ：</p>
@@ -4839,115 +4939,6 @@ $ systemctl status loki<span aria-hidden="true" class="line-numbers-rows"><span>
       </tags>
   </entry>
   <entry>
-    <title>基本数据类型的相互转换</title>
-    <url>/2022/04/07/Interconversion-of-basic-data-types/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2022/08/08/This%20will%20install%20the%20Istio%201/</url>
-    <content><![CDATA[<p>This will install the Istio 1.12.1 demo profile with [“Istio core” “Istiod” “Ingress gateways” “Egress gateways”] components into the cluster. Proceed? (y/N) y<br>✔ Istio core installed<br>✔ Istiod installed</p>
-<p>✘ Egress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-egressgateway (containers with unready status: [istio-proxy])<br>✘ Ingress gateways encountered an error: failed to wait for resource: resources not ready after 5m0s: timed out waiting for the condition<br>  Deployment/istio-system/istio-ingressgateway (containers with unready status: [istio-proxy])</p>
-<p>Pruning removed resources                                                                                                          Error: failed to install manifests: errors occurred during operation</p>
-<p><img data-src="/Users/dongpengfei/github/source/img/image-20220422181156616.png" alt="image-20220422181156616"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>布尔类型</title>
-    <url>/2022/03/18/bool-type/</url>
-    <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
-<p>2、bool 类型占1个字节</p>
-<p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p>
-<h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-	&quot;unsafe&quot;
-)
-
-func main() &#123;
-	var n1 &#x3D; false
-	fmt.Println(&quot;n1&#x3D;&quot;, n1)
-	fmt.Println(&quot;n1占用空间：&quot;, unsafe.Sizeof(n1))
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color=#FF000>n1= false</font></p>
-<p><font color=#FF0000>n1占用空间： 1</font></p>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符类型</title>
-    <url>/2022/03/17/byte-type/</url>
-    <content><![CDATA[<h1 id="1-字符类型"><a href="#1-字符类型" class="headerlink" title="1.字符类型"></a>1.字符类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Golang 中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存。字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。也就是说对于传统的字符串是由字符组成的，而 Go 的字符串不同，它是由字节组成的。</p>
-<span id="more"></span>
-
-<h2 id="1-1-字符类型使用细节"><a href="#1-1-字符类型使用细节" class="headerlink" title="1.1 字符类型使用细节"></a>1.1 字符类型使用细节</h2><ol>
-<li>字符常量是用单引号(‘’)括起来的单个字符。例如：var c1 byte = ‘a’ var c2 int = ‘中’ var c3 byte = ‘9’ </li>
-<li>Go 中允许使用转义字符 ‘\’来将其后的字符转变为特殊字符型常量。例如：var c3 char = ‘\n’ // ‘\n’表示换行符 </li>
-<li>Go 语言的字符使用 UTF-8 编码 ，如果想查询字符对应 的 utf8 码 值 <a href="http://www.mytju.com/classcode/tools/encode_utf8.asp">http://www.mytju.com/classcode/tools/encode_utf8.asp</a> 英文字母-1 个字节 汉字-3 个字节 </li>
-<li>在 Go 中，字符的本质是一个整数，直接输出时，是该字符对应的 UTF-8 编码的码值。</li>
-<li>可以直接给某个变量赋一个数字，然后按格式化输出时%c，会输出该数字对应的 unicode 字符</li>
-<li>字符类型是可以进行运算的，相当于一个整数，因为它都对应有 Unicode 码</li>
-</ol>
-<h2 id="1-2-字符类型本质探讨"><a href="#1-2-字符类型本质探讨" class="headerlink" title="1.2 字符类型本质探讨"></a>1.2 字符类型本质探讨</h2><ol>
-<li>   字符型存储到计算机中，需要将字符对应的码值（整数）找出来 存储：字符—&gt;对应码值—-&gt;二进制–&gt;存储读取：二进制 —-&gt; 码值 —-&gt; 字符 –&gt; 读取 </li>
-</ol>
-<ol start="2">
-<li>字符和码值的对应关系是通过字符编码表决定的(是规定好) </li>
-<li>Go 语言的编码都统一成了 utf-8。非常的方便，很统一，再也没有编码乱码的困扰了</li>
-</ol>
-<h2 id="1-3-案例演示"><a href="#1-3-案例演示" class="headerlink" title="1.3 案例演示"></a>1.3 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var n1 byte &#x3D; &#39;a&#39;
-	var n2 byte &#x3D; &#39;8&#39;
-	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
-	fmt.Printf(&quot;n1&#x3D;%c,n2&#x3D;%c\n&quot;, n1, n2)
-	&#x2F;&#x2F; var n3 byte &#x3D; &#39;董&#39;
-	&#x2F;&#x2F; fmt.Println(&quot;n3&#x3D;&quot;, n3)
-	var n4 int &#x3D; &#39;董&#39;
-	&#x2F;&#x2F; fmt.Println(&quot;n4&#x3D;&quot;, n4)
-	fmt.Printf(&quot;n4&#x3D;%c,n4&#x3D;%d&quot;, n4, n4)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color=#FF0000> n1= 97 n2= 56</p>
-<p>n1=a,n2=8</p>
-<p>n4=董,n4=33891</p>
-</font>
-
-<ol>
-<li>如果我们保存的字符在 ASCII 表的,比如[0-1, a-z,A-Z..]直接可以保存到 byte </li>
-<li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
-<li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>data-type</title>
     <url>/2022/03/16/data-type/</url>
     <content><![CDATA[<h1 id="1-数据类型的基本介绍"><a href="#1-数据类型的基本介绍" class="headerlink" title="1.数据类型的基本介绍"></a>1.数据类型的基本介绍</h1><p>每一种数据都定义了明确的数据类型，在内存中分配了不同大小的内存空间</p>
@@ -5053,6 +5044,11 @@ func main() &#123;
       <tags>
         <tag>go</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>go-goroutine</title>
+    <url>/2022/08/08/go-goroutine/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>go-变量</title>
