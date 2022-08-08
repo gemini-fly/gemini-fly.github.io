@@ -1,137 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>前端处理动态 url 和 pushStatus 的使用</title>
-    <url>/2015/12/31/History-API/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
-<span id="more"></span>
-<ul>
-<li>webpack 自动构建</li>
-<li>AMD 模块化 js</li>
-<li>Sass 预处理 CSS</li>
-<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
-</ul>
-<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
-<p>这里我将问题描述如下：</p>
-<blockquote>
-<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
-<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
-<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
-</blockquote>
-<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
-<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
-<p>下面就来研究和实践一下吧。</p>
-<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
-<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
-<p>如下图，Chrome的历史记录：</p>
-<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
-<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
-<ul>
-<li><p><code>back()</code></p>
-<p>  在历史记录中后退</p>
-<pre><code>  history.back();
-</code></pre>
-</li>
-<li><p><code>forward()</code></p>
-<p>  在历史记录中前进</p>
-<pre><code>  history.forward();
-</code></pre>
-</li>
-<li><p><code>go()</code></p>
-<p>  移动到指定的历史记录点</p>
-<pre><code>  history.go(-1);
-</code></pre>
-<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
-<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
-</li>
-<li><p><code>length</code></p>
-<p>  <code>length</code>为history的属性，显示history长度。</p>
-</li>
-</ul>
-<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
-<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
-<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
-<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
-<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
-<ul>
-<li><p><code>pushState(any data, string title, [string url])</code></p>
-<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
-<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
-<p>  例如，我们有这样一段代码：</p>
-<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
-
-  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
-      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
-      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
-  &#125;);
-</code></pre>
-<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
-</li>
-</ul>
-<ul>
-<li><p><code>replaceState(any data, string title, [string url])</code></p>
-<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
-</li>
-</ul>
-<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
-<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
-<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
-<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
-<p>Pjax的原理十分简单。</p>
-<ol>
-<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
-<li>使用 Ajax 请求新页面。</li>
-<li>将返回的 Html 替换到页面中。</li>
-<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
-</ol>
-<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
-<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
-<pre><code>window.onpopstate = function(event) &#123;
-    console.log(event.state);
-    console.log(location);
-&#125;;
-</code></pre>
-<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
-<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
-<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
-<li><a href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
-<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
-<li><a href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
-<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
-<li><a href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
-<li><a href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
-<li><a href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
-<li><a href="https://github.com/browserstate/history.js">History.js</a></li>
-<li><a href="https://github.com/defunkt/jquery-pjax">defunkt/jquery-pjax GitHub</a></li>
-<li><a href="https://github.com/welefen/pjax">welefen/pjax</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISP</title>
-    <url>/2021/05/28/ISP/</url>
-    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
-<span id="more"></span>
-<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 阶段总结</title>
     <url>/2015/07/09/JavaScript-Net/</url>
     <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
@@ -481,6 +350,137 @@ moduleA = function() &#123;
       </tags>
   </entry>
   <entry>
+    <title>前端处理动态 url 和 pushStatus 的使用</title>
+    <url>/2015/12/31/History-API/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
+<span id="more"></span>
+<ul>
+<li>webpack 自动构建</li>
+<li>AMD 模块化 js</li>
+<li>Sass 预处理 CSS</li>
+<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
+</ul>
+<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
+<p>这里我将问题描述如下：</p>
+<blockquote>
+<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
+<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
+<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
+</blockquote>
+<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
+<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
+<p>下面就来研究和实践一下吧。</p>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
+<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
+<p>如下图，Chrome的历史记录：</p>
+<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
+<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
+<ul>
+<li><p><code>back()</code></p>
+<p>  在历史记录中后退</p>
+<pre><code>  history.back();
+</code></pre>
+</li>
+<li><p><code>forward()</code></p>
+<p>  在历史记录中前进</p>
+<pre><code>  history.forward();
+</code></pre>
+</li>
+<li><p><code>go()</code></p>
+<p>  移动到指定的历史记录点</p>
+<pre><code>  history.go(-1);
+</code></pre>
+<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
+<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
+</li>
+<li><p><code>length</code></p>
+<p>  <code>length</code>为history的属性，显示history长度。</p>
+</li>
+</ul>
+<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href=""></a></p>
+<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
+<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
+<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
+<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
+<ul>
+<li><p><code>pushState(any data, string title, [string url])</code></p>
+<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
+<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
+<p>  例如，我们有这样一段代码：</p>
+<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
+
+  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
+      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
+      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
+  &#125;);
+</code></pre>
+<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
+</li>
+</ul>
+<ul>
+<li><p><code>replaceState(any data, string title, [string url])</code></p>
+<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
+</li>
+</ul>
+<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
+<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
+<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
+<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
+<p>Pjax的原理十分简单。</p>
+<ol>
+<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
+<li>使用 Ajax 请求新页面。</li>
+<li>将返回的 Html 替换到页面中。</li>
+<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
+</ol>
+<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
+<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
+<pre><code>window.onpopstate = function(event) &#123;
+    console.log(event.state);
+    console.log(location);
+&#125;;
+</code></pre>
+<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
+<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
+<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
+<li><a href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
+<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
+<li><a href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
+<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
+<li><a href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
+<li><a href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
+<li><a href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
+<li><a href="https://github.com/browserstate/history.js">History.js</a></li>
+<li><a href="https://github.com/defunkt/jquery-pjax">defunkt/jquery-pjax GitHub</a></li>
+<li><a href="https://github.com/welefen/pjax">welefen/pjax</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISP</title>
+    <url>/2021/05/28/ISP/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
+<span id="more"></span>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 函数</title>
     <url>/2015/06/11/JavaScript-function/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>函数是一块JavaScript代码，被定义一次，但可执行和调用多次。</p>
@@ -715,278 +715,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 中的闭包</title>
-    <url>/2015/06/14/JavaScript-closure/</url>
-    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
-    var localVal = 30;
-    return localVal;
-&#125;
-
-console.log(outer()); //30
-
-function outer2() &#123;
-    var localVal = 30;
-    return function() &#123;
-        return localVal;
-    &#125;;
-&#125;
-
-var func = outer2();
-console.log(func()); //30
-</code></pre>
-<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
-<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
-<span id="more"></span>
-<hr>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
-<pre><code>  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      document.addEventListener(&#39;click&#39;,
-          function() &#123;
-              console.log(localData); //这里访问外部数据
-          &#125;);
-  &#125;();
-
-  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      var url = &quot;http://www.baidu.com/&quot;;
-      $.ajax(&#123;
-          url: url,
-          success: function() &#123;
-              // do sth...
-              console.log(localData); //这里访问外部数据
-          &#125;
-      &#125;);
-  &#125;()
-</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    document.getElementById(&#39;div&#39; + i).
-    addEventListener(&#39;click&#39;, function() &#123;
-        alert(i); // all are 4!
-    &#125;);
-&#125;
-</code></pre>
-<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
-<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    ! function(i) &#123;
-        document.getElementById(&#39;div&#39; + i).
-        addEventListener(&#39;click&#39;, function() &#123;
-            alert(i); // 1, 2, 3
-        &#125;);
-    &#125;(i);
-&#125;
-</code></pre>
-<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
-<hr>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
-    var _userId = 9527;
-    var _typeId = &quot;item&quot;;
-    var exp = &#123;&#125;;
-
-    function converter(userId) &#123;
-        return +userId;
-    &#125;
-
-    exp.getUserId = function() &#123;
-        return converter(_userId);
-    &#125;;
-
-    exp.getTypeId = function() &#123;
-        return _typeId;
-    &#125;;
-
-    window.a = exp;
-&#125;)();
-
-console.log(a.getUserId()); //9527
-console.log(a.getTypeId()); //item
-
-console.log(a._userId); //undefined
-console.log(a._typeId); //undefined
-console.log(converter); //Uncaught ReferenceError: converter is not defined
-</code></pre>
-<p>上面的代码通过闭包实现了一个封装。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<ul>
-<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
-</li>
-<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
-</li>
-</ul>
-<p>from 维基百科</p>
-</blockquote>
-<ul>
-<li><p>闭包的优点</p>
-<ul>
-<li>灵活和方便</li>
-<li>封装</li>
-</ul>
-</li>
-<li><p>缺点</p>
-<ul>
-<li>空间浪费</li>
-<li>内存泄露</li>
-<li>性能消耗</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
-    <url>/2022/08/08/JavaScript-good-parts-note2/</url>
-    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承的两大好处：代码重用，引入一套类型系统的规范。</p>
-<span id="more"></span>
-<h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>JavaScript 通过构造器函数产生对象。</p>
-<p>构造器调用模式，即用<code>new</code>前缀去调用一个函数。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">Mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-<span class="token punctuation">&#125;</span>
-
-<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
-<span class="token punctuation">&#125;</span>
-
-<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mammal</span><span class="token punctuation">(</span><span class="token string">'Herb'</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>书中不推荐这样的写法。有很多风险。若忘记添加<code>new</code>前缀，<code>this</code>无法绑定到新的对象上。而是绑定到了全局对象上，破坏了全局变量环境。</p>
-<h3 id="对象说明符"><a href="#对象说明符" class="headerlink" title="对象说明符"></a>对象说明符</h3><p>上一节中的构造器可能要接受一大串参数。我们可以这样写：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myObject <span class="token operator">=</span> <span class="token function">Maker</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">first</span><span class="token operator">:</span> f<span class="token punctuation">,</span>
-    <span class="token literal-property property">middle</span><span class="token operator">:</span> m<span class="token punctuation">,</span>
-    <span class="token literal-property property">last</span><span class="token operator">:</span> l<span class="token punctuation">,</span>
-    <span class="token literal-property property">state</span><span class="token operator">:</span> s<span class="token punctuation">,</span>
-    <span class="token literal-property property">city</span><span class="token operator">:</span> c
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>将JSON对象传递给构造器，而它返回一个构造完全的对象。</p>
-<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>在一个纯粹的原型模式中，我们将摒弃类，转而专注于对象。一个新对象可以继承一个就对象的属性。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'MM'</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">getName</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token function-variable function">says</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">var</span> myCat <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">)</span>
-myCat<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Kitty'</span>
-myCat<span class="token punctuation">.</span>saying <span class="token operator">=</span> <span class="token string">'meow'</span>
-myCat<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token string">'Kitty is running'</span>
-<span class="token punctuation">&#125;</span>
-myCat<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这是一种差异化继承。</p>
-<h3 id="函数化"><a href="#函数化" class="headerlink" title="函数化"></a>函数化</h3><p>前文看到的继承模式没法保护隐私。对象的所有属性都是可见的。无法得到私有变量和私有函数。为了解决这一问题，我们有模块模式。</p>
-<p>构造一个生成对象的函数需要4步骤：</p>
-<ol>
-<li>创建一个新对象。</li>
-<li>有选择的定义私有变量和方法。</li>
-<li>给这个新对象扩充方法。</li>
-<li>返回那个新对象。</li>
-</ol>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">spec</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-
-    that<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>name
-    <span class="token punctuation">&#125;</span>
-    that<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">return</span> that
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token function">mammal</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Herb'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">saying</span><span class="token operator">:</span> <span class="token string">'Cheers!'</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">says</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Cheers!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>也可以参考上一篇文章，<a href="http://gaohaoyang.github.io/2016/06/07/JavaScript-good-parts-note1/#section-34">JavaScript 语言精粹笔记1-语法、对象、函数 之模块部分</a>。</p>
-<h3 id="部件"><a href="#部件" class="headerlink" title="部件"></a>部件</h3><p>这一部分看的不是特别懂，我想等我学完ES2015中的类和模块部分后再看看吧。</p>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="数组字面量"><a href="#数组字面量" class="headerlink" title="数组字面量"></a>数组字面量</h3><p>一个数组字面量是在一对方括号中包围零个或多个用逗号分隔的值的表达式。</p>
-<p>再大多数语言中，一个数组的多有元素都要求是相同的类型。JavaScript 允许数组包含任意混合类型的值。</p>
-<h3 id="长度"><a href="#长度" class="headerlink" title="长度"></a>长度</h3><p>JavaScript 数组的<code>length</code>属性是没有上界的。如果用大于或等于当前<code>length</code>的数字作为下标来存储一个元素，那么<code>length</code>值会被增大以容纳新元素，不会发生数组越界错误。</p>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>数组也是对象，可以用<code>delete</code>来删除元素</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'one'</span><span class="token punctuation">,</span> <span class="token string">'two'</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'four'</span><span class="token punctuation">,</span> <span class="token string">'wu'</span><span class="token punctuation">]</span>
-
-<span class="token keyword">delete</span> numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//undefined</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以使用<code>splice</code>方法，进行删除和修改操作。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">numbers<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//two</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>使用常规<code>for</code>循环即可，可以保证数组的顺序。</p>
-<h3 id="容易混淆的地方"><a href="#容易混淆的地方" class="headerlink" title="容易混淆的地方"></a>容易混淆的地方</h3><p>当属性名是小而连续的整数时，应该使用数组，否则使用对象。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//object</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>返回数组的类型是<code>object</code>，没有任何意义。</p>
-<p>判断数组类型的方法</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>ECMAScript 5.1 (ECMA-262) 和 ECMAScript 2015 (6th Edition, ECMA-262) 标准中的方法。</p>
-<p>或者下面这个方法。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">is_array</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Array]'</span>
-<span class="token punctuation">&#125;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">is_array</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>数组的方法被存储在<code>Array.prototype</code>中的函数。</p>
-<p>数组是对象，因此<code>Array.prototype</code>也是可扩充的。</p>
-<h3 id="指定初始值"><a href="#指定初始值" class="headerlink" title="指定初始值"></a>指定初始值</h3><p>JavaScript 的数组不会预制值。</p>
-<p>JavaScript 没有多维数组，单项大多数类 C 语言一样，支持元素为数组的数组。</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> matrix <span class="token operator">=</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-<span class="token punctuation">]</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>关于正则表达式，以前的博文写的比较多了，详情见：</p>
-<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-10">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分1</a></p>
-<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-12">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分2</a></p>
-<p><a href="http://gaohaoyang.github.io/2016/05/06/regular-expression-group/">浅谈正则表达式中的分组和引用</a></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>继承 对象 原型 Array 正则</tag>
       </tags>
   </entry>
   <entry>
@@ -1368,6 +1096,278 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </categories>
       <tags>
         <tag>对象 函数 this 闭包 面向对象 作用域</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 中的闭包</title>
+    <url>/2015/06/14/JavaScript-closure/</url>
+    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+    var localVal = 30;
+    return localVal;
+&#125;
+
+console.log(outer()); //30
+
+function outer2() &#123;
+    var localVal = 30;
+    return function() &#123;
+        return localVal;
+    &#125;;
+&#125;
+
+var func = outer2();
+console.log(func()); //30
+</code></pre>
+<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
+<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<span id="more"></span>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
+<pre><code>  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      document.addEventListener(&#39;click&#39;,
+          function() &#123;
+              console.log(localData); //这里访问外部数据
+          &#125;);
+  &#125;();
+
+  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      var url = &quot;http://www.baidu.com/&quot;;
+      $.ajax(&#123;
+          url: url,
+          success: function() &#123;
+              // do sth...
+              console.log(localData); //这里访问外部数据
+          &#125;
+      &#125;);
+  &#125;()
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    document.getElementById(&#39;div&#39; + i).
+    addEventListener(&#39;click&#39;, function() &#123;
+        alert(i); // all are 4!
+    &#125;);
+&#125;
+</code></pre>
+<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
+<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    ! function(i) &#123;
+        document.getElementById(&#39;div&#39; + i).
+        addEventListener(&#39;click&#39;, function() &#123;
+            alert(i); // 1, 2, 3
+        &#125;);
+    &#125;(i);
+&#125;
+</code></pre>
+<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
+<hr>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
+    var _userId = 9527;
+    var _typeId = &quot;item&quot;;
+    var exp = &#123;&#125;;
+
+    function converter(userId) &#123;
+        return +userId;
+    &#125;
+
+    exp.getUserId = function() &#123;
+        return converter(_userId);
+    &#125;;
+
+    exp.getTypeId = function() &#123;
+        return _typeId;
+    &#125;;
+
+    window.a = exp;
+&#125;)();
+
+console.log(a.getUserId()); //9527
+console.log(a.getTypeId()); //item
+
+console.log(a._userId); //undefined
+console.log(a._typeId); //undefined
+console.log(converter); //Uncaught ReferenceError: converter is not defined
+</code></pre>
+<p>上面的代码通过闭包实现了一个封装。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<ul>
+<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
+</li>
+<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
+</li>
+</ul>
+<p>from 维基百科</p>
+</blockquote>
+<ul>
+<li><p>闭包的优点</p>
+<ul>
+<li>灵活和方便</li>
+<li>封装</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>空间浪费</li>
+<li>内存泄露</li>
+<li>性能消耗</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
+    <url>/2022/08/08/JavaScript-good-parts-note2/</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中以下章节的笔记：继承、数组和正则表达式。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承的两大好处：代码重用，引入一套类型系统的规范。</p>
+<span id="more"></span>
+<h3 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h3><p>JavaScript 通过构造器函数产生对象。</p>
+<p>构造器调用模式，即用<code>new</code>前缀去调用一个函数。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">Mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
+<span class="token punctuation">&#125;</span>
+
+<span class="token class-name">Mammal</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Mammal</span><span class="token punctuation">(</span><span class="token string">'Herb'</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>书中不推荐这样的写法。有很多风险。若忘记添加<code>new</code>前缀，<code>this</code>无法绑定到新的对象上。而是绑定到了全局对象上，破坏了全局变量环境。</p>
+<h3 id="对象说明符"><a href="#对象说明符" class="headerlink" title="对象说明符"></a>对象说明符</h3><p>上一节中的构造器可能要接受一大串参数。我们可以这样写：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myObject <span class="token operator">=</span> <span class="token function">Maker</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">first</span><span class="token operator">:</span> f<span class="token punctuation">,</span>
+    <span class="token literal-property property">middle</span><span class="token operator">:</span> m<span class="token punctuation">,</span>
+    <span class="token literal-property property">last</span><span class="token operator">:</span> l<span class="token punctuation">,</span>
+    <span class="token literal-property property">state</span><span class="token operator">:</span> s<span class="token punctuation">,</span>
+    <span class="token literal-property property">city</span><span class="token operator">:</span> c
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将JSON对象传递给构造器，而它返回一个构造完全的对象。</p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>在一个纯粹的原型模式中，我们将摒弃类，转而专注于对象。一个新对象可以继承一个就对象的属性。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'MM'</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">getName</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">says</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> myCat <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">)</span>
+myCat<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Kitty'</span>
+myCat<span class="token punctuation">.</span>saying <span class="token operator">=</span> <span class="token string">'meow'</span>
+myCat<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token string">'Kitty is running'</span>
+<span class="token punctuation">&#125;</span>
+myCat<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">' '</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>says
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这是一种差异化继承。</p>
+<h3 id="函数化"><a href="#函数化" class="headerlink" title="函数化"></a>函数化</h3><p>前文看到的继承模式没法保护隐私。对象的所有属性都是可见的。无法得到私有变量和私有函数。为了解决这一问题，我们有模块模式。</p>
+<p>构造一个生成对象的函数需要4步骤：</p>
+<ol>
+<li>创建一个新对象。</li>
+<li>有选择的定义私有变量和方法。</li>
+<li>给这个新对象扩充方法。</li>
+<li>返回那个新对象。</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">mammal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">spec</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> that <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+    that<span class="token punctuation">.</span><span class="token function-variable function">getName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>name
+    <span class="token punctuation">&#125;</span>
+    that<span class="token punctuation">.</span><span class="token function-variable function">says</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> spec<span class="token punctuation">.</span>saying <span class="token operator">||</span> <span class="token string">''</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> that
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">var</span> myMammal <span class="token operator">=</span> <span class="token function">mammal</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Herb'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">saying</span><span class="token operator">:</span> <span class="token string">'Cheers!'</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Herb</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myMammal<span class="token punctuation">.</span><span class="token function">says</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//Cheers!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也可以参考上一篇文章，<a href="http://gaohaoyang.github.io/2016/06/07/JavaScript-good-parts-note1/#section-34">JavaScript 语言精粹笔记1-语法、对象、函数 之模块部分</a>。</p>
+<h3 id="部件"><a href="#部件" class="headerlink" title="部件"></a>部件</h3><p>这一部分看的不是特别懂，我想等我学完ES2015中的类和模块部分后再看看吧。</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="数组字面量"><a href="#数组字面量" class="headerlink" title="数组字面量"></a>数组字面量</h3><p>一个数组字面量是在一对方括号中包围零个或多个用逗号分隔的值的表达式。</p>
+<p>再大多数语言中，一个数组的多有元素都要求是相同的类型。JavaScript 允许数组包含任意混合类型的值。</p>
+<h3 id="长度"><a href="#长度" class="headerlink" title="长度"></a>长度</h3><p>JavaScript 数组的<code>length</code>属性是没有上界的。如果用大于或等于当前<code>length</code>的数字作为下标来存储一个元素，那么<code>length</code>值会被增大以容纳新元素，不会发生数组越界错误。</p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>数组也是对象，可以用<code>delete</code>来删除元素</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'one'</span><span class="token punctuation">,</span> <span class="token string">'two'</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'four'</span><span class="token punctuation">,</span> <span class="token string">'wu'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">delete</span> numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//undefined</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以使用<code>splice</code>方法，进行删除和修改操作。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">numbers<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//two</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">//4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>使用常规<code>for</code>循环即可，可以保证数组的顺序。</p>
+<h3 id="容易混淆的地方"><a href="#容易混淆的地方" class="headerlink" title="容易混淆的地方"></a>容易混淆的地方</h3><p>当属性名是小而连续的整数时，应该使用数组，否则使用对象。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//object</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>返回数组的类型是<code>object</code>，没有任何意义。</p>
+<p>判断数组类型的方法</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>ECMAScript 5.1 (ECMA-262) 和 ECMAScript 2015 (6th Edition, ECMA-262) 标准中的方法。</p>
+<p>或者下面这个方法。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> <span class="token function-variable function">is_array</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Array]'</span>
+<span class="token punctuation">&#125;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">is_array</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>数组的方法被存储在<code>Array.prototype</code>中的函数。</p>
+<p>数组是对象，因此<code>Array.prototype</code>也是可扩充的。</p>
+<h3 id="指定初始值"><a href="#指定初始值" class="headerlink" title="指定初始值"></a>指定初始值</h3><p>JavaScript 的数组不会预制值。</p>
+<p>JavaScript 没有多维数组，单项大多数类 C 语言一样，支持元素为数组的数组。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">var</span> matrix <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">//6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>关于正则表达式，以前的博文写的比较多了，详情见：</p>
+<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-10">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分1</a></p>
+<p><a href="http://gaohaoyang.github.io/2015/04/22/baidu-ife-2-javascript/#section-12">百度Web前端技术学院(2)-JavaScript 基础 之正则表达式部分2</a></p>
+<p><a href="http://gaohaoyang.github.io/2016/05/06/regular-expression-group/">浅谈正则表达式中的分组和引用</a></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>继承 对象 原型 Array 正则</tag>
       </tags>
   </entry>
   <entry>
@@ -2041,137 +2041,6 @@ document<span class="token punctuation">.</span><span class="token function">wri
       </tags>
   </entry>
   <entry>
-    <title>CentOS7定时任务详解</title>
-    <url>/2018/02/10/centos-crontab/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
-<span id="more"></span>
-<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
-<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
-<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
-<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
-<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
-<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
-<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
-<ul>
-<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-# Use the hash sign to prefix a comment
-# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
-# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
-</ul>
-<blockquote>
-<p>1 简单打印</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-每天早上<span class="token number">6</span>点 
-<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
-
-每两个小时 
-<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
-
-晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
-<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
-
-每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
-
-<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
-
-每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
-<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
-
-每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
-<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
-
-每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
-<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
-
-每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
-<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
-
-<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
-
-每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
-<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
-
-每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
-<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
-
-每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
-<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
-
-每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
-<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
-
-每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
-<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
-
-每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
-<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<hr>
-<blockquote>
-<p>2 nginx示例</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
-
-<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
-
-<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
-
-<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
-
-<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
-
-<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每一小时重启nginx
-
-<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
-
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
-
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-一月一号的<span class="token number">4</span>点重启nginx
-
-<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
-每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
-<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
-</li>
-<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
-</li>
-<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
-</li>
-</ol>
-<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
-<p>chmod +x filename</p>
-</blockquote>
-<p>引用：</p>
-<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>centos7 crontab linux 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>安装php7.3.5</title>
     <url>/2021/05/08/centos-php7-3-5/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作需要使用php7.3.5做报表系统<br>本文采用编译安装</p>
@@ -2407,6 +2276,161 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </tags>
   </entry>
   <entry>
+    <title>CentOS7定时任务详解</title>
+    <url>/2018/02/10/centos-crontab/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
+<span id="more"></span>
+<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
+<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
+<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
+<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
+<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
+<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
+<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
+<ul>
+<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+# Use the hash sign to prefix a comment
+# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
+# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
+</ul>
+<blockquote>
+<p>1 简单打印</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+每天早上<span class="token number">6</span>点 
+<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
+
+每两个小时 
+<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
+
+晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
+<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
+
+每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
+
+<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
+
+每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
+<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
+
+每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
+<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
+
+每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
+<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
+
+每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
+<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
+
+<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
+
+每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
+<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
+
+每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
+<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
+
+每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
+<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
+
+每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
+<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
+
+每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
+<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
+
+每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
+<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<blockquote>
+<p>2 nginx示例</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
+
+<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
+
+<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
+
+<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
+
+<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
+
+<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每一小时重启nginx
+
+<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
+
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
+
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+一月一号的<span class="token number">4</span>点重启nginx
+
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
+每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
+<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
+</li>
+<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
+</li>
+<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
+</li>
+</ol>
+<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
+<p>chmod +x filename</p>
+</blockquote>
+<p>引用：</p>
+<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>centos7 crontab linux 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10 关闭更新</title>
+    <url>/2022/08/08/close-win10-update/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
+<span id="more"></span>
+<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>2 在运行处输入 “services.msc”   点击确定。</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>3 在弹出来的服务中，找到“Windows Update”</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>4 选择禁用</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>会多出这两个位置，这样子就设置成功了。</p>
+]]></content>
+      <categories>
+        <category>win10</category>
+      </categories>
+      <tags>
+        <tag>win10 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>du</title>
     <url>/2021/09/18/du-md/</url>
     <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
@@ -2483,30 +2507,6 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </tags>
   </entry>
   <entry>
-    <title>win10 关闭更新</title>
-    <url>/2022/08/08/close-win10-update/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
-<span id="more"></span>
-<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>2 在运行处输入 “services.msc”   点击确定。</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>3 在弹出来的服务中，找到“Windows Update”</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>4 选择禁用</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>会多出这两个位置，这样子就设置成功了。</p>
-]]></content>
-      <categories>
-        <category>win10</category>
-      </categories>
-      <tags>
-        <tag>win10 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git 如何 clone 非 master 分支的代码</title>
     <url>/2022/08/08/git-clone-not-master-branch/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
@@ -2569,6 +2569,82 @@ If you wish to set tracking information for this branch you can do so with:
       </categories>
       <tags>
         <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端如何写一个精确的倒计时</title>
+    <url>/2022/08/08/how-to-write-a-count-down/</url>
+    <content><![CDATA[<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
+<span id="more"></span>
+<p><img data-src="https://img.alicdn.com/tfs/TB18QnlOpXXXXcVXpXXXXXXXXXX-388-256.png"></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>众所周知 setTimeout 或者 setInterval 调用的时候会有微小的误差。有人做了一个 <a href="https://bl.ocks.org/kenpenn/raw/92ebaa71696b4c4c3acd672b1bb3f49a/">demo</a> 来观察这个现象并对其做了修正。短时间的误差倒也可以接受，但是作为一个长时间的倒计时，误差累计就会导致倒计时不准确。</p>
+<p>因此我们可以在获取剩余时间的时候，每次 new 一个设备时间，因为设备时间的流逝相对是准确的，并且如果设备打开了网络时间同步，也会解决这个问题。</p>
+<p>但是，如果用户修改了设备时间，那么整个倒计时就没有意义了，用户只要将设备时间修改为倒计时的 endTime 就可以轻易看到倒计时结束是页面的变化。因此一开始获取服务端时间就是很重要的。</p>
+<p>简单的说，一个简单的精确倒计时原理如下：</p>
+<ul>
+<li>初始化时请求一次服务器时间 serverTime，再 new 一个设备时间 deviceTime</li>
+<li>deviceTime 与 serverTime 的差作为时间偏移修正</li>
+<li>每次递归时 new 一个系统时间，解决 setTimeout 不准确的问题</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>获取剩余时间的代码如下：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * 获取剩余时间
+ * @param  &#123;Number&#125; endTime    截止时间
+ * @param  &#123;Number&#125; deviceTime 设备时间
+ * @param  &#123;Number&#125; serverTime 服务端时间
+ * @return &#123;Object&#125;            剩余时间对象
+ */</span>
+<span class="token keyword">let</span> <span class="token function-variable function">getRemainTime</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">endTime<span class="token punctuation">,</span> deviceTime<span class="token punctuation">,</span> serverTime</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> t <span class="token operator">=</span> endTime <span class="token operator">-</span> Date<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> serverTime <span class="token operator">+</span> deviceTime
+    <span class="token keyword">let</span> seconds <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">60</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> minutes <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token number">1000</span> <span class="token operator">/</span> <span class="token number">60</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">60</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> hours <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">24</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> days <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        <span class="token string-property property">'total'</span><span class="token operator">:</span> t<span class="token punctuation">,</span>
+        <span class="token string-property property">'days'</span><span class="token operator">:</span> days<span class="token punctuation">,</span>
+        <span class="token string-property property">'hours'</span><span class="token operator">:</span> hours<span class="token punctuation">,</span>
+        <span class="token string-property property">'minutes'</span><span class="token operator">:</span> minutes<span class="token punctuation">,</span>
+        <span class="token string-property property">'seconds'</span><span class="token operator">:</span> seconds
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><del>获取服务器时间可以使用 mtop 接口 <code>mtop.common.getTimestamp</code> </del></p>
+<p>然后可以通过下面的方式来使用：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 获取服务端时间（获取服务端时间代码略）</span>
+<span class="token function">getServerTime</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">serverTime</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">//设置定时器</span>
+    <span class="token keyword">let</span> intervalTimer <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+
+        <span class="token comment">// 得到剩余时间</span>
+        <span class="token keyword">let</span> remainTime <span class="token operator">=</span> <span class="token function">getRemainTime</span><span class="token punctuation">(</span>endTime<span class="token punctuation">,</span> deviceTime<span class="token punctuation">,</span> serverTime<span class="token punctuation">)</span>
+
+        <span class="token comment">// 倒计时到两个小时内</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>remainTime<span class="token punctuation">.</span>total <span class="token operator">&lt;=</span> <span class="token number">7200000</span> <span class="token operator">&amp;&amp;</span> remainTime<span class="token punctuation">.</span>total <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// do something</span>
+
+        <span class="token comment">//倒计时结束</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>remainTime<span class="token punctuation">.</span>total <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">clearInterval</span><span class="token punctuation">(</span>intervalTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// do something</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这样的的写法也可以做到准确倒计时，同时也比较简洁。不需要隔段时间再去同步一次服务端时间。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>在写倒计时的时候遇到了一个坑这里记录一下。</p>
+<p><strong>千万别在倒计时结束的时候请求接口</strong>。会让服务端瞬间 QPS 峰值达到非常高。</p>
+<p><img data-src="https://img.alicdn.com/tfs/TB1LBzjOpXXXXcnXpXXXXXXXXXX-154-71.png"></p>
+<p>如果在倒计时结束的时候要使用新的数据渲染页面，正确的做法是：</p>
+<p>在倒计时结束前的一段时间里，先请求好数据，倒计时结束后，再渲染页面。</p>
+<p>关于倒计时，如果你有什么更好的解决方案，欢迎评论交流。</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -2683,82 +2759,6 @@ babel src -d lib<span aria-hidden="true" class="line-numbers-rows"><span></span>
       </categories>
       <tags>
         <tag>ES2015 ES6 ES5 babel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端如何写一个精确的倒计时</title>
-    <url>/2022/08/08/how-to-write-a-count-down/</url>
-    <content><![CDATA[<p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
-<span id="more"></span>
-<p><img data-src="https://img.alicdn.com/tfs/TB18QnlOpXXXXcVXpXXXXXXXXXX-388-256.png"></p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>众所周知 setTimeout 或者 setInterval 调用的时候会有微小的误差。有人做了一个 <a href="https://bl.ocks.org/kenpenn/raw/92ebaa71696b4c4c3acd672b1bb3f49a/">demo</a> 来观察这个现象并对其做了修正。短时间的误差倒也可以接受，但是作为一个长时间的倒计时，误差累计就会导致倒计时不准确。</p>
-<p>因此我们可以在获取剩余时间的时候，每次 new 一个设备时间，因为设备时间的流逝相对是准确的，并且如果设备打开了网络时间同步，也会解决这个问题。</p>
-<p>但是，如果用户修改了设备时间，那么整个倒计时就没有意义了，用户只要将设备时间修改为倒计时的 endTime 就可以轻易看到倒计时结束是页面的变化。因此一开始获取服务端时间就是很重要的。</p>
-<p>简单的说，一个简单的精确倒计时原理如下：</p>
-<ul>
-<li>初始化时请求一次服务器时间 serverTime，再 new 一个设备时间 deviceTime</li>
-<li>deviceTime 与 serverTime 的差作为时间偏移修正</li>
-<li>每次递归时 new 一个系统时间，解决 setTimeout 不准确的问题</li>
-</ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>获取剩余时间的代码如下：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
- * 获取剩余时间
- * @param  &#123;Number&#125; endTime    截止时间
- * @param  &#123;Number&#125; deviceTime 设备时间
- * @param  &#123;Number&#125; serverTime 服务端时间
- * @return &#123;Object&#125;            剩余时间对象
- */</span>
-<span class="token keyword">let</span> <span class="token function-variable function">getRemainTime</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">endTime<span class="token punctuation">,</span> deviceTime<span class="token punctuation">,</span> serverTime</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> t <span class="token operator">=</span> endTime <span class="token operator">-</span> Date<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> serverTime <span class="token operator">+</span> deviceTime
-    <span class="token keyword">let</span> seconds <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">60</span><span class="token punctuation">)</span>
-    <span class="token keyword">let</span> minutes <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token number">1000</span> <span class="token operator">/</span> <span class="token number">60</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">60</span><span class="token punctuation">)</span>
-    <span class="token keyword">let</span> hours <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">24</span><span class="token punctuation">)</span>
-    <span class="token keyword">let</span> days <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>t <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
-        <span class="token string-property property">'total'</span><span class="token operator">:</span> t<span class="token punctuation">,</span>
-        <span class="token string-property property">'days'</span><span class="token operator">:</span> days<span class="token punctuation">,</span>
-        <span class="token string-property property">'hours'</span><span class="token operator">:</span> hours<span class="token punctuation">,</span>
-        <span class="token string-property property">'minutes'</span><span class="token operator">:</span> minutes<span class="token punctuation">,</span>
-        <span class="token string-property property">'seconds'</span><span class="token operator">:</span> seconds
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><del>获取服务器时间可以使用 mtop 接口 <code>mtop.common.getTimestamp</code> </del></p>
-<p>然后可以通过下面的方式来使用：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// 获取服务端时间（获取服务端时间代码略）</span>
-<span class="token function">getServerTime</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">serverTime</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-
-    <span class="token comment">//设置定时器</span>
-    <span class="token keyword">let</span> intervalTimer <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
-
-        <span class="token comment">// 得到剩余时间</span>
-        <span class="token keyword">let</span> remainTime <span class="token operator">=</span> <span class="token function">getRemainTime</span><span class="token punctuation">(</span>endTime<span class="token punctuation">,</span> deviceTime<span class="token punctuation">,</span> serverTime<span class="token punctuation">)</span>
-
-        <span class="token comment">// 倒计时到两个小时内</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>remainTime<span class="token punctuation">.</span>total <span class="token operator">&lt;=</span> <span class="token number">7200000</span> <span class="token operator">&amp;&amp;</span> remainTime<span class="token punctuation">.</span>total <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// do something</span>
-
-        <span class="token comment">//倒计时结束</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>remainTime<span class="token punctuation">.</span>total <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token function">clearInterval</span><span class="token punctuation">(</span>intervalTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">// do something</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这样的的写法也可以做到准确倒计时，同时也比较简洁。不需要隔段时间再去同步一次服务端时间。</p>
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>在写倒计时的时候遇到了一个坑这里记录一下。</p>
-<p><strong>千万别在倒计时结束的时候请求接口</strong>。会让服务端瞬间 QPS 峰值达到非常高。</p>
-<p><img data-src="https://img.alicdn.com/tfs/TB1LBzjOpXXXXcnXpXXXXXXXXXX-154-71.png"></p>
-<p>如果在倒计时结束的时候要使用新的数据渲染页面，正确的做法是：</p>
-<p>在倒计时结束前的一段时间里，先请求好数据，倒计时结束后，再渲染页面。</p>
-<p>关于倒计时，如果你有什么更好的解决方案，欢迎评论交流。</p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -2901,6 +2901,82 @@ port: 1234<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
       </tags>
   </entry>
   <entry>
+    <title>mac使用crt异常报错</title>
+    <url>/2021/05/20/mac-crt/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
+<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
+<span id="more"></span>
+
+<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
+<p>sudo chmod o+w /cores</p>
+<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
+<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;" />
+
+<p>见证一下mac系统</p>
+<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;" />
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
+<p>查看下我们本机的 cores 目录权限</p>
+<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
+...
+drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发现缺少写权限，所以执行</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
+Password:
+ls -l &#x2F;
+...
+drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>然后再去启动CRT就正常了。</p>
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
+    <url>/2021/06/03/nginx-deny-git/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
+<span id="more"></span>
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
+        deny all;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php进程不及时释放进程导致CPU跑满</title>
+    <url>/2021/06/01/php-cpu/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
+<span id="more"></span>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
+<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
+<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
+<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 JavaScript 创建并下载文件</title>
     <url>/2022/08/08/js-create-file-and-download/</url>
     <content><![CDATA[<p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
@@ -2958,65 +3034,6 @@ element<span class="token punctuation">.</span><span class="token function">clic
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mac使用crt异常报错</title>
-    <url>/2021/05/20/mac-crt/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
-<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
-<span id="more"></span>
-
-<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
-<p>sudo chmod o+w /cores</p>
-<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
-<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;" />
-
-<p>见证一下mac系统</p>
-<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;" />
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
-<p>查看下我们本机的 cores 目录权限</p>
-<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
-...
-drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>发现缺少写权限，所以执行</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
-Password:
-ls -l &#x2F;
-...
-drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>然后再去启动CRT就正常了。</p>
-]]></content>
-      <categories>
-        <category>Mac</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
-    <url>/2021/06/03/nginx-deny-git/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
-<span id="more"></span>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
-        deny all;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>nginx</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -3278,6 +3295,90 @@ Done installing documentation for hitimes after 1 seconds
       </tags>
   </entry>
   <entry>
+    <title>window下python3环境安装scrapy</title>
+    <url>/2022/08/08/scrapy-setup-in-win/</url>
+    <content><![CDATA[<p>目录：</p>
+<h2 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h2><blockquote>
+<p>python3  3.6.4， win7 64位  </p>
+</blockquote>
+<span id="more"></span>
+<h2 id="初次安装："><a href="#初次安装：" class="headerlink" title="初次安装："></a>初次安装：</h2><blockquote>
+<p><code> pip install scrapy</code></p>
+</blockquote>
+<p>使用这个命令，在win7 64位是怎么也安装不上去的，因为这已经是第二次了，</p>
+<p>当这个命令输出完后，会出现一系列的问题。当然了，不用怕，这不是需要解决问题的方法来了嘛。</p>
+<p>可能出现需要下载版本对应的visual studio,但是也太大了，或也可以说下载慢。。。。。。但是，我们可以不用去进行下载，只要进行下面几个文件的安装就可以了。</p>
+<h2 id="打开网站"><a href="#打开网站" class="headerlink" title="打开网站"></a>打开网站</h2><p>首先你打开这个网站（里面包含了各种编译好的库）：</p>
+<blockquote>
+<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml</a></p>
+</blockquote>
+<h2 id="安装wheel"><a href="#安装wheel" class="headerlink" title="安装wheel"></a>安装wheel</h2><blockquote>
+<p><code> pip install wheel</code></p>
+</blockquote>
+<p>安装成功的界面</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-93cab0d529ca1dba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wheel—success.png"></p>
+<h2 id="安装-whl文件"><a href="#安装-whl文件" class="headerlink" title="安装.whl文件"></a>安装.whl文件</h2><p>这里需要安装三个.whl文件，而且是全名的安装，</p>
+<p>以下三个文件：</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-eaf16a31171cd6ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=".whl文件.png"></p>
+<p>中途可能会出现<code>Failed to build XXXX </code> 或者是<code> twisted</code>等相关的内容</p>
+<p>因为scrapy是基于twisted框架的，所以，twisted框架也需要进行安装</p>
+<p>当上面三个文件安装好了：</p>
+<p>再次运行：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">scrapy startproject pyjy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样就完成了scrapy在win下python3下的安装</p>
+<h2 id="end"><a href="#end" class="headerlink" title="end"></a>end</h2>]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>scrapy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu 16.04 下MySQL的安装</title>
+    <url>/2022/08/08/setup-mysql-inubuntu/</url>
+    <content><![CDATA[<p>1， 打开终端：</p>
+<blockquote>
+<p> sudo apt-get install mysql-server</p>
+</blockquote>
+<span id="more"></span>
+<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
+<p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
+<p>4 ，接下来，会继续让我们输入一次密码</p>
+<p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
+<p>6， 这时候已经安装完成了，我们需要验证一下是否安装上了mysql-server</p>
+<blockquote>
+<p> mysql -u root -p</p>
+</blockquote>
+<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+snakeson@snakeson<span class="token operator">-</span>Inspiron<span class="token operator">-</span><span class="token number">5421</span><span class="token operator">:</span><span class="token operator">~</span>$ mysql <span class="token operator">-</span>u root <span class="token operator">-</span>p
+Enter password<span class="token operator">:</span> 
+Welcome to the MySQL monitor<span class="token punctuation">.</span>  Commands end <span class="token keyword">with</span> <span class="token punctuation">;</span> or \g<span class="token punctuation">.</span>
+Your MySQL connection id is <span class="token number">5</span>
+Server version<span class="token operator">:</span> <span class="token number">5.7</span><span class="token number">.20</span><span class="token operator">-</span>0ubuntu0<span class="token punctuation">.</span><span class="token number">16.04</span><span class="token number">.1</span> <span class="token punctuation">(</span>Ubuntu<span class="token punctuation">)</span>
+
+<span class="token function">Copyright</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span><span class="token punctuation">,</span> <span class="token number">2017</span><span class="token punctuation">,</span> Oracle and<span class="token operator">/</span>or its affiliates<span class="token punctuation">.</span> All rights reserved<span class="token punctuation">.</span>
+
+Oracle is a registered trademark <span class="token keyword">of</span> Oracle Corporation and<span class="token operator">/</span>or its
+affiliates<span class="token punctuation">.</span> Other names may be trademarks <span class="token keyword">of</span> their respective
+owners<span class="token punctuation">.</span>
+
+Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help<span class="token punctuation">.</span> Type <span class="token string">'\c'</span> to clear the current input statement<span class="token punctuation">.</span>
+
+mysql<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux ubuntu16.04 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 作用域和作用域链</title>
     <url>/2015/05/20/scope/</url>
     <content><![CDATA[<h2 id="JavaScript-作用域"><a href="#JavaScript-作用域" class="headerlink" title="JavaScript 作用域"></a>JavaScript 作用域</h2><p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
@@ -3471,61 +3572,160 @@ x <span class="token operator">=</span> <span class="token number">20</span><spa
       </tags>
   </entry>
   <entry>
-    <title>php进程不及时释放进程导致CPU跑满</title>
-    <url>/2021/06/01/php-cpu/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
+    <title>Fisher–Yates shuffle 洗牌算法</title>
+    <url>/2022/08/08/shuffle-algorithm/</url>
+    <content><![CDATA[<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
 <span id="more"></span>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
-<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
-<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
-<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
+<p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
+<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
+<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
+<p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
+<ol>
+<li>写下从 1 到 N 的数字</li>
+<li>取一个从 1 到剩下的数字（包括这个数字）的随机数 k</li>
+<li>从低位开始，得到第 k 个数字（这个数字还没有被取出），把它写在独立的一个列表的最后一位</li>
+<li>重复第 2 步，直到所有的数字都被取出</li>
+<li>第 3 步写出的这个序列，现在就是原始数字的随机排列</li>
+</ol>
+<p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
+<h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
+<p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 **O(n)**。算法的伪代码如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">-- To shuffle an array a of n elements (indices 0..n-1):
+for i from n−1 downto 1 do
+     j ← random integer such that 0 ≤ j ≤ i
+     exchange a[j] and a[i]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
+<table>
+<thead>
+<tr>
+<th align="left">随机数取值范围</th>
+<th align="left">随机数</th>
+<th align="right">原始数据</th>
+<th align="left">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">1 2 3 4 5 6 7 8</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">1-8</td>
+<td align="left">6</td>
+<td align="right">1 2 3 4 5 7 8</td>
+<td align="left">6</td>
+</tr>
+<tr>
+<td align="left">1-7</td>
+<td align="left">2</td>
+<td align="right">1 7 3 4 5 8</td>
+<td align="left">2 6</td>
+</tr>
+<tr>
+<td align="left">1–6</td>
+<td align="left">6</td>
+<td align="right">1 7 3 4 5</td>
+<td align="left">8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–5</td>
+<td align="left">1</td>
+<td align="right">5 7 3 4</td>
+<td align="left">1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–4</td>
+<td align="left">3</td>
+<td align="right">5 7 4</td>
+<td align="left">3 1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–3</td>
+<td align="left">3</td>
+<td align="right">5 7</td>
+<td align="left">4 3 1 8 2 6</td>
+</tr>
+<tr>
+<td align="left">1–2</td>
+<td align="left">1</td>
+<td align="right">7</td>
+<td align="left">5 4 3 1 8 2 6</td>
+</tr>
+</tbody></table>
+<h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
+<iframe height='317' scrolling='no' src='//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/haoyang/pen/jrvrQq/'>Fisher–Yates shuffle</a> by Chuan shi (<a href='http://codepen.io/haoyang'>@haoyang</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+
+<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
+ * Fisher–Yates shuffle
+ */</span>
+<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">shuffle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">var</span> input <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> input<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token keyword">var</span> randomIndex <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> itemAtIndex <span class="token operator">=</span> input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+        input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span> <span class="token operator">=</span> input<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        input<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> itemAtIndex<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> input<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用方式也很简单，直接用数组调用这个方法即可</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">shuffle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle From Wikipedia</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>php</category>
+        <category>JavaScript</category>
       </categories>
       <tags>
-        <tag>php</tag>
+        <tag>算法 shuffle 乱序 洗牌</tag>
       </tags>
   </entry>
   <entry>
-    <title>window下python3环境安装scrapy</title>
-    <url>/2022/08/08/scrapy-setup-in-win/</url>
-    <content><![CDATA[<p>目录：</p>
-<h2 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h2><blockquote>
-<p>python3  3.6.4， win7 64位  </p>
-</blockquote>
+    <title>swap分区介绍</title>
+    <url>/2021/05/20/swap/</url>
+    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
+<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
+<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
 <span id="more"></span>
-<h2 id="初次安装："><a href="#初次安装：" class="headerlink" title="初次安装："></a>初次安装：</h2><blockquote>
-<p><code> pip install scrapy</code></p>
-</blockquote>
-<p>使用这个命令，在win7 64位是怎么也安装不上去的，因为这已经是第二次了，</p>
-<p>当这个命令输出完后，会出现一系列的问题。当然了，不用怕，这不是需要解决问题的方法来了嘛。</p>
-<p>可能出现需要下载版本对应的visual studio,但是也太大了，或也可以说下载慢。。。。。。但是，我们可以不用去进行下载，只要进行下面几个文件的安装就可以了。</p>
-<h2 id="打开网站"><a href="#打开网站" class="headerlink" title="打开网站"></a>打开网站</h2><p>首先你打开这个网站（里面包含了各种编译好的库）：</p>
-<blockquote>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml</a></p>
-</blockquote>
-<h2 id="安装wheel"><a href="#安装wheel" class="headerlink" title="安装wheel"></a>安装wheel</h2><blockquote>
-<p><code> pip install wheel</code></p>
-</blockquote>
-<p>安装成功的界面</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-93cab0d529ca1dba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wheel—success.png"></p>
-<h2 id="安装-whl文件"><a href="#安装-whl文件" class="headerlink" title="安装.whl文件"></a>安装.whl文件</h2><p>这里需要安装三个.whl文件，而且是全名的安装，</p>
-<p>以下三个文件：</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-eaf16a31171cd6ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=".whl文件.png"></p>
-<p>中途可能会出现<code>Failed to build XXXX </code> 或者是<code> twisted</code>等相关的内容</p>
-<p>因为scrapy是基于twisted框架的，所以，twisted框架也需要进行安装</p>
-<p>当上面三个文件安装好了：</p>
-<p>再次运行：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">scrapy startproject pyjy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这样就完成了scrapy在win下python3下的安装</p>
-<h2 id="end"><a href="#end" class="headerlink" title="end"></a>end</h2>]]></content>
+<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
+<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
+<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
+<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
+<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
+<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
+<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
+<p>4-8G的物理内存，swap 等于内存大小。</p>
+<p>8-64G 的物理内存，swap 设置为8G。</p>
+<p>64-256G物理内存，swap 设置为16G。</p>
+<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
+<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
+<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
+<p>用swapoff关闭交换分区</p>
+<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
+<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
+<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
+<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
+<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
+<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
+<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
+]]></content>
       <categories>
-        <category>爬虫</category>
+        <category>linux</category>
       </categories>
       <tags>
-        <tag>scrapy</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -3664,206 +3864,6 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </categories>
       <tags>
         <tag>Sublime jshint csslint</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu 16.04 下MySQL的安装</title>
-    <url>/2022/08/08/setup-mysql-inubuntu/</url>
-    <content><![CDATA[<p>1， 打开终端：</p>
-<blockquote>
-<p> sudo apt-get install mysql-server</p>
-</blockquote>
-<span id="more"></span>
-<p>2 ，接下来会让你选择y/n, 这里你选择y,</p>
-<p>3 ，这里会出现一个让你输入mysql-server的密码，输入完后如果鼠标点击不了，可以使用Tab键+enter键继续下一步</p>
-<p>4 ，接下来，会继续让我们输入一次密码</p>
-<p>5， 密码输入完后，我们这里的mysql-server的用户名是：root ，密码是我们刚刚设置过的密码，</p>
-<p>6， 这时候已经安装完成了，我们需要验证一下是否安装上了mysql-server</p>
-<blockquote>
-<p> mysql -u root -p</p>
-</blockquote>
-<p>按enter键后会让我们输入密码，当我们输入密码后，会出现：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-snakeson@snakeson<span class="token operator">-</span>Inspiron<span class="token operator">-</span><span class="token number">5421</span><span class="token operator">:</span><span class="token operator">~</span>$ mysql <span class="token operator">-</span>u root <span class="token operator">-</span>p
-Enter password<span class="token operator">:</span> 
-Welcome to the MySQL monitor<span class="token punctuation">.</span>  Commands end <span class="token keyword">with</span> <span class="token punctuation">;</span> or \g<span class="token punctuation">.</span>
-Your MySQL connection id is <span class="token number">5</span>
-Server version<span class="token operator">:</span> <span class="token number">5.7</span><span class="token number">.20</span><span class="token operator">-</span>0ubuntu0<span class="token punctuation">.</span><span class="token number">16.04</span><span class="token number">.1</span> <span class="token punctuation">(</span>Ubuntu<span class="token punctuation">)</span>
-
-<span class="token function">Copyright</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2000</span><span class="token punctuation">,</span> <span class="token number">2017</span><span class="token punctuation">,</span> Oracle and<span class="token operator">/</span>or its affiliates<span class="token punctuation">.</span> All rights reserved<span class="token punctuation">.</span>
-
-Oracle is a registered trademark <span class="token keyword">of</span> Oracle Corporation and<span class="token operator">/</span>or its
-affiliates<span class="token punctuation">.</span> Other names may be trademarks <span class="token keyword">of</span> their respective
-owners<span class="token punctuation">.</span>
-
-Type <span class="token string">'help;'</span> or <span class="token string">'\h'</span> <span class="token keyword">for</span> help<span class="token punctuation">.</span> Type <span class="token string">'\c'</span> to clear the current input statement<span class="token punctuation">.</span>
-
-mysql<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>7 ， 这样我们就在Ubuntu下安装好了mysql-server。</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux ubuntu16.04 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>swap分区介绍</title>
-    <url>/2021/05/20/swap/</url>
-    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
-<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
-<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
-<span id="more"></span>
-<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
-<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
-<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
-<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
-<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
-<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
-<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
-<p>4-8G的物理内存，swap 等于内存大小。</p>
-<p>8-64G 的物理内存，swap 设置为8G。</p>
-<p>64-256G物理内存，swap 设置为16G。</p>
-<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
-<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
-<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
-<p>用swapoff关闭交换分区</p>
-<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
-<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
-<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
-<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
-<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
-<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
-<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Fisher–Yates shuffle 洗牌算法</title>
-    <url>/2022/08/08/shuffle-algorithm/</url>
-    <content><![CDATA[<p>简单来说 Fisher–Yates shuffle 算法是一个用来将一个有限集合生成一个随机排列的算法（数组随机排序）。这个算法生成的随机排列是等概率的。同时这个算法非常高效。</p>
-<span id="more"></span>
-<p>本文主要介绍这个算法的来源、演变、原理。并举出一个例子为大家清晰的描述每次迭代过程。最后使用 JavaScript 代码将算法实现。</p>
-<p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Riffle_shuffle.jpg/320px-Riffle_shuffle.jpg"></p>
-<h2 id="Fisher-and-Yates-的原始版"><a href="#Fisher-and-Yates-的原始版" class="headerlink" title="Fisher and Yates 的原始版"></a>Fisher and Yates 的原始版</h2><p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Biologist_and_statistician_Ronald_Fisher.jpg/189px-Biologist_and_statistician_Ronald_Fisher.jpg"></p>
-<p>Fisher–Yates shuffle 的原始版本，最初描述在 1938 年的 Ronald Fisher（上图） 和 Frank Yates 写的书中，书名为《Statistical tables for biological, agricultural and medical research》。他们使用纸和笔去描述了这个算法，并使用了一个随机数表来提供随机数。它给出了 1 到 N 的数字的的随机排列，具体步骤如下：</p>
-<ol>
-<li>写下从 1 到 N 的数字</li>
-<li>取一个从 1 到剩下的数字（包括这个数字）的随机数 k</li>
-<li>从低位开始，得到第 k 个数字（这个数字还没有被取出），把它写在独立的一个列表的最后一位</li>
-<li>重复第 2 步，直到所有的数字都被取出</li>
-<li>第 3 步写出的这个序列，现在就是原始数字的随机排列</li>
-</ol>
-<p>已经证明如果第 2 步取出的数字是真随机的，那么最后得到的排序一定也是。</p>
-<h2 id="现代方法"><a href="#现代方法" class="headerlink" title="现代方法"></a>现代方法</h2><p>Fisher–Yates shuffle 算法的现代版本是为计算机设计的。由 Richard Durstenfeld 在1964年 描述。并且是被 Donald E. Knuth 在 《The Art of Computer Programming》 中推广。但是不管是 Durstenfeld 还是 Knuth，都没有在书的第一版中承认这个算法是 Fisher 和 Yates 的研究成果。也许他们并不知道。不过后来出版的 《The Art of Computer Programming》提到了 Fisher 和 Yates 贡献。</p>
-<p>现代版本的描述与原始略有不同，因为如果按照原始方法，愚蠢的计算机会花很多无用的时间去计算上述第 3 步的剩余数字。<strong>这里的方法是在每次迭代时交换这个被取出的数字到原始列表的最后</strong>。这样就将时间复杂度从 O(n^2) 减小到了 **O(n)**。算法的伪代码如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">-- To shuffle an array a of n elements (indices 0..n-1):
-for i from n−1 downto 1 do
-     j ← random integer such that 0 ≤ j ≤ i
-     exchange a[j] and a[i]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="迭代步骤演示"><a href="#迭代步骤演示" class="headerlink" title="迭代步骤演示"></a>迭代步骤演示</h3><p>根据每次迭代次数可以用下面的表格，描述这个算法的执行过程</p>
-<table>
-<thead>
-<tr>
-<th align="left">随机数取值范围</th>
-<th align="left">随机数</th>
-<th align="right">原始数据</th>
-<th align="left">结果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">1 2 3 4 5 6 7 8</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">1-8</td>
-<td align="left">6</td>
-<td align="right">1 2 3 4 5 7 8</td>
-<td align="left">6</td>
-</tr>
-<tr>
-<td align="left">1-7</td>
-<td align="left">2</td>
-<td align="right">1 7 3 4 5 8</td>
-<td align="left">2 6</td>
-</tr>
-<tr>
-<td align="left">1–6</td>
-<td align="left">6</td>
-<td align="right">1 7 3 4 5</td>
-<td align="left">8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–5</td>
-<td align="left">1</td>
-<td align="right">5 7 3 4</td>
-<td align="left">1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–4</td>
-<td align="left">3</td>
-<td align="right">5 7 4</td>
-<td align="left">3 1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–3</td>
-<td align="left">3</td>
-<td align="right">5 7</td>
-<td align="left">4 3 1 8 2 6</td>
-</tr>
-<tr>
-<td align="left">1–2</td>
-<td align="left">1</td>
-<td align="right">7</td>
-<td align="left">5 4 3 1 8 2 6</td>
-</tr>
-</tbody></table>
-<h3 id="动画演示"><a href="#动画演示" class="headerlink" title="动画演示"></a>动画演示</h3><p>下面这个动画就是整个数组 0-19 的随机排序过程</p>
-<iframe height='317' scrolling='no' src='//codepen.io/haoyang/embed/jrvrQq/?height=317&theme-id=dark&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/haoyang/pen/jrvrQq/'>Fisher–Yates shuffle</a> by Chuan shi (<a href='http://codepen.io/haoyang'>@haoyang</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
-
-<h2 id="JavaScript-代码实现"><a href="#JavaScript-代码实现" class="headerlink" title="JavaScript 代码实现"></a>JavaScript 代码实现</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">/**
- * Fisher–Yates shuffle
- */</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">shuffle</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">var</span> input <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> input<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        <span class="token keyword">var</span> randomIndex <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">var</span> itemAtIndex <span class="token operator">=</span> input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-        input<span class="token punctuation">[</span>randomIndex<span class="token punctuation">]</span> <span class="token operator">=</span> input<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        input<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> itemAtIndex<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> input<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>使用方式也很简单，直接用数组调用这个方法即可</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">shuffle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token comment">//[4, 6, 3, 2, 5, 1, 7, 8] // 每次结果都是随机的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之，Fisher–Yates shuffle 算法是一个非常高效又公平的随机排序算法，如果有随机排序数组的需求，用这个就对了！</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle From Wikipedia</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>算法 shuffle 乱序 洗牌</tag>
       </tags>
   </entry>
   <entry>
@@ -4648,106 +4648,6 @@ $ gem install sass
       </tags>
   </entry>
   <entry>
-    <title>基本数据类型的相互转换</title>
-    <url>/2022/04/07/Interconversion-of-basic-data-types/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>布尔类型</title>
-    <url>/2022/03/18/bool-type/</url>
-    <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
-<p>2、bool 类型占1个字节</p>
-<p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p>
-<h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-	&quot;unsafe&quot;
-)
-
-func main() &#123;
-	var n1 &#x3D; false
-	fmt.Println(&quot;n1&#x3D;&quot;, n1)
-	fmt.Println(&quot;n1占用空间：&quot;, unsafe.Sizeof(n1))
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color=#FF000>n1= false</font></p>
-<p><font color=#FF0000>n1占用空间： 1</font></p>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符类型</title>
-    <url>/2022/03/17/byte-type/</url>
-    <content><![CDATA[<h1 id="1-字符类型"><a href="#1-字符类型" class="headerlink" title="1.字符类型"></a>1.字符类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Golang 中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存。字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。也就是说对于传统的字符串是由字符组成的，而 Go 的字符串不同，它是由字节组成的。</p>
-<span id="more"></span>
-
-<h2 id="1-1-字符类型使用细节"><a href="#1-1-字符类型使用细节" class="headerlink" title="1.1 字符类型使用细节"></a>1.1 字符类型使用细节</h2><ol>
-<li>字符常量是用单引号(‘’)括起来的单个字符。例如：var c1 byte = ‘a’ var c2 int = ‘中’ var c3 byte = ‘9’ </li>
-<li>Go 中允许使用转义字符 ‘\’来将其后的字符转变为特殊字符型常量。例如：var c3 char = ‘\n’ // ‘\n’表示换行符 </li>
-<li>Go 语言的字符使用 UTF-8 编码 ，如果想查询字符对应 的 utf8 码 值 <a href="http://www.mytju.com/classcode/tools/encode_utf8.asp">http://www.mytju.com/classcode/tools/encode_utf8.asp</a> 英文字母-1 个字节 汉字-3 个字节 </li>
-<li>在 Go 中，字符的本质是一个整数，直接输出时，是该字符对应的 UTF-8 编码的码值。</li>
-<li>可以直接给某个变量赋一个数字，然后按格式化输出时%c，会输出该数字对应的 unicode 字符</li>
-<li>字符类型是可以进行运算的，相当于一个整数，因为它都对应有 Unicode 码</li>
-</ol>
-<h2 id="1-2-字符类型本质探讨"><a href="#1-2-字符类型本质探讨" class="headerlink" title="1.2 字符类型本质探讨"></a>1.2 字符类型本质探讨</h2><ol>
-<li>   字符型存储到计算机中，需要将字符对应的码值（整数）找出来 存储：字符—&gt;对应码值—-&gt;二进制–&gt;存储读取：二进制 —-&gt; 码值 —-&gt; 字符 –&gt; 读取 </li>
-</ol>
-<ol start="2">
-<li>字符和码值的对应关系是通过字符编码表决定的(是规定好) </li>
-<li>Go 语言的编码都统一成了 utf-8。非常的方便，很统一，再也没有编码乱码的困扰了</li>
-</ol>
-<h2 id="1-3-案例演示"><a href="#1-3-案例演示" class="headerlink" title="1.3 案例演示"></a>1.3 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var n1 byte &#x3D; &#39;a&#39;
-	var n2 byte &#x3D; &#39;8&#39;
-	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
-	fmt.Printf(&quot;n1&#x3D;%c,n2&#x3D;%c\n&quot;, n1, n2)
-	&#x2F;&#x2F; var n3 byte &#x3D; &#39;董&#39;
-	&#x2F;&#x2F; fmt.Println(&quot;n3&#x3D;&quot;, n3)
-	var n4 int &#x3D; &#39;董&#39;
-	&#x2F;&#x2F; fmt.Println(&quot;n4&#x3D;&quot;, n4)
-	fmt.Printf(&quot;n4&#x3D;%c,n4&#x3D;%d&quot;, n4, n4)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color=#FF0000> n1= 97 n2= 56</p>
-<p>n1=a,n2=8</p>
-<p>n4=董,n4=33891</p>
-</font>
-
-<ol>
-<li>如果我们保存的字符在 ASCII 表的,比如[0-1, a-z,A-Z..]直接可以保存到 byte </li>
-<li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
-<li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
-</ol>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>loki</title>
     <url>/2021/09/22/loki/</url>
     <content><![CDATA[<h1 id="简-介"><a href="#简-介" class="headerlink" title="简 介"></a>简 介</h1><p>Loki是受Prometheus启发由Grafana Labs团队开源的水平可扩展，高度可用的多租户日志聚合系统。 开发语言: Google Go。它的设计具有很高的成本效益，并且易于操作。使用标签来作为索引，而不是对全文进行检索，也就是说，你通过这些标签既可以查询日志的内容也可以查询到监控的数据签，极大地降低了日志索引的存储。系统架构十分简单，由以下3个部分组成 ：</p>
@@ -4936,6 +4836,106 @@ $ systemctl status loki<span aria-hidden="true" class="line-numbers-rows"><span>
       </categories>
       <tags>
         <tag>ops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基本数据类型的相互转换</title>
+    <url>/2022/04/07/Interconversion-of-basic-data-types/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>布尔类型</title>
+    <url>/2022/03/18/bool-type/</url>
+    <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
+<p>2、bool 类型占1个字节</p>
+<p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p>
+<h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;unsafe&quot;
+)
+
+func main() &#123;
+	var n1 &#x3D; false
+	fmt.Println(&quot;n1&#x3D;&quot;, n1)
+	fmt.Println(&quot;n1占用空间：&quot;, unsafe.Sizeof(n1))
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color=#FF000>n1= false</font></p>
+<p><font color=#FF0000>n1占用空间： 1</font></p>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符类型</title>
+    <url>/2022/03/17/byte-type/</url>
+    <content><![CDATA[<h1 id="1-字符类型"><a href="#1-字符类型" class="headerlink" title="1.字符类型"></a>1.字符类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Golang 中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存。字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。也就是说对于传统的字符串是由字符组成的，而 Go 的字符串不同，它是由字节组成的。</p>
+<span id="more"></span>
+
+<h2 id="1-1-字符类型使用细节"><a href="#1-1-字符类型使用细节" class="headerlink" title="1.1 字符类型使用细节"></a>1.1 字符类型使用细节</h2><ol>
+<li>字符常量是用单引号(‘’)括起来的单个字符。例如：var c1 byte = ‘a’ var c2 int = ‘中’ var c3 byte = ‘9’ </li>
+<li>Go 中允许使用转义字符 ‘\’来将其后的字符转变为特殊字符型常量。例如：var c3 char = ‘\n’ // ‘\n’表示换行符 </li>
+<li>Go 语言的字符使用 UTF-8 编码 ，如果想查询字符对应 的 utf8 码 值 <a href="http://www.mytju.com/classcode/tools/encode_utf8.asp">http://www.mytju.com/classcode/tools/encode_utf8.asp</a> 英文字母-1 个字节 汉字-3 个字节 </li>
+<li>在 Go 中，字符的本质是一个整数，直接输出时，是该字符对应的 UTF-8 编码的码值。</li>
+<li>可以直接给某个变量赋一个数字，然后按格式化输出时%c，会输出该数字对应的 unicode 字符</li>
+<li>字符类型是可以进行运算的，相当于一个整数，因为它都对应有 Unicode 码</li>
+</ol>
+<h2 id="1-2-字符类型本质探讨"><a href="#1-2-字符类型本质探讨" class="headerlink" title="1.2 字符类型本质探讨"></a>1.2 字符类型本质探讨</h2><ol>
+<li>   字符型存储到计算机中，需要将字符对应的码值（整数）找出来 存储：字符—&gt;对应码值—-&gt;二进制–&gt;存储读取：二进制 —-&gt; 码值 —-&gt; 字符 –&gt; 读取 </li>
+</ol>
+<ol start="2">
+<li>字符和码值的对应关系是通过字符编码表决定的(是规定好) </li>
+<li>Go 语言的编码都统一成了 utf-8。非常的方便，很统一，再也没有编码乱码的困扰了</li>
+</ol>
+<h2 id="1-3-案例演示"><a href="#1-3-案例演示" class="headerlink" title="1.3 案例演示"></a>1.3 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
+
+import (
+	&quot;fmt&quot;
+)
+
+func main() &#123;
+	var n1 byte &#x3D; &#39;a&#39;
+	var n2 byte &#x3D; &#39;8&#39;
+	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
+	fmt.Printf(&quot;n1&#x3D;%c,n2&#x3D;%c\n&quot;, n1, n2)
+	&#x2F;&#x2F; var n3 byte &#x3D; &#39;董&#39;
+	&#x2F;&#x2F; fmt.Println(&quot;n3&#x3D;&quot;, n3)
+	var n4 int &#x3D; &#39;董&#39;
+	&#x2F;&#x2F; fmt.Println(&quot;n4&#x3D;&quot;, n4)
+	fmt.Printf(&quot;n4&#x3D;%c,n4&#x3D;%d&quot;, n4, n4)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color=#FF0000> n1= 97 n2= 56</p>
+<p>n1=a,n2=8</p>
+<p>n4=董,n4=33891</p>
+</font>
+
+<ol>
+<li>如果我们保存的字符在 ASCII 表的,比如[0-1, a-z,A-Z..]直接可以保存到 byte </li>
+<li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
+<li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
+</ol>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
       </tags>
   </entry>
   <entry>
