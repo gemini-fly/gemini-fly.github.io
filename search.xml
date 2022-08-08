@@ -1,150 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ISP</title>
-    <url>/2021/05/28/ISP/</url>
-    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
-<span id="more"></span>
-<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端处理动态 url 和 pushStatus 的使用</title>
-    <url>/2015/12/31/History-API/</url>
-    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
-<span id="more"></span>
-<ul>
-<li>webpack 自动构建</li>
-<li>AMD 模块化 js</li>
-<li>Sass 预处理 CSS</li>
-<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
-</ul>
-<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
-<p>这里我将问题描述如下：</p>
-<blockquote>
-<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
-<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
-<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
-</blockquote>
-<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
-<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
-<p>下面就来研究和实践一下吧。</p>
-<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
-<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
-<p>如下图，Chrome的历史记录：</p>
-<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
-<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
-<ul>
-<li><p><code>back()</code></p>
-<p>  在历史记录中后退</p>
-<pre><code>  history.back();
-</code></pre>
-</li>
-<li><p><code>forward()</code></p>
-<p>  在历史记录中前进</p>
-<pre><code>  history.forward();
-</code></pre>
-</li>
-<li><p><code>go()</code></p>
-<p>  移动到指定的历史记录点</p>
-<pre><code>  history.go(-1);
-</code></pre>
-<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
-<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
-</li>
-<li><p><code>length</code></p>
-<p>  <code>length</code>为history的属性，显示history长度。</p>
-</li>
-</ul>
-<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href></a></p>
-<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
-<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
-<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
-<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
-<ul>
-<li><p><code>pushState(any data, string title, [string url])</code></p>
-<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
-<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
-<p>  例如，我们有这样一段代码：</p>
-<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
-
-  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
-      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
-      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
-  &#125;);
-</code></pre>
-<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
-</li>
-</ul>
-<ul>
-<li><p><code>replaceState(any data, string title, [string url])</code></p>
-<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
-</li>
-</ul>
-<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
-<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
-<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
-<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
-<p>Pjax的原理十分简单。</p>
-<ol>
-<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
-<li>使用 Ajax 请求新页面。</li>
-<li>将返回的 Html 替换到页面中。</li>
-<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
-</ol>
-<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
-<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
-<pre><code>window.onpopstate = function(event) &#123;
-    console.log(event.state);
-    console.log(location);
-&#125;;
-</code></pre>
-<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
-<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
-<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
-<li><a href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
-<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
-<li><a href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
-<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
-<li><a href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
-<li><a href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
-<li><a href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
-<li><a href="https://github.com/browserstate/history.js">History.js</a></li>
-<li><a href="https://github.com/defunkt/jquery-pjax">defunkt/jquery-pjax GitHub</a></li>
-<li><a href="https://github.com/welefen/pjax">welefen/pjax</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 阶段总结</title>
-    <url>/2015/07/09/JavaScript-Net/</url>
-    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
-<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 面向对象</title>
     <url>/2015/06/15/JavaScript-Object-Oriented/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
@@ -481,129 +337,140 @@ moduleA = function() &#123;
       </tags>
   </entry>
   <entry>
-    <title>JavaScript 中的闭包</title>
-    <url>/2015/06/14/JavaScript-closure/</url>
-    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
-    var localVal = 30;
-    return localVal;
-&#125;
-
-console.log(outer()); //30
-
-function outer2() &#123;
-    var localVal = 30;
-    return function() &#123;
-        return localVal;
-    &#125;;
-&#125;
-
-var func = outer2();
-console.log(func()); //30
-</code></pre>
-<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
-<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+    <title>JavaScript 阶段总结</title>
+    <url>/2015/07/09/JavaScript-Net/</url>
+    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
+<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ISP</title>
+    <url>/2021/05/28/ISP/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
 <span id="more"></span>
-<hr>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
-<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
-<pre><code>  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      document.addEventListener(&#39;click&#39;,
-          function() &#123;
-              console.log(localData); //这里访问外部数据
-          &#125;);
-  &#125;();
-
-  ! function() &#123;
-      var localData = &quot;localData here&quot;;
-      var url = &quot;http://www.baidu.com/&quot;;
-      $.ajax(&#123;
-          url: url,
-          success: function() &#123;
-              // do sth...
-              console.log(localData); //这里访问外部数据
-          &#125;
-      &#125;);
-  &#125;()
-</code></pre>
-</li>
-</ul>
-<hr>
-<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    document.getElementById(&#39;div&#39; + i).
-    addEventListener(&#39;click&#39;, function() &#123;
-        alert(i); // all are 4!
-    &#125;);
-&#125;
-</code></pre>
-<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
-<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
-<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
-for (var i = 1; i &lt; 4; i++) &#123;
-    ! function(i) &#123;
-        document.getElementById(&#39;div&#39; + i).
-        addEventListener(&#39;click&#39;, function() &#123;
-            alert(i); // 1, 2, 3
-        &#125;);
-    &#125;(i);
-&#125;
-</code></pre>
-<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
-<hr>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
-    var _userId = 9527;
-    var _typeId = &quot;item&quot;;
-    var exp = &#123;&#125;;
-
-    function converter(userId) &#123;
-        return +userId;
-    &#125;
-
-    exp.getUserId = function() &#123;
-        return converter(_userId);
-    &#125;;
-
-    exp.getTypeId = function() &#123;
-        return _typeId;
-    &#125;;
-
-    window.a = exp;
-&#125;)();
-
-console.log(a.getUserId()); //9527
-console.log(a.getTypeId()); //item
-
-console.log(a._userId); //undefined
-console.log(a._typeId); //undefined
-console.log(converter); //Uncaught ReferenceError: converter is not defined
-</code></pre>
-<p>上面的代码通过闭包实现了一个封装。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端处理动态 url 和 pushStatus 的使用</title>
+    <url>/2015/12/31/History-API/</url>
+    <content><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>起因是这样的，在尝试前后端分离的这条道路上，我自己也在不断摸索，感觉要把大部分的坑都踩踩了。目前我用的技术是：</p>
+<span id="more"></span>
 <ul>
-<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
-</li>
-<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
-</li>
+<li>webpack 自动构建</li>
+<li>AMD 模块化 js</li>
+<li>Sass 预处理 CSS</li>
+<li>使用前端模板引擎 handlebars 解决动态操作将 html 拼接在 js 中的问题</li>
 </ul>
-<p>from 维基百科</p>
+<p>但最近写了一个项目类似知乎这样的多页网站。前端 url 的处理让我觉得不够优雅。我使用的是 hash 的方式处理动态 url 的，为此我专门在知乎上提了一个问题：<a href="https://www.zhihu.com/question/38802932">前端如何处理动态url？</a></p>
+<p>这里我将问题描述如下：</p>
+<blockquote>
+<p>前后端彻底分离的情况下，页面跳转页全部由前端控制。那么如何更好的处理动态url地址？<br>例如本问题的url为<br><a href="https://www.zhihu.com/question/38802932">https://www.zhihu.com/question/38802932</a><br>这肯定是用后台路由处理的url</p>
+<p>纯前端怎么处理？用hash吗，如下:<br><a href="https://www.zhihu.com/question#38802932">https://www.zhihu.com/question#38802932</a><br>那如果本页跳转，只改变hash的话，页面不会刷新。<br>使用<code>location.reload()</code>倒是可以解决。</p>
+<p><strong>但总觉得这样处理不够优雅。大家在工作中是如何处理此类场景的？还是用传统的后台路由来提供动态url？</strong></p>
 </blockquote>
+<p>感谢郑海波和剧中人的热心回答。都提到了<code>history</code>对象中的<code>pushState</code>，这是我第一次接触到这方面的内容（顿时觉得自己真是才疏学浅）。</p>
+<p>同时也有人提到了<code>pjax</code>，这个就是<code>pushState</code>+<code>Ajax</code>的封装，也很有意思。</p>
+<p>下面就来研究和实践一下吧。</p>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p><code>window</code>对象通过<code>history</code>对象提供对浏览器历史记录的访问能力。它暴露了一些非常有用的方法和属性，让你在历史记录中自由前进和后退，而在 HTML5 中，更可以操纵历史记录中的数据。</p>
+<h3 id="back-forward-go-length"><a href="#back-forward-go-length" class="headerlink" title="back(), forward(), go(), length"></a><code>back()</code>, <code>forward()</code>, <code>go()</code>, <code>length</code></h3><p>浏览器的历史记录就好像一个栈，最新的在最上面，较早之前看过的在下面。</p>
+<p>如下图，Chrome的历史记录：</p>
+<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1ezb16fn2bfj20k008htan.jpg" alt="chrome history"></p>
+<p>下面介绍怎么在这些历史记录中跳转，但要<strong>注意</strong>，上图中的浏览器历史记录和本文说的 history 还不太同。</p>
 <ul>
-<li><p>闭包的优点</p>
-<ul>
-<li>灵活和方便</li>
-<li>封装</li>
-</ul>
+<li><p><code>back()</code></p>
+<p>  在历史记录中后退</p>
+<pre><code>  history.back();
+</code></pre>
 </li>
-<li><p>缺点</p>
-<ul>
-<li>空间浪费</li>
-<li>内存泄露</li>
-<li>性能消耗</li>
-</ul>
+<li><p><code>forward()</code></p>
+<p>  在历史记录中前进</p>
+<pre><code>  history.forward();
+</code></pre>
 </li>
+<li><p><code>go()</code></p>
+<p>  移动到指定的历史记录点</p>
+<pre><code>  history.go(-1);
+</code></pre>
+<p>  通过指定一个相对于当前页面位置的数值，你可以使用go()方法从当前会话的历史记录中加载页面（当前页面位置索引值为0，上一页就是-1，下一页为1）。</p>
+<p>  <strong>go()不填参数或参数为go(0)时，页面会刷新，即<code>history.go()</code>或<code>history.go(0)</code>相当于<code>location.reload()</code></strong></p>
+</li>
+<li><p><code>length</code></p>
+<p>  <code>length</code>为history的属性，显示history长度。</p>
+</li>
+</ul>
+<p>本节在线demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/">History &amp; pjax demo</a> 源代码：<a href></a></p>
+<p><strong>经过亲自测试，<code>history</code>对象只记录同一个 tab 页内的历史。如果是在新窗口打开的，则无效。如：在a标签中添加<code>target=&quot;_blank&quot;</code>，或按住<code>ctrl</code>点击，这类场景下，在新的tab页中，<code>history</code>对象也是新的。</strong></p>
+<p><strong>且<code>history</code>对象记录的信息与是否同源也无关，所以唯一要满足的就是同一个标签页。</strong></p>
+<h3 id="pushState-replaceState"><a href="#pushState-replaceState" class="headerlink" title="pushState(), replaceState()"></a><code>pushState()</code>, <code>replaceState()</code></h3><p>HTML5 引进了<code>history.pushState()</code>方法和<code>history.replaceState()</code>方法，它们允许你逐条地添加和修改历史记录条目，能够在不加载新页面的情况下没改变浏览器的URL。这些方法可以协同<code>window.onpopstate</code>事件一起工作。</p>
+<p>使用<code>history.pushState()</code>会改变<code>referrer</code>的值，而在你调用方法后创建的  XMLHttpRequest 对象会在 HTTP 请求头中使用这个值。<code>referrer的</code>值则是创建  XMLHttpRequest 对象时所处的窗口的 URL。</p>
+<ul>
+<li><p><code>pushState(any data, string title, [string url])</code></p>
+<p>  第一个参数为<code>history</code>对象的<code>state</code>属性值，可以放任意数据，记录历史状态。第二个参数是新状态的标题，目前浏览器基本不支持。第三个参数为可选的相对url。</p>
+<p>  执行<code>pushState</code>后，可以在不加载新页面的情况下，更改url。同时<code>history</code>栈中新增一条数据。</p>
+<p>  例如，我们有这样一段代码：</p>
+<pre><code>  &lt;button id=&quot;push1&quot;&gt;pushState()&lt;/button&gt;
+
+  document.querySelector(&#39;#push1&#39;).addEventListener(&#39;click&#39;, function() &#123;
+      history.pushState(&#39;abc&#39;,&#39;pushStatePageTitle&#39;,&#39;pushState.html&#39;);
+      document.querySelector(&#39;#length&#39;).innerHTML = history.length;//重新读取历史长度
+  &#125;);
+</code></pre>
+<p>  当点击按钮的时候，页面不会刷新，但<code>url</code>地址的最后已经变为<code>pushState.html</code>。这一点非常像<code>hash</code>的作用，但比<code>hash</code>更优雅。</p>
+</li>
+</ul>
+<ul>
+<li><p><code>replaceState(any data, string title, [string url])</code></p>
+<p>  与<code>pushState()</code>类似，只是在<code>history</code>栈中不是新增记录，而是替换一条记录。</p>
+</li>
+</ul>
+<p><strong>需要注意的是：</strong><code>pushState()</code>和<code>replaceState()</code>方法存在安全方面的限制，本地测试是无效的，会报错，可以简单放到任何服务端测试，或者使用<code>http-server</code>开启简单服务器，通过访问<code>localhost</code>来查看效果。</p>
+<p>本节demo见：<a href="http://gaohaoyang.github.io/history-pjax-demo/index.html">History &amp; pjax demo - pushState</a></p>
+<h2 id="pjax"><a href="#pjax" class="headerlink" title="pjax"></a>pjax</h2><p>现在再看本文一开始提出的问题，如何让前端优雅的控制 url，这里就可以考虑 pjax 技术了。我们把 pushState + ajax 进行封装，合起来简称为 pjax。虽然不是什么新的技术，但概念已然不同。</p>
+<p>如果不使用 pjax。我们依然可以使用<code>hash</code>来实现文本开始的需求。但会不利于 SEO，看着也不够优雅。</p>
+<p>Pjax的原理十分简单。</p>
+<ol>
+<li>拦截 a 标签的默认跳转动作或某些按钮的点击事件。</li>
+<li>使用 Ajax 请求新页面。</li>
+<li>将返回的 Html 替换到页面中。</li>
+<li>使用 HTML5 的<code>pushState()</code>修改Url。</li>
+</ol>
+<p>个人理解3中也可以仅仅请求数据，再由浏览器渲染。</p>
+<p>每当同一个文档的浏览历史（即history对象）出现变化时，会触发<code>window.onpopstate</code>事件。</p>
+<pre><code>window.onpopstate = function(event) &#123;
+    console.log(event.state);
+    console.log(location);
+&#125;;
+</code></pre>
+<p>这样在用户点击前进后退时也可以很好的监听url，来做相应的页面渲染。</p>
+<p>若用户刷新了页面，但没有相应的页面资源，这时页面就会显示不存在。所以我认为较好的方法是在写<code>pushState()</code>第三个参数的时候，写为<code>?a=1</code>这样的参数形式。<a href="https://github.com/browserstate/history.js">History.js</a> 也是这么写的。但是这样应该会多一次请求。也许使用 nodeJS 作为中间层会好一些吧。</p>
+<p>对于上述的探索，不知道是不是我还不够深入，总觉得还是不够完美。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History">MDN History</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history">MDN 操纵浏览器的历史记录</a></li>
+<li><a href="https://www.zhihu.com/question/20289254">pjax 是如何工作的？ 知乎</a></li>
+<li><a href="http://www.cnblogs.com/hustskyking/p/history-api-in-html5.html">PJAX的实现与应用 小胡子哥</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">URL的井号-阮一峰</a></li>
+<li><a href="http://javascript.ruanyifeng.com/bom/history.html">history对象 JavaScript 标准参考教程（alpha） 阮一峰</a></li>
+<li><a href="http://www.ayqy.net/blog/pjaxpushstate-and-ajax/">Pjax(pushState and Ajax) 黯羽轻扬</a></li>
+<li><a href="http://www.clanfei.com/2012/09/1646.html">操纵历史，利用HTML5 History API实现无刷新跳转 蓝飞</a></li>
+<li><a href="http://segmentfault.com/a/1190000002920768">前端：将网站打造成单页面应用SPA（一） Coffce</a></li>
+<li><a href="https://github.com/Coffcer/coffce-pjax">coffce-pjax</a></li>
+<li><a href="https://github.com/browserstate/history.js">History.js</a></li>
+<li><a href="https://github.com/defunkt/jquery-pjax">defunkt/jquery-pjax GitHub</a></li>
+<li><a href="https://github.com/welefen/pjax">welefen/pjax</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -1568,6 +1435,139 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 中的闭包</title>
+    <url>/2015/06/14/JavaScript-closure/</url>
+    <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
+    var localVal = 30;
+    return localVal;
+&#125;
+
+console.log(outer()); //30
+
+function outer2() &#123;
+    var localVal = 30;
+    return function() &#123;
+        return localVal;
+    &#125;;
+&#125;
+
+var func = outer2();
+console.log(func()); //30
+</code></pre>
+<p>对于第一个普通的函数，在执行过之后，它的局部变量就可以被释放。</p>
+<p>对于第二个函数，<code>localVal</code> 是不能被释放的。因为调用 <code>outer2()</code> 后，返回的是匿名函数，匿名函数可以访问外部的 <code>outer2()</code> 中的局部变量，并返回了这个局部变量 localVal。当 <code>outer2()</code> 赋值给 <code>func</code> 后，再次调用 <code>func()</code>，仍能访问到局部变量 <code>localVal</code>。这种情况就是闭包。</p>
+<span id="more"></span>
+<hr>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ul>
+<li><p><strong>所谓闭包就是：子函数可以使用父函数中的局部变量。</strong></p>
+<pre><code>  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      document.addEventListener(&#39;click&#39;,
+          function() &#123;
+              console.log(localData); //这里访问外部数据
+          &#125;);
+  &#125;();
+
+  ! function() &#123;
+      var localData = &quot;localData here&quot;;
+      var url = &quot;http://www.baidu.com/&quot;;
+      $.ajax(&#123;
+          url: url,
+          success: function() &#123;
+              // do sth...
+              console.log(localData); //这里访问外部数据
+          &#125;
+      &#125;);
+  &#125;()
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="常见错误之循环闭包"><a href="#常见错误之循环闭包" class="headerlink" title="常见错误之循环闭包"></a>常见错误之循环闭包</h2><p>比如我们想循环绑定点击事件</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    document.getElementById(&#39;div&#39; + i).
+    addEventListener(&#39;click&#39;, function() &#123;
+        alert(i); // all are 4!
+    &#125;);
+&#125;
+</code></pre>
+<p>上面的代码，我们点击任何一个 div，弹出的都是 4</p>
+<p>这是因为，for 循环中的 i 是一个全局变量。这里内函数的点击事件，访问到的是循环后的 i 值，所以是 4</p>
+<pre><code>document.body.innerHTML = &quot;&lt;div id=div1&gt;aaa&lt;/div&gt;&lt;div id=div2&gt;bbb&lt;/div&gt;&lt;div id=div3&gt;ccc&lt;/div&gt;&quot;;
+for (var i = 1; i &lt; 4; i++) &#123;
+    ! function(i) &#123;
+        document.getElementById(&#39;div&#39; + i).
+        addEventListener(&#39;click&#39;, function() &#123;
+            alert(i); // 1, 2, 3
+        &#125;);
+    &#125;(i);
+&#125;
+</code></pre>
+<p>这里使用了立即执行函数，并给匿名函数赋值 i，这样点击事件每一次就会访问到相应的 i。</p>
+<hr>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><pre><code>(function() &#123;
+    var _userId = 9527;
+    var _typeId = &quot;item&quot;;
+    var exp = &#123;&#125;;
+
+    function converter(userId) &#123;
+        return +userId;
+    &#125;
+
+    exp.getUserId = function() &#123;
+        return converter(_userId);
+    &#125;;
+
+    exp.getTypeId = function() &#123;
+        return _typeId;
+    &#125;;
+
+    window.a = exp;
+&#125;)();
+
+console.log(a.getUserId()); //9527
+console.log(a.getTypeId()); //item
+
+console.log(a._userId); //undefined
+console.log(a._typeId); //undefined
+console.log(converter); //Uncaught ReferenceError: converter is not defined
+</code></pre>
+<p>上面的代码通过闭包实现了一个封装。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<ul>
+<li><p>在计算机科学中，闭包（也称词法闭包或函数闭包）是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个非局部变量（也叫自由变量）的表。</p>
+</li>
+<li><p>闭包，不同于一般的函数，它允许一个函数在立即词法作用域外调用时，仍可访问非本地变量。</p>
+</li>
+</ul>
+<p>from 维基百科</p>
+</blockquote>
+<ul>
+<li><p>闭包的优点</p>
+<ul>
+<li>灵活和方便</li>
+<li>封装</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>空间浪费</li>
+<li>内存泄露</li>
+<li>性能消耗</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NGINX禁止解析IP访问</title>
     <url>/2021/05/20/NGINX-Prohibit-IP-access/</url>
     <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
@@ -1599,6 +1599,30 @@ server_name xxx;
       </categories>
       <tags>
         <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Write-Ahead Log（WAL）的工作原理</title>
+    <url>/2021/05/13/WAL/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
+<span id="more"></span>
+
+<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
+<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
+<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
+<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
+<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
+<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
+<p>上述WAL细节过程如下图:</p>
+<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
+<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
+<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
+]]></content>
+      <categories>
+        <category>分布式系统</category>
+      </categories>
+      <tags>
+        <tag>WAL</tag>
       </tags>
   </entry>
   <entry>
@@ -1723,30 +1747,6 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </tags>
   </entry>
   <entry>
-    <title>Write-Ahead Log（WAL）的工作原理</title>
-    <url>/2021/05/13/WAL/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
-<span id="more"></span>
-
-<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
-<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
-<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
-<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
-<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
-<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
-<p>上述WAL细节过程如下图:</p>
-<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
-<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
-<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
-]]></content>
-      <categories>
-        <category>分布式系统</category>
-      </categories>
-      <tags>
-        <tag>WAL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>工作填坑之内网与外网</title>
     <url>/2022/08/08/about-inner-outer-ip/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>内网：</p>
@@ -1780,6 +1780,396 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </categories>
       <tags>
         <tag>MongoDB Redis 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7定时任务详解</title>
+    <url>/2018/02/10/centos-crontab/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
+<span id="more"></span>
+<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
+<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
+<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
+<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
+<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
+<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
+<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
+<ul>
+<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+# Use the hash sign to prefix a comment
+# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
+# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
+</ul>
+<blockquote>
+<p>1 简单打印</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+每天早上<span class="token number">6</span>点 
+<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
+
+每两个小时 
+<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
+
+晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
+<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
+
+每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
+
+<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
+
+每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
+<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
+
+每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
+<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
+
+每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
+<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
+
+每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
+<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
+
+<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
+
+每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
+<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
+
+每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
+<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
+
+每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
+<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
+
+每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
+<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
+
+每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
+<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
+
+每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
+<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<blockquote>
+<p>2 nginx示例</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
+
+<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
+
+<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
+
+<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
+
+<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
+
+<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每一小时重启nginx
+
+<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
+
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
+
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+一月一号的<span class="token number">4</span>点重启nginx
+
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
+每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
+<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
+</li>
+<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
+</li>
+<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
+</li>
+</ol>
+<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
+<p>chmod +x filename</p>
+</blockquote>
+<p>引用：</p>
+<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>centos7 crontab linux 工具软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装php7.3.5</title>
+    <url>/2021/05/08/centos-php7-3-5/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作需要使用php7.3.5做报表系统<br>本文采用编译安装</p>
+<span id="more"></span>
+<p>1、先安装依赖包</p>
+<pre class="line-numbers language-none"><code class="language-none">yum -y install epel-release libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel ncurses curl gdbm-devel db4-devel libXpm-devel libX11-devel gd-devel gmp-devel expat-devel xmlrpc-c xmlrpc-c-devel libicu-devel libmcrypt-devel libmemcached-devel libzip gcc-c++ sqlite-devel  oniguruma oniguruma-devel autoconf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2、开始编译</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;configure \
+--prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
+--exec-prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
+--bindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin \
+--sbindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin \
+--includedir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;include \
+--libdir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php \
+--mandir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;php&#x2F;man \
+--with-config-file-path&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;etc \
+--with-mhash \
+--with-openssl \
+--with-mysqli&#x3D;shared,mysqlnd \
+--with-pdo-mysql&#x3D;shared,mysqlnd \
+--with-gd \
+--with-iconv \
+--with-zlib \
+--enable-zip \
+--enable-inline-optimization \
+--disable-debug \
+--disable-rpath \
+--enable-shared \
+--enable-xml \
+--enable-redis\
+--enable-bcmath \
+--enable-shmop \
+--enable-sysvsem \
+--enable-mbregex \
+--enable-mbstring \
+--enable-ftp \
+--enable-pcntl \
+--enable-calendar \
+--enable-exif \
+--enable-sockets \
+--with-xmlrpc \
+--with-libxml-dir \
+--enable-soap \
+--without-pear \
+--with-gettext \
+--enable-session \
+--with-curl \
+--with-jpeg-dir \
+--with-png-dir \
+--with-freetype-dir \
+--with-bz2 \
+--enable-opcache \
+--enable-fpm \
+--with-fpm-user&#x3D;nginx \
+--with-fpm-group&#x3D;nginx \
+--without-gdbm \
+--enable-fast-install \
+--disable-fileinfo
+
+make &amp;&amp; make install <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>添加配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc
+cp php-fpm.conf.default php-fpm.conf
+cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm.d
+cp www.conf.default www.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>查找当前php使用ini的位置</p>
+<pre class="line-numbers language-none"><code class="language-none">php --ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>添加配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir &#x2F;usr&#x2F;local&#x2F;php&#x2F;conf
+vim php.ini
+[PHP]
+engine &#x3D; On
+short_open_tag &#x3D; Off
+precision &#x3D; 14
+output_buffering &#x3D; 4096
+zlib.output_compression &#x3D; Off
+implicit_flush &#x3D; Off
+unserialize_callback_func &#x3D;
+serialize_precision &#x3D; -1
+disable_functions &#x3D;
+disable_classes &#x3D;
+zend.enable_gc &#x3D; On
+zend.exception_ignore_args &#x3D; Off
+expose_php &#x3D; On
+max_execution_time &#x3D; 30
+max_input_time &#x3D; 60
+memory_limit &#x3D; 128M
+error_reporting &#x3D; E_ALL
+display_errors &#x3D; On
+display_startup_errors &#x3D; On
+log_errors &#x3D; On
+log_errors_max_len &#x3D; 1024
+ignore_repeated_errors &#x3D; Off
+ignore_repeated_source &#x3D; Off
+report_memleaks &#x3D; On
+variables_order &#x3D; &quot;GPCS&quot;
+request_order &#x3D; &quot;GP&quot;
+register_argc_argv &#x3D; Off
+auto_globals_jit &#x3D; On
+post_max_size &#x3D; 8M
+auto_prepend_file &#x3D;
+auto_append_file &#x3D;
+default_mimetype &#x3D; &quot;text&#x2F;html&quot;
+default_charset &#x3D; &quot;UTF-8&quot;
+doc_root &#x3D;
+user_dir &#x3D;
+enable_dl &#x3D; Off
+file_uploads &#x3D; On
+upload_max_filesize &#x3D; 2M
+max_file_uploads &#x3D; 20
+allow_url_fopen &#x3D; On
+allow_url_include &#x3D; Off
+default_socket_timeout &#x3D; 60
+extension&#x3D;ldap
+[CLI Server]
+cli_server.color &#x3D; On
+[Date]
+[filter]
+[iconv]
+[imap]
+[intl]
+[sqlite3]
+[Pcre]
+[Pdo]
+[Pdo_mysql]
+pdo_mysql.default_socket&#x3D;
+[Phar]
+[mail function]
+SMTP &#x3D; localhost
+smtp_port &#x3D; 25
+mail.add_x_header &#x3D; Off
+[ODBC]
+odbc.allow_persistent &#x3D; On
+odbc.check_persistent &#x3D; On
+odbc.max_persistent &#x3D; -1
+odbc.max_links &#x3D; -1
+odbc.defaultlrl &#x3D; 4096
+odbc.defaultbinmode &#x3D; 1
+[MySQLi]
+mysqli.max_persistent &#x3D; -1
+mysqli.allow_persistent &#x3D; On
+mysqli.max_links &#x3D; -1
+mysqli.default_port &#x3D; 3306
+mysqli.default_socket &#x3D;
+mysqli.default_host &#x3D;
+mysqli.default_user &#x3D;
+mysqli.default_pw &#x3D;
+mysqli.reconnect &#x3D; Off
+[mysqlnd]
+mysqlnd.collect_statistics &#x3D; On
+mysqlnd.collect_memory_statistics &#x3D; On
+[OCI8]
+[PostgreSQL]
+pgsql.allow_persistent &#x3D; On
+pgsql.auto_reset_persistent &#x3D; Off
+pgsql.max_persistent &#x3D; -1
+pgsql.max_links &#x3D; -1
+pgsql.ignore_notice &#x3D; 0
+pgsql.log_notice &#x3D; 0
+[bcmath]
+bcmath.scale &#x3D; 0
+[browscap]
+[Session]
+session.save_handler &#x3D; files
+session.use_strict_mode &#x3D; 0
+session.use_cookies &#x3D; 1
+session.use_only_cookies &#x3D; 1
+session.name &#x3D; PHPSESSID
+session.auto_start &#x3D; 0
+session.cookie_lifetime &#x3D; 0
+session.cookie_path &#x3D; &#x2F;
+session.cookie_domain &#x3D;
+session.cookie_httponly &#x3D;
+session.cookie_samesite &#x3D;
+session.serialize_handler &#x3D; php
+session.gc_probability &#x3D; 1
+session.gc_divisor &#x3D; 1000
+session.gc_maxlifetime &#x3D; 1440
+session.referer_check &#x3D;
+session.cache_limiter &#x3D; nocache
+session.cache_expire &#x3D; 180
+session.use_trans_sid &#x3D; 0
+session.sid_length &#x3D; 26
+session.trans_sid_tags &#x3D; &quot;a&#x3D;href,area&#x3D;href,frame&#x3D;src,form&#x3D;&quot;
+session.sid_bits_per_character &#x3D; 5
+[Assertion]
+zend.assertions &#x3D; 1
+[COM]
+[mbstring]
+[gd]
+[exif]
+[Tidy]
+tidy.clean_output &#x3D; Off
+[soap]
+soap.wsdl_cache_enabled&#x3D;1
+soap.wsdl_cache_dir&#x3D;&quot;&#x2F;tmp&quot;
+soap.wsdl_cache_ttl&#x3D;86400
+soap.wsdl_cache_limit &#x3D; 5
+[sysvshm]
+[ldap]
+ldap.max_links &#x3D; -1
+[dba]
+[opcache]
+[curl]
+[openssl]
+[ffi]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装php-redis</p>
+<pre class="line-numbers language-none"><code class="language-none">tar -zxvf owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
+cd owlient-phpredis-90ecd17
+&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
+.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config
+make &amp;&amp; make install
+cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;
+vim php.ini
+extension_dir &#x3D; &quot;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;&quot;
+extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装php-grpc</p>
+<pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;grpc-1.20.0.tgz
+tar -xzvf grpc-1.20.0.tgz
+cd grpc-1.20.0
+&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
+.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config 
+make &amp;&amp; make install
+vim php.ini
+extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>centos7 php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10 关闭更新</title>
+    <url>/2022/08/08/close-win10-update/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
+<span id="more"></span>
+<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>2 在运行处输入 “services.msc”   点击确定。</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>3 在弹出来的服务中，找到“Windows Update”</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>4 选择禁用</p>
+<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
+<p>会多出这两个位置，这样子就设置成功了。</p>
+]]></content>
+      <categories>
+        <category>win10</category>
+      </categories>
+      <tags>
+        <tag>win10 工具软件</tag>
       </tags>
   </entry>
   <entry>
@@ -2041,472 +2431,6 @@ document<span class="token punctuation">.</span><span class="token function">wri
       </tags>
   </entry>
   <entry>
-    <title>CentOS7定时任务详解</title>
-    <url>/2018/02/10/centos-crontab/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
-<span id="more"></span>
-<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
-<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
-<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
-<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
-<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
-<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
-<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
-<ul>
-<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-# Use the hash sign to prefix a comment
-# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
-# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
-</ul>
-<blockquote>
-<p>1 简单打印</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-每天早上<span class="token number">6</span>点 
-<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
-
-每两个小时 
-<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
-
-晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
-<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
-
-每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
-
-<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
-
-每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
-<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
-
-每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
-<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
-
-每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
-<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
-
-每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
-<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
-
-<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
-
-每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
-<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
-
-每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
-<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
-
-每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
-<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
-
-每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
-<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
-
-每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
-<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
-
-每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
-<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<hr>
-<blockquote>
-<p>2 nginx示例</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
-
-<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
-
-<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
-
-<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
-
-<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
-
-<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每一小时重启nginx
-
-<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
-
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
-
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-一月一号的<span class="token number">4</span>点重启nginx
-
-<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
-每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
-<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
-</li>
-<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
-</li>
-<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
-</li>
-</ol>
-<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
-<p>chmod +x filename</p>
-</blockquote>
-<p>引用：</p>
-<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>centos7 crontab linux 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10 关闭更新</title>
-    <url>/2022/08/08/close-win10-update/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
-<span id="more"></span>
-<p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p>
-<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>2 在运行处输入 “services.msc”   点击确定。</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>3 在弹出来的服务中，找到“Windows Update”</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>4 选择禁用</p>
-<p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p>
-<p>会多出这两个位置，这样子就设置成功了。</p>
-]]></content>
-      <categories>
-        <category>win10</category>
-      </categories>
-      <tags>
-        <tag>win10 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>安装php7.3.5</title>
-    <url>/2021/05/08/centos-php7-3-5/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作需要使用php7.3.5做报表系统<br>本文采用编译安装</p>
-<span id="more"></span>
-<p>1、先安装依赖包</p>
-<pre class="line-numbers language-none"><code class="language-none">yum -y install epel-release libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel ncurses curl gdbm-devel db4-devel libXpm-devel libX11-devel gd-devel gmp-devel expat-devel xmlrpc-c xmlrpc-c-devel libicu-devel libmcrypt-devel libmemcached-devel libzip gcc-c++ sqlite-devel  oniguruma oniguruma-devel autoconf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>2、开始编译</p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;configure \
---prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
---exec-prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
---bindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin \
---sbindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin \
---includedir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;include \
---libdir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php \
---mandir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;php&#x2F;man \
---with-config-file-path&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;etc \
---with-mhash \
---with-openssl \
---with-mysqli&#x3D;shared,mysqlnd \
---with-pdo-mysql&#x3D;shared,mysqlnd \
---with-gd \
---with-iconv \
---with-zlib \
---enable-zip \
---enable-inline-optimization \
---disable-debug \
---disable-rpath \
---enable-shared \
---enable-xml \
---enable-redis\
---enable-bcmath \
---enable-shmop \
---enable-sysvsem \
---enable-mbregex \
---enable-mbstring \
---enable-ftp \
---enable-pcntl \
---enable-calendar \
---enable-exif \
---enable-sockets \
---with-xmlrpc \
---with-libxml-dir \
---enable-soap \
---without-pear \
---with-gettext \
---enable-session \
---with-curl \
---with-jpeg-dir \
---with-png-dir \
---with-freetype-dir \
---with-bz2 \
---enable-opcache \
---enable-fpm \
---with-fpm-user&#x3D;nginx \
---with-fpm-group&#x3D;nginx \
---without-gdbm \
---enable-fast-install \
---disable-fileinfo
-
-make &amp;&amp; make install <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>添加配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc
-cp php-fpm.conf.default php-fpm.conf
-cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm.d
-cp www.conf.default www.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>查找当前php使用ini的位置</p>
-<pre class="line-numbers language-none"><code class="language-none">php --ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>添加配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">mkdir &#x2F;usr&#x2F;local&#x2F;php&#x2F;conf
-vim php.ini
-[PHP]
-engine &#x3D; On
-short_open_tag &#x3D; Off
-precision &#x3D; 14
-output_buffering &#x3D; 4096
-zlib.output_compression &#x3D; Off
-implicit_flush &#x3D; Off
-unserialize_callback_func &#x3D;
-serialize_precision &#x3D; -1
-disable_functions &#x3D;
-disable_classes &#x3D;
-zend.enable_gc &#x3D; On
-zend.exception_ignore_args &#x3D; Off
-expose_php &#x3D; On
-max_execution_time &#x3D; 30
-max_input_time &#x3D; 60
-memory_limit &#x3D; 128M
-error_reporting &#x3D; E_ALL
-display_errors &#x3D; On
-display_startup_errors &#x3D; On
-log_errors &#x3D; On
-log_errors_max_len &#x3D; 1024
-ignore_repeated_errors &#x3D; Off
-ignore_repeated_source &#x3D; Off
-report_memleaks &#x3D; On
-variables_order &#x3D; &quot;GPCS&quot;
-request_order &#x3D; &quot;GP&quot;
-register_argc_argv &#x3D; Off
-auto_globals_jit &#x3D; On
-post_max_size &#x3D; 8M
-auto_prepend_file &#x3D;
-auto_append_file &#x3D;
-default_mimetype &#x3D; &quot;text&#x2F;html&quot;
-default_charset &#x3D; &quot;UTF-8&quot;
-doc_root &#x3D;
-user_dir &#x3D;
-enable_dl &#x3D; Off
-file_uploads &#x3D; On
-upload_max_filesize &#x3D; 2M
-max_file_uploads &#x3D; 20
-allow_url_fopen &#x3D; On
-allow_url_include &#x3D; Off
-default_socket_timeout &#x3D; 60
-extension&#x3D;ldap
-[CLI Server]
-cli_server.color &#x3D; On
-[Date]
-[filter]
-[iconv]
-[imap]
-[intl]
-[sqlite3]
-[Pcre]
-[Pdo]
-[Pdo_mysql]
-pdo_mysql.default_socket&#x3D;
-[Phar]
-[mail function]
-SMTP &#x3D; localhost
-smtp_port &#x3D; 25
-mail.add_x_header &#x3D; Off
-[ODBC]
-odbc.allow_persistent &#x3D; On
-odbc.check_persistent &#x3D; On
-odbc.max_persistent &#x3D; -1
-odbc.max_links &#x3D; -1
-odbc.defaultlrl &#x3D; 4096
-odbc.defaultbinmode &#x3D; 1
-[MySQLi]
-mysqli.max_persistent &#x3D; -1
-mysqli.allow_persistent &#x3D; On
-mysqli.max_links &#x3D; -1
-mysqli.default_port &#x3D; 3306
-mysqli.default_socket &#x3D;
-mysqli.default_host &#x3D;
-mysqli.default_user &#x3D;
-mysqli.default_pw &#x3D;
-mysqli.reconnect &#x3D; Off
-[mysqlnd]
-mysqlnd.collect_statistics &#x3D; On
-mysqlnd.collect_memory_statistics &#x3D; On
-[OCI8]
-[PostgreSQL]
-pgsql.allow_persistent &#x3D; On
-pgsql.auto_reset_persistent &#x3D; Off
-pgsql.max_persistent &#x3D; -1
-pgsql.max_links &#x3D; -1
-pgsql.ignore_notice &#x3D; 0
-pgsql.log_notice &#x3D; 0
-[bcmath]
-bcmath.scale &#x3D; 0
-[browscap]
-[Session]
-session.save_handler &#x3D; files
-session.use_strict_mode &#x3D; 0
-session.use_cookies &#x3D; 1
-session.use_only_cookies &#x3D; 1
-session.name &#x3D; PHPSESSID
-session.auto_start &#x3D; 0
-session.cookie_lifetime &#x3D; 0
-session.cookie_path &#x3D; &#x2F;
-session.cookie_domain &#x3D;
-session.cookie_httponly &#x3D;
-session.cookie_samesite &#x3D;
-session.serialize_handler &#x3D; php
-session.gc_probability &#x3D; 1
-session.gc_divisor &#x3D; 1000
-session.gc_maxlifetime &#x3D; 1440
-session.referer_check &#x3D;
-session.cache_limiter &#x3D; nocache
-session.cache_expire &#x3D; 180
-session.use_trans_sid &#x3D; 0
-session.sid_length &#x3D; 26
-session.trans_sid_tags &#x3D; &quot;a&#x3D;href,area&#x3D;href,frame&#x3D;src,form&#x3D;&quot;
-session.sid_bits_per_character &#x3D; 5
-[Assertion]
-zend.assertions &#x3D; 1
-[COM]
-[mbstring]
-[gd]
-[exif]
-[Tidy]
-tidy.clean_output &#x3D; Off
-[soap]
-soap.wsdl_cache_enabled&#x3D;1
-soap.wsdl_cache_dir&#x3D;&quot;&#x2F;tmp&quot;
-soap.wsdl_cache_ttl&#x3D;86400
-soap.wsdl_cache_limit &#x3D; 5
-[sysvshm]
-[ldap]
-ldap.max_links &#x3D; -1
-[dba]
-[opcache]
-[curl]
-[openssl]
-[ffi]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装php-redis</p>
-<pre class="line-numbers language-none"><code class="language-none">tar -zxvf owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
-cd owlient-phpredis-90ecd17
-&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
-.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config
-make &amp;&amp; make install
-cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;
-vim php.ini
-extension_dir &#x3D; &quot;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;&quot;
-extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装php-grpc</p>
-<pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;grpc-1.20.0.tgz
-tar -xzvf grpc-1.20.0.tgz
-cd grpc-1.20.0
-&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
-.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config 
-make &amp;&amp; make install
-vim php.ini
-extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>centos7 php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>du</title>
-    <url>/2021/09/18/du-md/</url>
-    <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
-<span id="more"></span>
-<pre class="line-numbers language-none"><code class="language-none">-a, --all
-    显示对所有文件的统计，而不只是包含子目录。
--b, --bytes
-    输出以字节为单位的大小，替代缺省时1024字节的计数单位。
---block-size&#x3D;size
-    输出以块为单位的大小，块的大小为 size 字节。( file- utils-4.0 的新选项)
--c, --total
-    在处理完所有参数后给出所有这些参数的总计。这个选项被 用给出指定的一组文件或目录使用的空间的总和。
--D, --dereference-args
-    引用命令行参数的符号连接。但不影响其他的符号连接。 这对找出象 &#x2F;usr&#x2F;tmp 这样的目录的磁盘使用量有用， &#x2F;usr&#x2F;tmp 等通常是符号连接。 译住：例如在 &#x2F;var&#x2F;tmp 下建立一个目录test, 而&#x2F;usr&#x2F;tmp 是指向 &#x2F;var&#x2F;tmp 的符号连接。du &#x2F;usr&#x2F;tmp 返回一项 &#x2F;usr&#x2F;tmp , 而 du - D &#x2F;usr&#x2F;tmp 返回两项 &#x2F;usr&#x2F;tmp，&#x2F;usr&#x2F;tmp&#x2F;test。
---exclude&#x3D;pattern
-    在递归时，忽略与指定模式相匹配的文件或子目录。模式 可以是任何 Bourne shell 的文件 glob 模式。( file- utils-4.0 的新选项)
--h, --human-readable
-    为每个数附加一个表示大小单位的字母，象用M表示二进制 的兆字节。
--H, --si
-    与 -h 参数起同样的作用，只是使用法定的 SI 单位( 用 1000的幂而不是 1024 的幂，这样 M 代表的就是1000000 而不是 1048576)。(fileutils-4.0 的新选项)
--k, --kilobytes
-    输出以1024字节为计数单位的大小。
--l, --count-links
-    统计所有文件的大小，包括已经被统计过的(作为一个硬连接)。
--L, --dereference
-    引用符号连接(不是显示连接点本身而是连接指向的文件或 目录所使用的磁盘空间)。
--m, --megabytes
-    输出以兆字节的块为计数单位的大小(就是 1,048,576 字节)。
---max-depth&#x3D;n
-    只输出命令行参数的小于等于第 n 层的目录的总计。 --max-depth&#x3D;0的作用同于-s选项。(fileutils-4.0的新选项)
--s, --summarize
-    对每个参数只显示总和。
--S, --separate-dirs
-    单独报告每一个目录的大小，不包括子目录的大小。
--x, --one-file-system
-    忽略与被处理的参数不在同一个文件系统的目录。
--X file, --exclude-from&#x3D;file
-    除了从指定的文件中得到模式之外与 --exclude 一样。 模式以行的形式列出。如果指定的文件是&#39;-&#39;,那么从标准输 入中读出模式。(fileutils-4.0 的新选项) GNU 标准选项
---help
-    在标准输出上输出帮助信息后正常退出。
---version
-    在标准输出上输出版本信息后正常退出。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li>统计当前目录下，第一层的文件大小</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -ah --max-depth&#x3D;1 .&#x2F;cdn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>统计当前目录大小，并安大小排序</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -sm * | sort -n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>按大小排序目录(查看文件目录大小)</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --time --max-depth&#x3D;1 | sort -hr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>列出当前目录中的目录名不包括xyz字符串的目录的大小</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --exclude&#x3D;&#39;*xyz*&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>显示几个文件或目录各自占用磁盘空间的大小，并统计它们的总和</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -c log30.tar.gz log31.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>查看各文件夹大小命令</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --max-depth&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git 如何 clone 非 master 分支的代码</title>
     <url>/2022/08/08/git-clone-not-master-branch/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
@@ -2683,6 +2607,82 @@ babel src -d lib<span aria-hidden="true" class="line-numbers-rows"><span></span>
       </categories>
       <tags>
         <tag>ES2015 ES6 ES5 babel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>du</title>
+    <url>/2021/09/18/du-md/</url>
+    <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
+<span id="more"></span>
+<pre class="line-numbers language-none"><code class="language-none">-a, --all
+    显示对所有文件的统计，而不只是包含子目录。
+-b, --bytes
+    输出以字节为单位的大小，替代缺省时1024字节的计数单位。
+--block-size&#x3D;size
+    输出以块为单位的大小，块的大小为 size 字节。( file- utils-4.0 的新选项)
+-c, --total
+    在处理完所有参数后给出所有这些参数的总计。这个选项被 用给出指定的一组文件或目录使用的空间的总和。
+-D, --dereference-args
+    引用命令行参数的符号连接。但不影响其他的符号连接。 这对找出象 &#x2F;usr&#x2F;tmp 这样的目录的磁盘使用量有用， &#x2F;usr&#x2F;tmp 等通常是符号连接。 译住：例如在 &#x2F;var&#x2F;tmp 下建立一个目录test, 而&#x2F;usr&#x2F;tmp 是指向 &#x2F;var&#x2F;tmp 的符号连接。du &#x2F;usr&#x2F;tmp 返回一项 &#x2F;usr&#x2F;tmp , 而 du - D &#x2F;usr&#x2F;tmp 返回两项 &#x2F;usr&#x2F;tmp，&#x2F;usr&#x2F;tmp&#x2F;test。
+--exclude&#x3D;pattern
+    在递归时，忽略与指定模式相匹配的文件或子目录。模式 可以是任何 Bourne shell 的文件 glob 模式。( file- utils-4.0 的新选项)
+-h, --human-readable
+    为每个数附加一个表示大小单位的字母，象用M表示二进制 的兆字节。
+-H, --si
+    与 -h 参数起同样的作用，只是使用法定的 SI 单位( 用 1000的幂而不是 1024 的幂，这样 M 代表的就是1000000 而不是 1048576)。(fileutils-4.0 的新选项)
+-k, --kilobytes
+    输出以1024字节为计数单位的大小。
+-l, --count-links
+    统计所有文件的大小，包括已经被统计过的(作为一个硬连接)。
+-L, --dereference
+    引用符号连接(不是显示连接点本身而是连接指向的文件或 目录所使用的磁盘空间)。
+-m, --megabytes
+    输出以兆字节的块为计数单位的大小(就是 1,048,576 字节)。
+--max-depth&#x3D;n
+    只输出命令行参数的小于等于第 n 层的目录的总计。 --max-depth&#x3D;0的作用同于-s选项。(fileutils-4.0的新选项)
+-s, --summarize
+    对每个参数只显示总和。
+-S, --separate-dirs
+    单独报告每一个目录的大小，不包括子目录的大小。
+-x, --one-file-system
+    忽略与被处理的参数不在同一个文件系统的目录。
+-X file, --exclude-from&#x3D;file
+    除了从指定的文件中得到模式之外与 --exclude 一样。 模式以行的形式列出。如果指定的文件是&#39;-&#39;,那么从标准输 入中读出模式。(fileutils-4.0 的新选项) GNU 标准选项
+--help
+    在标准输出上输出帮助信息后正常退出。
+--version
+    在标准输出上输出版本信息后正常退出。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>统计当前目录下，第一层的文件大小</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -ah --max-depth&#x3D;1 .&#x2F;cdn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>统计当前目录大小，并安大小排序</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -sm * | sort -n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>按大小排序目录(查看文件目录大小)</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --time --max-depth&#x3D;1 | sort -hr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>列出当前目录中的目录名不包括xyz字符串的目录的大小</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --exclude&#x3D;&#39;*xyz*&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>显示几个文件或目录各自占用磁盘空间的大小，并统计它们的总和</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -c log30.tar.gz log31.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>查看各文件夹大小命令</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --max-depth&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2901,6 +2901,65 @@ port: 1234<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
       </tags>
   </entry>
   <entry>
+    <title>mac使用crt异常报错</title>
+    <url>/2021/05/20/mac-crt/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
+<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
+<span id="more"></span>
+
+<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
+<p>sudo chmod o+w /cores</p>
+<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
+<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
+
+<p>见证一下mac系统</p>
+<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
+<p>查看下我们本机的 cores 目录权限</p>
+<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
+...
+drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发现缺少写权限，所以执行</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
+Password:
+ls -l &#x2F;
+...
+drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>然后再去启动CRT就正常了。</p>
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
+    <url>/2021/06/03/nginx-deny-git/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
+<span id="more"></span>
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
+        deny all;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 JavaScript 创建并下载文件</title>
     <url>/2022/08/08/js-create-file-and-download/</url>
     <content><![CDATA[<p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
@@ -2958,65 +3017,6 @@ element<span class="token punctuation">.</span><span class="token function">clic
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mac使用crt异常报错</title>
-    <url>/2021/05/20/mac-crt/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
-<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
-<span id="more"></span>
-
-<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
-<p>sudo chmod o+w /cores</p>
-<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
-<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
-
-<p>见证一下mac系统</p>
-<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
-<p>查看下我们本机的 cores 目录权限</p>
-<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
-...
-drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>发现缺少写权限，所以执行</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
-Password:
-ls -l &#x2F;
-...
-drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>然后再去启动CRT就正常了。</p>
-]]></content>
-      <categories>
-        <category>Mac</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
-    <url>/2021/06/03/nginx-deny-git/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
-<span id="more"></span>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
-        deny all;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>nginx</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -3693,6 +3693,42 @@ for i from n−1 downto 1 do
       </tags>
   </entry>
   <entry>
+    <title>swap分区介绍</title>
+    <url>/2021/05/20/swap/</url>
+    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
+<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
+<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
+<span id="more"></span>
+<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
+<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
+<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
+<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
+<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
+<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
+<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
+<p>4-8G的物理内存，swap 等于内存大小。</p>
+<p>8-64G 的物理内存，swap 设置为8G。</p>
+<p>64-256G物理内存，swap 设置为16G。</p>
+<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
+<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
+<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
+<p>用swapoff关闭交换分区</p>
+<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
+<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
+<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
+<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
+<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
+<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
+<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>代码校验工具 SublimeLinter 的安装与使用</title>
     <url>/2015/03/26/sublimeLinter/</url>
     <content><![CDATA[<p>本文我将讲述一下 SublimeLinter 的安装过程。其组件 jshint 的安装与使用。其组件 csslint 的安装与使用。我将基于 <a href="http://sublimetext.com/3">Sublime Text 3</a> 来安装。使用 Sublime Text 2 的用户阅读本文是没有帮助的。</p>
@@ -3828,82 +3864,6 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </categories>
       <tags>
         <tag>Sublime jshint csslint</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>swap分区介绍</title>
-    <url>/2021/05/20/swap/</url>
-    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
-<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
-<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
-<span id="more"></span>
-<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
-<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
-<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
-<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
-<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
-<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
-<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
-<p>4-8G的物理内存，swap 等于内存大小。</p>
-<p>8-64G 的物理内存，swap 设置为8G。</p>
-<p>64-256G物理内存，swap 设置为16G。</p>
-<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
-<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
-<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
-<p>用swapoff关闭交换分区</p>
-<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
-<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
-<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
-<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
-<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
-<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
-<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
-    <url>/2021/05/20/swappiness/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
-<span id="more"></span>
-
-<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
-<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
-<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
-#vm.swappiness&#x3D;10
-cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
-<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>加上</p>
-<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
-kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
-vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p> 生效</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这样便完成修改设置！</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -4596,6 +4556,46 @@ $ gem install sass
       </tags>
   </entry>
   <entry>
+    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
+    <url>/2021/05/20/swappiness/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
+<span id="more"></span>
+
+<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
+<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
+<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
+#vm.swappiness&#x3D;10
+cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
+<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>加上</p>
+<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
+kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
+vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 生效</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样便完成修改设置！</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>wireshark合并多个pacp文件</title>
     <url>/2021/05/27/wireshark-merge/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当出现网络问题的时候，可能会抓很多个pcap包，当分析的时候时间点很不容易查找，所以要将多个pcap包合并为一个，方便我们运维人员查找</p>
@@ -4881,6 +4881,23 @@ func main() &#123;
       </tags>
   </entry>
   <entry>
+    <title>data-type</title>
+    <url>/2022/03/16/data-type/</url>
+    <content><![CDATA[<h1 id="1-数据类型的基本介绍"><a href="#1-数据类型的基本介绍" class="headerlink" title="1.数据类型的基本介绍"></a>1.数据类型的基本介绍</h1><p>每一种数据都定义了明确的数据类型，在内存中分配了不同大小的内存空间</p>
+<span id="more"></span>
+
+<h2 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h2><p>数据类型分为：基本数据类型、复杂数据类型</p>
+<h3 id="1-1-1基本数据类型"><a href="#1-1-1基本数据类型" class="headerlink" title="1.1.1基本数据类型"></a>1.1.1基本数据类型</h3><p>基本数据类型：整数类型（int、int8、int16、int32、int64、uint、uint8、uint16、uint32、uint64，byte）、浮点类型（float32、float64）、字符型（没有专门的字符型，使用byte来保存单个字幕字符）、布尔型（bool）、字符串（string）。</p>
+<h3 id="1-1-2复杂数据类型"><a href="#1-1-2复杂数据类型" class="headerlink" title="1.1.2复杂数据类型"></a>1.1.2复杂数据类型</h3><p>复杂数据类型：指针（pointer）、数组、结构体（struct）、管道（channel）、函数、切片（slice）、接口（interface）、map</p>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>字符类型</title>
     <url>/2022/03/17/byte-type/</url>
     <content><![CDATA[<h1 id="1-字符类型"><a href="#1-字符类型" class="headerlink" title="1.字符类型"></a>1.字符类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Golang 中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存。字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。也就是说对于传统的字符串是由字符组成的，而 Go 的字符串不同，它是由字节组成的。</p>
@@ -4930,23 +4947,6 @@ func main() &#123;
 <li>如果我们保存的字符对应码值大于 255,这时我们可以考虑使用 int 类型保存</li>
 <li>如果我们需要安装字符的方式输出，这时我们需要格式化输出，即 fmt.Printf(“%c”,)</li>
 </ol>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>data-type</title>
-    <url>/2022/03/16/data-type/</url>
-    <content><![CDATA[<h1 id="1-数据类型的基本介绍"><a href="#1-数据类型的基本介绍" class="headerlink" title="1.数据类型的基本介绍"></a>1.数据类型的基本介绍</h1><p>每一种数据都定义了明确的数据类型，在内存中分配了不同大小的内存空间</p>
-<span id="more"></span>
-
-<h2 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h2><p>数据类型分为：基本数据类型、复杂数据类型</p>
-<h3 id="1-1-1基本数据类型"><a href="#1-1-1基本数据类型" class="headerlink" title="1.1.1基本数据类型"></a>1.1.1基本数据类型</h3><p>基本数据类型：整数类型（int、int8、int16、int32、int64、uint、uint8、uint16、uint32、uint64，byte）、浮点类型（float32、float64）、字符型（没有专门的字符型，使用byte来保存单个字幕字符）、布尔型（bool）、字符串（string）。</p>
-<h3 id="1-1-2复杂数据类型"><a href="#1-1-2复杂数据类型" class="headerlink" title="1.1.2复杂数据类型"></a>1.1.2复杂数据类型</h3><p>复杂数据类型：指针（pointer）、数组、结构体（struct）、管道（channel）、函数、切片（slice）、接口（interface）、map</p>
 ]]></content>
       <categories>
         <category>go</category>
@@ -5046,11 +5046,6 @@ func main() &#123;
       </tags>
   </entry>
   <entry>
-    <title>go-goroutine</title>
-    <url>/2022/08/08/go-goroutine/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>go-变量</title>
     <url>/2022/03/10/go-%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试." data-whm="抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.">
@@ -5071,6 +5066,11 @@ func main() &#123;
       <tags>
         <tag>go</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>go-goroutine</title>
+    <url>/2022/08/08/go-goroutine/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>pointer</title>
