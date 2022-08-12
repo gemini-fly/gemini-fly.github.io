@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/12/etcd-ops-order/</loc>
+    <loc>https://running-dpf.github.io/post/etcd-ops-order.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/12/etcd-Overview/</loc>
+    <loc>https://running-dpf.github.io/post/etcd-Overview.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/09/gin-template/</loc>
+    <loc>https://running-dpf.github.io/post/gin-template.html</loc>
     
     <lastmod>2022-08-09</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/09/gin-method/</loc>
+    <loc>https://running-dpf.github.io/post/gin-method.html</loc>
     
     <lastmod>2022-08-09</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/go-routine-cpu/</loc>
+    <loc>https://running-dpf.github.io/post/go-routine-cpu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/go-goroutine/</loc>
+    <loc>https://running-dpf.github.io/post/go-goroutine.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/04/07/Interconversion-of-basic-data-types/</loc>
+    <loc>https://running-dpf.github.io/post/Interconversion-of-basic-data-types.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/17/byte-type/</loc>
+    <loc>https://running-dpf.github.io/post/byte-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/18/bool-type/</loc>
+    <loc>https://running-dpf.github.io/post/bool-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/16/data-type/</loc>
+    <loc>https://running-dpf.github.io/post/data-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/17/float-type/</loc>
+    <loc>https://running-dpf.github.io/post/float-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/10/go-%E5%8F%98%E9%87%8F/</loc>
+    <loc>https://running-dpf.github.io/post/go-%E5%8F%98%E9%87%8F.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/04/11/pointer/</loc>
+    <loc>https://running-dpf.github.io/post/pointer.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -137,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/04/07/values-for-primitive-data-types/</loc>
+    <loc>https://running-dpf.github.io/post/values-for-primitive-data-types.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -146,7 +146,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/18/string-type/</loc>
+    <loc>https://running-dpf.github.io/post/string-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -155,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/03/11/variable-type/</loc>
+    <loc>https://running-dpf.github.io/post/variable-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/09/24/k8s-kubeadm/</loc>
+    <loc>https://running-dpf.github.io/post/k8s-kubeadm.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/09/29/k8s-calico/</loc>
+    <loc>https://running-dpf.github.io/post/k8s-calico.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/09/22/loki/</loc>
+    <loc>https://running-dpf.github.io/post/loki.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/12/31/History-API/</loc>
+    <loc>https://running-dpf.github.io/post/History-API.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -200,7 +200,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/28/ISP/</loc>
+    <loc>https://running-dpf.github.io/post/ISP.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -209,7 +209,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/15/JavaScript-Object-Oriented/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-Object-Oriented.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -218,7 +218,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note1/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note1.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -227,7 +227,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/07/09/JavaScript-Net/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-Net.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -236,7 +236,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/11/JavaScript-function/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-function.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -245,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note2/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note2.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/14/JavaScript-closure/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-closure.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -263,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/20/NGINX-Prohibit-IP-access/</loc>
+    <loc>https://running-dpf.github.io/post/NGINX-Prohibit-IP-access.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -272,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/12/JavaScript-this/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-this.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -281,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note3/</loc>
+    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note3.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -290,7 +290,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/04/12/Syncing-a-fork/</loc>
+    <loc>https://running-dpf.github.io/post/Syncing-a-fork.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -299,7 +299,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/04/06/arrays-similar/</loc>
+    <loc>https://running-dpf.github.io/post/arrays-similar.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -308,7 +308,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/13/WAL/</loc>
+    <loc>https://running-dpf.github.io/post/WAL.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -317,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/about-inner-outer-ip/</loc>
+    <loc>https://running-dpf.github.io/post/about-inner-outer-ip.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -326,7 +326,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/Ubuntu16-04-pycharm-icon-setting/</loc>
+    <loc>https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -335,7 +335,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/08/centos-php7-3-5/</loc>
+    <loc>https://running-dpf.github.io/post/centos-php7-3-5.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -344,7 +344,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/close-win10-update/</loc>
+    <loc>https://running-dpf.github.io/post/close-win10-update.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -353,7 +353,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/git-clone-not-master-branch/</loc>
+    <loc>https://running-dpf.github.io/post/git-clone-not-master-branch.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -362,7 +362,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/09/18/du-md/</loc>
+    <loc>https://running-dpf.github.io/post/du-md.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -371,7 +371,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/how-to-use-babel/</loc>
+    <loc>https://running-dpf.github.io/post/how-to-use-babel.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/how-to-write-a-count-down/</loc>
+    <loc>https://running-dpf.github.io/post/how-to-write-a-count-down.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2016/03/12/jekyll-theme-version-2-0/</loc>
+    <loc>https://running-dpf.github.io/post/jekyll-theme-version-2-0.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -398,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/js-create-file-and-download/</loc>
+    <loc>https://running-dpf.github.io/post/js-create-file-and-download.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -407,7 +407,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2018/02/10/centos-crontab/</loc>
+    <loc>https://running-dpf.github.io/post/centos-crontab.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -416,7 +416,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/06/03/nginx-deny-git/</loc>
+    <loc>https://running-dpf.github.io/post/nginx-deny-git.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -425,7 +425,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/20/mac-crt/</loc>
+    <loc>https://running-dpf.github.io/post/mac-crt.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -434,7 +434,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/06/01/php-cpu/</loc>
+    <loc>https://running-dpf.github.io/post/php-cpu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -443,7 +443,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/06/01/php-fpm-conf/</loc>
+    <loc>https://running-dpf.github.io/post/php-fpm-conf.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -452,7 +452,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/python-crawl-words/</loc>
+    <loc>https://running-dpf.github.io/post/python-crawl-words.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -461,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/02/15/reate-my-blog-with-jekyll/</loc>
+    <loc>https://running-dpf.github.io/post/reate-my-blog-with-jekyll.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -470,7 +470,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/scrapy-setup-in-win/</loc>
+    <loc>https://running-dpf.github.io/post/scrapy-setup-in-win.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -479,7 +479,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/05/20/scope/</loc>
+    <loc>https://running-dpf.github.io/post/scope.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -488,7 +488,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/setup-mysql-inubuntu/</loc>
+    <loc>https://running-dpf.github.io/post/setup-mysql-inubuntu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -497,7 +497,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/03/26/sublimeLinter/</loc>
+    <loc>https://running-dpf.github.io/post/sublimeLinter.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -506,7 +506,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/20/swap/</loc>
+    <loc>https://running-dpf.github.io/post/swap.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -515,7 +515,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/20/swappiness/</loc>
+    <loc>https://running-dpf.github.io/post/swappiness.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -524,7 +524,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/17/web-app/</loc>
+    <loc>https://running-dpf.github.io/post/web-app.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -533,7 +533,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2022/08/08/shuffle-algorithm/</loc>
+    <loc>https://running-dpf.github.io/post/shuffle-algorithm.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -542,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2015/06/18/weinre/</loc>
+    <loc>https://running-dpf.github.io/post/weinre.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -551,7 +551,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/2021/05/27/wireshark-merge/</loc>
+    <loc>https://running-dpf.github.io/post/wireshark-merge.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -659,14 +659,14 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
+    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -687,14 +687,14 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
+    <loc>https://running-dpf.github.io/tags/nginx/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/nginx/</loc>
+    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -806,13 +806,6 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/wireshark/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://running-dpf.github.io/tags/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7-JavaScript/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -820,7 +813,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/k8s-calico/</loc>
+    <loc>https://running-dpf.github.io/tags/wireshark/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -828,6 +821,13 @@
   
   <url>
     <loc>https://running-dpf.github.io/tags/k8s/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/tags/k8s-calico/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -871,13 +871,6 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -885,7 +878,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
+    <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -893,6 +886,13 @@
   
   <url>
     <loc>https://running-dpf.github.io/categories/nginx/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

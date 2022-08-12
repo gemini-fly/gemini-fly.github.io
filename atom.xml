@@ -6,7 +6,7 @@
   <link href="https://running-dpf.github.io/atom.xml" rel="self"/>
   
   <link href="https://running-dpf.github.io/"/>
-  <updated>2022-08-12T10:12:04.667Z</updated>
+  <updated>2022-08-12T10:13:11.005Z</updated>
   <id>https://running-dpf.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>etcd06-运维命令</title>
-    <link href="https://running-dpf.github.io/2022/08/12/etcd-ops-order/"/>
-    <id>https://running-dpf.github.io/2022/08/12/etcd-ops-order/</id>
+    <link href="https://running-dpf.github.io/post/etcd-ops-order.html"/>
+    <id>https://running-dpf.github.io/post/etcd-ops-order.html</id>
     <published>2022-08-12T09:57:18.000Z</published>
-    <updated>2022-08-12T10:12:04.667Z</updated>
+    <updated>2022-08-12T10:13:11.005Z</updated>
     
     <content type="html"><![CDATA[<p>在此记录一下运维同学常用操作etcd的命令</p><span id="more"></span><h2 id="增-改"><a href="#增-改" class="headerlink" title="增/改"></a>增/改</h2><p>这里是设置键的值的命令 foo 到 bar：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl put foo barOK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h2 id="查"><a href="#查" class="headerlink" title="查"></a>查</h2><p>读取键为 foo 的命令</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl get foofoo &#x2F;&#x2F; keybar &#x2F;&#x2F; value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>上面同时返回了 key 和 value，怎么只读取 key 对应的值呢：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get foo --print-value-onlybar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>按前缀读取：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foofoobarfoo1bar1foo2bar2foo3bar3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>按前缀只需要key：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foo --keys-only=truefoofoo1foo2foo3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="删"><a href="#删" class="headerlink" title="删"></a>删</h2><p>删除一个key</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo1 &#x2F;&#x2F;删除个数foo &#x2F;&#x2F;删除keybar &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>删除key foo1时并返回被删除的键值对</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo1 &#x2F;&#x2F;删除个数foo1 &#x2F;&#x2F;删除keybar1 &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>删除指定前缀的key</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prev-kv --prefix foo2foo3bar3foo4bar4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>删除已foo为开头的key，只显示key不显示value</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl  del --prefix foo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>删除所有数据</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prefix &quot;&quot;4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>当删除数据后，发现数据库容量并没有变少，这个时候可以使用数据压缩与碎片整理</p><p>1、获取当前版本</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">rev&#x3D;$(ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 endpoint status --write-out&#x3D;&quot;json&quot; | egrep -o &#39;&quot;revision&quot;:[0-9]*&#39; | egrep -o &#39;[0-9].*&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>2、压缩掉所有旧版本</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 compact $rev<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>3、整理多余的空间</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 defrag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>通过线上实践发现还是设置自动压缩更靠谱，官方同样提供数据自动压缩方式，历史数据只保留一个小时的</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --auto-compaction-retention&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>根据实践发现只配置auto-compaction-retention只会做碎片整理，不会实际减少空间大小；　如果需要减少大小还是需要使用etcdctl compact 和　etcdctl defrag清理空间</p><p>etcd 3.3.3版本以后的自动压缩方式：</p><p>每5分钟自动压缩”latest revision” - 1000</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;revision --auto-compaction-retention&#x3D;1000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>每1小时自动压缩并保留12小时窗口</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;periodic --auto-compaction-retention&#x3D;12h<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="leader节点切换"><a href="#leader节点切换" class="headerlink" title="leader节点切换"></a>leader节点切换</h2><p>有时候我们运维需要对集群进行操作，为了不影响线上服务，我们可以手动指定leader节点</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">#注意：只能在leader节点进行操作/tmp/etcd-download-test/etcdctl move-leader 219637592b6b26a7 --endpoints 127.0.0.1:2379Leadership transferred from 6f33c9a8402dd6ab to 219637592b6b26a7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>]]></content>
     
@@ -37,8 +37,8 @@
   
   <entry>
     <title>etcd-Overview</title>
-    <link href="https://running-dpf.github.io/2022/08/12/etcd-Overview/"/>
-    <id>https://running-dpf.github.io/2022/08/12/etcd-Overview/</id>
+    <link href="https://running-dpf.github.io/post/etcd-Overview.html"/>
+    <id>https://running-dpf.github.io/post/etcd-Overview.html</id>
     <published>2022-08-12T09:57:02.000Z</published>
     <updated>2022-08-12T09:59:47.604Z</updated>
     
@@ -50,8 +50,8 @@
   
   <entry>
     <title>gin中模板的配置</title>
-    <link href="https://running-dpf.github.io/2022/08/09/gin-template/"/>
-    <id>https://running-dpf.github.io/2022/08/09/gin-template/</id>
+    <link href="https://running-dpf.github.io/post/gin-template.html"/>
+    <id>https://running-dpf.github.io/post/gin-template.html</id>
     <published>2022-08-09T07:12:08.000Z</published>
     <updated>2022-08-09T07:19:38.188Z</updated>
     
@@ -69,8 +69,8 @@
   
   <entry>
     <title>gin-method</title>
-    <link href="https://running-dpf.github.io/2022/08/09/gin-method/"/>
-    <id>https://running-dpf.github.io/2022/08/09/gin-method/</id>
+    <link href="https://running-dpf.github.io/post/gin-method.html"/>
+    <id>https://running-dpf.github.io/post/gin-method.html</id>
     <published>2022-08-09T05:52:46.000Z</published>
     <updated>2022-08-09T05:54:09.124Z</updated>
     
@@ -88,8 +88,8 @@
   
   <entry>
     <title>Golang并行运行时设置占用cpu数量</title>
-    <link href="https://running-dpf.github.io/2022/08/08/go-routine-cpu/"/>
-    <id>https://running-dpf.github.io/2022/08/08/go-routine-cpu/</id>
+    <link href="https://running-dpf.github.io/post/go-routine-cpu.html"/>
+    <id>https://running-dpf.github.io/post/go-routine-cpu.html</id>
     <published>2022-08-08T10:42:15.000Z</published>
     <updated>2022-08-08T10:56:29.346Z</updated>
     
@@ -107,8 +107,8 @@
   
   <entry>
     <title>go-协程说明</title>
-    <link href="https://running-dpf.github.io/2022/08/08/go-goroutine/"/>
-    <id>https://running-dpf.github.io/2022/08/08/go-goroutine/</id>
+    <link href="https://running-dpf.github.io/post/go-goroutine.html"/>
+    <id>https://running-dpf.github.io/post/go-goroutine.html</id>
     <published>2022-08-08T07:23:26.000Z</published>
     <updated>2022-08-08T10:10:39.831Z</updated>
     
@@ -128,8 +128,8 @@
   
   <entry>
     <title>JavaScript 语言精粹笔记1-语法、对象、函数</title>
-    <link href="https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note1/"/>
-    <id>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note1/</id>
+    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note1.html"/>
+    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note1.html</id>
     <published>2022-08-08T06:30:13.142Z</published>
     <updated>2022-08-08T06:30:13.145Z</updated>
     
@@ -153,8 +153,8 @@
   
   <entry>
     <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
-    <link href="https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note2/"/>
-    <id>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note2/</id>
+    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note2.html"/>
+    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note2.html</id>
     <published>2022-08-08T06:30:13.066Z</published>
     <updated>2022-08-08T06:30:13.067Z</updated>
     
@@ -175,8 +175,8 @@
   
   <entry>
     <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
-    <link href="https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note3/"/>
-    <id>https://running-dpf.github.io/2022/08/08/JavaScript-good-parts-note3/</id>
+    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note3.html"/>
+    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note3.html</id>
     <published>2022-08-08T06:30:12.907Z</published>
     <updated>2022-08-08T06:30:12.908Z</updated>
     
@@ -197,8 +197,8 @@
   
   <entry>
     <title>工作填坑之内网与外网</title>
-    <link href="https://running-dpf.github.io/2022/08/08/about-inner-outer-ip/"/>
-    <id>https://running-dpf.github.io/2022/08/08/about-inner-outer-ip/</id>
+    <link href="https://running-dpf.github.io/post/about-inner-outer-ip.html"/>
+    <id>https://running-dpf.github.io/post/about-inner-outer-ip.html</id>
     <published>2022-08-08T06:30:12.761Z</published>
     <updated>2022-08-08T06:30:12.761Z</updated>
     
@@ -224,8 +224,8 @@
   
   <entry>
     <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <link href="https://running-dpf.github.io/2022/08/08/Ubuntu16-04-pycharm-icon-setting/"/>
-    <id>https://running-dpf.github.io/2022/08/08/Ubuntu16-04-pycharm-icon-setting/</id>
+    <link href="https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html"/>
+    <id>https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html</id>
     <published>2022-08-08T06:30:12.720Z</published>
     <updated>2022-08-08T06:30:12.720Z</updated>
     
@@ -248,8 +248,8 @@
   
   <entry>
     <title>win10 关闭更新</title>
-    <link href="https://running-dpf.github.io/2022/08/08/close-win10-update/"/>
-    <id>https://running-dpf.github.io/2022/08/08/close-win10-update/</id>
+    <link href="https://running-dpf.github.io/post/close-win10-update.html"/>
+    <id>https://running-dpf.github.io/post/close-win10-update.html</id>
     <published>2022-08-08T06:30:12.661Z</published>
     <updated>2022-08-08T06:30:12.661Z</updated>
     
@@ -269,8 +269,8 @@
   
   <entry>
     <title>Git 如何 clone 非 master 分支的代码</title>
-    <link href="https://running-dpf.github.io/2022/08/08/git-clone-not-master-branch/"/>
-    <id>https://running-dpf.github.io/2022/08/08/git-clone-not-master-branch/</id>
+    <link href="https://running-dpf.github.io/post/git-clone-not-master-branch.html"/>
+    <id>https://running-dpf.github.io/post/git-clone-not-master-branch.html</id>
     <published>2022-08-08T06:30:12.624Z</published>
     <updated>2022-08-08T06:30:12.625Z</updated>
     
@@ -293,8 +293,8 @@
   
   <entry>
     <title>如何使用 babel</title>
-    <link href="https://running-dpf.github.io/2022/08/08/how-to-use-babel/"/>
-    <id>https://running-dpf.github.io/2022/08/08/how-to-use-babel/</id>
+    <link href="https://running-dpf.github.io/post/how-to-use-babel.html"/>
+    <id>https://running-dpf.github.io/post/how-to-use-babel.html</id>
     <published>2022-08-08T06:30:12.547Z</published>
     <updated>2022-08-08T06:30:12.547Z</updated>
     
@@ -314,8 +314,8 @@
   
   <entry>
     <title>前端如何写一个精确的倒计时</title>
-    <link href="https://running-dpf.github.io/2022/08/08/how-to-write-a-count-down/"/>
-    <id>https://running-dpf.github.io/2022/08/08/how-to-write-a-count-down/</id>
+    <link href="https://running-dpf.github.io/post/how-to-write-a-count-down.html"/>
+    <id>https://running-dpf.github.io/post/how-to-write-a-count-down.html</id>
     <published>2022-08-08T06:30:12.484Z</published>
     <updated>2022-08-08T06:30:12.484Z</updated>
     
@@ -335,8 +335,8 @@
   
   <entry>
     <title>使用 JavaScript 创建并下载文件</title>
-    <link href="https://running-dpf.github.io/2022/08/08/js-create-file-and-download/"/>
-    <id>https://running-dpf.github.io/2022/08/08/js-create-file-and-download/</id>
+    <link href="https://running-dpf.github.io/post/js-create-file-and-download.html"/>
+    <id>https://running-dpf.github.io/post/js-create-file-and-download.html</id>
     <published>2022-08-08T06:30:12.454Z</published>
     <updated>2022-08-08T06:30:12.454Z</updated>
     
@@ -356,8 +356,8 @@
   
   <entry>
     <title>News_scrapy_redis 框架系统</title>
-    <link href="https://running-dpf.github.io/2022/08/08/python-crawl-words/"/>
-    <id>https://running-dpf.github.io/2022/08/08/python-crawl-words/</id>
+    <link href="https://running-dpf.github.io/post/python-crawl-words.html"/>
+    <id>https://running-dpf.github.io/post/python-crawl-words.html</id>
     <published>2022-08-08T06:30:12.249Z</published>
     <updated>2022-08-08T06:30:12.250Z</updated>
     
@@ -377,8 +377,8 @@
   
   <entry>
     <title>window下python3环境安装scrapy</title>
-    <link href="https://running-dpf.github.io/2022/08/08/scrapy-setup-in-win/"/>
-    <id>https://running-dpf.github.io/2022/08/08/scrapy-setup-in-win/</id>
+    <link href="https://running-dpf.github.io/post/scrapy-setup-in-win.html"/>
+    <id>https://running-dpf.github.io/post/scrapy-setup-in-win.html</id>
     <published>2022-08-08T06:30:12.116Z</published>
     <updated>2022-08-08T06:30:12.117Z</updated>
     
@@ -401,8 +401,8 @@
   
   <entry>
     <title>Ubuntu 16.04 下MySQL的安装</title>
-    <link href="https://running-dpf.github.io/2022/08/08/setup-mysql-inubuntu/"/>
-    <id>https://running-dpf.github.io/2022/08/08/setup-mysql-inubuntu/</id>
+    <link href="https://running-dpf.github.io/post/setup-mysql-inubuntu.html"/>
+    <id>https://running-dpf.github.io/post/setup-mysql-inubuntu.html</id>
     <published>2022-08-08T06:30:12.096Z</published>
     <updated>2022-08-08T06:30:12.096Z</updated>
     
@@ -425,8 +425,8 @@
   
   <entry>
     <title>Fisher–Yates shuffle 洗牌算法</title>
-    <link href="https://running-dpf.github.io/2022/08/08/shuffle-algorithm/"/>
-    <id>https://running-dpf.github.io/2022/08/08/shuffle-algorithm/</id>
+    <link href="https://running-dpf.github.io/post/shuffle-algorithm.html"/>
+    <id>https://running-dpf.github.io/post/shuffle-algorithm.html</id>
     <published>2022-08-08T06:30:11.914Z</published>
     <updated>2022-08-08T06:30:11.914Z</updated>
     
