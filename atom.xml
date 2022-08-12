@@ -196,33 +196,6 @@
   </entry>
   
   <entry>
-    <title>工作填坑之内网与外网</title>
-    <link href="https://running-dpf.github.io/post/about-inner-outer-ip.html"/>
-    <id>https://running-dpf.github.io/post/about-inner-outer-ip.html</id>
-    <published>2022-08-08T06:30:12.761Z</published>
-    <updated>2022-08-08T06:30:12.761Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>内网：</p><blockquote><p>内网也就是局域网，内网的计算机以NAT（<a href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">网络地址转换</a>）协议，通过一个公共的<a href="https://baike.baidu.com/item/%E7%BD%91%E5%85%B3">网关</a>访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。</p></blockquote><blockquote><p>最直观的就是像网吧，公司内部的电脑用交换机，HUB，路由连起来的</p></blockquote><span id="more"></span><p>外网：</p><blockquote><p>外网IP包括：ADSL拨号的动态IP用动态<a href="https://baike.baidu.com/item/%E8%A7%A3%E6%9E%90%E5%9F%9F%E5%90%8D">解析域名</a>来绑定IP，又叫<a href="https://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E5%9F%9F%E5%90%8D">动态域名</a>；固定的外网IP(这种多半为网吧的IP)即，整个网吧的那个主IP。外网IP指的是：打开ADSL<a href="https://baike.baidu.com/item/%E8%B7%AF%E7%94%B1">路由</a>功能的用户你的外网IP就应该是ADSL设备的IP，网吧里的外网IP是指整个网吧的主IP，校园网的外网IP就是整个校园网的那个主IP，小区网的外网IP与校园网同理，长宽的用户就要试下了，可以上论坛，看看你的IP是多少，那么那个IP就是你要绑定的，所有的内网用户都可以这样查的，论坛<br>上的IP就是你要绑定的IP</p></blockquote><h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>第一次搭建服务器相关项目，因为第一次直接使用的是一台服务器，外网的ip，在自己的windows 是可以用mongodb 客户端与redis 客户端进行服务器上的mongodb服务端与redis服务端相连接的，并没有遇到什么困难</p><h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>因为后台与爬虫用的同一个mongodb与redis，而那台服务器又是单核的，2g运行内存。导致mongodb老是因为连接池开得过多而被挂掉，后来就买了内网的mongodb与redis服务，一开始啥都不懂，也不知道这是一个坑，在自己本机上进行mongodb，redis测试，一直连接不上去，代码是改了又改，</p><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>后来老大过来了，你这是内网的，外网的当然连接不上去了，你得在腾讯云服务器上进行连接</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>后来就直接在腾讯云服务器上测试连接，然后就连好了。这个问题搞到我们三到晚上12点，确实菜，然后预料到的确实少，回过头来看下代码，一点毛病都没有啊！不知道有句mmp，该不该讲。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h2&gt;&lt;p&gt;内网：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;内网也就是局域网，内网的计算机以NAT（&lt;a href=&quot;https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2&quot;&gt;网络地址转换&lt;/a&gt;）协议，通过一个公共的&lt;a href=&quot;https://baike.baidu.com/item/%E7%BD%91%E5%85%B3&quot;&gt;网关&lt;/a&gt;访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;最直观的就是像网吧，公司内部的电脑用交换机，HUB，路由连起来的&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="工具软件" scheme="https://running-dpf.github.io/categories/%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-    <category term="MongoDB Redis 工具软件" scheme="https://running-dpf.github.io/tags/MongoDB-Redis-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
     <link href="https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html"/>
     <id>https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html</id>
@@ -441,6 +414,19 @@
     
     
     <category term="算法 shuffle 乱序 洗牌" scheme="https://running-dpf.github.io/tags/%E7%AE%97%E6%B3%95-shuffle-%E4%B9%B1%E5%BA%8F-%E6%B4%97%E7%89%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pointer</title>
+    <link href="https://running-dpf.github.io/post/pointer.html"/>
+    <id>https://running-dpf.github.io/post/pointer.html</id>
+    <published>2022-04-11T05:36:59.000Z</published>
+    <updated>2022-08-08T06:30:13.541Z</updated>
+    
+    
+    
+    
     
   </entry>
   
