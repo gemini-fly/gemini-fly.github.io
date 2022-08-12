@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://running-dpf.github.io/post/loki.html</loc>
+    
+    <lastmod>2022-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://running-dpf.github.io/post/bool-type.html</loc>
     
     <lastmod>2022-08-12</lastmod>
@@ -174,15 +183,6 @@
   
   <url>
     <loc>https://running-dpf.github.io/post/k8s-calico.html</loc>
-    
-    <lastmod>2022-08-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/loki.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -650,14 +650,14 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
+    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -685,14 +685,14 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/Ubuntu-Python/</loc>
+    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
+    <loc>https://running-dpf.github.io/tags/Ubuntu-Python/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -804,27 +804,6 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/k8s-calico/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/tags/k8s/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/tags/ops/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://running-dpf.github.io/tags/go/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -852,17 +831,38 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
+    <loc>https://running-dpf.github.io/tags/k8s-calico/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
+    <loc>https://running-dpf.github.io/tags/k8s/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/tags/ops/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
     <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -876,14 +876,14 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/python/</loc>
+    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
+    <loc>https://running-dpf.github.io/categories/python/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -953,6 +953,13 @@
   </url>
   
   <url>
+    <loc>https://running-dpf.github.io/categories/go/</loc>
+    <lastmod>2022-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://running-dpf.github.io/categories/k8s/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -961,13 +968,6 @@
   
   <url>
     <loc>https://running-dpf.github.io/categories/ops/</loc>
-    <lastmod>2022-08-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/categories/go/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
