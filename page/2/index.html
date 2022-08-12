@@ -588,7 +588,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-08 14:30:13" itemprop="dateModified" datetime="2022-08-08T14:30:13+08:00">2022-08-08</time>
+                <time title="修改时间：2022-08-12 18:22:25" itemprop="dateModified" datetime="2022-08-12T18:22:25+08:00">2022-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -626,118 +626,14 @@
 
       
           <h1 id="1-字符串类型"><a href="#1-字符串类型" class="headerlink" title="1.字符串类型"></a>1.字符串类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本</p>
-<h2 id="1-1-案例演示"><a href="#1-1-案例演示" class="headerlink" title="1.1 案例演示"></a>1.1 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;
-	fmt.Println(ssr)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#FF000">哈哈哈哈，hello world</font></p>
-<h2 id="1-2-string-使用注意事项和细"><a href="#1-2-string-使用注意事项和细" class="headerlink" title="1.2 string 使用注意事项和细"></a>1.2 string 使用注意事项和细</h2><h3 id="1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员"><a href="#1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员" class="headerlink" title="1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员"></a>1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员</h3><h3 id="1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的"><a href="#1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的" class="headerlink" title="1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的"></a>1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的</h3><pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;
-	fmt.Println(ssr[0])
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#FF0000">229</font></p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;
-	ssr[0] &#x3D; &#39;a&#39;
-	fmt.Println(ssr[0])
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">cannot assign to ssr[0]</font>，标识无法重新给ssr的第0个元素进行修改</p>
-<h3 id="1-2-3-字符串的两种表示形式"><a href="#1-2-3-字符串的两种表示形式" class="headerlink" title="1.2.3 字符串的两种表示形式"></a>1.2.3 字符串的两种表示形式</h3><p>(1) 双引号, 会识别转义字符 </p>
-<p>(2) 反引号，以字符串的原生形式输出，包括换行和特殊字符，可以实现防止攻击、输出源代码等效果</p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var ssr string &#x3D; &#96;
-	package main
-
-import (
-	&quot;fmt&quot;
-)
-
-func main() &#123;
-	var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;
-	ssr[0] &#x3D; &#39;a&#39;
-	fmt.Println(ssr[0])
-&#125;
-
-	&#96;
-	fmt.Println(ssr)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">package main</font></p>
-<p><font color="#ff0000">import (</font></p>
-<p><font color="#ff0000">    “fmt”</font></p>
-<p><font color="#ff0000">)</font></p>
-<p><font color="#ff0000">func main() {</font></p>
-<p><font color="#ff0000">    var ssr string = “哈哈哈哈，hello world”</font></p>
-<p><font color="#ff0000">    ssr[0] = ‘a’</font></p>
-<p><font color="#ff0000">    fmt.Println(ssr[0])</font></p>
-<p><font color="#ff0000">}</font></p>
-<h3 id="1-2-4-字符串的拼接方式"><a href="#1-2-4-字符串的拼接方式" class="headerlink" title="1.2.4 字符串的拼接方式"></a>1.2.4 字符串的拼接方式</h3><pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var nayaur &#x3D; &quot;hello&quot; + &quot;world&quot;
-	nayaur +&#x3D; &quot;nayaur!&quot;
-	fmt.Println(nayaur)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">helloworldnayaur!</font></p>
-<p>发现其实是没有空格的，这样可以在每个字符串中间加空格，拼接的字符串就会有空格</p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var nayaur &#x3D; &quot;hello&quot; + &quot; world&quot;
-	nayaur +&#x3D; &quot; nayaur!&quot;
-	fmt.Println(nayaur)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">hello world nayaur!</font></p>
-<h3 id="1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理"><a href="#1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理" class="headerlink" title="1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理"></a>1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理</h3><pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var nayaur &#x3D; &quot;hello&quot; + &quot; world&quot; + 
-	&quot;hello&quot; + &quot; world&quot;
-	fmt.Println(nayaur)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">hello worldhello world</font></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/string-type.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

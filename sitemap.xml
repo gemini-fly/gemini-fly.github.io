@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://running-dpf.github.io/post/string-type.html</loc>
+    
+    <lastmod>2022-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://running-dpf.github.io/post/etcd-ops-order.html</loc>
     
     <lastmod>2022-08-12</lastmod>
@@ -138,15 +147,6 @@
   
   <url>
     <loc>https://running-dpf.github.io/post/values-for-primitive-data-types.html</loc>
-    
-    <lastmod>2022-08-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/string-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     

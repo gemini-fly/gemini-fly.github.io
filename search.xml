@@ -118,6 +118,20 @@
       </tags>
   </entry>
   <entry>
+    <title>ISP</title>
+    <url>//post/ISP.html</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
+<span id="more"></span>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 阶段总结</title>
     <url>//post/JavaScript-Net.html</url>
     <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
@@ -464,20 +478,6 @@ moduleA = function() &#123;
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISP</title>
-    <url>//post/ISP.html</url>
-    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
-<span id="more"></span>
-<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1371,6 +1371,72 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
+    <url>//post/JavaScript-good-parts-note3.html</url>
+    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中最后一部分：方法、代码风格、优美的特性、毒瘤、糟粕等。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>这一章主要介绍了一些方法集。这里写几个我不太熟悉的方法和要点吧。</p>
+<span id="more"></span>
+<ul>
+<li><p><code>array.join()</code></p>
+<blockquote>
+<p>对于IE6/7，使用<code>array.join()</code>连接大量字符串的效率确实优于使用<code>+</code>元素运算符。但是目前主流的浏览器，包括IE8以后的版本，都对<code>+</code>元素运算符连接字符串做了特别优化，性能已经显著高于<code>array.join()</code>。</p>
+</blockquote>
+</li>
+<li><p><code>number.toExponential(fractionDigits)</code></p>
+<p>  把这个<code>number</code>转换成一个指数形式的字符串。</p>
+</li>
+<li><p><code>number.toFixed(fractionDigits)</code></p>
+<p>  将这个<code>number</code>转换成一个十进制形式的字符串。</p>
+</li>
+</ul>
+<h2 id="毒瘤"><a href="#毒瘤" class="headerlink" title="毒瘤"></a>毒瘤</h2><ul>
+<li><p>注意全局变量的引入。</p>
+</li>
+<li><p>JavaScript 中 Unicode 是16位的。包含65536个字符（基本多文种平面 Basic Multilingual Plane）。剩下的百万字符中的每一个都可以用一对字符来表示。Unicode 把一对字符视为一个单一的字符，而 JavaScript 认为一对字符是两个不同的字符。</p>
+</li>
+<li><p>检测<code>null</code>的方式。</p>
+</li>
+</ul>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment">//object</span>
+
+myValue <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token comment">//检测 null</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>myValue <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> myValue <span class="token operator">===</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// myValue 是一个对象或数组！</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p><code>parseInt</code> 把字符串转化为整数的函数。它遇到非数字时会停止解析，所以<code>parseInt(&#39;16&#39;)</code>和<code>parseInt(&#39;16ton&#39;)</code>产生相同的结果。</p>
+<p>  如果该字符串第一个字符是0，那么该字符串会基于八进制而不是十进制来求职。在八进制中，8和9不是数字，所以<code>parseInt(&#39;08&#39;)</code>和<code>parseInt(&#39;09&#39;)</code>都产生0作为结果。但<code>parseInt()</code>可以接受基数，因此<code>parseInt(&#39;08&#39;,10)</code>结果为8，建议总是加上这个基数参数。</p>
+</li>
+<li><p>JavaScript 的对象永远不会是真的空对象，因为它们可以送原型链中取得成员属性。</p>
+</li>
+</ul>
+<h2 id="糟粕"><a href="#糟粕" class="headerlink" title="糟粕"></a>糟粕</h2><ul>
+<li><p>避免使用<code>with</code>语句。</p>
+</li>
+<li><p>避免使用<code>eval</code>语句。</p>
+</li>
+<li><p><code>continue</code>可能会降低运算性能。</p>
+</li>
+<li><p>位运算符在 JavaScript 会非常慢。</p>
+<p>  Java 里，位运算符处理的是整数。JavaScript 没有整数类型，它只有双精度的浮点数，因此，位运算符把它们的数字运算数先转换为整数，执行运算，在转换回去。JavaScript 的执行环境一般接触不到硬件，所以非常慢。</p>
+</li>
+<li><p>避免使用包装对象。<code>new Object</code>和<code>new Array</code>等。</p>
+</li>
+<li><p>避免使用<code>void</code>。</p>
+</li>
+</ul>
+<p>本系列结束。</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 中的 this</title>
     <url>//post/JavaScript-this.html</url>
     <content><![CDATA[<h2 id="全局的-this"><a href="#全局的-this" class="headerlink" title="全局的 this"></a>全局的 this</h2><p>全局 this 一般指向全局对象，浏览器中的全局对象就是 <code>window</code>。</p>
@@ -1493,72 +1559,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> o<span class="token punctuation">.</span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 37, test</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>绑定之后再调用时，仍然会按绑定时的内容走，所以 o.g() 结果是 test</p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
-    <url>//post/JavaScript-good-parts-note3.html</url>
-    <content><![CDATA[<p>记录一下阅读蝴蝶书的笔记，本篇为书中最后一部分：方法、代码风格、优美的特性、毒瘤、糟粕等。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>这一章主要介绍了一些方法集。这里写几个我不太熟悉的方法和要点吧。</p>
-<span id="more"></span>
-<ul>
-<li><p><code>array.join()</code></p>
-<blockquote>
-<p>对于IE6/7，使用<code>array.join()</code>连接大量字符串的效率确实优于使用<code>+</code>元素运算符。但是目前主流的浏览器，包括IE8以后的版本，都对<code>+</code>元素运算符连接字符串做了特别优化，性能已经显著高于<code>array.join()</code>。</p>
-</blockquote>
-</li>
-<li><p><code>number.toExponential(fractionDigits)</code></p>
-<p>  把这个<code>number</code>转换成一个指数形式的字符串。</p>
-</li>
-<li><p><code>number.toFixed(fractionDigits)</code></p>
-<p>  将这个<code>number</code>转换成一个十进制形式的字符串。</p>
-</li>
-</ul>
-<h2 id="毒瘤"><a href="#毒瘤" class="headerlink" title="毒瘤"></a>毒瘤</h2><ul>
-<li><p>注意全局变量的引入。</p>
-</li>
-<li><p>JavaScript 中 Unicode 是16位的。包含65536个字符（基本多文种平面 Basic Multilingual Plane）。剩下的百万字符中的每一个都可以用一对字符来表示。Unicode 把一对字符视为一个单一的字符，而 JavaScript 认为一对字符是两个不同的字符。</p>
-</li>
-<li><p>检测<code>null</code>的方式。</p>
-</li>
-</ul>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment">//object</span>
-
-myValue <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token comment">//检测 null</span>
-
-<span class="token keyword">if</span> <span class="token punctuation">(</span>myValue <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> myValue <span class="token operator">===</span> <span class="token string">'object'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// myValue 是一个对象或数组！</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><p><code>parseInt</code> 把字符串转化为整数的函数。它遇到非数字时会停止解析，所以<code>parseInt(&#39;16&#39;)</code>和<code>parseInt(&#39;16ton&#39;)</code>产生相同的结果。</p>
-<p>  如果该字符串第一个字符是0，那么该字符串会基于八进制而不是十进制来求职。在八进制中，8和9不是数字，所以<code>parseInt(&#39;08&#39;)</code>和<code>parseInt(&#39;09&#39;)</code>都产生0作为结果。但<code>parseInt()</code>可以接受基数，因此<code>parseInt(&#39;08&#39;,10)</code>结果为8，建议总是加上这个基数参数。</p>
-</li>
-<li><p>JavaScript 的对象永远不会是真的空对象，因为它们可以送原型链中取得成员属性。</p>
-</li>
-</ul>
-<h2 id="糟粕"><a href="#糟粕" class="headerlink" title="糟粕"></a>糟粕</h2><ul>
-<li><p>避免使用<code>with</code>语句。</p>
-</li>
-<li><p>避免使用<code>eval</code>语句。</p>
-</li>
-<li><p><code>continue</code>可能会降低运算性能。</p>
-</li>
-<li><p>位运算符在 JavaScript 会非常慢。</p>
-<p>  Java 里，位运算符处理的是整数。JavaScript 没有整数类型，它只有双精度的浮点数，因此，位运算符把它们的数字运算数先转换为整数，执行运算，在转换回去。JavaScript 的执行环境一般接触不到硬件，所以非常慢。</p>
-</li>
-<li><p>避免使用包装对象。<code>new Object</code>和<code>new Array</code>等。</p>
-</li>
-<li><p>避免使用<code>void</code>。</p>
-</li>
-</ul>
-<p>本系列结束。</p>
 ]]></content>
       <categories>
         <category>JavaScript</category>
@@ -1744,6 +1744,137 @@ Categories<span class="token operator">=</span>Pycharm<span class="token punctua
       </categories>
       <tags>
         <tag>WAL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7定时任务详解</title>
+    <url>//post/centos-crontab.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
+<span id="more"></span>
+<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
+<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
+<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
+<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
+<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
+<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
+<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
+<ul>
+<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+# Use the hash sign to prefix a comment
+# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
+# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
+# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
+</ul>
+<blockquote>
+<p>1 简单打印</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+每天早上<span class="token number">6</span>点 
+<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
+
+每两个小时 
+<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
+
+晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
+<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
+
+每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
+
+<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
+
+每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
+<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
+
+每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
+<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
+
+每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
+<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
+
+每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
+<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
+
+<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
+
+每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
+<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
+
+每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
+<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
+
+每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
+<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
+
+每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
+<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
+
+每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
+<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
+
+每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
+<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<blockquote>
+<p>2 nginx示例</p>
+</blockquote>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
+
+<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
+
+<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
+
+<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
+
+<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
+
+<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每一小时重启nginx
+
+<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
+
+<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
+
+<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
+一月一号的<span class="token number">4</span>点重启nginx
+
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
+每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
+<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
+</li>
+<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
+</li>
+<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
+</li>
+</ol>
+<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
+<p>chmod +x filename</p>
+</blockquote>
+<p>引用：</p>
+<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>centos7 crontab linux 工具软件</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,137 +2133,6 @@ document<span class="token punctuation">.</span><span class="token function">wri
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CentOS7定时任务详解</title>
-    <url>//post/centos-crontab.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中需要开启一个定时任务：每天晚上2点进行爬虫代码的运行，这不得不去学习一下linux 下的定时任务crontab</p>
-<span id="more"></span>
-<h2 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h2><p>yum install crontabs</p>
-<p>说明：<br>/sbin/service crond start //启动服务<br>/sbin/service crond stop //关闭服务<br>/sbin/service crond restart //重启服务<br>/sbin/service crond reload //重新载入配置<br>查看crontab服务状态：service crond status<br>手动启动crontab服务：service crond start<br>查看crontab服务是否已设置为开机启动，执行命令：ntsysv<br>加入开机自动启动:<br>chkconfig crond on</p>
-<h2 id="1，crontab命令"><a href="#1，crontab命令" class="headerlink" title="1，crontab命令"></a>1，crontab命令</h2><p>功能说明：设置计时器。<br>语　　法：crontab [-u &lt;用户名称&gt;][配置文件] 或 crontab [-u &lt;用户名称&gt;][-elr]</p>
-<p>补充说明：cron是一个常驻服务，它提供计时器的功能，让用户在特定的时间得以执行预设的指令或程序。只要用户会编辑计时器的配置文件，就可以使 用计时器的功能。</p>
-<p>其配置文件格式如下：<br>Minute Hour Day Month DayOFWeek Command</p>
-<p>参　　数：<br>-e 　编辑该用户的计时器设置。<br>-l 　列出该用户的计时器设置。<br>-r 　删除该用户的计时器设置。<br>-u&lt;用户名称&gt; 　指定要设定计时器的用户名称。</p>
-<h2 id="2，crontab-格式"><a href="#2，crontab-格式" class="headerlink" title="2，crontab 格式"></a>2，crontab 格式</h2><p>基本格式 :</p>
-<ul>
-<li>*　 *　 *　 *　　command<br>分　时　日　月　周　 命令<br>第1列表示分钟1～59 每分钟用*或者 */1表示<br>第2列表示小时1～23（0表示0点）<br>第3列表示日期1～31<br>第4列 表示月份1～12<br>第5列标识号星期0～6（0表示星期天）<br>第6列要运行的命令<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-# Use the hash sign to prefix a comment
-# <span class="token operator">+</span>—————<span class="token operator">-</span> <span class="token function">minute</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">59</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">+</span>————<span class="token operator">-</span> <span class="token function">hour</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">23</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>———<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">31</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>——<span class="token operator">-</span> <span class="token function">month</span> <span class="token punctuation">(</span><span class="token number">1</span> – <span class="token number">12</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">+</span>—<span class="token operator">-</span> day <span class="token keyword">of</span> <span class="token function">week</span> <span class="token punctuation">(</span><span class="token number">0</span> – <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Sunday<span class="token operator">=</span><span class="token number">0</span> or <span class="token number">7</span><span class="token punctuation">)</span>
-# <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span> <span class="token operator">|</span>
-# <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command to be executed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="3，crontab文件的一些例子："><a href="#3，crontab文件的一些例子：" class="headerlink" title="3，crontab文件的一些例子："></a>3，crontab文件的一些例子：</h2></li>
-</ul>
-<blockquote>
-<p>1 简单打印</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-每天早上<span class="token number">6</span>点 
-<span class="token number">0</span> <span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Good morning."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt <span class="token comment">//注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</span>
-
-每两个小时 
-<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a break now."</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt  
-
-晚上<span class="token number">11</span>点到早上<span class="token number">8</span>点之间每两个小时和早上八点 
-<span class="token number">0</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">2</span>，<span class="token number">8</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> echo <span class="token string">"Have a good dream"</span> <span class="token operator">>></span> <span class="token operator">/</span>tmp<span class="token operator">/</span>test<span class="token punctuation">.</span>txt
-
-每个月的<span class="token number">4</span>号和每个礼拜的礼拜一到礼拜三的早上<span class="token number">11</span>点 
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> command line
-
-<span class="token number">1</span>月<span class="token number">1</span>日早上<span class="token number">4</span>点 
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token operator">*</span> command line <span class="token constant">SHELL</span><span class="token operator">=</span><span class="token operator">/</span>bin<span class="token operator">/</span>bash <span class="token constant">PATH</span><span class="token operator">=</span><span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>bin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">:</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin <span class="token constant">MAILTO</span><span class="token operator">=</span>root <span class="token comment">//如果出现错误，或者有数据输出，数据作为邮件发给这个帐号 HOME=/ </span>
-
-每小时执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly内的脚本
-<span class="token number">01</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>hourly
-
-每天执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily内的脚本
-<span class="token number">02</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>daily 
-
-每星期执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly内的脚本
-<span class="token number">22</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">0</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>weekly 
-
-每月去执行<span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly内的脚本 
-<span class="token number">42</span> <span class="token number">4</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> root run<span class="token operator">-</span>parts <span class="token operator">/</span>etc<span class="token operator">/</span>cron<span class="token punctuation">.</span>monthly 
-
-<span class="token literal-property property">注意</span><span class="token operator">:</span> <span class="token string">"run-parts"</span>这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是文件夹名。 　 
-
-每天的下午<span class="token number">4</span>点、<span class="token number">5</span>点、<span class="token number">6</span>点的<span class="token number">5</span> min、<span class="token number">15</span> min、<span class="token number">25</span> min、<span class="token number">35</span> min、<span class="token number">45</span> min、<span class="token number">55</span> min时执行命令。 
-<span class="token number">5</span>，<span class="token number">15</span>，<span class="token number">25</span>，<span class="token number">35</span>，<span class="token number">45</span>，<span class="token number">55</span> <span class="token number">16</span>，<span class="token number">17</span>，<span class="token number">18</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> command
-
-每周一，三，五的下午<span class="token number">3</span>：<span class="token number">00</span>系统进入维护状态，重新启动系统。
-<span class="token number">00</span> <span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">1</span>，<span class="token number">3</span>，<span class="token number">5</span> shutdown <span class="token operator">-</span>r <span class="token operator">+</span><span class="token number">5</span>
-
-每小时的<span class="token number">10</span>分，<span class="token number">40</span>分执行用户目录下的innd<span class="token operator">/</span>bbslin这个指令： 
-<span class="token number">10</span>，<span class="token number">40</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> innd<span class="token operator">/</span>bbslink 
-
-每小时的<span class="token number">1</span>分执行用户目录下的bin<span class="token operator">/</span>account这个指令： 
-<span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> bin<span class="token operator">/</span>account
-
-每天早晨三点二十分执行用户目录下如下所示的两个指令（每个指令以<span class="token punctuation">;</span>分隔）： 
-<span class="token number">20</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> （<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>ls logins<span class="token punctuation">.</span>bad<span class="token punctuation">;</span>bin<span class="token operator">/</span>expire$#@<span class="token number">62</span><span class="token punctuation">;</span>expire<span class="token punctuation">.</span>1st）　　
-
-每年的一月和四月，<span class="token number">4</span>号到<span class="token number">9</span>号的<span class="token number">3</span>点<span class="token number">12</span>分和<span class="token number">3</span>点<span class="token number">55</span>分执行<span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st这个指令，并把结果添加在mm<span class="token punctuation">.</span>txt这个文件之后（mm<span class="token punctuation">.</span>txt文件位于用户自己的目录位置）。 
-<span class="token number">12</span><span class="token punctuation">,</span><span class="token number">55</span> <span class="token number">3</span> <span class="token number">4</span><span class="token operator">-</span><span class="token number">9</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token operator">*</span> <span class="token operator">/</span>bin<span class="token operator">/</span>rm <span class="token operator">-</span>f expire<span class="token punctuation">.</span>1st$#@<span class="token number">62</span><span class="token punctuation">;</span>$#@<span class="token number">62</span><span class="token punctuation">;</span>mm<span class="token punctuation">.</span>txt <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<hr>
-<blockquote>
-<p>2 nginx示例</p>
-</blockquote>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token number">30</span> <span class="token number">21</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每晚的<span class="token number">21</span><span class="token operator">:</span><span class="token number">30</span>重启 nginx。
-
-<span class="token number">45</span> <span class="token number">4</span> <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">22</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月<span class="token number">1</span>、 <span class="token number">10</span>、<span class="token number">22</span>日的<span class="token number">4</span> <span class="token operator">:</span> <span class="token number">45</span>重启nginx。
-
-<span class="token number">10</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每周六、周日的<span class="token number">1</span> <span class="token operator">:</span> <span class="token number">10</span>重启nginx。
-
-<span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span> <span class="token number">18</span><span class="token operator">-</span><span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每天<span class="token number">18</span> <span class="token operator">:</span> <span class="token number">00</span>至<span class="token number">23</span> <span class="token operator">:</span> <span class="token number">00</span>之间每隔<span class="token number">30</span>分钟重启nginx。
-
-<span class="token number">0</span> <span class="token number">23</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token number">6</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每星期六的<span class="token number">11</span> <span class="token operator">:</span> <span class="token number">00</span> pm重启nginx。
-
-<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每一小时重启nginx
-
-<span class="token operator">*</span> <span class="token number">23</span><span class="token operator">-</span><span class="token number">7</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-晚上<span class="token number">11</span>点到早上<span class="token number">7</span>点之间，每 隔一小时重启nginx
-
-<span class="token number">0</span> <span class="token number">11</span> <span class="token number">4</span> <span class="token operator">*</span> mon<span class="token operator">-</span>wed <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-每月的<span class="token number">4</span>号与每周一到周三 的<span class="token number">11</span>点重启nginx
-
-<span class="token number">0</span> <span class="token number">4</span> <span class="token number">1</span> jan <span class="token operator">*</span> <span class="token operator">/</span>etc<span class="token operator">/</span>init<span class="token punctuation">.</span>d<span class="token operator">/</span>nginx restart
-一月一号的<span class="token number">4</span>点重启nginx
-
-<span class="token operator">*</span><span class="token operator">/</span><span class="token number">30</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>ntpdate <span class="token number">210.72</span><span class="token number">.145</span><span class="token number">.20</span>
-每半小时同步一下时间<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="4-创建cron脚本"><a href="#4-创建cron脚本" class="headerlink" title="4 创建cron脚本"></a>4 创建cron脚本</h2><ol>
-<li><p>第一步：写cron脚本文件,命名为crontest.cron。<br>15,30,45,59 * * * * echo “xgmtest…..” &gt;&gt; xgmtest.txt  表示，每隔15分钟，执行打印一次命令 </p>
-</li>
-<li><p>第二步：添加定时任务。执行命令 “crontab crontest.cron”。搞定 </p>
-</li>
-<li><p>第三步：”crontab -l” 查看定时任务是否成功或者检测/var/spool/cron下是否生成对应cron脚本</p>
-</li>
-</ol>
-<h2 id="将脚本改为可执行（针对shell，-sh文件）"><a href="#将脚本改为可执行（针对shell，-sh文件）" class="headerlink" title="将脚本改为可执行（针对shell，.sh文件）"></a>将脚本改为可执行（针对shell，.sh文件）</h2><blockquote>
-<p>chmod +x filename</p>
-</blockquote>
-<p>引用：</p>
-<p><a href="http://blog.csdn.net/u012402276/article/details/51063269">http://blog.csdn.net/u012402276/article/details/51063269</a><br><a href="https://www.cnblogs.com/longjshz/p/5779215.html">https://www.cnblogs.com/longjshz/p/5779215.html</a><br><a href="http://blog.csdn.net/edgdvcyz/article/details/53348832">http://blog.csdn.net/edgdvcyz/article/details/53348832</a></p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>centos7 crontab linux 工具软件</tag>
       </tags>
   </entry>
   <entry>
@@ -2865,6 +2865,47 @@ port: 1234<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
       </tags>
   </entry>
   <entry>
+    <title>mac使用crt异常报错</title>
+    <url>//post/mac-crt.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
+<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
+<span id="more"></span>
+
+<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
+<p>sudo chmod o+w /cores</p>
+<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
+<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
+
+<p>见证一下mac系统</p>
+<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
+<p>查看下我们本机的 cores 目录权限</p>
+<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
+...
+drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发现缺少写权限，所以执行</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
+Password:
+ls -l &#x2F;
+...
+drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>然后再去启动CRT就正常了。</p>
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 JavaScript 创建并下载文件</title>
     <url>//post/js-create-file-and-download.html</url>
     <content><![CDATA[<p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
@@ -2922,47 +2963,6 @@ element<span class="token punctuation">.</span><span class="token function">clic
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mac使用crt异常报错</title>
-    <url>//post/mac-crt.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
-<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
-<span id="more"></span>
-
-<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
-<p>sudo chmod o+w /cores</p>
-<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
-<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
-
-<p>见证一下mac系统</p>
-<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
-<p>查看下我们本机的 cores 目录权限</p>
-<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
-...
-drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>发现缺少写权限，所以执行</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
-Password:
-ls -l &#x2F;
-...
-drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>然后再去启动CRT就正常了。</p>
-]]></content>
-      <categories>
-        <category>Mac</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
       </tags>
   </entry>
   <entry>
@@ -3795,6 +3795,82 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </tags>
   </entry>
   <entry>
+    <title>swap分区介绍</title>
+    <url>//post/swap.html</url>
+    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
+<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
+<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
+<span id="more"></span>
+<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
+<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
+<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
+<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
+<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
+<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
+<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
+<p>4-8G的物理内存，swap 等于内存大小。</p>
+<p>8-64G 的物理内存，swap 设置为8G。</p>
+<p>64-256G物理内存，swap 设置为16G。</p>
+<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
+<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
+<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
+<p>用swapoff关闭交换分区</p>
+<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
+<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
+<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
+<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
+<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
+<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
+<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
+    <url>//post/swappiness.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
+<span id="more"></span>
+
+<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
+<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
+<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
+#vm.swappiness&#x3D;10
+cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
+<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>加上</p>
+<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
+kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
+vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 生效</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样便完成修改设置！</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Web App 相关技术</title>
     <url>//post/web-app.html</url>
     <content><![CDATA[<blockquote>
@@ -4481,82 +4557,6 @@ $ gem install sass
       </categories>
       <tags>
         <tag>调试工具 JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>swap分区介绍</title>
-    <url>//post/swap.html</url>
-    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
-<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
-<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
-<span id="more"></span>
-<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
-<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
-<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
-<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
-<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
-<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
-<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
-<p>4-8G的物理内存，swap 等于内存大小。</p>
-<p>8-64G 的物理内存，swap 设置为8G。</p>
-<p>64-256G物理内存，swap 设置为16G。</p>
-<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
-<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
-<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
-<p>用swapoff关闭交换分区</p>
-<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
-<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
-<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
-<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
-<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
-<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
-<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
-    <url>//post/swappiness.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
-<span id="more"></span>
-
-<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
-<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
-<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
-#vm.swappiness&#x3D;10
-cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
-<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>加上</p>
-<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
-kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
-vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p> 生效</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这样便完成修改设置！</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -5292,6 +5292,7 @@ func main() &#123;
     <title>string类型</title>
     <url>//post/string-type.html</url>
     <content><![CDATA[<h1 id="1-字符串类型"><a href="#1-字符串类型" class="headerlink" title="1.字符串类型"></a>1.字符串类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本</p>
+<span id="more"></span>
 <h2 id="1-1-案例演示"><a href="#1-1-案例演示" class="headerlink" title="1.1 案例演示"></a>1.1 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
 
 import (
