@@ -5068,9 +5068,23 @@ func main() &#123;
       </tags>
   </entry>
   <entry>
-    <title>go-goroutine</title>
+    <title>go-协程说明</title>
     <url>/2022/08/08/go-goroutine/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="1、关于进程与线程"><a href="#1、关于进程与线程" class="headerlink" title="1、关于进程与线程"></a>1、关于进程与线程</h1><p>进程（process）就是程序在操作系统中的一次执行过程，是系统进行资源分配和调度的基本单位，进程是一个动态概念，是程序在执行过程中分配和管理资源的基本单位，每一个进程都有一个自己的地址空间。一个进程至少有5种基本状态，它们是：初始态、执行态、等待状态、就绪状态、终止状态。</p>
+<span id="more"></span>
+<p>通俗的讲，进程就是一个正在执行的程序</p>
+<p>线程 是进程的一个执行实例，是程序执行的最小单元，它是比进程更小的能独立运行的基本单位</p>
+<p>一个进程可以创建多个线程，同一个进程中的多个线程可以并发执行，一个程序要运行的话执行有一个进程</p>
+<h1 id="2、关于并发与并行"><a href="#2、关于并发与并行" class="headerlink" title="2、关于并发与并行"></a>2、关于并发与并行</h1><p>并发：多个线程同时竞争一个位置，竞争到的才可以执行，每一个时间段只有一个线程在执行</p>
+<p>并行：多个线程可以同时执行，每一个时间段，可以有多个线程同时执行<br>通俗的讲：多线程程序在单核CPU上运行就是并发，多线程程序在多核CPU上运行就是并行，如果线程数大于CPU核数，则多线程程序在多个CPU上面运行即有并发又有并行</p>
+<h1 id="3、Golang中的协程（goroutine）以及主线程"><a href="#3、Golang中的协程（goroutine）以及主线程" class="headerlink" title="3、Golang中的协程（goroutine）以及主线程"></a>3、Golang中的协程（goroutine）以及主线程</h1><p>Golang中的主线程：（可以理解为线程/也可以理解为进程），在一个Golang程序的主线程上可以起多个协程。Golang中多协程可以实现并行或者并发。<br>协程：可以理解为用户级线程，这是对内核透明的，也就是系统并不知道有协程的存在，是完全有用户自己的程序进行调度的。Golang的一大特色就是i次哦那个语言层面原生支持协程，在函数或者方法前面加 go 关键字姐可以创建一个携程。可以说Golang中的协程就是goroutine。<br>多线程和多协程：Golang中每个goroutine（协程）默认占用内存远比java、c的线程少。os线程（操作系统线程）一般都有固定的栈内存（通常为2MB左右），一个goroutine（协程）占用内存非常小，只有2Kb左右，多协程goroutine切换调度开销方面远比线程要少。这也是为什么越来越多的公司开始使用golang的原因之一。</p>
+<h1 id="4、goroutine的使用以及sync-WaitGroup"><a href="#4、goroutine的使用以及sync-WaitGroup" class="headerlink" title="4、goroutine的使用以及sync.WaitGroup"></a>4、goroutine的使用以及sync.WaitGroup</h1>]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
   </entry>
   <entry>
     <title>pointer</title>
@@ -5434,6 +5448,234 @@ func main() &#123;
       </categories>
       <tags>
         <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>etcd-Overview</title>
+    <url>/2022/08/12/etcd-Overview/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>gin-method</title>
+    <url>/2022/08/09/gin-method/</url>
+    <content><![CDATA[<p>实现gin的调用方法，包括post、get、json等</p>
+<span id="more"></span>
+
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">package main
+
+import (
+	&quot;net&#x2F;http&quot;
+
+	&quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;
+)
+
+func main() &#123;
+	r :&#x3D; gin.Default()
+	r.GET(&quot;&#x2F;&quot;, func(c *gin.Context) &#123;
+		c.JSON(200, gin.H&#123;&quot;default&quot;: true&#125;)
+	&#125;)
+	r.GET(&quot;&#x2F;string&quot;, func(c *gin.Context) &#123;
+		c.String(http.StatusOK, &quot;值：%v&quot;, &quot;首页&quot;)
+	&#125;)
+	r.GET(&quot;&#x2F;json&quot;, func(c *gin.Context) &#123;
+		c.JSON(http.StatusOK, gin.H&#123;
+			&quot;status&quot;: true,
+			&quot;msg&quot;:    &quot;访问成功&quot;,
+		&#125;)
+	&#125;)
+	r.Run()
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <tags>
+        <tag>go gin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gin中模板的配置</title>
+    <url>/2022/08/09/gin-template/</url>
+    <content><![CDATA[<h2 id="1、全部模板放在一个目录里的配置方法"><a href="#1、全部模板放在一个目录里的配置方法" class="headerlink" title="1、全部模板放在一个目录里的配置方法"></a>1、全部模板放在一个目录里的配置方法</h2><p>现在的目录路径：</p>
+<span id="more"></span>
+
+<p>![image-20220809151655101](/Users/geminifly/Library/Application Support/typora-user-images/image-20220809151655101.png)</p>
+<p>index.html</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;&#123;define "index.html"&#125;&#125;
+<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">doctype</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span>
+        <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>&#123;&#123;.title&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+&#123;&#123;end&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>news.html</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;&#123;define "news.html"&#125;&#125;
+<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">doctype</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span>
+        <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>&#123;&#123;.title&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+&#123;&#123;end&#125;&#125; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>main.go</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">
+package main
+
+import &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;
+
+func main() &#123;
+	r :&#x3D; gin.Default()
+	&#x2F;&#x2F;加载模板
+	r.LoadHTMLGlob(&quot;templates&#x2F;**&#x2F;**&quot;)
+	r.GET(&quot;&#x2F;index&quot;, func(context *gin.Context) &#123;
+		context.HTML(200, &quot;index.html&quot;, gin.H&#123;&quot;title&quot;: &quot;首页&quot;&#125;)
+	&#125;)
+	r.GET(&quot;&#x2F;news&quot;, func(context *gin.Context) &#123;
+		context.HTML(200, &quot;news.html&quot;, gin.H&#123;&quot;title&quot;: &quot;新闻 页&quot;&#125;)
+	&#125;)
+	r.Run()
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <tags>
+        <tag>gin go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Golang并行运行时设置占用cpu数量</title>
+    <url>/2022/08/08/go-routine-cpu/</url>
+    <content><![CDATA[<p>Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个OS线程来同时执行Go代码。默认值是机器上的VCPU核心数。例如在一个8核心的机器上，调度器会把Go代码同时调度到8个OS线程上。</p>
+<span id="more"></span>
+
+<p>Golang中可以通过runtime.GOMAXPROCS()函数设置当前程序并发时占用的CPU逻辑核心数。</p>
+<p>Golang1.5版本之前，默认使用的是单核心执行。Golang1.5版本之后，默认使用全部的CPU逻辑核心数。</p>
+<p>代码演示：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;runtime&quot;
+)
+
+func main() &#123;
+	&#x2F;&#x2F;获取当前计算机上面的Cpu核数
+	CpuNum :&#x3D; runtime.NumCPU()
+	fmt.Println(&quot;cpuNum&#x3D;&quot;, CpuNum)
+	&#x2F;&#x2F;可以自己设置使用多个Cpu
+	runtime.GOMAXPROCS(CpuNum - 2)
+	fmt.Println(&quot;ok&quot;)
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+]]></content>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>etcd06-运维命令</title>
+    <url>/2022/08/12/etcd-ops-order/</url>
+    <content><![CDATA[<p>在此记录一下运维同学常用操作etcd的命令</p>
+<span id="more"></span>
+
+<h1 id="增-改"><a href="#增-改" class="headerlink" title="增/改"></a>增/改</h1><p>这里是设置键的值的命令 foo 到 bar：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl put foo bar
+OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h1 id="查"><a href="#查" class="headerlink" title="查"></a>查</h1><p>读取键为 foo 的命令</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl get foo
+foo &#x2F;&#x2F; key
+bar &#x2F;&#x2F; value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>上面同时返回了 key 和 value，怎么只读取 key 对应的值呢：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get foo --print-value-only
+bar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>按前缀读取：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foo
+foo
+bar
+foo1
+bar1
+foo2
+bar2
+foo3
+bar3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>按前缀只需要key：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foo --keys-only=true
+foo
+foo1
+foo2
+foo3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="删"><a href="#删" class="headerlink" title="删"></a>删</h1><p>删除一个key</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo
+1 &#x2F;&#x2F;删除个数
+foo &#x2F;&#x2F;删除key
+bar &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>删除key foo1时并返回被删除的键值对</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo
+1 &#x2F;&#x2F;删除个数
+foo1 &#x2F;&#x2F;删除key
+bar1 &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>删除指定前缀的key</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prev-kv --prefix foo
+2
+foo3
+bar3
+foo4
+bar4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>删除已foo为开头的key，只显示key不显示value</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl  del --prefix foo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>删除所有数据</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prefix &quot;&quot;
+4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>当删除数据后，发现数据库容量并没有变少，这个时候可以使用数据压缩与碎片整理</p>
+<p>1、获取当前版本</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">rev&#x3D;$(ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 endpoint status --write-out&#x3D;&quot;json&quot; | egrep -o &#39;&quot;revision&quot;:[0-9]*&#39; | egrep -o &#39;[0-9].*&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2、压缩掉所有旧版本</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 compact $rev<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>3、整理多余的空间</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 defrag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>通过线上实践发现还是设置自动压缩更靠谱，官方同样提供数据自动压缩方式，历史数据只保留一个小时的</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --auto-compaction-retention&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>根据实践发现只配置auto-compaction-retention只会做碎片整理，不会实际减少空间大小；　如果需要减少大小还是需要使用etcdctl compact 和　etcdctl defrag清理空间</p>
+<p>etcd 3.3.3版本以后的自动压缩方式：</p>
+<p>每5分钟自动压缩”latest revision” - 1000</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;revision --auto-compaction-retention&#x3D;1000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>每1小时自动压缩并保留12小时窗口</p>
+<pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;periodic --auto-compaction-retention&#x3D;12h<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <tags>
+        <tag>etcd</tag>
       </tags>
   </entry>
 </search>

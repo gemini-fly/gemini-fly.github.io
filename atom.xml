@@ -6,7 +6,7 @@
   <link href="https://running-dpf.github.io/atom.xml" rel="self"/>
   
   <link href="https://running-dpf.github.io/"/>
-  <updated>2022-08-08T07:25:46.277Z</updated>
+  <updated>2022-08-12T10:05:12.258Z</updated>
   <id>https://running-dpf.github.io/</id>
   
   <author>
@@ -17,15 +17,112 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>go-goroutine</title>
+    <title>etcd06-运维命令</title>
+    <link href="https://running-dpf.github.io/2022/08/12/etcd-ops-order/"/>
+    <id>https://running-dpf.github.io/2022/08/12/etcd-ops-order/</id>
+    <published>2022-08-12T09:57:18.000Z</published>
+    <updated>2022-08-12T10:05:12.258Z</updated>
+    
+    <content type="html"><![CDATA[<p>在此记录一下运维同学常用操作etcd的命令</p><span id="more"></span><h1 id="增-改"><a href="#增-改" class="headerlink" title="增/改"></a>增/改</h1><p>这里是设置键的值的命令 foo 到 bar：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl put foo barOK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h1 id="查"><a href="#查" class="headerlink" title="查"></a>查</h1><p>读取键为 foo 的命令</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl get foofoo &#x2F;&#x2F; keybar &#x2F;&#x2F; value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>上面同时返回了 key 和 value，怎么只读取 key 对应的值呢：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get foo --print-value-onlybar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>按前缀读取：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foofoobarfoo1bar1foo2bar2foo3bar3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>按前缀只需要key：</p><pre class="line-numbers language-text" data-language="text"><code class="language-text">etcdctl get --prefix foo --keys-only=truefoofoo1foo2foo3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h1 id="删"><a href="#删" class="headerlink" title="删"></a>删</h1><p>删除一个key</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo1 &#x2F;&#x2F;删除个数foo &#x2F;&#x2F;删除keybar &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>删除key foo1时并返回被删除的键值对</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del foo1 &#x2F;&#x2F;删除个数foo1 &#x2F;&#x2F;删除keybar1 &#x2F;&#x2F;删除value<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>删除指定前缀的key</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prev-kv --prefix foo2foo3bar3foo4bar4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>删除已foo为开头的key，只显示key不显示value</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl  del --prefix foo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>删除所有数据</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl del --prefix &quot;&quot;4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>当删除数据后，发现数据库容量并没有变少，这个时候可以使用数据压缩与碎片整理</p><p>1、获取当前版本</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">rev&#x3D;$(ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 endpoint status --write-out&#x3D;&quot;json&quot; | egrep -o &#39;&quot;revision&quot;:[0-9]*&#39; | egrep -o &#39;[0-9].*&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>2、压缩掉所有旧版本</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 compact $rev<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>3、整理多余的空间</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --endpoints&#x3D;http:&#x2F;&#x2F;127.0.0.1:2379 defrag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>通过线上实践发现还是设置自动压缩更靠谱，官方同样提供数据自动压缩方式，历史数据只保留一个小时的</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">ETCDCTL_API&#x3D;3 etcdctl --auto-compaction-retention&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>根据实践发现只配置auto-compaction-retention只会做碎片整理，不会实际减少空间大小；　如果需要减少大小还是需要使用etcdctl compact 和　etcdctl defrag清理空间</p><p>etcd 3.3.3版本以后的自动压缩方式：</p><p>每5分钟自动压缩”latest revision” - 1000</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;revision --auto-compaction-retention&#x3D;1000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>每1小时自动压缩并保留12小时窗口</p><pre class="line-numbers language-Go" data-language="Go"><code class="language-Go">etcdctl -–auto-compaction-mode&#x3D;periodic --auto-compaction-retention&#x3D;12h<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;在此记录一下运维同学常用操作etcd的命令&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="etcd" scheme="https://running-dpf.github.io/tags/etcd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>etcd-Overview</title>
+    <link href="https://running-dpf.github.io/2022/08/12/etcd-Overview/"/>
+    <id>https://running-dpf.github.io/2022/08/12/etcd-Overview/</id>
+    <published>2022-08-12T09:57:02.000Z</published>
+    <updated>2022-08-12T09:59:47.604Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>gin中模板的配置</title>
+    <link href="https://running-dpf.github.io/2022/08/09/gin-template/"/>
+    <id>https://running-dpf.github.io/2022/08/09/gin-template/</id>
+    <published>2022-08-09T07:12:08.000Z</published>
+    <updated>2022-08-09T07:19:38.188Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、全部模板放在一个目录里的配置方法"><a href="#1、全部模板放在一个目录里的配置方法" class="headerlink" title="1、全部模板放在一个目录里的配置方法"></a>1、全部模板放在一个目录里的配置方法</h2><p>现在的目录路径：</p><span id="more"></span><p>![image-20220809151655101](/Users/geminifly/Library/Application Support/typora-user-images/image-20220809151655101.png)</p><p>index.html</p><pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;&#123;define "index.html"&#125;&#125;<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">doctype</span> <span class="token name">html</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span>        <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>&#123;&#123;.title&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>&#123;&#123;end&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>news.html</p><pre class="line-numbers language-html" data-language="html"><code class="language-html">&#123;&#123;define "news.html"&#125;&#125;<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">doctype</span> <span class="token name">html</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span>        <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span>&#123;&#123;.title&#125;&#125;<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>&#123;&#123;end&#125;&#125; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>main.go</p><pre class="line-numbers language-go" data-language="go"><code class="language-go">package mainimport &quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;func main() &#123;r :&#x3D; gin.Default()&#x2F;&#x2F;加载模板r.LoadHTMLGlob(&quot;templates&#x2F;**&#x2F;**&quot;)r.GET(&quot;&#x2F;index&quot;, func(context *gin.Context) &#123;context.HTML(200, &quot;index.html&quot;, gin.H&#123;&quot;title&quot;: &quot;首页&quot;&#125;)&#125;)r.GET(&quot;&#x2F;news&quot;, func(context *gin.Context) &#123;context.HTML(200, &quot;news.html&quot;, gin.H&#123;&quot;title&quot;: &quot;新闻 页&quot;&#125;)&#125;)r.Run()&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1、全部模板放在一个目录里的配置方法&quot;&gt;&lt;a href=&quot;#1、全部模板放在一个目录里的配置方法&quot; class=&quot;headerlink&quot; title=&quot;1、全部模板放在一个目录里的配置方法&quot;&gt;&lt;/a&gt;1、全部模板放在一个目录里的配置方法&lt;/h2&gt;&lt;p&gt;现在的目录路径：&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="gin go" scheme="https://running-dpf.github.io/tags/gin-go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gin-method</title>
+    <link href="https://running-dpf.github.io/2022/08/09/gin-method/"/>
+    <id>https://running-dpf.github.io/2022/08/09/gin-method/</id>
+    <published>2022-08-09T05:52:46.000Z</published>
+    <updated>2022-08-09T05:54:09.124Z</updated>
+    
+    <content type="html"><![CDATA[<p>实现gin的调用方法，包括post、get、json等</p><span id="more"></span><pre class="line-numbers language-go" data-language="go"><code class="language-go">package mainimport (&quot;net&#x2F;http&quot;&quot;github.com&#x2F;gin-gonic&#x2F;gin&quot;)func main() &#123;r :&#x3D; gin.Default()r.GET(&quot;&#x2F;&quot;, func(c *gin.Context) &#123;c.JSON(200, gin.H&#123;&quot;default&quot;: true&#125;)&#125;)r.GET(&quot;&#x2F;string&quot;, func(c *gin.Context) &#123;c.String(http.StatusOK, &quot;值：%v&quot;, &quot;首页&quot;)&#125;)r.GET(&quot;&#x2F;json&quot;, func(c *gin.Context) &#123;c.JSON(http.StatusOK, gin.H&#123;&quot;status&quot;: true,&quot;msg&quot;:    &quot;访问成功&quot;,&#125;)&#125;)r.Run()&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;实现gin的调用方法，包括post、get、json等&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="go gin" scheme="https://running-dpf.github.io/tags/go-gin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang并行运行时设置占用cpu数量</title>
+    <link href="https://running-dpf.github.io/2022/08/08/go-routine-cpu/"/>
+    <id>https://running-dpf.github.io/2022/08/08/go-routine-cpu/</id>
+    <published>2022-08-08T10:42:15.000Z</published>
+    <updated>2022-08-08T10:56:29.346Z</updated>
+    
+    <content type="html"><![CDATA[<p>Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个OS线程来同时执行Go代码。默认值是机器上的VCPU核心数。例如在一个8核心的机器上，调度器会把Go代码同时调度到8个OS线程上。</p><span id="more"></span><p>Golang中可以通过runtime.GOMAXPROCS()函数设置当前程序并发时占用的CPU逻辑核心数。</p><p>Golang1.5版本之前，默认使用的是单核心执行。Golang1.5版本之后，默认使用全部的CPU逻辑核心数。</p><p>代码演示：</p><pre class="line-numbers language-go" data-language="go"><code class="language-go">package mainimport (&quot;fmt&quot;&quot;runtime&quot;)func main() &#123;&#x2F;&#x2F;获取当前计算机上面的Cpu核数CpuNum :&#x3D; runtime.NumCPU()fmt.Println(&quot;cpuNum&#x3D;&quot;, CpuNum)&#x2F;&#x2F;可以自己设置使用多个Cpuruntime.GOMAXPROCS(CpuNum - 2)fmt.Println(&quot;ok&quot;)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Go运行时的调度器使用GOMAXPROCS参数来确定需要使用多少个OS线程来同时执行Go代码。默认值是机器上的VCPU核心数。例如在一个8核心的机器上，调度器会把Go代码同时调度到8个OS线程上。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>go-协程说明</title>
     <link href="https://running-dpf.github.io/2022/08/08/go-goroutine/"/>
     <id>https://running-dpf.github.io/2022/08/08/go-goroutine/</id>
     <published>2022-08-08T07:23:26.000Z</published>
-    <updated>2022-08-08T07:25:46.277Z</updated>
+    <updated>2022-08-08T10:10:39.831Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1、关于进程与线程"><a href="#1、关于进程与线程" class="headerlink" title="1、关于进程与线程"></a>1、关于进程与线程</h1><p>进程（process）就是程序在操作系统中的一次执行过程，是系统进行资源分配和调度的基本单位，进程是一个动态概念，是程序在执行过程中分配和管理资源的基本单位，每一个进程都有一个自己的地址空间。一个进程至少有5种基本状态，它们是：初始态、执行态、等待状态、就绪状态、终止状态。</p><span id="more"></span><p>通俗的讲，进程就是一个正在执行的程序</p><p>线程 是进程的一个执行实例，是程序执行的最小单元，它是比进程更小的能独立运行的基本单位</p><p>一个进程可以创建多个线程，同一个进程中的多个线程可以并发执行，一个程序要运行的话执行有一个进程</p><h1 id="2、关于并发与并行"><a href="#2、关于并发与并行" class="headerlink" title="2、关于并发与并行"></a>2、关于并发与并行</h1><p>并发：多个线程同时竞争一个位置，竞争到的才可以执行，每一个时间段只有一个线程在执行</p><p>并行：多个线程可以同时执行，每一个时间段，可以有多个线程同时执行<br>通俗的讲：多线程程序在单核CPU上运行就是并发，多线程程序在多核CPU上运行就是并行，如果线程数大于CPU核数，则多线程程序在多个CPU上面运行即有并发又有并行</p><h1 id="3、Golang中的协程（goroutine）以及主线程"><a href="#3、Golang中的协程（goroutine）以及主线程" class="headerlink" title="3、Golang中的协程（goroutine）以及主线程"></a>3、Golang中的协程（goroutine）以及主线程</h1><p>Golang中的主线程：（可以理解为线程/也可以理解为进程），在一个Golang程序的主线程上可以起多个协程。Golang中多协程可以实现并行或者并发。<br>协程：可以理解为用户级线程，这是对内核透明的，也就是系统并不知道有协程的存在，是完全有用户自己的程序进行调度的。Golang的一大特色就是i次哦那个语言层面原生支持协程，在函数或者方法前面加 go 关键字姐可以创建一个携程。可以说Golang中的协程就是goroutine。<br>多线程和多协程：Golang中每个goroutine（协程）默认占用内存远比java、c的线程少。os线程（操作系统线程）一般都有固定的栈内存（通常为2MB左右），一个goroutine（协程）占用内存非常小，只有2Kb左右，多协程goroutine切换调度开销方面远比线程要少。这也是为什么越来越多的公司开始使用golang的原因之一。</p><h1 id="4、goroutine的使用以及sync-WaitGroup"><a href="#4、goroutine的使用以及sync-WaitGroup" class="headerlink" title="4、goroutine的使用以及sync.WaitGroup"></a>4、goroutine的使用以及sync.WaitGroup</h1>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1、关于进程与线程&quot;&gt;&lt;a href=&quot;#1、关于进程与线程&quot; class=&quot;headerlink&quot; title=&quot;1、关于进程与线程&quot;&gt;&lt;/a&gt;1、关于进程与线程&lt;/h1&gt;&lt;p&gt;进程（process）就是程序在操作系统中的一次执行过程，是系统进行资源分配和调度的基本单位，进程是一个动态概念，是程序在执行过程中分配和管理资源的基本单位，每一个进程都有一个自己的地址空间。一个进程至少有5种基本状态，它们是：初始态、执行态、等待状态、就绪状态、终止状态。&lt;/p&gt;</summary>
     
     
     
+    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
     
+    
+    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
     
   </entry>
   
@@ -344,103 +441,6 @@
     
     
     <category term="算法 shuffle 乱序 洗牌" scheme="https://running-dpf.github.io/tags/%E7%AE%97%E6%B3%95-shuffle-%E4%B9%B1%E5%BA%8F-%E6%B4%97%E7%89%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pointer</title>
-    <link href="https://running-dpf.github.io/2022/04/11/pointer/"/>
-    <id>https://running-dpf.github.io/2022/04/11/pointer/</id>
-    <published>2022-04-11T05:36:59.000Z</published>
-    <updated>2022-08-08T06:30:13.541Z</updated>
-    
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>基本数据类型的相互转换</title>
-    <link href="https://running-dpf.github.io/2022/04/07/Interconversion-of-basic-data-types/"/>
-    <id>https://running-dpf.github.io/2022/04/07/Interconversion-of-basic-data-types/</id>
-    <published>2022-04-07T06:28:55.000Z</published>
-    <updated>2022-08-08T06:30:13.766Z</updated>
-    
-    
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基本数据类型的默认值</title>
-    <link href="https://running-dpf.github.io/2022/04/07/values-for-primitive-data-types/"/>
-    <id>https://running-dpf.github.io/2022/04/07/values-for-primitive-data-types/</id>
-    <published>2022-04-07T06:16:55.000Z</published>
-    <updated>2022-08-08T06:30:13.529Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-基本介绍"><a href="#1-基本介绍" class="headerlink" title="1.基本介绍"></a>1.基本介绍</h1><p>在 go 中，数据类型都有一个默认值，当程序员没有赋值时，就会保留默认值，在 go 中，默认值 又叫零值。</p><span id="more"></span><h1 id="2-基本数据类型的默认值如下"><a href="#2-基本数据类型的默认值如下" class="headerlink" title="2. 基本数据类型的默认值如下"></a>2. 基本数据类型的默认值如下</h1><table><thead><tr><th align="center">数据类型</th><th align="center">默认值</th></tr></thead><tbody><tr><td align="center">整型</td><td align="center">0</td></tr><tr><td align="center">浮点型</td><td align="center">0</td></tr><tr><td align="center">字符串</td><td align="center">“”</td></tr><tr><td align="center">布尔型</td><td align="center">False</td></tr></tbody></table><h2 id="2-1-案例"><a href="#2-1-案例" class="headerlink" title="2.1 案例"></a>2.1 案例</h2><pre class="line-numbers language-none"><code class="language-none">package mainimport &quot;fmt&quot;func main() &#123;var a intvar b float32var c float64var d boolvar f stringfmt.Printf(&quot;a&#x3D;%d,b&#x3D;%v,c&#x3D;%v,d&#x3D;%v,f&#x3D;%v&quot;, a, b, c, d, f)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">a=0,b=0,c=0,d=false,f=</font></p>]]></content>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;1-基本介绍&quot;&gt;&lt;a href=&quot;#1-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;1.基本介绍&quot;&gt;&lt;/a&gt;1.基本介绍&lt;/h1&gt;&lt;p&gt;在 go 中，数据类型都有一个默认值，当程序员没有赋值时，就会保留默认值，在 go 中，默认值 又叫零值。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>string类型</title>
-    <link href="https://running-dpf.github.io/2022/03/18/string-type/"/>
-    <id>https://running-dpf.github.io/2022/03/18/string-type/</id>
-    <published>2022-03-18T07:33:13.000Z</published>
-    <updated>2022-08-08T06:30:13.481Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-字符串类型"><a href="#1-字符串类型" class="headerlink" title="1.字符串类型"></a>1.字符串类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本</p><h2 id="1-1-案例演示"><a href="#1-1-案例演示" class="headerlink" title="1.1 案例演示"></a>1.1 案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package mainimport (&quot;fmt&quot;)func main() &#123;var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;fmt.Println(ssr)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#FF000">哈哈哈哈，hello world</font></p><h2 id="1-2-string-使用注意事项和细"><a href="#1-2-string-使用注意事项和细" class="headerlink" title="1.2 string 使用注意事项和细"></a>1.2 string 使用注意事项和细</h2><h3 id="1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员"><a href="#1-2-1-Go-语言的字符串的字节使用-UTF-8-编码标识-Unicode-文本，这样-Golang-统一使用-UTF-8-编码-中文-乱码问题不会再困扰程序员" class="headerlink" title="1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员"></a>1.2.1 Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本，这样 Golang 统一使用 UTF-8 编码,中文 乱码问题不会再困扰程序员</h3><h3 id="1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的"><a href="#1-2-2-字符串一旦赋值了，字符串就不能修改了：在-Go-中字符串是不可变的" class="headerlink" title="1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的"></a>1.2.2 字符串一旦赋值了，字符串就不能修改了：在 Go 中字符串是不可变的</h3><pre class="line-numbers language-none"><code class="language-none">package mainimport (&quot;fmt&quot;)func main() &#123;var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;fmt.Println(ssr[0])&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#FF0000">229</font></p><pre class="line-numbers language-none"><code class="language-none">package mainimport (&quot;fmt&quot;)func main() &#123;var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;ssr[0] &#x3D; &#39;a&#39;fmt.Println(ssr[0])&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">cannot assign to ssr[0]</font>，标识无法重新给ssr的第0个元素进行修改</p><h3 id="1-2-3-字符串的两种表示形式"><a href="#1-2-3-字符串的两种表示形式" class="headerlink" title="1.2.3 字符串的两种表示形式"></a>1.2.3 字符串的两种表示形式</h3><p>(1) 双引号, 会识别转义字符 </p><p>(2) 反引号，以字符串的原生形式输出，包括换行和特殊字符，可以实现防止攻击、输出源代码等效果</p><pre class="line-numbers language-none"><code class="language-none">package mainimport &quot;fmt&quot;func main() &#123;var ssr string &#x3D; &#96;package mainimport (&quot;fmt&quot;)func main() &#123;var ssr string &#x3D; &quot;哈哈哈哈，hello world&quot;ssr[0] &#x3D; &#39;a&#39;fmt.Println(ssr[0])&#125;&#96;fmt.Println(ssr)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">package main</font></p><p><font color="#ff0000">import (</font></p><p><font color="#ff0000">    “fmt”</font></p><p><font color="#ff0000">)</font></p><p><font color="#ff0000">func main() {</font></p><p><font color="#ff0000">    var ssr string = “哈哈哈哈，hello world”</font></p><p><font color="#ff0000">    ssr[0] = ‘a’</font></p><p><font color="#ff0000">    fmt.Println(ssr[0])</font></p><p><font color="#ff0000">}</font></p><h3 id="1-2-4-字符串的拼接方式"><a href="#1-2-4-字符串的拼接方式" class="headerlink" title="1.2.4 字符串的拼接方式"></a>1.2.4 字符串的拼接方式</h3><pre class="line-numbers language-none"><code class="language-none">package mainimport &quot;fmt&quot;func main() &#123;var nayaur &#x3D; &quot;hello&quot; + &quot;world&quot;nayaur +&#x3D; &quot;nayaur!&quot;fmt.Println(nayaur)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">helloworldnayaur!</font></p><p>发现其实是没有空格的，这样可以在每个字符串中间加空格，拼接的字符串就会有空格</p><pre class="line-numbers language-none"><code class="language-none">package mainimport &quot;fmt&quot;func main() &#123;var nayaur &#x3D; &quot;hello&quot; + &quot; world&quot;nayaur +&#x3D; &quot; nayaur!&quot;fmt.Println(nayaur)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">hello world nayaur!</font></p><h3 id="1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理"><a href="#1-2-5-当一行字符串太长时，需要使用到多行字符串，可以如下处理" class="headerlink" title="1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理"></a>1.2.5 当一行字符串太长时，需要使用到多行字符串，可以如下处理</h3><pre class="line-numbers language-none"><code class="language-none">package mainimport &quot;fmt&quot;func main() &#123;var nayaur &#x3D; &quot;hello&quot; + &quot; world&quot; + &quot;hello&quot; + &quot; world&quot;fmt.Println(nayaur)&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#ff0000">hello worldhello world</font></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-字符串类型&quot;&gt;&lt;a href=&quot;#1-字符串类型&quot; class=&quot;headerlink&quot; title=&quot;1.字符串类型&quot;&gt;&lt;/a&gt;1.字符串类型&lt;/h1&gt;&lt;h2 id=&quot;基本介绍&quot;&gt;&lt;a href=&quot;#基本介绍&quot; class=&quot;headerlink&quot; titl</summary>
-      
-    
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>布尔类型</title>
-    <link href="https://running-dpf.github.io/2022/03/18/bool-type/"/>
-    <id>https://running-dpf.github.io/2022/03/18/bool-type/</id>
-    <published>2022-03-18T07:16:21.000Z</published>
-    <updated>2022-08-08T06:30:13.712Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p><p>2、bool 类型占1个字节</p><p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p><h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package mainimport (&quot;fmt&quot;&quot;unsafe&quot;)func main() &#123;var n1 &#x3D; falsefmt.Println(&quot;n1&#x3D;&quot;, n1)fmt.Println(&quot;n1占用空间：&quot;, unsafe.Sizeof(n1))&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>结果</p><p><font color="#FF000">n1= false</font></p><p><font color="#FF0000">n1占用空间： 1</font></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-布尔类型&quot;&gt;&lt;a href=&quot;#1-布尔类型&quot; class=&quot;headerlink&quot; title=&quot;1.布尔类型&quot;&gt;&lt;/a&gt;1.布尔类型&lt;/h1&gt;&lt;h2 id=&quot;基本介绍&quot;&gt;&lt;a href=&quot;#基本介绍&quot; class=&quot;headerlink&quot; title=&quot;基</summary>
-      
-    
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
-    
-    
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
     
   </entry>
   
