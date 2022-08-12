@@ -118,6 +118,19 @@
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 阶段总结</title>
+    <url>//post/JavaScript-Net.html</url>
+    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
+<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ISP</title>
     <url>//post/ISP.html</url>
     <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
@@ -129,19 +142,6 @@
       </categories>
       <tags>
         <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 阶段总结</title>
-    <url>//post/JavaScript-Net.html</url>
-    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
-<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -1437,6 +1437,40 @@ myValue <span class="token operator">===</span> <span class="token keyword">null
       </tags>
   </entry>
   <entry>
+    <title>NGINX禁止解析IP访问</title>
+    <url>//post/NGINX-Prohibit-IP-access.html</url>
+    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
+<span id="more"></span>
+
+
+<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
+listen 80 default; 
+server_name _; 
+return 404; 
+&#125;
+
+server &#123;
+listen 80;
+server_name xxx;
+rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
+&#125;
+
+server &#123;
+listen 443;
+server_name xxx;
+    #ssl_certificate ;
+    #ssl_certificate_key ;
+
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 中的 this</title>
     <url>//post/JavaScript-this.html</url>
     <content><![CDATA[<h2 id="全局的-this"><a href="#全局的-this" class="headerlink" title="全局的 this"></a>全局的 this</h2><p>全局 this 一般指向全局对象，浏览器中的全局对象就是 <code>window</code>。</p>
@@ -1568,37 +1602,47 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </tags>
   </entry>
   <entry>
-    <title>NGINX禁止解析IP访问</title>
-    <url>//post/NGINX-Prohibit-IP-access.html</url>
-    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
+    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
+    <url>//post/Ubuntu16-04-pycharm-icon-setting.html</url>
+    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
+<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
 <span id="more"></span>
+<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法二（使用gedit）：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
-<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
-listen 80 default; 
-server_name _; 
-return 404; 
-&#125;
 
-server &#123;
-listen 80;
-server_name xxx;
-rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
-&#125;
 
-server &#123;
-listen 443;
-server_name xxx;
-    #ssl_certificate ;
-    #ssl_certificate_key ;
 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后就会弹出一个新框：</p>
+<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+<span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>
+Type<span class="token operator">=</span>Application
+Name<span class="token operator">=</span>Pycharm
+GenericName<span class="token operator">=</span>Pycharm3
+Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>
+Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>f
+Icon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>png
+Terminal<span class="token operator">=</span>pycharm
+Categories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
+<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 ]]></content>
       <categories>
-        <category>nginx</category>
+        <category>python</category>
       </categories>
       <tags>
-        <tag>nginx</tag>
+        <tag>Ubuntu Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1676,50 +1720,6 @@ server_name xxx;
       </categories>
       <tags>
         <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <url>//post/Ubuntu16-04-pycharm-icon-setting.html</url>
-    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
-<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
-<span id="more"></span>
-<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二（使用gedit）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<p>然后就会弹出一个新框：</p>
-<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>
-Type<span class="token operator">=</span>Application
-Name<span class="token operator">=</span>Pycharm
-GenericName<span class="token operator">=</span>Pycharm3
-Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>
-Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>f
-Icon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>png
-Terminal<span class="token operator">=</span>pycharm
-Categories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
-<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>Ubuntu Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2471,71 +2471,6 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </tags>
   </entry>
   <entry>
-    <title>Git 如何 clone 非 master 分支的代码</title>
-    <url>//post/git-clone-not-master-branch.html</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone git@gitlab.xxx.com:xxxxx.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p>
-<span id="more"></span>
-
-
-
-<p><img data-src="https://ooo.0o0.ooo/2016/07/07/577e349ab42ed.png" alt="7f07c8f6deef169ef6be5103bbd3e932f8676bb1.png"></p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><strong>刚刚开周会的时候，自己洋洋得意的分享我的解决方案，但是……经过与团队成员的的讨论，自己的方法弱爆了，现在把更优雅的方法写一下。原来写的方法并不太适合用在这个场景里。</strong> 我之前写的方法在文章后面。</p>
-<p>直接使用命令</p>
-<pre class="line-numbers language-none"><code class="language-none">git branch -r #查看远程分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>或</p>
-<pre class="line-numbers language-none"><code class="language-none">git branch -a #查看所有分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>会显示</p>
-<pre class="line-numbers language-none"><code class="language-none">origin&#x2F;HEAD -&gt; origin&#x2F;master
-origin&#x2F;daily&#x2F;1.2.2
-origin&#x2F;daily&#x2F;1.3.0
-origin&#x2F;daily&#x2F;1.4.1
-origin&#x2F;develop
-origin&#x2F;feature&#x2F;daily-1.0.0
-origin&#x2F;master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>然后直接</p>
-<pre class="line-numbers language-none"><code class="language-none">git checkout origin&#x2F;daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>就好了。。。</p>
-<h2 id="原来的解决方案"><a href="#原来的解决方案" class="headerlink" title="原来的解决方案"></a>原来的解决方案</h2><p><strong>其实我原来写的这个方法更多的是：设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支。</strong></p>
-<p>我们在本地先建立一个分支，建议名称和远程的想要同步的分支名称一样。</p>
-<pre class="line-numbers language-none"><code class="language-none">git branch daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>在切换到这个本地分支</p>
-<pre class="line-numbers language-none"><code class="language-none">git checkout daily&#x2F;1.4.1
-# Switched to branch &#39;daily&#x2F;1.4.1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>接下来就可以去建立上游分支的关联了，但是这个命令比较长，不好记，我们可以直接先<code>pull</code>一下，git 会提示我们相应的操作和命令。</p>
-<pre class="line-numbers language-none"><code class="language-none">git pull
-There is no tracking information for the current branch.
-Please specify which branch you want to merge with.
-See git-pull(1) for details.
-
-    git pull &lt;remote&gt; &lt;branch&gt;
-
-If you wish to set tracking information for this branch you can do so with:
-
-    git branch --set-upstream-to&#x3D;origin&#x2F;&lt;branch&gt; daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们看到最后一行，执行这个命令，即可完成与上游分支的关联。</p>
-<pre class="line-numbers language-none"><code class="language-none">git branch --set-upstream-to&#x3D;origin&#x2F;daily&#x2F;1.4.1 daily&#x2F;1.4.1
-# Branch daily&#x2F;1.4.1 set up to track remote branch daily&#x2F;1.4.1 from origin.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>然后再<code>pull</code>一下就好了！</p>
-<pre class="line-numbers language-none"><code class="language-none">git pull<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>GitHub</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何使用 babel</title>
     <url>//post/how-to-use-babel.html</url>
     <content><![CDATA[<p><a href="https://babeljs.io/">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
@@ -2647,6 +2582,71 @@ babel src -d lib<span aria-hidden="true" class="line-numbers-rows"><span></span>
       </categories>
       <tags>
         <tag>ES2015 ES6 ES5 babel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git 如何 clone 非 master 分支的代码</title>
+    <url>//post/git-clone-not-master-branch.html</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone git@gitlab.xxx.com:xxxxx.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p>
+<span id="more"></span>
+
+
+
+<p><img data-src="https://ooo.0o0.ooo/2016/07/07/577e349ab42ed.png" alt="7f07c8f6deef169ef6be5103bbd3e932f8676bb1.png"></p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><strong>刚刚开周会的时候，自己洋洋得意的分享我的解决方案，但是……经过与团队成员的的讨论，自己的方法弱爆了，现在把更优雅的方法写一下。原来写的方法并不太适合用在这个场景里。</strong> 我之前写的方法在文章后面。</p>
+<p>直接使用命令</p>
+<pre class="line-numbers language-none"><code class="language-none">git branch -r #查看远程分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或</p>
+<pre class="line-numbers language-none"><code class="language-none">git branch -a #查看所有分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>会显示</p>
+<pre class="line-numbers language-none"><code class="language-none">origin&#x2F;HEAD -&gt; origin&#x2F;master
+origin&#x2F;daily&#x2F;1.2.2
+origin&#x2F;daily&#x2F;1.3.0
+origin&#x2F;daily&#x2F;1.4.1
+origin&#x2F;develop
+origin&#x2F;feature&#x2F;daily-1.0.0
+origin&#x2F;master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后直接</p>
+<pre class="line-numbers language-none"><code class="language-none">git checkout origin&#x2F;daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>就好了。。。</p>
+<h2 id="原来的解决方案"><a href="#原来的解决方案" class="headerlink" title="原来的解决方案"></a>原来的解决方案</h2><p><strong>其实我原来写的这个方法更多的是：设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支。</strong></p>
+<p>我们在本地先建立一个分支，建议名称和远程的想要同步的分支名称一样。</p>
+<pre class="line-numbers language-none"><code class="language-none">git branch daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在切换到这个本地分支</p>
+<pre class="line-numbers language-none"><code class="language-none">git checkout daily&#x2F;1.4.1
+# Switched to branch &#39;daily&#x2F;1.4.1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>接下来就可以去建立上游分支的关联了，但是这个命令比较长，不好记，我们可以直接先<code>pull</code>一下，git 会提示我们相应的操作和命令。</p>
+<pre class="line-numbers language-none"><code class="language-none">git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull &lt;remote&gt; &lt;branch&gt;
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to&#x3D;origin&#x2F;&lt;branch&gt; daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们看到最后一行，执行这个命令，即可完成与上游分支的关联。</p>
+<pre class="line-numbers language-none"><code class="language-none">git branch --set-upstream-to&#x3D;origin&#x2F;daily&#x2F;1.4.1 daily&#x2F;1.4.1
+# Branch daily&#x2F;1.4.1 set up to track remote branch daily&#x2F;1.4.1 from origin.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后再<code>pull</code>一下就好了！</p>
+<pre class="line-numbers language-none"><code class="language-none">git pull<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>GitHub</tag>
       </tags>
   </entry>
   <entry>
@@ -3001,58 +3001,6 @@ element<span class="token punctuation">.</span><span class="token function">clic
       </tags>
   </entry>
   <entry>
-    <title>php-fpm配置文件详解</title>
-    <url>//post/php-fpm-conf.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php一直都搞不懂，今天彻底把php-fpm的配置文件解释一下</p>
-<span id="more"></span>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><pre class="line-numbers language-none"><code class="language-none">[www]
-user &#x3D; www
-group &#x3D; www
-
-;listen &#x3D; 127.0.0.1:9000
-listen.owner &#x3D; www
-listen.group &#x3D; www
-listen.mode &#x3D; 0660
-listen &#x3D; &#x2F;dev&#x2F;shm&#x2F;php-fpm.sock
-listen.allowed_clients &#x3D; 127.0.0.1
-
-;pm &#x3D; static
-pm &#x3D; dynamic
-
-pm.max_children &#x3D; 40
-pm.start_servers &#x3D; 20
-pm.min_spare_servers &#x3D; 20
-pm.max_spare_servers &#x3D; 40
-pm.max_requests &#x3D; 128
-;pm.max_requests &#x3D; 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>1、pm = dynamic 或 pm = static 表示使用哪种进程数量管理方式，dynamic表示php-fpm进程数是动态的，最开始是pm.start_servers指定的数量，如果请求较多，则会自动增加，保证空闲的进程数不小于pm.min_spare_servers，如果进程数较多，也会进行相应清理，保证多余的进程数不多于pm.max_spare_servers；</p>
-<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color="red">这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
-<p>区别：</p>
-<p>如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。</p>
-<p>如果dm设置为dynamic，那么pm.max_children参数失效，后面3个参数生效。系统会在php-fpm运行开始的时候启动pm.start_servers个php-fpm进程，然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数。</p>
-<p>设置：</p>
-<p>数值设置，参考自己的实际硬件配置，可以参考 总内存/30M 来计算。</p>
-<h1 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h1><p>如何判断我选择“pm = dynamic”还是“pm = static”呢？哪一种更好呢？</p>
-<p>事实上，跟Apache一样，运行的PHP程序在执行完成后，或多或少会有内存泄露的问题。</p>
-<p>这也是为什么开始的时候一个php-fpm进程只占用3M左右内存，运行一段时间后就会上升到20-30M的原因了。</p>
-<p>对于内存大的服务器（比如8G以上）来说，用静态的max_children实际上更为妥当，因为这样不需要进行额外的进程数目控制，会提高效率。因为频繁开关php-fpm进程也会有时滞，所以内存够大的情况下开静态效果会更好。数量也可以根据 总内存/30M 得到，比如8GB内存可以设置为100，那么php-fpm耗费的内存就能控制在 2G-3G的样子。</p>
-<p>如果内存稍微小点，比如1~2G，那么指定静态的进程数量更加有利于服务器的稳定。这样可以保证php-fpm只获取够用的内存，将不多的内存分配给其他应用去使用，会使系统的运行更加畅通。</p>
-<p>对于小内存的服务器来说，比如256M内存的VPS，即使按照一个20M的内存量来算，10个php-cgi进程就将耗掉200M内存，那系统的崩溃就应该很正常了。</p>
-<p>因此应该尽量地控制php-fpm进程的数量，大体明确其他应用占用的内存后，给它指定一个静态的小数量，会让系统更加平稳一些。</p>
-<p>或者使用动态方式，因为动态方式会结束掉多余的进程，可以回收释放一些内存，所以推荐在内存较少的服务器或VPS上使用，具体最大数量根据 总内存/20M 得到。</p>
-<p>比如说512M的VPS，建议pm.max_spare_servers设置为20。至于pm.min_spare_servers，则建议根据服务器的负载情况来设置，比较合适的值在5~10之间。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结：内存小的建议用动态（pm = dynamic），内存大的建议用静态（pm = static）</p>
-]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>News_scrapy_redis 框架系统</title>
     <url>//post/python-crawl-words.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
@@ -3161,101 +3109,55 @@ pm.max_requests &#x3D; 128
       </tags>
   </entry>
   <entry>
-    <title>Jekyll 搭建静态博客</title>
-    <url>//post/reate-my-blog-with-jekyll.html</url>
-    <content><![CDATA[<p>一直以来都想搭建一个自己的博客，但是近半年做项目太忙，再加上教研室的网络很坑爹，所以也一直没顾得上。之前用过 WordPress 托管在免费的京东云擎上，但是速度太慢。在知乎上看到一些相关的内容，于是选择了在github上用jekyll搭建博客。</p>
+    <title>php-fpm配置文件详解</title>
+    <url>//post/php-fpm-conf.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php一直都搞不懂，今天彻底把php-fpm的配置文件解释一下</p>
 <span id="more"></span>
 
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><pre class="line-numbers language-none"><code class="language-none">[www]
+user &#x3D; www
+group &#x3D; www
 
+;listen &#x3D; 127.0.0.1:9000
+listen.owner &#x3D; www
+listen.group &#x3D; www
+listen.mode &#x3D; 0660
+listen &#x3D; &#x2F;dev&#x2F;shm&#x2F;php-fpm.sock
+listen.allowed_clients &#x3D; 127.0.0.1
 
+;pm &#x3D; static
+pm &#x3D; dynamic
 
-<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><p>在jekyll的官网上 <a href="http://jekyllrb.com/">http://jekyllrb.com/</a> 其实已经说得比较明白了，我在这里还是简单的说一下吧。我用的是Windows系统。<br>主要环节有：安装Ruby，安装RubyGems，安装jekyll，安装代码高亮插件，安装node.js</p>
-<h3 id="安装Ruby"><a href="#安装Ruby" class="headerlink" title="安装Ruby"></a>安装Ruby</h3><p>ruby官网下载安装：<a href="https://www.ruby-lang.org/en/downloads/">https://www.ruby-lang.org/en/downloads/</a></p>
-<p>安装完成后配置环境变量</p>
-<p>在命令提示符中，得到ruby版本号，如下图，即安装成功</p>
-<p><img data-src="ww4.sinaimg.cn/large/7011d6cfjw1f2ue0e393vj20cu00t748.jpg"></p>
-<h3 id="安装RubyGems"><a href="#安装RubyGems" class="headerlink" title="安装RubyGems"></a>安装RubyGems</h3><p>官网下载 <a href="http://rubygems.org/pages/download">http://rubygems.org/pages/download</a> rubygems-2.4.5.zip   </p>
-<p>cd到RubyGems目录   </p>
-<p><img data-src="ww1.sinaimg.cn/large/7011d6cfjw1f2ue1l2yscj20gk02amxj.jpg"></p>
-<p>执行安装   </p>
-<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue1w8eqnj20bx00hglg.jpg">  </p>
-<h3 id="用RubyGems安装Jekyll"><a href="#用RubyGems安装Jekyll" class="headerlink" title="用RubyGems安装Jekyll"></a>用RubyGems安装Jekyll</h3><p>执行下面的语句安装   </p>
-<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue2g2p3uj207x00ft8j.jpg"></p>
-<p>安装结束画面   </p>
-<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue32drwhj20hv09xq5m.jpg"></p>
-<p>至此jekyll就已经安装完毕了，后续就是个性化的自己设定了。</p>
-<h3 id="创建博客"><a href="#创建博客" class="headerlink" title="创建博客"></a>创建博客</h3><p>在d盘新建一个工作区jekyllWorkspace</p>
-<p>cd到jekyllWorkspace   </p>
-<p>执行jekyll new name创建新的工作区   </p>
-<p><img data-src="http://ww3.sinaimg.cn/large/7011d6cfjw1f2ue3lt31nj20cj02nt8u.jpg"></p>
-<p>文件结构如下：   </p>
-<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue3ujsybj20ek06wabh.jpg"></p>
-<p>cd到博客文件夹，开启服务器   </p>
-<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue47y9lgj20ao00f0sl.jpg"></p>
-<p>watch为了检测文件夹内的变化，即修改后不需要重新启动jekyll</p>
-<p>我的环境下启动报错(你的可能没有)，再安装yajl-ruby和rouge  </p>
-<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4nelnxj20dd077q49.jpg"></p>
-<p>再次启动服务器成功</p>
-<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4v42koj20g505bdgy.jpg"></p>
-<p>访问 <a href="http://localhost:4000/">http://localhost:4000/</a>   </p>
-<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue56ckwoj20je0eumz3.jpg"></p>
-<p>详细文章页面   </p>
-<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1f2ue5f3j9cj20je0gyq7a.jpg"></p>
-<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><ul>
-<li> 整个安装过程参考了jekyll官网，注意jekyll还有一个简体中文官网，不过比较坑（我就被坑了），有些内容没有翻译过来，有可能会走弯路，建议如果想看中文的相关资料，也要中英对照着阅读。<a href="http://jekyllcn.com/">jekyll中文网 http://jekyllcn.com</a>, <a href="http://jekyllrb.com/">jekyll英文网 http://jekyllrb.com</a></li>
-<li> jekyll中的css是用sass写的，当然直接在<code>_sass/_layout.scss</code>中添加css也是可以的。</li>
-<li> 本文是用Markdown格式来写的，相关语法可参考： <a href="http://wowubuntu.com/markdown/">Markdown 语法说明 (简体中文版) http://wowubuntu.com/markdown/</a>  </li>
-<li> 按照本文的说明搭建完博客后，用<code>github Pages</code>托管就可以看到了。注意，在github上面好像不支持rouge，所以要push到github上时，我将配置文件_config.yml中的代码高亮改变为<code>highlighter: pygments</code>就可以了</li>
-<li> 博客默认是没有评论系统的，本文的评论系统使用了多说，详细安装办法可访问<a href="http://duoshuo.com/">多说官网 http://duoshuo.com/</a>，当然也可以使用<a href="http://changyan.sohu.com/">搜狐畅言 http://changyan.sohu.com/</a>作为评论系统。</li>
-<li> 也可以绑定自己的域名，如果没有域名，可以在<a href="http://www.godaddy.com/">godaddy http://www.godaddy.com/</a>上将域名放入购物车等待降价，买之。</li>
-<li> 祝各位新年快乐！</li>
-</ul>
-<hr>
-<h2 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h2><h3 id="hitimes-hitimes-LoadError"><a href="#hitimes-hitimes-LoadError" class="headerlink" title="hitimes/hitimes (LoadError)"></a><code>hitimes/hitimes (LoadError)</code></h3><p><strong>错误代码：</strong></p>
-<pre class="line-numbers language-none"><code class="language-none">C:&#x2F;Ruby22&#x2F;lib&#x2F;ruby&#x2F;2.2.0&#x2F;rubygems&#x2F;core_ext&#x2F;kernel_require.rb:54:in &#96;require&#39;: cannot load such file -- hitimes&#x2F;hitimes (LoadError)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+pm.max_children &#x3D; 40
+pm.start_servers &#x3D; 20
+pm.min_spare_servers &#x3D; 20
+pm.max_spare_servers &#x3D; 40
+pm.max_requests &#x3D; 128
+;pm.max_requests &#x3D; 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>解决方法：</strong></p>
-<p>在stackoverflow上又一个很好的解决方法。<a href="http://stackoverflow.com/questions/28985481/hitimes-require-error-when-running-jekyll-serve-on-windows-8-1">hitimes require error when running jekyll serve on windows 8.1</a> 虽然上面的题主问的是 win 8.1 系统下的情况，但是同样适用于 win7。下面我简单翻译一下错误原因和解决方法。</p>
-<blockquote>
-<p>可能是 Ruby 2.2 和 hitimes-1.2.2-x86-mingw32 中有一些 ABI 变化，少了一些相关的类库。</p>
-<p>所以卸载 hitimes 并通过 <code>--platform ruby</code> 重装即可。代码如下：</p>
-</blockquote>
-<pre class="line-numbers language-none"><code class="language-none">gem uni hitimes
-**Remove ALL versions**
-gem ins hitimes -v 1.2.1 --platform ruby<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<blockquote>
-<p>然后将自动重新编译 hitimes 并适用于 Ruby 2.2</p>
-</blockquote>
-<p>下面是我自己的卸载和安装过程：</p>
-<pre class="line-numbers language-none"><code class="language-none">E:\GitWorkSpace\gaohaoyang.github.io&gt;gem uni hitimes
-
-You have requested to uninstall the gem:
-        hitimes-1.2.2-x86-mingw32
-
-timers-4.0.1 depends on hitimes (&gt;&#x3D; 0)
-If you remove this gem, these dependencies will not be met.
-Continue with Uninstall? [yN]  y
-Successfully uninstalled hitimes-1.2.2-x86-mingw32
-
-E:\GitWorkSpace\gaohaoyang.github.io&gt;gem ins hitimes -v 1.2.1 --platform ruby
-Fetching: hitimes-1.2.1.gem (100%)
-Temporarily enhancing PATH to include DevKit...
-Building native extensions.  This could take a while...
-Successfully installed hitimes-1.2.1
-Parsing documentation for hitimes-1.2.1
-Installing ri documentation for hitimes-1.2.1
-Done installing documentation for hitimes after 1 seconds
-1 gem installed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p>关于，<a href="https://rubygems.org/gems/hitimes/versions/1.2.2">hitimes</a> 是一个快速的高效的定时器解决方案库，详情可以去官网查看。</p>
+<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>1、pm = dynamic 或 pm = static 表示使用哪种进程数量管理方式，dynamic表示php-fpm进程数是动态的，最开始是pm.start_servers指定的数量，如果请求较多，则会自动增加，保证空闲的进程数不小于pm.min_spare_servers，如果进程数较多，也会进行相应清理，保证多余的进程数不多于pm.max_spare_servers；</p>
+<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color="red">这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
+<p>区别：</p>
+<p>如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。</p>
+<p>如果dm设置为dynamic，那么pm.max_children参数失效，后面3个参数生效。系统会在php-fpm运行开始的时候启动pm.start_servers个php-fpm进程，然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数。</p>
+<p>设置：</p>
+<p>数值设置，参考自己的实际硬件配置，可以参考 总内存/30M 来计算。</p>
+<h1 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h1><p>如何判断我选择“pm = dynamic”还是“pm = static”呢？哪一种更好呢？</p>
+<p>事实上，跟Apache一样，运行的PHP程序在执行完成后，或多或少会有内存泄露的问题。</p>
+<p>这也是为什么开始的时候一个php-fpm进程只占用3M左右内存，运行一段时间后就会上升到20-30M的原因了。</p>
+<p>对于内存大的服务器（比如8G以上）来说，用静态的max_children实际上更为妥当，因为这样不需要进行额外的进程数目控制，会提高效率。因为频繁开关php-fpm进程也会有时滞，所以内存够大的情况下开静态效果会更好。数量也可以根据 总内存/30M 得到，比如8GB内存可以设置为100，那么php-fpm耗费的内存就能控制在 2G-3G的样子。</p>
+<p>如果内存稍微小点，比如1~2G，那么指定静态的进程数量更加有利于服务器的稳定。这样可以保证php-fpm只获取够用的内存，将不多的内存分配给其他应用去使用，会使系统的运行更加畅通。</p>
+<p>对于小内存的服务器来说，比如256M内存的VPS，即使按照一个20M的内存量来算，10个php-cgi进程就将耗掉200M内存，那系统的崩溃就应该很正常了。</p>
+<p>因此应该尽量地控制php-fpm进程的数量，大体明确其他应用占用的内存后，给它指定一个静态的小数量，会让系统更加平稳一些。</p>
+<p>或者使用动态方式，因为动态方式会结束掉多余的进程，可以回收释放一些内存，所以推荐在内存较少的服务器或VPS上使用，具体最大数量根据 总内存/20M 得到。</p>
+<p>比如说512M的VPS，建议pm.max_spare_servers设置为20。至于pm.min_spare_servers，则建议根据服务器的负载情况来设置，比较合适的值在5~10之间。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结：内存小的建议用动态（pm = dynamic），内存大的建议用静态（pm = static）</p>
 ]]></content>
       <categories>
-        <category>jekyll</category>
+        <category>php</category>
       </categories>
       <tags>
-        <tag>jekyll</tag>
+        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -3449,6 +3351,104 @@ x <span class="token operator">=</span> <span class="token number">20</span><spa
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jekyll 搭建静态博客</title>
+    <url>//post/reate-my-blog-with-jekyll.html</url>
+    <content><![CDATA[<p>一直以来都想搭建一个自己的博客，但是近半年做项目太忙，再加上教研室的网络很坑爹，所以也一直没顾得上。之前用过 WordPress 托管在免费的京东云擎上，但是速度太慢。在知乎上看到一些相关的内容，于是选择了在github上用jekyll搭建博客。</p>
+<span id="more"></span>
+
+
+
+
+<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><p>在jekyll的官网上 <a href="http://jekyllrb.com/">http://jekyllrb.com/</a> 其实已经说得比较明白了，我在这里还是简单的说一下吧。我用的是Windows系统。<br>主要环节有：安装Ruby，安装RubyGems，安装jekyll，安装代码高亮插件，安装node.js</p>
+<h3 id="安装Ruby"><a href="#安装Ruby" class="headerlink" title="安装Ruby"></a>安装Ruby</h3><p>ruby官网下载安装：<a href="https://www.ruby-lang.org/en/downloads/">https://www.ruby-lang.org/en/downloads/</a></p>
+<p>安装完成后配置环境变量</p>
+<p>在命令提示符中，得到ruby版本号，如下图，即安装成功</p>
+<p><img data-src="ww4.sinaimg.cn/large/7011d6cfjw1f2ue0e393vj20cu00t748.jpg"></p>
+<h3 id="安装RubyGems"><a href="#安装RubyGems" class="headerlink" title="安装RubyGems"></a>安装RubyGems</h3><p>官网下载 <a href="http://rubygems.org/pages/download">http://rubygems.org/pages/download</a> rubygems-2.4.5.zip   </p>
+<p>cd到RubyGems目录   </p>
+<p><img data-src="ww1.sinaimg.cn/large/7011d6cfjw1f2ue1l2yscj20gk02amxj.jpg"></p>
+<p>执行安装   </p>
+<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue1w8eqnj20bx00hglg.jpg">  </p>
+<h3 id="用RubyGems安装Jekyll"><a href="#用RubyGems安装Jekyll" class="headerlink" title="用RubyGems安装Jekyll"></a>用RubyGems安装Jekyll</h3><p>执行下面的语句安装   </p>
+<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue2g2p3uj207x00ft8j.jpg"></p>
+<p>安装结束画面   </p>
+<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue32drwhj20hv09xq5m.jpg"></p>
+<p>至此jekyll就已经安装完毕了，后续就是个性化的自己设定了。</p>
+<h3 id="创建博客"><a href="#创建博客" class="headerlink" title="创建博客"></a>创建博客</h3><p>在d盘新建一个工作区jekyllWorkspace</p>
+<p>cd到jekyllWorkspace   </p>
+<p>执行jekyll new name创建新的工作区   </p>
+<p><img data-src="http://ww3.sinaimg.cn/large/7011d6cfjw1f2ue3lt31nj20cj02nt8u.jpg"></p>
+<p>文件结构如下：   </p>
+<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue3ujsybj20ek06wabh.jpg"></p>
+<p>cd到博客文件夹，开启服务器   </p>
+<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue47y9lgj20ao00f0sl.jpg"></p>
+<p>watch为了检测文件夹内的变化，即修改后不需要重新启动jekyll</p>
+<p>我的环境下启动报错(你的可能没有)，再安装yajl-ruby和rouge  </p>
+<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4nelnxj20dd077q49.jpg"></p>
+<p>再次启动服务器成功</p>
+<p><img data-src="http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4v42koj20g505bdgy.jpg"></p>
+<p>访问 <a href="http://localhost:4000/">http://localhost:4000/</a>   </p>
+<p><img data-src="http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue56ckwoj20je0eumz3.jpg"></p>
+<p>详细文章页面   </p>
+<p><img data-src="http://ww2.sinaimg.cn/large/7011d6cfjw1f2ue5f3j9cj20je0gyq7a.jpg"></p>
+<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><ul>
+<li> 整个安装过程参考了jekyll官网，注意jekyll还有一个简体中文官网，不过比较坑（我就被坑了），有些内容没有翻译过来，有可能会走弯路，建议如果想看中文的相关资料，也要中英对照着阅读。<a href="http://jekyllcn.com/">jekyll中文网 http://jekyllcn.com</a>, <a href="http://jekyllrb.com/">jekyll英文网 http://jekyllrb.com</a></li>
+<li> jekyll中的css是用sass写的，当然直接在<code>_sass/_layout.scss</code>中添加css也是可以的。</li>
+<li> 本文是用Markdown格式来写的，相关语法可参考： <a href="http://wowubuntu.com/markdown/">Markdown 语法说明 (简体中文版) http://wowubuntu.com/markdown/</a>  </li>
+<li> 按照本文的说明搭建完博客后，用<code>github Pages</code>托管就可以看到了。注意，在github上面好像不支持rouge，所以要push到github上时，我将配置文件_config.yml中的代码高亮改变为<code>highlighter: pygments</code>就可以了</li>
+<li> 博客默认是没有评论系统的，本文的评论系统使用了多说，详细安装办法可访问<a href="http://duoshuo.com/">多说官网 http://duoshuo.com/</a>，当然也可以使用<a href="http://changyan.sohu.com/">搜狐畅言 http://changyan.sohu.com/</a>作为评论系统。</li>
+<li> 也可以绑定自己的域名，如果没有域名，可以在<a href="http://www.godaddy.com/">godaddy http://www.godaddy.com/</a>上将域名放入购物车等待降价，买之。</li>
+<li> 祝各位新年快乐！</li>
+</ul>
+<hr>
+<h2 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h2><h3 id="hitimes-hitimes-LoadError"><a href="#hitimes-hitimes-LoadError" class="headerlink" title="hitimes/hitimes (LoadError)"></a><code>hitimes/hitimes (LoadError)</code></h3><p><strong>错误代码：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">C:&#x2F;Ruby22&#x2F;lib&#x2F;ruby&#x2F;2.2.0&#x2F;rubygems&#x2F;core_ext&#x2F;kernel_require.rb:54:in &#96;require&#39;: cannot load such file -- hitimes&#x2F;hitimes (LoadError)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>解决方法：</strong></p>
+<p>在stackoverflow上又一个很好的解决方法。<a href="http://stackoverflow.com/questions/28985481/hitimes-require-error-when-running-jekyll-serve-on-windows-8-1">hitimes require error when running jekyll serve on windows 8.1</a> 虽然上面的题主问的是 win 8.1 系统下的情况，但是同样适用于 win7。下面我简单翻译一下错误原因和解决方法。</p>
+<blockquote>
+<p>可能是 Ruby 2.2 和 hitimes-1.2.2-x86-mingw32 中有一些 ABI 变化，少了一些相关的类库。</p>
+<p>所以卸载 hitimes 并通过 <code>--platform ruby</code> 重装即可。代码如下：</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">gem uni hitimes
+**Remove ALL versions**
+gem ins hitimes -v 1.2.1 --platform ruby<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>然后将自动重新编译 hitimes 并适用于 Ruby 2.2</p>
+</blockquote>
+<p>下面是我自己的卸载和安装过程：</p>
+<pre class="line-numbers language-none"><code class="language-none">E:\GitWorkSpace\gaohaoyang.github.io&gt;gem uni hitimes
+
+You have requested to uninstall the gem:
+        hitimes-1.2.2-x86-mingw32
+
+timers-4.0.1 depends on hitimes (&gt;&#x3D; 0)
+If you remove this gem, these dependencies will not be met.
+Continue with Uninstall? [yN]  y
+Successfully uninstalled hitimes-1.2.2-x86-mingw32
+
+E:\GitWorkSpace\gaohaoyang.github.io&gt;gem ins hitimes -v 1.2.1 --platform ruby
+Fetching: hitimes-1.2.1.gem (100%)
+Temporarily enhancing PATH to include DevKit...
+Building native extensions.  This could take a while...
+Successfully installed hitimes-1.2.1
+Parsing documentation for hitimes-1.2.1
+Installing ri documentation for hitimes-1.2.1
+Done installing documentation for hitimes after 1 seconds
+1 gem installed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>关于，<a href="https://rubygems.org/gems/hitimes/versions/1.2.2">hitimes</a> 是一个快速的高效的定时器解决方案库，详情可以去官网查看。</p>
+]]></content>
+      <categories>
+        <category>jekyll</category>
+      </categories>
+      <tags>
+        <tag>jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -3822,46 +3822,6 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
 <p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
 <p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
 <p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
-    <url>//post/swappiness.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
-<span id="more"></span>
-
-<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
-<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
-<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
-#vm.swappiness&#x3D;10
-cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
-<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>加上</p>
-<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
-kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
-vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p> 生效</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这样便完成修改设置！</p>
 ]]></content>
       <categories>
         <category>linux</category>
@@ -4430,6 +4390,46 @@ $ gem install sass
       </tags>
   </entry>
   <entry>
+    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
+    <url>//post/swappiness.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
+<span id="more"></span>
+
+<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
+<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
+<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
+#vm.swappiness&#x3D;10
+cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
+<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>加上</p>
+<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
+kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
+vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 生效</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样便完成修改设置！</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Weinre --WebApp 调试工具</title>
     <url>//post/weinre.html</url>
     <content><![CDATA[<h2 id="什么是-weinre？"><a href="#什么是-weinre？" class="headerlink" title="什么是 weinre？"></a>什么是 weinre？</h2><p><a href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre官网</a> 上有两句有意思的介绍：</p>
@@ -4818,6 +4818,7 @@ $ systemctl status loki<span aria-hidden="true" class="line-numbers-rows"><span>
     <url>//post/bool-type.html</url>
     <content><![CDATA[<h1 id="1-布尔类型"><a href="#1-布尔类型" class="headerlink" title="1.布尔类型"></a>1.布尔类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>1、布尔类型也叫 bool 类型，bool 类型数据只允许取值 true 和 false</p>
 <p>2、bool 类型占1个字节</p>
+<span id="more"></span>
 <p>3、bool 类型适于逻辑运算，一般用于程序流程控制</p>
 <h2 id="1-1案例演示"><a href="#1-1案例演示" class="headerlink" title="1.1案例演示"></a>1.1案例演示</h2><pre class="line-numbers language-none"><code class="language-none">package main
 
@@ -4925,6 +4926,96 @@ func main() &#123;
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>浮点类型</title>
+    <url>//post/float-type.html</url>
+    <content><![CDATA[<h1 id="1-浮点类型"><a href="#1-浮点类型" class="headerlink" title="1.浮点类型"></a>1.浮点类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>小数类型就是用于存放小数的，比如 1.2 0.23 -1.91</p>
+<span id="more"></span>
+
+<h2 id="1-1浮点类型分类"><a href="#1-1浮点类型分类" class="headerlink" title="1.1浮点类型分类"></a>1.1浮点类型分类</h2><table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">占用存储空间</th>
+<th align="center">表数范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">单精度float32</td>
+<td align="center">字节</td>
+<td align="center">-3.403E38~3.403E38</td>
+</tr>
+<tr>
+<td align="center">双精度float32</td>
+<td align="center">8字节</td>
+<td align="center">-1.798E308~1.798E308</td>
+</tr>
+</tbody></table>
+<p>对上图的说明:</p>
+<h3 id="1-1-1-关于浮点数在机器中存放形式的简单说明-浮点数-符号位-指数位-尾数位"><a href="#1-1-1-关于浮点数在机器中存放形式的简单说明-浮点数-符号位-指数位-尾数位" class="headerlink" title="1.1.1 关于浮点数在机器中存放形式的简单说明,浮点数=符号位+指数位+尾数位"></a>1.1.1 关于浮点数在机器中存放形式的简单说明,浮点数=符号位+指数位+尾数位</h3><p>说明：浮点数都是有符号的.</p>
+<pre class="line-numbers language-none"><code class="language-none">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+	var n1 float32 &#x3D; 79.32
+	var n2 float32 &#x3D; -0.000123
+	var n3 float64 &#x3D; -98765.4321
+	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2, &quot;n3&#x3D;&quot;, n3)
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color="#FF0000">n1= 79.32 n2= -0.000123 n3= -98765.4321</font></p>
+<h3 id="1-1-2尾数部分可能丢失，造成精度损失"><a href="#1-1-2尾数部分可能丢失，造成精度损失" class="headerlink" title="1.1.2尾数部分可能丢失，造成精度损失"></a>1.1.2尾数部分可能丢失，造成精度损失</h3><pre class="line-numbers language-none"><code class="language-none">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+	var n1 float32 &#x3D; 123.456789999
+	var n2 float64 &#x3D; 123.4567899999999
+	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<p><font color="#ff0000">n1= 123.45679 n2= 123.4567899999999</font></p>
+<p>说明：float64 的精度比 float32 的要准确。</p>
+<p>说明：如果我们要保存一个精度高的数，则应该选用 float64。</p>
+<h3 id="1-1-3-浮点型的存储分为三部分"><a href="#1-1-3-浮点型的存储分为三部分" class="headerlink" title="1.1.3 浮点型的存储分为三部分"></a>1.1.3 浮点型的存储分为三部分</h3><p>符号位+指数位+尾数位在存储过程中，精度会有丢失</p>
+<h2 id="1-2浮点型使用细节"><a href="#1-2浮点型使用细节" class="headerlink" title="1.2浮点型使用细节"></a>1.2浮点型使用细节</h2><ol>
+<li><p>Golang 浮点类型有固定的范围和字段长度，不受具体 OS(操作系统)的影响。 </p>
+</li>
+<li><p>Golang 的浮点型默认声明为 float64 类型。</p>
+ <pre class="line-numbers language-none"><code class="language-none">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+	var n1 &#x3D; 123.456789999
+	fmt.Printf(&quot;n1的数据类型是%T&quot;, n1)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p> 结果</p>
+<p> <font color="#FF0000">n1的数据类型是float64</font></p>
+</li>
+<li><p>浮点型常量有两种表示形式 </p>
+</li>
+<li><p>十进制数形式：如：5.12 .512 (必须有小数点）科学计数法形式:</p>
+<p> 5.1234e2 = 5.12 * 10 的 2 次方</p>
+<p>  5.12E-2 = 5.12/10 的 2 次方</p>
+</li>
+<li><p>通常情况下，应该使用 float64 ，因为它比 float32 更精确。[开发中，推荐使用 float64]</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>etcd06-运维命令</title>
     <url>//post/etcd-ops-order.html</url>
     <content><![CDATA[<p>在此记录一下运维同学常用操作etcd的命令</p>
@@ -5016,96 +5107,6 @@ Leadership transferred from 6f33c9a8402dd6ab to 219637592b6b26a7<span aria-hidde
 ]]></content>
       <tags>
         <tag>etcd</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>浮点类型</title>
-    <url>//post/float-type.html</url>
-    <content><![CDATA[<h1 id="1-浮点类型"><a href="#1-浮点类型" class="headerlink" title="1.浮点类型"></a>1.浮点类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>小数类型就是用于存放小数的，比如 1.2 0.23 -1.91</p>
-<span id="more"></span>
-
-<h2 id="1-1浮点类型分类"><a href="#1-1浮点类型分类" class="headerlink" title="1.1浮点类型分类"></a>1.1浮点类型分类</h2><table>
-<thead>
-<tr>
-<th align="center">类型</th>
-<th align="center">占用存储空间</th>
-<th align="center">表数范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">单精度float32</td>
-<td align="center">字节</td>
-<td align="center">-3.403E38~3.403E38</td>
-</tr>
-<tr>
-<td align="center">双精度float32</td>
-<td align="center">8字节</td>
-<td align="center">-1.798E308~1.798E308</td>
-</tr>
-</tbody></table>
-<p>对上图的说明:</p>
-<h3 id="1-1-1-关于浮点数在机器中存放形式的简单说明-浮点数-符号位-指数位-尾数位"><a href="#1-1-1-关于浮点数在机器中存放形式的简单说明-浮点数-符号位-指数位-尾数位" class="headerlink" title="1.1.1 关于浮点数在机器中存放形式的简单说明,浮点数=符号位+指数位+尾数位"></a>1.1.1 关于浮点数在机器中存放形式的简单说明,浮点数=符号位+指数位+尾数位</h3><p>说明：浮点数都是有符号的.</p>
-<pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var n1 float32 &#x3D; 79.32
-	var n2 float32 &#x3D; -0.000123
-	var n3 float64 &#x3D; -98765.4321
-	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2, &quot;n3&#x3D;&quot;, n3)
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#FF0000">n1= 79.32 n2= -0.000123 n3= -98765.4321</font></p>
-<h3 id="1-1-2尾数部分可能丢失，造成精度损失"><a href="#1-1-2尾数部分可能丢失，造成精度损失" class="headerlink" title="1.1.2尾数部分可能丢失，造成精度损失"></a>1.1.2尾数部分可能丢失，造成精度损失</h3><pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var n1 float32 &#x3D; 123.456789999
-	var n2 float64 &#x3D; 123.4567899999999
-	fmt.Println(&quot;n1&#x3D;&quot;, n1, &quot;n2&#x3D;&quot;, n2)
-&#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>结果</p>
-<p><font color="#ff0000">n1= 123.45679 n2= 123.4567899999999</font></p>
-<p>说明：float64 的精度比 float32 的要准确。</p>
-<p>说明：如果我们要保存一个精度高的数，则应该选用 float64。</p>
-<h3 id="1-1-3-浮点型的存储分为三部分"><a href="#1-1-3-浮点型的存储分为三部分" class="headerlink" title="1.1.3 浮点型的存储分为三部分"></a>1.1.3 浮点型的存储分为三部分</h3><p>符号位+指数位+尾数位在存储过程中，精度会有丢失</p>
-<h2 id="1-2浮点型使用细节"><a href="#1-2浮点型使用细节" class="headerlink" title="1.2浮点型使用细节"></a>1.2浮点型使用细节</h2><ol>
-<li><p>Golang 浮点类型有固定的范围和字段长度，不受具体 OS(操作系统)的影响。 </p>
-</li>
-<li><p>Golang 的浮点型默认声明为 float64 类型。</p>
- <pre class="line-numbers language-none"><code class="language-none">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-	var n1 &#x3D; 123.456789999
-	fmt.Printf(&quot;n1的数据类型是%T&quot;, n1)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p> 结果</p>
-<p> <font color="#FF0000">n1的数据类型是float64</font></p>
-</li>
-<li><p>浮点型常量有两种表示形式 </p>
-</li>
-<li><p>十进制数形式：如：5.12 .512 (必须有小数点）科学计数法形式:</p>
-<p> 5.1234e2 = 5.12 * 10 的 2 次方</p>
-<p>  5.12E-2 = 5.12/10 的 2 次方</p>
-</li>
-<li><p>通常情况下，应该使用 float64 ，因为它比 float32 更精确。[开发中，推荐使用 float64]</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
       </tags>
   </entry>
   <entry>

@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://running-dpf.github.io/post/bool-type.html</loc>
+    
+    <lastmod>2022-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://running-dpf.github.io/post/string-type.html</loc>
     
     <lastmod>2022-08-12</lastmod>
@@ -93,15 +102,6 @@
   
   <url>
     <loc>https://running-dpf.github.io/post/byte-type.html</loc>
-    
-    <lastmod>2022-08-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/bool-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -685,14 +685,14 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
+    <loc>https://running-dpf.github.io/tags/Ubuntu-Python/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/Ubuntu-Python/</loc>
+    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -876,14 +876,14 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
+    <loc>https://running-dpf.github.io/categories/python/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/python/</loc>
+    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
     <lastmod>2022-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
