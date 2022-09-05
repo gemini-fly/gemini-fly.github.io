@@ -210,6 +210,701 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/kubeadm-cert-expired.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/kubeadm-cert-expired.html" class="post-title-link" itemprop="url">kubeadm-cert-expired</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-05 16:42:37 / 修改时间：17:10:16" itemprop="dateCreated datePublished" datetime="2022-09-05T16:42:37+08:00">2022-09-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-为什么要修改-kubeadm-证书时间"><a href="#1-为什么要修改-kubeadm-证书时间" class="headerlink" title="1.为什么要修改 kubeadm 证书时间"></a>1.为什么要修改 kubeadm 证书时间</h2><p>Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。</p>
+<p>不过该工具有点坑的就是，使用其安装的 kubernetes 集群的大部分证书有效期只有一年，需要在证书过期前，使用更新操作更新集群，使证书的有效期再续一年。如果忘记这个操作，那么在使用过程中证书到期将导致集群不可用，使用过程中会出现以下报错：x509: certificate has expired or is not yet valid，应用无法访问，急急忙忙解决也需要半天时间，这个问题是致命的。</p>
+<p>不过实际情况下，在现网环境中大部分人追求稳定，一般不会大改 Kubernetes 版本，所以解决 kubeadm 集群证书有效期只有一年的最好办法就是重新编译 kubeadm 源码，将里面的 1 年有效期修改为 10 年或者 100 年，也不会影响使用 kubeadm 后续的升级，所以修改源码能很好的规避这个证书过期风险。</p>
+<h2 id="2-查看证书有的效期"><a href="#2-查看证书有的效期" class="headerlink" title="2.查看证书有的效期"></a>2.查看证书有的效期</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd &#x2F;etc&#x2F;kubernetes&#x2F;pki
+for i in $(ls *.crt); do echo &quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; $i &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;; openssl x509 -in $i -text -noout | grep -A 3 &#39;Validity&#39; ; done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>结果</p>
+<pre class="line-numbers language-tex" data-language="tex"><code class="language-tex">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; apiserver.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:57 2022 GMT
+            Not After : Sep  5 08:32:58 2023 GMT
+        Subject: CN&#x3D;kube-apiserver
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; apiserver-etcd-client.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:58 2022 GMT
+            Not After : Sep  5 08:32:59 2023 GMT
+        Subject: O&#x3D;system:masters, CN&#x3D;kube-apiserver-etcd-client
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; apiserver-kubelet-client.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:57 2022 GMT
+            Not After : Sep  5 08:32:58 2023 GMT
+        Subject: O&#x3D;system:masters, CN&#x3D;kube-apiserver-kubelet-client
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; ca.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:57 2022 GMT
+            Not After : Sep  2 08:32:57 2032 GMT
+        Subject: CN&#x3D;kubernetes
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; front-proxy-ca.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:58 2022 GMT
+            Not After : Sep  2 08:32:58 2032 GMT
+        Subject: CN&#x3D;front-proxy-ca
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; front-proxy-client.crt &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+        Validity
+            Not Before: Sep  5 08:32:58 2022 GMT
+            Not After : Sep  5 08:32:58 2023 GMT
+        Subject: CN&#x3D;front-proxy-client<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h3><pre class="line-numbers language-none"><code class="language-none">kubeadm certs check-expiration<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>结果</p>
+<pre class="line-numbers language-none"><code class="language-none">
+[check-expiration] Reading configuration from the cluster...
+[check-expiration] FYI: You can look at this config file with &#39;kubectl -n kube-system get cm kubeadm-config -o yaml&#39;
+
+CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED
+admin.conf                 Sep 05, 2023 08:33 UTC   364d                                    no
+apiserver                  Sep 05, 2023 08:32 UTC   364d            ca                      no
+apiserver-etcd-client      Sep 05, 2023 08:32 UTC   364d            etcd-ca                 no
+apiserver-kubelet-client   Sep 05, 2023 08:32 UTC   364d            ca                      no
+controller-manager.conf    Sep 05, 2023 08:33 UTC   364d                                    no
+etcd-healthcheck-client    Sep 05, 2023 08:32 UTC   364d            etcd-ca                 no
+etcd-peer                  Sep 05, 2023 08:32 UTC   364d            etcd-ca                 no
+etcd-server                Sep 05, 2023 08:32 UTC   364d            etcd-ca                 no
+front-proxy-client         Sep 05, 2023 08:32 UTC   364d            front-proxy-ca          no
+scheduler.conf             Sep 05, 2023 08:33 UTC   364d                                    no
+
+CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED
+ca                      Sep 02, 2032 08:32 UTC   9y              no
+etcd-ca                 Sep 02, 2032 08:32 UTC   9y              no
+front-proxy-ca          Sep 02, 2032 08:32 UTC   9y              no<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="3-证书有效期修改方法"><a href="#3-证书有效期修改方法" class="headerlink" title="3.证书有效期修改方法"></a>3.证书有效期修改方法</h2><h3 id="3-1-部署go环境"><a href="#3-1-部署go环境" class="headerlink" title="3.1 部署go环境"></a>3.1 部署go环境</h3><p>查看go版本(1.16.8)</p>
+<pre class="line-numbers language-none"><code class="language-none">kubeadm version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>结果</p>
+<pre class="line-numbers language-none"><code class="language-none">kubeadm version: &amp;version.Info&#123;Major:&quot;1&quot;, Minor:&quot;22&quot;, GitVersion:&quot;v1.22.2&quot;, GitCommit:&quot;8b5a19147530eaac9476b0ab82980b4088bbc1b2&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-09-15T21:37:34Z&quot;, GoVersion:&quot;go1.16.8&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux&#x2F;amd64&quot;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>下载</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir &#x2F;opt&#x2F;data
+cd &#x2F;opt&#x2F;data
+wget  https:&#x2F;&#x2F;studygolang.com&#x2F;dl&#x2F;golang&#x2F;go1.16.8.linux-amd64.tar.gz
+tar -xvf go1.16.8.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-2-配置环境变量"><a href="#3-2-配置环境变量" class="headerlink" title="3.2 配置环境变量"></a>3.2 配置环境变量</h3><pre class="line-numbers language-none"><code class="language-none">echo &quot;export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;go&#x2F;bin&quot; &gt;&gt;&#x2F;etc&#x2F;profile
+source &#x2F;etc&#x2F;profile
+go version<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-3-Kubernetes源码下载"><a href="#3-3-Kubernetes源码下载" class="headerlink" title="3.3 Kubernetes源码下载"></a>3.3 Kubernetes源码下载</h3><pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;
+git clone --branch v1.22.2 https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;kubernetes.git<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="3-4-修改源代码文件"><a href="#3-4-修改源代码文件" class="headerlink" title="3.4 修改源代码文件"></a>3.4 修改源代码文件</h3><p>证书的有效期是需要修改两个文件constants.go和cert.go</p>
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;kubernetes
+vim .&#x2F;cmd&#x2F;kubeadm&#x2F;app&#x2F;constants&#x2F;constants.go
+查找CertificateValidity 字段
+
+const (
+        &#x2F;&#x2F; KubernetesDir is the directory Kubernetes owns for storing various configuration files
+        KubernetesDir &#x3D; &quot;&#x2F;etc&#x2F;kubernetes&quot;
+        &#x2F;&#x2F; ManifestsSubDirName defines directory name to store manifests
+        ManifestsSubDirName &#x3D; &quot;manifests&quot;
+        &#x2F;&#x2F; TempDirForKubeadm defines temporary directory for kubeadm
+        &#x2F;&#x2F; should be joined with KubernetesDir.
+        TempDirForKubeadm &#x3D; &quot;tmp&quot;
+
+        &#x2F;&#x2F; CertificateValidity defines the validity for all the signed certificates generated by kubeadm
+        &#x2F;&#x2F; &lt;font color&#x3D;&quot;red&quot;&gt;修改这个地方&lt;&#x2F;font&gt;
+        CertificateValidity &#x3D; time.Hour * 24 * 365 &lt;font color&#x3D;&quot;red&quot;&gt;* 100&lt;&#x2F;font&gt;
+
+        &#x2F;&#x2F; CACertAndKeyBaseName defines certificate authority base name
+        CACertAndKeyBaseName &#x3D; &quot;ca&quot;
+        &#x2F;&#x2F; CACertName defines certificate name
+        CACertName &#x3D; &quot;ca.crt&quot;
+        &#x2F;&#x2F; CAKeyName defines certificate name
+        CAKeyName &#x3D; &quot;ca.key&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9A%E4%B9%89v1.0%E8%AF%B4%EF%BC%9A.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9A%E4%B9%89v1.0%E8%AF%B4%EF%BC%9A.html" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-05 16:04:48" itemprop="dateCreated datePublished" datetime="2022-09-05T16:04:48+08:00">2022-09-05</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>334</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>CNCF云原生定义v1.0说：</p>
+<p>云原生技术使组织能够在现代动态环境（如公共云、私有云和混合云）中构建和运行可扩展的应用程序。容器、服务网格、微服务、不可变基础结构和声明性 API 就是这种方法的例证。</p>
+<p>理解：</p>
+<p>云原生（Cloud Native）是一套技术体系和方法论，它由2个词组成，云（Cloud）和原生（Native）。云（Cloud）表示应用程序位于云中，而不是传统的数据中心；原生（Native）表示应用程序从设计之初即考虑到云的环境，原生为云而设计，在云上以最佳状态运行，充分利用和发挥云平台的弹性和分布式优势。</p>
+<p>云原生的代表技术包括容器、服务网格（Service Mesh）、微服务（Microservice）、不可变基础设施和声明式API</p>
+<p>4514617511506976</p>
+
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-05 15:27:39" itemprop="dateCreated datePublished" datetime="2022-09-05T15:27:39+08:00">2022-09-05</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>kubectl top pod 内存使用量container_memory_working_set_bytes</p>
+<p>计算方式：</p>
+<p>container_memory_working_set_bytes = container_memory_usage_bytes – total_inactive_file（未激活的匿名缓存页）</p>
+<p>cadvisor 内存使用量 container_memory_usage_bytes</p>
+<p>计算公式：</p>
+<p>container_memory_usage_bytes = container_memory_rss + container_memory_cache + kernel memory</p>
+<p>container_memory_working_set_bytes 是容器真实使用的内存量，也是 limit限制时的 oom 判断依据</p>
+<p>  apiVersion: networking.k8s.io/v1<br>  kind: Ingress<br>  metadata:<br>    name: example<br>    namespace: foo<br>  spec:<br>    ingressClassName: ops<br>    rules:<br>      - host: <a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a><br>        http:<br>          paths:<br>            - pathType: Prefix<br>              backend:<br>                service:<br>                  name: exampleService<br>                  port:<br>                    number: 80<br>              path: /<br>    # This section is only required if TLS is to be enabled for the Ingress<br>​    tls:<br>      - hosts:<br>        - <a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a><br>        secretName: example-tls</p>
+<p>If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:</p>
+<p>  apiVersion: v1<br>  kind: Secret<br>  metadata:<br>    name: example-tls<br>    namespace: foo<br>  data:<br>    tls.crt: <base64 encoded cert><br>    tls.key: <base64 encoded key><br>  type: kubernetes.io/tls</base64></base64></p>
+<pre class="line-numbers language-ruby" data-language="ruby"><code class="language-ruby">curl -k -H &quot;Content-Type: application&#x2F;json&quot; -X PUT --data-binary @ingress-nginx.json http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;ingress-nginx&#x2F;finalize<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/kubeadm-join-fatal.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/kubeadm-join-fatal.html" class="post-title-link" itemprop="url">kubeadm初始化集群报错</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-05 15:27:02 / 修改时间：15:30:35" itemprop="dateCreated datePublished" datetime="2022-09-05T15:27:02+08:00">2022-09-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>745</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>报错信息如下</p>
+<pre class="line-numbers language-none"><code class="language-none">error execution phase preflight: [preflight] Some fatal errors occurred:
+[ERROR CRI]: container runtime is not running: output: E0905 15:24:41.698370   29432 remote_runtime.go:925] &quot;Status from runtime service failed&quot; err&#x3D;&quot;rpc error: code &#x3D; Unimplemented desc &#x3D; unknown service runtime.v1alpha2.RuntimeService&quot;
+time&#x3D;&quot;2022-09-05T15:24:41+08:00&quot; level&#x3D;fatal msg&#x3D;&quot;getting status of runtime: rpc error: code &#x3D; Unimplemented desc &#x3D; unknown service runtime.v1alpha2.RuntimeService&quot;
+, error: exit status 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/kubeadm-join-fatal.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/go-context.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/go-context.html" class="post-title-link" itemprop="url">go-context</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-17 10:48:35 / 修改时间：17:02:58" itemprop="dateCreated datePublished" datetime="2022-08-17T10:48:35+08:00">2022-08-17</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>762</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Context初识"><a href="#Context初识" class="headerlink" title="Context初识"></a>Context初识</h1><p>Go1.7加入一个新的标准库context，他定义了context类型，专门用来简化对于处理单个请求的多个goroutine之间与请求域的数据、请求信号、截止时间等相关操作，这些操作可能涉及多个API调用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/post/go-context.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/makevsnew.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/makevsnew.html" class="post-title-link" itemprop="url">makevsnew</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-16 10:49:29 / 修改时间：11:55:15" itemprop="dateCreated datePublished" datetime="2022-08-16T10:49:29+08:00">2022-08-16</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>122</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>make 和new的区别</p>
+<p>首先，两个都是初始化内存</p>
+<p>1、new：多用来为基本数据类型（string、int、bool、struct等）初始化内存，返回的是指针</p>
+<p>2、make：多用来为slice、map、channel的内存，返回对应类型</p>
+<p>10.8.0.3</p>
+
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/proto01.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/post/proto01.html" class="post-title-link" itemprop="url">protobuf系列-安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-16 09:49:56 / 修改时间：09:52:09" itemprop="dateCreated datePublished" datetime="2022-08-16T09:49:56+08:00">2022-08-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index"><span itemprop="name">go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>40</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="protobuf安装"><a href="#protobuf安装" class="headerlink" title="protobuf安装"></a>protobuf安装</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">&#x2F;&#x2F;下载protobuf
+git clone <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+
+	
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/etcd-ops-order.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1158,645 +1853,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/git-clone-not-master-branch.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/git-clone-not-master-branch.html" class="post-title-link" itemprop="url">Git 如何 clone 非 master 分支的代码</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/GitHub/" itemprop="url" rel="index"><span itemprop="name">GitHub</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone git@gitlab.xxx.com:xxxxx.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/git-clone-not-master-branch.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/how-to-use-babel.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/how-to-use-babel.html" class="post-title-link" itemprop="url">如何使用 babel</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://babeljs.io/">Babel</a> 用于将 ES6 的代码转化为 ES5，使得 ES6 可以在目前的浏览器环境下使用。学习使用 babel 是为了使用 ES2015 做准备。本文将介绍如何使用 babel，以及一些相关的配置。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/how-to-use-babel.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/how-to-write-a-count-down.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/how-to-write-a-count-down.html" class="post-title-link" itemprop="url">前端如何写一个精确的倒计时</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>关于写倒计时大家可能都都比较熟悉，使用 setTimeout 或 setInterval 就可以搞定。几秒钟或者几分钟的倒计时这样写没有问题，但是如果是长时间的倒计时，这样写就会不准确。如果用户修改了他的设备时间，这样的倒计时就没有意义了。今天就说说写一个精确的倒计时的方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/how-to-write-a-count-down.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/js-create-file-and-download.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/js-create-file-and-download.html" class="post-title-link" itemprop="url">使用 JavaScript 创建并下载文件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文将介绍如何使用 JavaScript 创建文件，并自动/手动将文件下载。这在导出原始数据时会比较方便。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/js-create-file-and-download.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/python-crawl-words.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/python-crawl-words.html" class="post-title-link" itemprop="url">News_scrapy_redis 框架系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>该文档针对爬虫系统设计目标中相应的场景给出技术方案</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/python-crawl-words.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/scrapy-setup-in-win.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/scrapy-setup-in-win.html" class="post-title-link" itemprop="url">window下python3环境安装scrapy</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>502</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>目录：</p>
-<h2 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h2><blockquote>
-<p>python3  3.6.4， win7 64位  </p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/scrapy-setup-in-win.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/setup-mysql-inubuntu.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
-      <meta itemprop="name" content="岩羊">
-      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nayaur's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/setup-mysql-inubuntu.html" class="post-title-link" itemprop="url">Ubuntu 16.04 下MySQL的安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-08 14:30:12" itemprop="dateCreated datePublished" datetime="2022-08-08T14:30:12+08:00">2022-08-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>732</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>1， 打开终端：</p>
-<blockquote>
-<p> sudo apt-get install mysql-server</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/setup-mysql-inubuntu.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-	
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1879,7 +1935,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1892,7 +1948,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2213,13 +2269,13 @@ if(canvas.getContext){
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">125k</span>
+    <span title="站点总字数">133k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:54</span>
+    <span title="站点阅读时长">2:01</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
