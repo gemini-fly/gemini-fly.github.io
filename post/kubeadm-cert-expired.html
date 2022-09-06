@@ -22,15 +22,15 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8144939565768363"
      crossorigin="anonymous"></script>
 
-  <meta name="description" content="1.为什么要修改 kubeadm 证书时间Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。 不过该工具有点坑的就是，使用其安装的 kubernetes 集群的大部分证书有效期只有一年，需要在证书过期前，使用更新操作更新集群，使证书的有效期再续一年。如果忘记这个操作，那么在使用过程">
+  <meta name="description" content="1.为什么要修改 kubeadm 证书时间Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kubeadm-cert-expired">
 <meta property="og:url" content="https://running-dpf.github.io/post/kubeadm-cert-expired.html">
 <meta property="og:site_name" content="Nayaur&#39;s blog">
-<meta property="og:description" content="1.为什么要修改 kubeadm 证书时间Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。 不过该工具有点坑的就是，使用其安装的 kubernetes 集群的大部分证书有效期只有一年，需要在证书过期前，使用更新操作更新集群，使证书的有效期再续一年。如果忘记这个操作，那么在使用过程">
+<meta property="og:description" content="1.为什么要修改 kubeadm 证书时间Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-05T08:42:37.000Z">
-<meta property="article:modified_time" content="2022-09-05T09:10:16.233Z">
+<meta property="article:modified_time" content="2022-09-05T09:38:42.646Z">
 <meta property="article:author" content="岩羊">
 <meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
@@ -238,7 +238,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-09-05 16:42:37 / 修改时间：17:10:16" itemprop="dateCreated datePublished" datetime="2022-09-05T16:42:37+08:00">2022-09-05</time>
+              <time title="创建时间：2022-09-05 16:42:37 / 修改时间：17:38:42" itemprop="dateCreated datePublished" datetime="2022-09-05T16:42:37+08:00">2022-09-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -283,6 +283,8 @@
 
       
         <h2 id="1-为什么要修改-kubeadm-证书时间"><a href="#1-为什么要修改-kubeadm-证书时间" class="headerlink" title="1.为什么要修改 kubeadm 证书时间"></a>1.为什么要修改 kubeadm 证书时间</h2><p>Kubernetes 官方提供了 kubeadm 工具安装 kubernetes 集群，使用这个工具安装集群非常便捷，使部署和升级 Kubernetes 变得简单起来。</p>
+<span id="more"></span>
+
 <p>不过该工具有点坑的就是，使用其安装的 kubernetes 集群的大部分证书有效期只有一年，需要在证书过期前，使用更新操作更新集群，使证书的有效期再续一年。如果忘记这个操作，那么在使用过程中证书到期将导致集群不可用，使用过程中会出现以下报错：x509: certificate has expired or is not yet valid，应用无法访问，急急忙忙解决也需要半天时间，这个问题是致命的。</p>
 <p>不过实际情况下，在现网环境中大部分人追求稳定，一般不会大改 Kubernetes 版本，所以解决 kubeadm 集群证书有效期只有一年的最好办法就是重新编译 kubeadm 源码，将里面的 1 年有效期修改为 10 年或者 100 年，也不会影响使用 kubeadm 后续的升级，所以修改源码能很好的规避这个证书过期风险。</p>
 <h2 id="2-查看证书有的效期"><a href="#2-查看证书有的效期" class="headerlink" title="2.查看证书有的效期"></a>2.查看证书有的效期</h2><h3 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd &#x2F;etc&#x2F;kubernetes&#x2F;pki
@@ -365,10 +367,10 @@ go version<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <h3 id="3-3-Kubernetes源码下载"><a href="#3-3-Kubernetes源码下载" class="headerlink" title="3.3 Kubernetes源码下载"></a>3.3 Kubernetes源码下载</h3><pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;
 git clone --branch v1.22.2 https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;kubernetes.git<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="3-4-修改源代码文件"><a href="#3-4-修改源代码文件" class="headerlink" title="3.4 修改源代码文件"></a>3.4 修改源代码文件</h3><p>证书的有效期是需要修改两个文件constants.go和cert.go</p>
+<h3 id="3-4-修改源代码文件"><a href="#3-4-修改源代码文件" class="headerlink" title="3.4 修改源代码文件"></a>3.4 修改源代码文件</h3><p>1、修改constants.go文件</p>
 <pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;kubernetes
 vim .&#x2F;cmd&#x2F;kubeadm&#x2F;app&#x2F;constants&#x2F;constants.go
-查找CertificateValidity 字段
+查找CertificateValidity字段
 
 const (
         &#x2F;&#x2F; KubernetesDir is the directory Kubernetes owns for storing various configuration files
@@ -380,8 +382,8 @@ const (
         TempDirForKubeadm &#x3D; &quot;tmp&quot;
 
         &#x2F;&#x2F; CertificateValidity defines the validity for all the signed certificates generated by kubeadm
-        &#x2F;&#x2F; &lt;font color&#x3D;&quot;red&quot;&gt;修改这个地方&lt;&#x2F;font&gt;
-        CertificateValidity &#x3D; time.Hour * 24 * 365 &lt;font color&#x3D;&quot;red&quot;&gt;* 100&lt;&#x2F;font&gt;
+        &#x2F;&#x2F; 修改这个地方
+        CertificateValidity &#x3D; time.Hour * 24 * 365 * 100
 
         &#x2F;&#x2F; CACertAndKeyBaseName defines certificate authority base name
         CACertAndKeyBaseName &#x3D; &quot;ca&quot;
@@ -390,6 +392,76 @@ const (
         &#x2F;&#x2F; CAKeyName defines certificate name
         CAKeyName &#x3D; &quot;ca.key&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>2、修改cert.go文件</p>
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;kubernetes
+vim staging&#x2F;src&#x2F;k8s.io&#x2F;client-go&#x2F;util&#x2F;cert&#x2F;cert.go 
+查找NotAfter字段
+
+&#x2F;&#x2F; NewSelfSignedCACert creates a CA certificate
+func NewSelfSignedCACert(cfg Config, key crypto.Signer) (*x509.Certificate, error) &#123;
+        now :&#x3D; time.Now()
+        tmpl :&#x3D; x509.Certificate&#123;
+                SerialNumber: new(big.Int).SetInt64(0),
+                Subject: pkix.Name&#123;
+                        CommonName:   cfg.CommonName,
+                        Organization: cfg.Organization,
+                &#125;,
+                DNSNames:              []string&#123;cfg.CommonName&#125;,
+                NotBefore:             now.UTC(),
+                NotAfter:              now.Add(duration365d * 100).UTC(),
+                KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+                BasicConstraintsValid: true,
+                IsCA:                  true,
+        &#125;
+
+        certDERBytes, err :&#x3D; x509.CreateCertificate(cryptorand.Reader, &amp;tmpl, &amp;tmpl, key.Public(), key)
+        if err !&#x3D; nil &#123;
+                return nil, err
+        &#125;
+        return x509.ParseCertificate(certDERBytes)
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-5-编译源码"><a href="#3-5-编译源码" class="headerlink" title="3.5 编译源码"></a>3.5 编译源码</h3><pre class="line-numbers language-none"><code class="language-none">cd &#x2F;opt&#x2F;data&#x2F;kubernetes
+make WHAT&#x3D;cmd&#x2F;kubeadm GOFLAGS&#x3D;-v<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="3-6-编译完后查看结果，就可以看到生成的kubeadm二进文件"><a href="#3-6-编译完后查看结果，就可以看到生成的kubeadm二进文件" class="headerlink" title="3.6 编译完后查看结果，就可以看到生成的kubeadm二进文件"></a>3.6 编译完后查看结果，就可以看到生成的kubeadm二进文件</h3><pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;opt&#x2F;data&#x2F;kubernetes&#x2F;_output&#x2F;bin&#x2F;
+
+-rwxr-xr-x 1 root root  7540736 Sep  5 17:20 conversion-gen
+-rwxr-xr-x 1 root root  7200768 Sep  5 17:19 deepcopy-gen
+-rwxr-xr-x 1 root root  7233536 Sep  5 17:19 defaulter-gen
+-rwxr-xr-x 1 root root  3555847 Sep  5 17:19 go2make
+-rwxr-xr-x 1 root root 45789184 Sep  5 17:22 kubeadm
+-rwxr-xr-x 1 root root 10141696 Sep  5 17:20 openapi-gen
+-rwxr-xr-x 1 root root  7168000 Sep  5 17:19 prerelease-lifecycle-gen<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-7-备份"><a href="#3-7-备份" class="headerlink" title="3.7 备份"></a>3.7 备份</h3><pre class="line-numbers language-none"><code class="language-none">备份
+cp &#x2F;usr&#x2F;bin&#x2F;kubeadm &#x2F;usr&#x2F;bin&#x2F;kubeadm.20220905
+备份旧的证书文件，记住3台master都需要备份一下
+cp -R &#x2F;etc&#x2F;kubernetes&#x2F;pki &#x2F;etc&#x2F;kubernetes&#x2F;pki.20220905<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-8-替换"><a href="#3-8-替换" class="headerlink" title="3.8 替换"></a>3.8 替换</h3><pre class="line-numbers language-none"><code class="language-none">cp &#x2F;opt&#x2F;data&#x2F;kubernetes&#x2F;_output&#x2F;bin&#x2F;kubeadm &#x2F;usr&#x2F;bin&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3-9-证书更新"><a href="#3-9-证书更新" class="headerlink" title="3.9 证书更新"></a>3.9 证书更新</h3><pre class="line-numbers language-none"><code class="language-none">kubeadm certs renew all
+
+[renew] Reading configuration from the cluster...
+[renew] FYI: You can look at this config file with &#39;kubectl -n kube-system get cm kubeadm-config -o yaml&#39;
+
+certificate embedded in the kubeconfig file for the admin to use and for kubeadm itself renewed
+certificate for serving the Kubernetes API renewed
+certificate the apiserver uses to access etcd renewed
+certificate for the API server to connect to kubelet renewed
+certificate embedded in the kubeconfig file for the controller manager to use renewed
+certificate for liveness probes to healthcheck etcd renewed
+certificate for etcd nodes to communicate with each other renewed
+certificate for serving etcd renewed
+certificate for the front proxy client renewed
+certificate embedded in the kubeconfig file for the scheduler manager to use renewed
+
+Done renewing certificates. You must restart the kube-apiserver, kube-controller-manager, kube-scheduler and etcd, so that they can use the new certificates.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3-10-重启apiserver、controller、scheduler配置生效"><a href="#3-10-重启apiserver、controller、scheduler配置生效" class="headerlink" title="3.10 重启apiserver、controller、scheduler配置生效"></a>3.10 重启apiserver、controller、scheduler配置生效</h3><pre class="line-numbers language-none"><code class="language-none">docker ps |grep -E &#39;k8s_kube-apiserver|k8s_kube-controller-manager|k8s_kube-scheduler|k8s_etcd_etcd&#39;|awk &#39;&#123;print $1&#125;&#39; |xargs docker restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3-11-其他master节点"><a href="#3-11-其他master节点" class="headerlink" title="3.11 其他master节点"></a>3.11 其他master节点</h3><p>同理另外2台的master，只需要把kubeadm文件，从第一台更新过的scp过去，然后按上面步骤，重新生成新的证书文件就可以了。记住更新过需要重启一下服务或者服务器。</p>
 
     </div>
 
@@ -516,7 +588,7 @@ const (
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BF%AE%E6%94%B9-kubeadm-%E8%AF%81%E4%B9%A6%E6%97%B6%E9%97%B4"><span class="nav-text">1.为什么要修改 kubeadm 证书时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E8%AF%81%E4%B9%A6%E6%9C%89%E7%9A%84%E6%95%88%E6%9C%9F"><span class="nav-text">2.查看证书有的效期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-text">第一种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-text">第二种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AF%81%E4%B9%A6%E6%9C%89%E6%95%88%E6%9C%9F%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95"><span class="nav-text">3.证书有效期修改方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%83%A8%E7%BD%B2go%E7%8E%AF%E5%A2%83"><span class="nav-text">3.1 部署go环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">3.2 配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Kubernetes%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD"><span class="nav-text">3.3 Kubernetes源码下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E4%BF%AE%E6%94%B9%E6%BA%90%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6"><span class="nav-text">3.4 修改源代码文件</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BF%AE%E6%94%B9-kubeadm-%E8%AF%81%E4%B9%A6%E6%97%B6%E9%97%B4"><span class="nav-text">1.为什么要修改 kubeadm 证书时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E8%AF%81%E4%B9%A6%E6%9C%89%E7%9A%84%E6%95%88%E6%9C%9F"><span class="nav-text">2.查看证书有的效期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-text">第一种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-text">第二种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AF%81%E4%B9%A6%E6%9C%89%E6%95%88%E6%9C%9F%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95"><span class="nav-text">3.证书有效期修改方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E9%83%A8%E7%BD%B2go%E7%8E%AF%E5%A2%83"><span class="nav-text">3.1 部署go环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">3.2 配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Kubernetes%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD"><span class="nav-text">3.3 Kubernetes源码下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E4%BF%AE%E6%94%B9%E6%BA%90%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6"><span class="nav-text">3.4 修改源代码文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="nav-text">3.5 编译源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E7%BC%96%E8%AF%91%E5%AE%8C%E5%90%8E%E6%9F%A5%E7%9C%8B%E7%BB%93%E6%9E%9C%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E7%94%9F%E6%88%90%E7%9A%84kubeadm%E4%BA%8C%E8%BF%9B%E6%96%87%E4%BB%B6"><span class="nav-text">3.6 编译完后查看结果，就可以看到生成的kubeadm二进文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-%E5%A4%87%E4%BB%BD"><span class="nav-text">3.7 备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-%E6%9B%BF%E6%8D%A2"><span class="nav-text">3.8 替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-%E8%AF%81%E4%B9%A6%E6%9B%B4%E6%96%B0"><span class="nav-text">3.9 证书更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-%E9%87%8D%E5%90%AFapiserver%E3%80%81controller%E3%80%81scheduler%E9%85%8D%E7%BD%AE%E7%94%9F%E6%95%88"><span class="nav-text">3.10 重启apiserver、controller、scheduler配置生效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-11-%E5%85%B6%E4%BB%96master%E8%8A%82%E7%82%B9"><span class="nav-text">3.11 其他master节点</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -866,13 +938,13 @@ if(canvas.getContext){
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">133k</span>
+    <span title="站点总字数">136k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:01</span>
+    <span title="站点阅读时长">2:03</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
