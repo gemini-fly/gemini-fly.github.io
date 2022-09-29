@@ -2,7 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://running-dpf.github.io/post/makevsnew.html</loc>
+    <loc>https://running-dpf.github.io/post/mtr.html</loc>
+    
+    <lastmod>2022-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/post/docker-use-source.html</loc>
+    
+    <lastmod>2022-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://running-dpf.github.io/post/WAN.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -20,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/mtr.html</loc>
+    <loc>https://running-dpf.github.io/post/makevsnew.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -41,24 +59,6 @@
     <loc>https://running-dpf.github.io/post/consul.html</loc>
     
     <lastmod>2022-09-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/docker-use-source.html</loc>
-    
-    <lastmod>2022-09-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/WAN.html</loc>
-    
-    <lastmod>2022-09-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
