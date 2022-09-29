@@ -118,33 +118,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ISP</title>
-    <url>//post/ISP.html</url>
-    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
-<span id="more"></span>
-<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 阶段总结</title>
-    <url>//post/JavaScript-Net.html</url>
-    <content><![CDATA[<p>做了一张思维导图。总结这几个月对 JavaScript 的学习吧，也是一个复习。也是我目前的技能树。</p>
-<p><img data-src="http://7q5cdt.com1.z0.glb.clouddn.com/blog-JavaScriptNet2.png" alt="JavaScriptNet"></p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript 中的闭包</title>
     <url>//post/JavaScript-closure.html</url>
     <content><![CDATA[<h2 id="闭包的例子"><a href="#闭包的例子" class="headerlink" title="闭包的例子"></a>闭包的例子</h2><pre><code>function outer() &#123;
@@ -1568,161 +1541,6 @@ myValue <span class="token operator">===</span> <span class="token keyword">null
       </tags>
   </entry>
   <entry>
-    <title>NGINX禁止解析IP访问</title>
-    <url>//post/NGINX-Prohibit-IP-access.html</url>
-    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
-<span id="more"></span>
-
-
-<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
-listen 80 default; 
-server_name _; 
-return 404; 
-&#125;
-
-server &#123;
-listen 80;
-server_name xxx;
-rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
-&#125;
-
-server &#123;
-listen 443;
-server_name xxx;
-    #ssl_certificate ;
-    #ssl_certificate_key ;
-
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>nginx</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>同步一个fork</title>
-    <url>//post/Syncing-a-fork.html</url>
-    <content><![CDATA[<p>fork 了别人的仓库后，原作者又更新了仓库，如何将自己的代码和原仓库保持一致？本文将给你解答。</p>
-<span id="more"></span>
-
-
-
-
-<h2 id="如何使用搜索引擎"><a href="#如何使用搜索引擎" class="headerlink" title="如何使用搜索引擎"></a>如何使用搜索引擎</h2><p>其实这个问题并不难，我又被坑了。百度搜的东西不靠谱啊，以后这种问题一定要用<strong>英文</strong>在 <a href="http://www.google.com/">Google</a> 或者 <a href="http://cn.bing.com/">Bing</a> 上搜索，这样才能搜到原汁原味的答案。就当是一个教训吧。   </p>
-<p>搜索 fork sync，就可以看到 GitHub 自己的帮助文档 <a href="https://help.github.com/articles/syncing-a-fork/">Syncing a fork</a> 点进去看这篇的时候，注意到有一个 Tip: Before you can sync your fork with an upstream repository, you must <a href="https://help.github.com/articles/configuring-a-remote-for-a-fork/">configure a remote that points to the upstream repository</a> in Git.   </p>
-<p>根据这两篇文章，问题迎刃而解！   </p>
-<h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><h3 id="Configuring-a-remote-for-a-fork"><a href="#Configuring-a-remote-for-a-fork" class="headerlink" title="Configuring a remote for a fork"></a>Configuring a remote for a fork</h3><ul>
-<li><p>给 fork 配置一个 remote   </p>
-</li>
-<li><p>主要使用 <code>git remote -v</code> 查看远程状态。   </p>
-</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git remote -v
-# origin  https:&#x2F;&#x2F;github.com&#x2F;YOUR_USERNAME&#x2F;YOUR_FORK.git (fetch)
-# origin  https:&#x2F;&#x2F;github.com&#x2F;YOUR_USERNAME&#x2F;YOUR_FORK.git (push)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>添加一个将被同步给 fork 远程的上游仓库      </li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git remote add upstream https:&#x2F;&#x2F;github.com&#x2F;ORIGINAL_OWNER&#x2F;ORIGINAL_REPOSITORY.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-<ul>
-<li>再次查看状态确认是否配置成功。   </li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git remote -v
-# origin    https:&#x2F;&#x2F;github.com&#x2F;YOUR_USERNAME&#x2F;YOUR_FORK.git (fetch)
-# origin    https:&#x2F;&#x2F;github.com&#x2F;YOUR_USERNAME&#x2F;YOUR_FORK.git (push)
-# upstream  https:&#x2F;&#x2F;github.com&#x2F;ORIGINAL_OWNER&#x2F;ORIGINAL_REPOSITORY.git (fetch)
-# upstream  https:&#x2F;&#x2F;github.com&#x2F;ORIGINAL_OWNER&#x2F;ORIGINAL_REPOSITORY.git (push)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Syncing-a-fork"><a href="#Syncing-a-fork" class="headerlink" title="Syncing a fork"></a>Syncing a fork</h3><ul>
-<li>从上游仓库 fetch 分支和提交点，传送到本地，并会被存储在一个本地分支 upstream/master<br><code>git fetch upstream</code>    </li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git fetch upstream
-# remote: Counting objects: 75, done.
-# remote: Compressing objects: 100% (53&#x2F;53), done.
-# remote: Total 62 (delta 27), reused 44 (delta 9)
-# Unpacking objects: 100% (62&#x2F;62), done.
-# From https:&#x2F;&#x2F;github.com&#x2F;ORIGINAL_OWNER&#x2F;ORIGINAL_REPOSITORY
-#  * [new branch]      master     -&gt; upstream&#x2F;master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>切换到本地主分支(如果不在的话)<br><code>git checkout master</code>    </li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git checkout master
-# Switched to branch &#39;master&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<ul>
-<li>把 upstream/master 分支合并到本地 master 上，这样就完成了同步，并且不会丢掉本地修改的内容。<br><code>git merge upstream/master</code>      </li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">git merge upstream&#x2F;master
-# Updating a422352..5fdff0f
-# Fast-forward
-#  README                    |    9 -------
-#  README.md                 |    7 ++++++
-#  2 files changed, 7 insertions(+), 9 deletions(-)
-#  delete mode 100644 README
-#  create mode 100644 README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>如果想更新到 GitHub 的 fork 上，直接 <code>git push origin master</code> 就好了。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>GitHub</category>
-      </categories>
-      <tags>
-        <tag>GitHub</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <url>//post/Ubuntu16-04-pycharm-icon-setting.html</url>
-    <content><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p>
-<p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p>
-<span id="more"></span>
-<h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>方法二（使用gedit）：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-<p>然后就会弹出一个新框：</p>
-<h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p>
-<pre class="line-numbers language-js" data-language="js"><code class="language-js">
-<span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>
-Type<span class="token operator">=</span>Application
-Name<span class="token operator">=</span>Pycharm
-GenericName<span class="token operator">=</span>Pycharm3
-Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>
-Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>f
-Icon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>png
-Terminal<span class="token operator">=</span>pycharm
-Categories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p>
-<h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>Ubuntu Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>判断两个数组是否相似 (arraysSimilar)</title>
     <url>//post/arrays-similar.html</url>
     <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>题目来自 <a href="http://imooc.com/code/5760">慕课网 JavaScript 深入浅出 1-6 编程练习</a>    </p>
@@ -2112,265 +1930,6 @@ document<span class="token punctuation">.</span><span class="token function">wri
       </tags>
   </entry>
   <entry>
-    <title>安装php7.3.5</title>
-    <url>//post/centos-php7-3-5.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作需要使用php7.3.5做报表系统<br>本文采用编译安装</p>
-<span id="more"></span>
-<p>1、先安装依赖包</p>
-<pre class="line-numbers language-none"><code class="language-none">yum -y install epel-release libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel ncurses curl gdbm-devel db4-devel libXpm-devel libX11-devel gd-devel gmp-devel expat-devel xmlrpc-c xmlrpc-c-devel libicu-devel libmcrypt-devel libmemcached-devel libzip gcc-c++ sqlite-devel  oniguruma oniguruma-devel autoconf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>2、开始编译</p>
-<pre class="line-numbers language-none"><code class="language-none">.&#x2F;configure \
---prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
---exec-prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
---bindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin \
---sbindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin \
---includedir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;include \
---libdir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php \
---mandir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;php&#x2F;man \
---with-config-file-path&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;etc \
---with-mhash \
---with-openssl \
---with-mysqli&#x3D;shared,mysqlnd \
---with-pdo-mysql&#x3D;shared,mysqlnd \
---with-gd \
---with-iconv \
---with-zlib \
---enable-zip \
---enable-inline-optimization \
---disable-debug \
---disable-rpath \
---enable-shared \
---enable-xml \
---enable-redis\
---enable-bcmath \
---enable-shmop \
---enable-sysvsem \
---enable-mbregex \
---enable-mbstring \
---enable-ftp \
---enable-pcntl \
---enable-calendar \
---enable-exif \
---enable-sockets \
---with-xmlrpc \
---with-libxml-dir \
---enable-soap \
---without-pear \
---with-gettext \
---enable-session \
---with-curl \
---with-jpeg-dir \
---with-png-dir \
---with-freetype-dir \
---with-bz2 \
---enable-opcache \
---enable-fpm \
---with-fpm-user&#x3D;nginx \
---with-fpm-group&#x3D;nginx \
---without-gdbm \
---enable-fast-install \
---disable-fileinfo
-
-make &amp;&amp; make install <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>添加配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc
-cp php-fpm.conf.default php-fpm.conf
-cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm.d
-cp www.conf.default www.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>查找当前php使用ini的位置</p>
-<pre class="line-numbers language-none"><code class="language-none">php --ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>添加配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">mkdir &#x2F;usr&#x2F;local&#x2F;php&#x2F;conf
-vim php.ini
-[PHP]
-engine &#x3D; On
-short_open_tag &#x3D; Off
-precision &#x3D; 14
-output_buffering &#x3D; 4096
-zlib.output_compression &#x3D; Off
-implicit_flush &#x3D; Off
-unserialize_callback_func &#x3D;
-serialize_precision &#x3D; -1
-disable_functions &#x3D;
-disable_classes &#x3D;
-zend.enable_gc &#x3D; On
-zend.exception_ignore_args &#x3D; Off
-expose_php &#x3D; On
-max_execution_time &#x3D; 30
-max_input_time &#x3D; 60
-memory_limit &#x3D; 128M
-error_reporting &#x3D; E_ALL
-display_errors &#x3D; On
-display_startup_errors &#x3D; On
-log_errors &#x3D; On
-log_errors_max_len &#x3D; 1024
-ignore_repeated_errors &#x3D; Off
-ignore_repeated_source &#x3D; Off
-report_memleaks &#x3D; On
-variables_order &#x3D; &quot;GPCS&quot;
-request_order &#x3D; &quot;GP&quot;
-register_argc_argv &#x3D; Off
-auto_globals_jit &#x3D; On
-post_max_size &#x3D; 8M
-auto_prepend_file &#x3D;
-auto_append_file &#x3D;
-default_mimetype &#x3D; &quot;text&#x2F;html&quot;
-default_charset &#x3D; &quot;UTF-8&quot;
-doc_root &#x3D;
-user_dir &#x3D;
-enable_dl &#x3D; Off
-file_uploads &#x3D; On
-upload_max_filesize &#x3D; 2M
-max_file_uploads &#x3D; 20
-allow_url_fopen &#x3D; On
-allow_url_include &#x3D; Off
-default_socket_timeout &#x3D; 60
-extension&#x3D;ldap
-[CLI Server]
-cli_server.color &#x3D; On
-[Date]
-[filter]
-[iconv]
-[imap]
-[intl]
-[sqlite3]
-[Pcre]
-[Pdo]
-[Pdo_mysql]
-pdo_mysql.default_socket&#x3D;
-[Phar]
-[mail function]
-SMTP &#x3D; localhost
-smtp_port &#x3D; 25
-mail.add_x_header &#x3D; Off
-[ODBC]
-odbc.allow_persistent &#x3D; On
-odbc.check_persistent &#x3D; On
-odbc.max_persistent &#x3D; -1
-odbc.max_links &#x3D; -1
-odbc.defaultlrl &#x3D; 4096
-odbc.defaultbinmode &#x3D; 1
-[MySQLi]
-mysqli.max_persistent &#x3D; -1
-mysqli.allow_persistent &#x3D; On
-mysqli.max_links &#x3D; -1
-mysqli.default_port &#x3D; 3306
-mysqli.default_socket &#x3D;
-mysqli.default_host &#x3D;
-mysqli.default_user &#x3D;
-mysqli.default_pw &#x3D;
-mysqli.reconnect &#x3D; Off
-[mysqlnd]
-mysqlnd.collect_statistics &#x3D; On
-mysqlnd.collect_memory_statistics &#x3D; On
-[OCI8]
-[PostgreSQL]
-pgsql.allow_persistent &#x3D; On
-pgsql.auto_reset_persistent &#x3D; Off
-pgsql.max_persistent &#x3D; -1
-pgsql.max_links &#x3D; -1
-pgsql.ignore_notice &#x3D; 0
-pgsql.log_notice &#x3D; 0
-[bcmath]
-bcmath.scale &#x3D; 0
-[browscap]
-[Session]
-session.save_handler &#x3D; files
-session.use_strict_mode &#x3D; 0
-session.use_cookies &#x3D; 1
-session.use_only_cookies &#x3D; 1
-session.name &#x3D; PHPSESSID
-session.auto_start &#x3D; 0
-session.cookie_lifetime &#x3D; 0
-session.cookie_path &#x3D; &#x2F;
-session.cookie_domain &#x3D;
-session.cookie_httponly &#x3D;
-session.cookie_samesite &#x3D;
-session.serialize_handler &#x3D; php
-session.gc_probability &#x3D; 1
-session.gc_divisor &#x3D; 1000
-session.gc_maxlifetime &#x3D; 1440
-session.referer_check &#x3D;
-session.cache_limiter &#x3D; nocache
-session.cache_expire &#x3D; 180
-session.use_trans_sid &#x3D; 0
-session.sid_length &#x3D; 26
-session.trans_sid_tags &#x3D; &quot;a&#x3D;href,area&#x3D;href,frame&#x3D;src,form&#x3D;&quot;
-session.sid_bits_per_character &#x3D; 5
-[Assertion]
-zend.assertions &#x3D; 1
-[COM]
-[mbstring]
-[gd]
-[exif]
-[Tidy]
-tidy.clean_output &#x3D; Off
-[soap]
-soap.wsdl_cache_enabled&#x3D;1
-soap.wsdl_cache_dir&#x3D;&quot;&#x2F;tmp&quot;
-soap.wsdl_cache_ttl&#x3D;86400
-soap.wsdl_cache_limit &#x3D; 5
-[sysvshm]
-[ldap]
-ldap.max_links &#x3D; -1
-[dba]
-[opcache]
-[curl]
-[openssl]
-[ffi]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装php-redis</p>
-<pre class="line-numbers language-none"><code class="language-none">tar -zxvf owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
-cd owlient-phpredis-90ecd17
-&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
-.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config
-make &amp;&amp; make install
-cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;
-vim php.ini
-extension_dir &#x3D; &quot;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;&quot;
-extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装php-grpc</p>
-<pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;grpc-1.20.0.tgz
-tar -xzvf grpc-1.20.0.tgz
-cd grpc-1.20.0
-&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
-.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config 
-make &amp;&amp; make install
-vim php.ini
-extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>centos7 php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Write-Ahead Log（WAL）的工作原理</title>
-    <url>//post/WAL.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
-<span id="more"></span>
-
-<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
-<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
-<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
-<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
-<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
-<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
-<p>上述WAL细节过程如下图:</p>
-<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
-<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
-<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
-]]></content>
-      <categories>
-        <category>分布式系统</category>
-      </categories>
-      <tags>
-        <tag>WAL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>win10 关闭更新</title>
     <url>//post/close-win10-update.html</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p>
@@ -2392,82 +1951,6 @@ extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><spa
       </categories>
       <tags>
         <tag>win10 工具软件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>du</title>
-    <url>//post/du-md.html</url>
-    <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
-<span id="more"></span>
-<pre class="line-numbers language-none"><code class="language-none">-a, --all
-    显示对所有文件的统计，而不只是包含子目录。
--b, --bytes
-    输出以字节为单位的大小，替代缺省时1024字节的计数单位。
---block-size&#x3D;size
-    输出以块为单位的大小，块的大小为 size 字节。( file- utils-4.0 的新选项)
--c, --total
-    在处理完所有参数后给出所有这些参数的总计。这个选项被 用给出指定的一组文件或目录使用的空间的总和。
--D, --dereference-args
-    引用命令行参数的符号连接。但不影响其他的符号连接。 这对找出象 &#x2F;usr&#x2F;tmp 这样的目录的磁盘使用量有用， &#x2F;usr&#x2F;tmp 等通常是符号连接。 译住：例如在 &#x2F;var&#x2F;tmp 下建立一个目录test, 而&#x2F;usr&#x2F;tmp 是指向 &#x2F;var&#x2F;tmp 的符号连接。du &#x2F;usr&#x2F;tmp 返回一项 &#x2F;usr&#x2F;tmp , 而 du - D &#x2F;usr&#x2F;tmp 返回两项 &#x2F;usr&#x2F;tmp，&#x2F;usr&#x2F;tmp&#x2F;test。
---exclude&#x3D;pattern
-    在递归时，忽略与指定模式相匹配的文件或子目录。模式 可以是任何 Bourne shell 的文件 glob 模式。( file- utils-4.0 的新选项)
--h, --human-readable
-    为每个数附加一个表示大小单位的字母，象用M表示二进制 的兆字节。
--H, --si
-    与 -h 参数起同样的作用，只是使用法定的 SI 单位( 用 1000的幂而不是 1024 的幂，这样 M 代表的就是1000000 而不是 1048576)。(fileutils-4.0 的新选项)
--k, --kilobytes
-    输出以1024字节为计数单位的大小。
--l, --count-links
-    统计所有文件的大小，包括已经被统计过的(作为一个硬连接)。
--L, --dereference
-    引用符号连接(不是显示连接点本身而是连接指向的文件或 目录所使用的磁盘空间)。
--m, --megabytes
-    输出以兆字节的块为计数单位的大小(就是 1,048,576 字节)。
---max-depth&#x3D;n
-    只输出命令行参数的小于等于第 n 层的目录的总计。 --max-depth&#x3D;0的作用同于-s选项。(fileutils-4.0的新选项)
--s, --summarize
-    对每个参数只显示总和。
--S, --separate-dirs
-    单独报告每一个目录的大小，不包括子目录的大小。
--x, --one-file-system
-    忽略与被处理的参数不在同一个文件系统的目录。
--X file, --exclude-from&#x3D;file
-    除了从指定的文件中得到模式之外与 --exclude 一样。 模式以行的形式列出。如果指定的文件是&#39;-&#39;,那么从标准输 入中读出模式。(fileutils-4.0 的新选项) GNU 标准选项
---help
-    在标准输出上输出帮助信息后正常退出。
---version
-    在标准输出上输出版本信息后正常退出。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li>统计当前目录下，第一层的文件大小</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -ah --max-depth&#x3D;1 .&#x2F;cdn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>统计当前目录大小，并安大小排序</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -sm * | sort -n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>按大小排序目录(查看文件目录大小)</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --time --max-depth&#x3D;1 | sort -hr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>列出当前目录中的目录名不包括xyz字符串的目录的大小</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --exclude&#x3D;&#39;*xyz*&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>显示几个文件或目录各自占用磁盘空间的大小，并统计它们的总和</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -c log30.tar.gz log31.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul>
-<li>查看各文件夹大小命令</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">du -h --max-depth&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -2922,134 +2405,6 @@ port: 1234<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
       </categories>
       <tags>
         <tag>jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mac使用crt异常报错</title>
-    <url>//post/mac-crt.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
-<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
-<span id="more"></span>
-
-<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
-<p>sudo chmod o+w /cores</p>
-<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
-<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
-
-<p>见证一下mac系统</p>
-<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
-<p>查看下我们本机的 cores 目录权限</p>
-<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
-...
-drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>发现缺少写权限，所以执行</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
-Password:
-ls -l &#x2F;
-...
-drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
-...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>然后再去启动CRT就正常了。</p>
-]]></content>
-      <categories>
-        <category>Mac</category>
-      </categories>
-      <tags>
-        <tag>mac</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
-    <url>//post/nginx-deny-git.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
-<span id="more"></span>
-
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
-        deny all;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>nginx</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php进程不及时释放进程导致CPU跑满</title>
-    <url>//post/php-cpu.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
-<span id="more"></span>
-<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
-<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
-<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
-<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
-]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>php-fpm配置文件详解</title>
-    <url>//post/php-fpm-conf.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php一直都搞不懂，今天彻底把php-fpm的配置文件解释一下</p>
-<span id="more"></span>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><pre class="line-numbers language-none"><code class="language-none">[www]
-user &#x3D; www
-group &#x3D; www
-
-;listen &#x3D; 127.0.0.1:9000
-listen.owner &#x3D; www
-listen.group &#x3D; www
-listen.mode &#x3D; 0660
-listen &#x3D; &#x2F;dev&#x2F;shm&#x2F;php-fpm.sock
-listen.allowed_clients &#x3D; 127.0.0.1
-
-;pm &#x3D; static
-pm &#x3D; dynamic
-
-pm.max_children &#x3D; 40
-pm.start_servers &#x3D; 20
-pm.min_spare_servers &#x3D; 20
-pm.max_spare_servers &#x3D; 40
-pm.max_requests &#x3D; 128
-;pm.max_requests &#x3D; 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>1、pm = dynamic 或 pm = static 表示使用哪种进程数量管理方式，dynamic表示php-fpm进程数是动态的，最开始是pm.start_servers指定的数量，如果请求较多，则会自动增加，保证空闲的进程数不小于pm.min_spare_servers，如果进程数较多，也会进行相应清理，保证多余的进程数不多于pm.max_spare_servers；</p>
-<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color="red">这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
-<p>区别：</p>
-<p>如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。</p>
-<p>如果dm设置为dynamic，那么pm.max_children参数失效，后面3个参数生效。系统会在php-fpm运行开始的时候启动pm.start_servers个php-fpm进程，然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数。</p>
-<p>设置：</p>
-<p>数值设置，参考自己的实际硬件配置，可以参考 总内存/30M 来计算。</p>
-<h1 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h1><p>如何判断我选择“pm = dynamic”还是“pm = static”呢？哪一种更好呢？</p>
-<p>事实上，跟Apache一样，运行的PHP程序在执行完成后，或多或少会有内存泄露的问题。</p>
-<p>这也是为什么开始的时候一个php-fpm进程只占用3M左右内存，运行一段时间后就会上升到20-30M的原因了。</p>
-<p>对于内存大的服务器（比如8G以上）来说，用静态的max_children实际上更为妥当，因为这样不需要进行额外的进程数目控制，会提高效率。因为频繁开关php-fpm进程也会有时滞，所以内存够大的情况下开静态效果会更好。数量也可以根据 总内存/30M 得到，比如8GB内存可以设置为100，那么php-fpm耗费的内存就能控制在 2G-3G的样子。</p>
-<p>如果内存稍微小点，比如1~2G，那么指定静态的进程数量更加有利于服务器的稳定。这样可以保证php-fpm只获取够用的内存，将不多的内存分配给其他应用去使用，会使系统的运行更加畅通。</p>
-<p>对于小内存的服务器来说，比如256M内存的VPS，即使按照一个20M的内存量来算，10个php-cgi进程就将耗掉200M内存，那系统的崩溃就应该很正常了。</p>
-<p>因此应该尽量地控制php-fpm进程的数量，大体明确其他应用占用的内存后，给它指定一个静态的小数量，会让系统更加平稳一些。</p>
-<p>或者使用动态方式，因为动态方式会结束掉多余的进程，可以回收释放一些内存，所以推荐在内存较少的服务器或VPS上使用，具体最大数量根据 总内存/20M 得到。</p>
-<p>比如说512M的VPS，建议pm.max_spare_servers设置为20。至于pm.min_spare_servers，则建议根据服务器的负载情况来设置，比较合适的值在5~10之间。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结：内存小的建议用动态（pm = dynamic），内存大的建议用静态（pm = static）</p>
-]]></content>
-      <categories>
-        <category>php</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
       </tags>
   </entry>
   <entry>
@@ -3671,82 +3026,6 @@ v0.10.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
       </categories>
       <tags>
         <tag>Sublime jshint csslint</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>swap分区介绍</title>
-    <url>//post/swap.html</url>
-    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
-<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
-<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
-<span id="more"></span>
-<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
-<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
-<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
-<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
-<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
-<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
-<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
-<p>4-8G的物理内存，swap 等于内存大小。</p>
-<p>8-64G 的物理内存，swap 设置为8G。</p>
-<p>64-256G物理内存，swap 设置为16G。</p>
-<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
-<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
-<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
-<p>用swapoff关闭交换分区</p>
-<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
-<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
-<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
-<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
-<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
-<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
-<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
-    <url>//post/swappiness.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
-<span id="more"></span>
-
-<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
-<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
-<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
-#vm.swappiness&#x3D;10
-cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
-#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
-<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>加上</p>
-<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
-kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
-vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p> 生效</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>这样便完成修改设置！</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -4560,24 +3839,6 @@ $ gem install sass
       </tags>
   </entry>
   <entry>
-    <title>wireshark合并多个pacp文件</title>
-    <url>//post/wireshark-merge.html</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当出现网络问题的时候，可能会抓很多个pcap包，当分析的时候时间点很不容易查找，所以要将多个pcap包合并为一个，方便我们运维人员查找</p>
-<span id="more"></span>
-
-<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>macos命令</p>
-<p>cd /Applications/Wireshark.app/Contents/MacOS</p>
-<p>./mergecap -w ~/Downloads/compare.pcap ~/Downloads/*.pcap</p>
-<p>这样，我们在Downloads文件夹能看到一个compare.pcap的文件，这就是整合的pacp文件</p>
-]]></content>
-      <categories>
-        <category>wireshark 网络</category>
-      </categories>
-      <tags>
-        <tag>wireshark</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s1.22.2部署网络插件calico</title>
     <url>//post/k8s-calico.html</url>
     <content><![CDATA[<p>上篇文章我们部署了K8S1.22.2</p>
@@ -4593,7 +3854,7 @@ $ gem install sass
     <title>kubeadm高可用部署K8S1.22.2(一)</title>
     <url>//post/k8s-kubeadm.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着>不太对, 请再试试." data-whm="抱歉, 这个文章不能>被校验, 不过您还是能看看解密后的内容.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="8a86ab5836324bf270bd2ce471d590a428600185738bc6f3c80781441ba00991">8221007b37e27603cb9fed6d1c0ac3e4a2ab0d43b56764150513a3a03e1bdf9242e49fb7e48398f3e036fff1161da7567ebafc00aaa2a8e4b950d235db3518f3992b3b9be11e6b8c45265a003390e789fcb5aabc97ca360f2b8ae590330e887eb46798f6e78f8c24f7c2ab158c2036270deb7ac29d48ab54446e757f7f70bf39d7d24f8d4757ffb778d6b07a6ab55ff03fb79744b7372bcbf0a2f32a8e06f3dd8fd3c4244f7a48b9946339c9ee02da8ca16297651e999ae371864ae4a1a5aa03d5729345c0d3e976fb8275dbfdac04f904794cf9743678e8d8247edba248840d43216e8845aca6a595cd3ae14cff0168d3e93811e9f942931b532dc61fe8905cc58635ec522272e8d5b1fc8112dc83935a0db063d1f60a1cf686d6dc298642efa7247ab8e5871cc732a057a2fce5241d41e23dee7c5edad1e6d67225845fda0170b54c8ad944b720d25c31579b1fd871409805d818067ff47b1e85c72e2a4ef0a51ce504d84db395912d0d35df10d44820846ae1bf02ebe590e9c166a4472f088058d56ea88c53aea6440bbb3b3630f8d5a7794d4a8e9bcccc46ef4f0400314bf8c970ce561399e1f09bf5811b4bb21da18a560add424a39ce648f0d6b48d5518a1ce0e7ede9bf4ad99f55c9aaa5beefc7b2aa891cc3b04de31d310af84e0eb186a8b6a93915388e89a4d33cfdb95fd6c1300643b87f71adbc840c6625a3acfddbabdb0138a3d84545eea39cf877a6abfb4443457f469cef13afed95490f09dc29dd9fbbbb7066ad9e878e4e1835e9f751ede63774038ba1673235a3ed3659a8a6372ed362f8cc7dc3e83f51cda5ce3ca0c729ec06a68239589d19a3ca26a19034b48173940afea8c02c8935a2aec53a2d4d67a45b2d0bffbba160cf4369b534ee28ac2b19a18b6dba05b2e8b8b1996ff045ac9f6316b862868cec84b653ca7b94be3cd8d091c52bcb7778a79b17511454f60570e9fe0070f1e24c5082d846de97fc64617ccc4ddd72d20696251894cf0da4e506a8f9dfd4ac83997bf93bd7cd0395cc6a0ae200ef87c7f21b1997d637bf5d97dacfdd4a6853b604be56b3921b83b3903c64d59f46ab19368b50a56d07649c1a055ea590e79b8a7841c6b8c872d2362fa986be2d20f9cbc4a72887a7d69123f2b9a77a9888975e0619e19bf1a5bf58b93beb21babcf840fbcf5446e0e40c45a71858fa30a4ef63b5c1cb53741d55c70dae6dc04f8c526be40354d72367c76820203e6b89c0e2f2019c44dc5ef21316d9019a26b30b7159ea9a5e9cee0b8f1a5dc05e11abff79a88f3eb03b77b2b7afe85da6cc0790f68b1545662bf9ecfc45456999eceb4312815678c9f0c894ff6b42596ea7514517af2ae2ae3ffd819264c3b31f7ede445ad509797721640dbd7e140300deadefb1eaee0b70943b6e3204b3c2650676a9033c987910eafb755bff151003fecb173d9286ea97f17fcf1feff9289b06d5a9106adc8811d1558fed7e479acb4102032a554a9eafa86d1f2cbd73ed57a32379b3e81fca540b60745588f40395fba7aee414409dbbf2dd80b791680f49472f7b7975494d31b70c9de56772642cba654a8e46719ef5f2eee85903a887ad79355cdc1fa18e587ff753bd794bff0ea0e40f2b1581374cc6d5c50e03cc2f7e2678a635224c680b354b8e7f073aad610689e00fe65ac6a7aa848839e4b0a3a423c10b02d6c495480e4087cc85a6dd3dbc29f43cd0ab51fffc398908e5a93911f86ced3e7de63e27c0c42e677e09305733492e893e5e396779c85e3e525a68e3ee99d2dcd01862b21cb52f5c71ab47ec1fff9e6c8c2998c56d91cc53c37c1f44a0c1757ce156ea0217672a7a50a3385a9f4462592eeb1fe156202851948ab0afe96a87eb6ee07b6107d2e662203e6e74ccff4f4087b741c839525586c7e614b07f468081a16e20caffccfe5f7d45ba86370ed0ac14fbc54c5248579f939ef891432b7d71d6805df874aea9f515779fa212368ca212ec838c14dbad8c351ffa8402673b077b76113850f5b7ba9503bcf2cd0fa6a63ac904d0d0fb3231250ddc29bd9d3cfa64e1ea391e416f0932247cf3ac031a0f82275e85ac93ca28030375eeb8faf6329f8903e09be4d8b9e554c5f73a28438df840a7d5e7549f6ad0a2e99fc8c5bb4a30037fc7a30f19d123fd76638530855b6c5668186bf298cfa5d428eea6da6e33ce0352ccf5f7c920390095bd255339d73330b13a3292de04b6f44d1494fc765f03e7dc288cf8722daab23c026e6c481e5dcc6a294f788b514dfb79711dc6b3b5d9675eae5b9ccdc13d6c397f6dd80e6206a96a6fc5cdffeee8d7edd210e95953548d309159d05b2119ad3945ec7968fc82552c231c54212e43a8f39297cc0f76ec551136d6aa09e7d6bee81b94b7466c3659e7c8a33a48ea3a1d30ddcd53205936c071ad13e5f10b6d8690b2950e2198fa62793b08458648b1644c29e28c397ea08d8269b80204bd4556d92487ee2a4b1326728f2333410b613a158d004d38da3fb08dc522dc1ce2ba67c5f7ee0b9937864e8ab2a41a13a6a177d43cf33dcf99956b97ef13d3469a223f1d786aed3fac739c3d732fc01b3411f9b4dbc61608a605b6e356956ee9bd0aaa294e165efe889df93ecde975f54e1d007936319248bfeb0315e16812b85b810e2fe21b741e04ed066f0f9cc848d6486bbbc131d629586abfb38e564f1418e5f4149019c9ebe9aa3e87e1df31a5ae3b9ead108591512238abe38b5dc2956954d3ab2a43311a3a8a60f2f11fb5afb161da1aff08a4d41177d08194e329299521ba89dbcff7c635b47121df0feb0f7bb8b0227c77544ba5288872fb80fc9de100e5b74594b27f064ddbf750578720b7b9fe7934be0798f3cbfb26ab9cbd9cfa037b7c3aa20ae55ca4a5bc3b66e0c042a26bac34c834eabef2e29729b9b852c84c55bd59e80d812096decea9ef36f005db7cd4cbc9f93ac9062d041a6a9328b6c16f9a8bd9dac0256f3f22984c328ca8755c8411535db76a22087e0e5de7e99b98debc359640ee7a82705cc7d1bc1bee350781faa73b7c61242f52308aa851cbabaa3b0b6b5c2e07ede0f6b6d08d474e2c043abbd1b54bce6e1429533c445cf2fcac8f8c54b6c8f8677ae920b5fe3589307d97d14cd71d04b49f86b276ed120bb41fdcf00ba1b2f01b6edae0063b8dba518067fdeaaeaea07a331b1e52cea893fc0bf2c70bb1d097e68526984b034030f12e57671cfdb58b134f9b8d30b63f8d9e9bdd5bc08eef849fa37a18a95ad4b984ecdcab11898cb5dd6b3ac2f9a42ef2cd35b107e0fa60fc614d1d593cc9b0a76074b1eef549b5018669ebd2b11baf941b5b5ff1b64d293e4b3c9bc5f708f4596553060d0122f4aeaf11b76bff50b1b03fc9e7564154d70e45ff920bbec54f4adcce929ea918471b76d755486d93369b3cc86e47238dc11eaede3291a16497acdab3bfcdf07e6f950ec53957cb4736750c817f778dfaeb99035d33d75131b43e28e680cb778b97f35be0de85670c1f9569a43f1810020716542525d41b748f56cac81b98aa96f9d7b36873295edbe55a03eb4c8080ce5911c890a4348030245b0027c42f6e7012916d7d9dfdb38c7de33cfa0cccd690462bb42344df4186d64005cb6ca0bf9338cbca9f96c737bed9553213dca5c6b3459ce29b5cb968756620df65a33b5f196d20c8498b7bb4050d155d2a5ab3a72f12b45150ad2d0961d846796a281db29db94e61143a48de2aa44a15a34b1d11b0ff175532417c48eeb3eadfb3cbc9391007cd280c97f7bdc18737d8bcf22d2581c02404987b3e9955eef235c5ffb84bbf06218b01fb245e34d1f40db57331ee70ed4f2162d4abe3557680951de8d75c3b2ba566da0735eeb67d909ea16cd3e0d2b13dac0bcca142cb84ff9e643bb159e6d1c68a0aad19f644f7854b71d2a644b98d930fe2f27b3b52e8d33c15e747b13ffcf7fe3a98bb0d0a16cfce45cf434e5026eb93ffb4994ad95e9e0ae23cc7847d1f167c9eb357fd9664cc8b92423c2c268920460b6ca1231b0b30f3e46d9217dedde3f79462d64580a89ffb93ec1b7bb1f0360a6a256fcd59012f658c1db56f2ba91f7e786e94d2162f9d89a74506cdf44fbb5674f3c475131f04f56fa0ebf7d983ea380ac3baeff507e53a1e3e493dc09b4e6c347465741897a192b1f5fe481f9bb7e71382b15795767bfb694609a4c0e47f3c6f7d8bfec9c2bdcee161d8db74e208b7e44ee5529603e8524e23b75883bb804d7b9670d959c26c79121162c4a4d89d75622214902947717e9b4872001283dc1988642228eb78ded73218da70fe3b101a5721df7711f362c99980dda15223d38896b80b4598ff6fd13009d477981b5b9d4c1ed7c7505ff5319ec706305001b51e6fc856b727865b228fe3e7dc2502f1cfe4a468fc75b8ff97800f4506dbcb8e979c18c0d3e2afb472b9d87cb3c6d9c6090639c71b11bd7284c1b9a58186d3478b74851bf39c269c217fda330cfdd3efdba7ce0a29cf3a889fe3bd9471e85e60d1f1423f1f9ac42a331ba8de90ff444c1ee4c1770d9e8c8b7b23db27877669332c559549758a59a9b2d19bd0a324e3a0777e74cedfd1cdd86b830e3687f89c844f35cf9c20b9073608521183a8eb8aa68b1d27904321999855fc52ac7d4f66151e8eaf7c2ee49b066d4eb550d22581cc302cbe10826ac6ff6ecaf3ec852787d61c316640fb2da17505c9fe7f3934cceaac3a93952f70f62c98c0450f00e6495e3ea4cae8b3c20826210f897fa8eb198bd85ae4d37c9ded862ee5fd65121ba839176923b86d1f65729cb364ba828948905994d55474bf7cab5431c71f194bae6fba1fbdc08cae1e0d4e23ec6423f97707b6a8dfb2a54ae3ae23762c8e1e7cd2398470212741b1f4b46e60a8be038a385aaeaeff8c4a29d9cf82f2758df24435a6fe44d8b427a66b0db3726d764b5e72e503c5418b850603d1617f81812873fa4ceae8b4ed0771d887e068fc81acac7fbcd28edc5b1ba79e48df1fd951e4f3275bfc97beeec87903ee15e1241370797235b5197b348983a8e19543e20d5617e0bb5a57bb6ed947bea9e178154cf4cd2e40b70508078b9d8aca0a64bd20f6460a4caaa0dcfc296fcd2e445fbadf138ce809bef7d4427a9ff8fa50a0deb0951ad752c2be2c978384bf1d3c50f28a4033d665ffe6547ae5951ead075907c2707f3e79042592abd357c239855fa3bbe99dc61cefe9b906ef7ff7dc1013141c41ded033787eef1bf3dee2d20dda7e7df35a54bc2f6c48065fe041c58c20f8ebd164978676c5a2ef0eb6f82ea5b67b8631996d21836c562595c88b13380a083e1943b25f9c2eae6f1db28fd9fef5ababce286de8a521d82a1a7fff95108939a45a3423d343c13a5c904c61260d51c34316b2a584e356cffcc8a359ce7d301257122ded6854aeff85be4c4a9623f269f171405be4ecb304ecd07e1a7566a81599122c4043f90034fa81e3664fba0e7d951cb54fabd119d846181c2ada93b8a7d8dd7ea8435890d221fd09b2f0a0cfa22478ed92e7afb0b40994c3b2e8121e9baae180408d31199d52963b01e3015d88f3305cc1536e3b9939bcc7fc6be1bb12b7028c1b0d46e5279bbbd0eda8dba4bd7d5c274d93084ea13e3d98f2a6ec61fb6f99579af6eb5de696547a65b7f2eba74d55acd165c652ecccfac2a088091406113a151504ddbed67f618f14a2853c766fee90b191f823cda6ad80b05987b6224f3a84ca29bf4138876cbfddd9d86f6a2ef3f44ace859d513f205f859aac306570a97e886959a3485811178cdbe0c1105d9a86ec0eadcc3adbd667f33e87080f4b05e7aad3de96321b4126352c88de312c4c46ee582b45823fac38e2f5ebfddace9352e146422e3ca245112dfe8ad49233d9db5090a5329ec98b515995635fe3eacd4c20d73fcc094141488c2d5f59ed29992fc4712b4aa41e03e73331808293f0cb7167bdec9f8ee47df3b8cb4d1af0f5359b336bc2f6cffe02c099e18b307c4b67da947e78f7ebca8e93dd51a8977baab3f5d4e44b057b848ac7dde9090170c1dd8c530a00aa5a4782d8b67f5a7374ea36bae4e160760d4748299bd145195647c1bff39bab5e06102507d2b01ddec3207e504b7d0ebc3e0c06c98b8df7f9d814733ffa35d97197ee0f2e25ce9a0a00d8c8f5ce2c112330edb0429d0c3c1182d1dc01c45bfa547a3666b8de416a2de2fed44227a22332dec7e03845b9d3ec8885a60bbf6fd546b3de02fa7d5673ab738c0ceab018f7cba5e4d96bbfb1311cc178ad8ad37c7fe1856d8563f487de1bef2d704d61bf45671ab1f1398c5eb87076e9d019d83953f2ee8844775693b90e85032b071560267f70614b1b62fedd5dff3e802c87f9a6108c4df2b61d726e8d1af490ad0033efee662b0d667704267b1a4416e8777e2ecb3549d38fe3b2799e39d0ca320ab71d628fa8d976c99914262966e0080dacf2b9f9df37492004f7437a0660b6a0ac86e85d4ad46b330e0155229a10ebebcedf5b4b4951f9a74183cea1476eb77f55f8a1607f88e71c581d95bd1adede206a6a601eb3f743510d3cf2b21a8b0d73017029fe752002ceda4a37ad4263e1a960aa4aea893ec20ff914571f93b22e59f0f56e1481bfdf2e4beb1a62a6d4493c3d273bc19a3ab1846836406b233f44eb550fab28261c5e2269564befc1c3dd85c9bc3c1f63cc8318b5ba314f4f5916eb7274379c1520b1440b31c7d2b4913da479cfd3e107ee96ae60de4c31b9bbe5ee6b2f638ecdefa370e7a4eeff9435191018938859573f790d0235d9a82e87683b02825ac027c7351e6dc27cd5c03095a6d8a3a4105f0b65423c4f8332c0a4db94117771796379c10b4bcf69da62781f14c8cdcb8ed37787f3479c99957e70279cfed3465f08df2c303c0c71f94d736d4c803571961515169f7074da7a4cb40bf845e11c576e30f914ceba3df9a04e98e2d4f680570998d2b3f9e23bfef46502bcdfab013e2e90d69293a3bce11fc409e0f03c66194ce0a74535f95c2dc09dd8fec81a2d0d1142b7a05809d1770b59f2a535a7ababb7d2bd1aa9f5d1a3ffd61b5b45d90a393c22907e0744042ee07469b2a795be4359965e02a58a06a07ea394c98861d11b9780c155616db1241be772d4d33beb83a524704b4261c5574d5d715ec16b657bade10a51941f8d3ad139eec9b6d8a9014f54c7b35918afe3f954fe21468a4dd9057e7b15a88ee565360590bd1956ef29340826f3ae92e1c09360b222e9335a985a92d9fbf7f9e30cfb59d99e34313bf1274a4daf23b5aadb2a038c522d38de626e7ca6c7cf2adf5938a6b23455c638d0e1969e65a34096b553d69693daf611234a1ed98527812fb07c20cb2c135ce9b44a908ab23ad4706ca6936d7bcb0342f653469eaa4b93c814916c8cb7f0dc34125b90ca86779fe0a47213b847604831b4d73bf90d07abb3e38f28432f84edc6470c2aacca09353a83ca08a0954a0619633b501b7fd18cf8b2798496a3e1b5ce3561b13e9ddb58914cd1fee174f9c66ce6462bfa8f1f1a122e14578c6be97a629be98c9de80d08ca4e7faee10768f3c2efaa58100a0929181e2dd44a2ca4ae5b18cc8dcfa24e2f167d8453ee016a87a440d0e059611930dc74400aecdf723633117e07baaaa3250868f30842fdf59781e36498d51d3764b16d671b4f3ad66432f05d805fad8977ada4fd8f67b2f24b761ccdd50350ef0126541f333fc5b59ae9a2c5cb6f405de51e9b1af46ae0d9b9203def0299c76ba83779a5ad3cb5527c147e465fd58fd3e5e1ce6f7d0a4fc167abf7f049d0ac97740ed1deb70edb4a83bc9ed9f72ca54bf25705f17ad157fa83612744cd1cccf4b8c91e62388450081ea4271ad17644325cb860ebc0d59d8e6312484834a01e89fb96e718c6e06bc6a770da0cdfdfca071bcc46924d2d66aa61d97c86e690369421a459ed33afe34979448d885ef0a32b822339b7309c4c2f3053179a3a140d8e1fbefc409924a4cedfff4116c30269f54c0c074f481c090fab68029fddbdfb2b18115749d056adc8b7ec435a9703dc33e97549031ce5f13bb5c538316c0643a09bb62431cb11b78457d7964f9ce288f89ec63ad519a1d32870cf18fac3fe97240e2219b685e34df5d943530db0ad1a96cf8246da7a66187dac6fb34921b66ccac027c9b422852d045ab9bfb3ebb18ca69d28e546f81a342479affa03072ccfe178e9ce101b6697dfb22a9d9bb59f81eeefc9c4b5b662120f0662571597249dbff966eef2db8599c4efe6cedbc8dec7f6a95759db2e3a9c094950aa46a09ccad7cf753cb3fb75285fdbb6aefc2bdfce521b8c6b2c42245c30f819cc3f40946de6f183e1c184b574f2a72631f6aa2a19d91dd2ba9e856bc25b5134cfd53dc4b1430eb89bb5f04eccf84c063a480945e0b412a69b79e13205f7a7a6ccdec5a963db30d05b9fab042f7ac2977bf1aa8f455477cedcf479943dc8c60a4d16ad7a19b02ba4d7c1d50f41e74498e8281d15462dca22ba629a07531bd7e54defb590d2b240f5d113d4b6a7c7b1b2c3f4917d632461d3001523ddc93212585b3cc106e3730c1172af3c6d0274acbf5aa4b9e75be00b49baa8f31bb440fc2c9c4fe1f341375332d60793e83c0b2e67938fb993ee4a5df134d6630445a8b5188d9bb96ca2dabb71b501f4f0b928f849f3660572e5274c1c8e71380241e2d6cf1357276b8ab3c95cc53a10fe390d26db880719de5278cb3c44888203482eab89f8845cdacb1586d643b0f2170b386a3dcfdfec370d538493fff6d5fe4dc14ea7633d5c60ff637cf53aaac5e570c2964f2dfff4b77be951c0bc98802df4fe34117711a1538c2d043619f1e3bc6308c7855e84974b1d0248849f2fd099cf22a28faad5e3f94188c59771489315319457d35e1850cb6b33a82b540a5dd592513ce149d17e6c9be36cfd260fd1ad7967acbdbe3dfd4898785dbda738df7afbdd6c3693d30a2b2246379698c296dfb60f7351801bdf5cba1e19fa5f45535fd3cf2abbf592341f68f39482171716570197e1932afca23a276e781d4a3cc4a21cea98fed16838426e47cd7b890c28f9bad8e2c67a7eeb3a9015e2bd0460160dcbc417e5f3887440ebd2130f4bc2e14c946fdeb73bf0a5fed6435848e35e07b5de58ecaf7b96b3ca37076b46a3b78129a023fdd3135dfa3287cb5c096750f6e08f25cc0fd9b7f71c4e842141f9b640da321cba5a0c7c02350efdb5ca914f8a22a7b7af5a5c5ad8580b75f7f957624cd557312ebd7f745d72f265c8ffb3f702ea255101b19e1783b8f6e8779df290574356c23ddab33083635b65ee52800e68596982dd322f90e165873b49d10715cfa2ae1f24e31f426ba6fbf108b5b62d66a25b86ff46a0402065eb29fa36c3e51c2f1ffdea527a6875dbea24e305848914b135b6e9d60bcd4319fdf2e40f92bdbc65c4aa393e1c4581aaedc2041ea4efd1a43edbfa3d537c4934fe84cf73893b9c216235962fddf49987a0c7237211150dd58a635b8340fdbd35b42398df96c171c6d8c3d6cd05c3bd31c5111c4075a02c8adeb2afd71d73493820449e08b9b1551492d63a5aad14686203bceb34f5ac8888820bd8a885cd804e377e21baaf4f8d97ffd22b0b82ca80c57f033fedbd84db2e13d974236060ec023f6f05d4ebc44b1557f484df12a22556bac80a0cf48a033045bd71ede12cd3a41bab263b18e8606cb72d6d3e199b6ff8010a0a3bb6080a89ffc4438d14d7dc1c8c8b4f060469a537a45e955f0dca7fe6a298e6540146b6b48e2706042e28079a432a09b3472b227d602f1cf73476930a8825c0380e75d22b1c79f5c6c50b09411baa03087492b3f65e9ff778ff62963f8d95c8c3bdb72075f6a21db704ad074f8126ede55230e4e99f0e80bf7b2b1f218c7e16cb9c34d07604ecfd1d4a48f5e87542a6d574e3d71001d33fd3b29b4c3a79026674132f87de7649489ec43131b6ddce51ca185fa165cf1cd50db79266945e04cc45cdc3d924a9b3ebb1ef7fdbca2649ab4998b51e12b1f6ef6eb66372325894c322582009ab97fbbad663e9b48dd40fabdde3dda1208326e5eb1fe7a937744f5b9c93d3939c44734f421298b11d865e169af80a9f83b1ed3a44067c11bef40a5303406d521fe9b6be8498ad46b5e15a70c836e460cbd5938723b0d8a5a7b0c89d891de8e1d9e698a4ee2fd84777385f45482ff4d54dab558fd2f383cc956196274871f7d1d1e96dc46ee1baebce95e194ddfcc96b7794ad2f580df33bcd3f79cde8aa1a2733e82389ebb8430cb92759421a89f5e25fea76b7af7539d2b33da576c8f8bf65926d5a9b39f6525f87d9e57f4c319b3cea180610ac29c80534aae4d5f9b7e169d7c629746814897b052d81c2c8c3deb29a1aa19f99a933c33b31fffcce94f8d2244fc4cdc26dbecdb33354ccf03a5535a6e263a0ee46de0d92906a506dc2aeffe5e8bc80544967bf77c8d6cd84cf19305d95be408383ed6667e9277f7671a3b50bef7c7354e05fafa90735c4acc5988e0ef81b140573a47b303d869c69db699c93c266b118a8ac0cd55baf6839dc5228de3a572f52bbf85a60a9b264d639d49590bfd5b09b27ee45bdcd399696cd2d68e491df76468772d82301aa94d1fe0b81397cf478972e309c4ac6cd1c38cb91def7a07bde4d7e7e648b64c3d51bc79fe22ca3d520fd9aaf42fbb56391df1f2ef096b063e7d4cf9d72674793e0d7ec5474a8c67bdd703b6710f3b6c9baae7da46f6567354f2187d71f961e4e9d723f803516f06ac4c3a6617f2e1a25aa27a89746c8fe28ab1d7c05c82ddda829c68f954ecae85f249dfe88129e3be75b4c530a9e70cfef66f0b6312becc98f7dc071db83f121d942b870705afc021fd83fefc6d431563fb5a9908531dd8ca000bcf3e7393c7b7c6792f7a6deb04185090a97a219bbefd5d33f532c82e5ae158bcb451a4215a0682cbea6f13661e0c0cbec38daba68f9c1a1935519da859b5d95691b538000d64b3bb60438a05f518417ec535b161437d97dde5f52d66cae15cb9788f179a57c5b573babe55b2e4ee001b305c0953c1a407c0af89a1f07cb340638c02fd7da24b485b063f48cccedd3742e16b4d6eda5e41be9ffe73e8998754edd6859f74a648be3abf0f2cd6227fec3dfef1d23fe5eefe206577aed7bbc5b0c39eb57cae2578ee249685c5b4c2c7bf90448f5b14841fe41a5a301e5b20f84b96f465bb985e11ef9d740fead724e3a2f1964524cb4670634ee2039346358ecd48d2f2450a38b8c52f625c69fbd5e375de740084c61d04108a3ad84a166ed3c12af55a7a6749e75777db084c8e53274127de627acfa80e0d7ddd5b7e14c31404179d9b3b0c341ba23054448e15235b7e3d472b52b1aa9aaeb05fc21007d524ba00c0bdae9112d2f12397f85d1be1fdc0956c0286acc57894949fb4bdb0705e7ca5cffc4d6a86bc24610ec1e9a23eee26d885991da8002de5ab134893dc86db9aac5c9cc9f09743902198ac666a916a4cb238caf6d3408710de4b6228d82e81cca991c1359c3acf4f3b37278ae9258e68a93f779e29f2c5823a74b7443d9271ed62c4d0a74b5087bdab45ab712d19a4d765e48d78f8e9831d1dbfbd7a2ef057208fe02a69435b8512a7eb0d6784d24ed76745794fb597dcb67d17a8dd932eb9a569015f374698160abe9c2cb3864a0f23679dcd4f0ce44cb7c971d040becf38ac5f64cfcd72c2401ed9e71ac2eb8f66e75cf6f553d993e78176443ab90e9407cb4c705c32c5627ea2910823e8a4ff01c0f36e46b9e4d4f6a2bdb824a81bc6d3cd226e947c53c91923a76b7e72bdd71e089e8a52e0bba39a35074130b10100e46431a03259a77a0564007e7c41d7567b2bf9b889ea9751aa2ba1b3099d63b1562dd38b24670ca4e11c8d51aed2e8f6a0b949b75924d991bb1e4bed5ea2720b5cd681630d2e49c3d5c6bcda5b6e1e8171a6dcb9813d8c4fd8dda78bd38780106e7b9f72152584684a8b9ed050e22a20ef79ebe8036c87335ccde1d579757a14bcfde7613e0bd7956846d83212e470ce6e8b6d932b1b2310e33fa501bad716dd8539c1def530a12f08c8ec0af013ec447c1dca742aa994d3635fe8fd4e57b4ca8299c35e12f54bd6f271a5edaf5f97b9d7c024fa0a751e7d1e5d719bc925cb06afc213286cb25fa5fd3304d4cd3fe518b62bd51c4d9a00113fa9967ef40fcbcf5ec18ee4303d6bf1e7561043e327f4ef689e713640f9d26428a5b1cf4609c0a9ff41899168d0c5bc6d2c69b1d798d7033ecf0a06ad7ec0bdcbc468e8a3d6826185059d1a27ccff77b61076554459c5197283b7566b776fa90a569c133855e978eb3b5c7c604649b073bb1e02b9a39e171334da711e1fa2420bf4b80a1fc02fe4a7a6f2230c9cd5bd271fecf25d5b7bc4bb952ab132ab45c6fa8ad5458120e61d5cad72f0671a610fa1774ee6e6895e2051efd2003a5534215da360ed18bf881700c532869b78490bad33150b559f8a308717d89c8ce593656c3073d768163e95c9ddbd53629d10668373b8260faa25a3b035bffdbe36fa50db1e7f02d85b05fd4375f03fe6b58ac3e951e12545907faeed85f4d12ecb5d60698dc7ac37fea1309b365bd909363cd74f16654e92db0aaef5e0245a64d188781985dc85e84d041c7a3fb93c4eb802e1439c3a6264249e74578831d7ee397d007132b193a8c832fb1a9fa6d55f6c97caf43957895291810a30b35ede793f97d6d6405ec89c5697dec034199081b6e306f3814c7f92de22f4f82ddd1a65a72861081af793f208f9367bfea7928b47b58992dda712a8ff634d33875181755c791fab53f4a94cd61dd22b5630d1833f6e7a309d35673af60d4bfccd45c8b2c72f0b70192f122fee9e1e63e74754066ce8b2ef0127057ec31d55e8482738b3632fb84f1161c11af5712f4f6355632d253d9eff3add05a4c9e8c645d6a035d2748849b3176e57ed1c43dcbe81d826f71cd1975c4b11eff4dcdb4521b7e33102541452d871312405195068f923f4b7d6d558078121d36e6dddb3fd083e69af1b4c312b5957cad881eced929b037ac5f8adbb55ce3f6e3034ab1cefdbb4e460e3b48f8f1dd08b11c6f495b11e880eab8d114a5044b355908f7617d7de339a01ea5cf1d8104906cbfdbb51ab296b24ef0b5beda2103d786f6268b668fb3f938193598e08e0dca1d9d044ec180fda8ecf3c8db0592d974ce1acc1b95d80cb89a6fe07cbf9ee5380cca0d94abc1beaea5ee5796d9c86db3d7422d11c47b7dc908c2ece5a28ba42d621d868c632767755f36e18fc818e7275f432b5240ee619390b51508a4960c5cbde2896d1e0b8b3feaef7b6b2a3b4248902a2c77644ddf8650b247cae2c268c3908478992258a900717540a945f4843d9ae714e080587cb82d5ae7a5b462f2005aaf3dfb0e7f8eca8670c3ced108c848dc016d9da6bbec8c3f7c910b016ac778834764de2fda1f6e6e5675b2f30bb4d58c4a6dc7f327cefe0bb5421f976d23ef9c4d1358b98f111972d2182e47e231d591b28312525d1a983176abc3d52eb842a17dddf59e3b2843218d0506dedd538ec98722bf08756eb829b7fc2d7be3d7736cea55fe514f37687bd2a26a6272d144783d830123484f02c6eea5f5a6c9b48f09997e2b811e45d7d82abb13eec0848a54a8236b7c246268a1b24bf334341ece02a9061c38b103ed5690ebdf9f0835722f978fed07b2726da1dffd87bd2f540ad07dc783e30627ff4071cc14c9181850630c2d4b53acf561a75e69d4d1396b39395591098a2cf497ad5c56b96398df77316c84b853896f0273c938c66d66bea65751220fffc5a0428f8697d7faa19171889b92f1e78d46846562c3958ea28182c0b2bb0f7f3b493bca0524945145294ad2965be1b0c7f311269da243d57df4de0cf8bb6632a4f01ae21e671154218b7ad78cba4a28106bb7bbed772391c819f281dac88dba16e478fb635a79b14d44ad5fa307af9b037a5a0ab398e551d6c690f1eaadbc1cf5d85e3bb23f5f4229387611fb108a1658712e1a13db83d01cfd78fce25e4c1c91e17c8e18a0986b344be961024b12d8ecdb1b7fcfe7500b7e7043807cc42e6facad8e87e5fd6d3084e9915b6d986377ddbb49ae4467d0f4d5888ab58914aedff36bd378faa99b4f25ff1c2ea639769ba802fde86273920f49a1cdd20e2debcba4059040e655cb65c72a7cd255c9dc58d30ce0959fb5ee80c3a841637b7e121b06abcae2c59730c75fab73da4c73e4d8e4fb346cacdb101805b21babd008ae9d613f13bdf2ba49f24725a45e7168e07ee3721dfc7916dd7853a06d519bf61cee1aff4c7417e38f5a38d33e1ccb023258fb296bb4f7b3df01cf67abc1d53916ba407d65d78a52fd54da621f646109609dad1497e7de1c6adfcd0533476d932e380efcd3ee0c077a32a36174d87bbd44917f0b6174f3081326dba4994ed792401e35574972865f0abcdbbfed122a00b4521165f4a5341e279a79e31f597cab2e0905d49849b59d1c6cb64e1b694b708d2b6241ccd0461761e43363d0b1b0367f10718940832a4122956d784e26cbc3db440b53b15f2de4d448a93a5d9561ad5dadeb33ac6957100f88fe56138b92cc24fb63d40b84ea93976b93602ab3f649d07db150f73955586467cf55a4c2f34636c7f18cfc2112bee248f10a700dbc0a8203a260891a65b1e0a9a08c0edf2835a03af00a27fdb88cda7dfb3ea1f9e09379217f25afc64b35ab85498c4f901e01a435914943ea6d746ecd2297f39b909d45cddcaefd29b94ead86eb893a2b5e89365ddb30631040fbeb8f531b9bf4718ef75c268b26879ea22b5ddc179019758b7740698d1d9ad8fc9f196760d507190e17a912fdff0dbaa9d3abbf0a91ee9e249891a5aaff4ae34bc346e8030cf4d4fa9fc6624fb90254c4598628a65ec72c6afbcae08215a98997c885b4e2ca165f8f57e9fdacafe57582dac3f119c31c4c14ffcf9b00a9284c734875b2d1d3020cb435700120a3d66cc56d77a4c7a0f4658e22bc3f69806328df237d554bb6712930bf19da98a464cf4ba383938f5108798115cf64602992470852ee72d963c59aefbdd22e1d20b6d6f9dfeba9533482a6d99cdba4eb4f8b0e6d0c3369d726c7e9014675093a9b6e85a38c002580cfdb1627cc600e01fc985d3ab3f189d8434a66fd923ddda5ba1cdfd95ced2e3cce3feac0503d78605ed645525f4b26f493155ff86e2806b380ae1f2a0621a22f922ee4353f1f9b69c8561d1a871be1a170c4ddb1f9e270f71d431b592fc0c699248daab4c73da3c5d230d14ac4174636e7a5aff924d13d93549c34864974dccb00b6ad53e8c4896b87f66db303bb9e7704d6bea72bc66e4af05d64e25b87eca00ebd16419ceccdd560495e725020d801d8e9835c0d038bb91c586fb1bbabb2a6e6143344c34ed942574764655c90a41a2c720c180ca3a9f8ace055f435896ac3c71ea025d4794be4bde79f95a2519bf9fefbfac3c5ac6a2b305affd123b61ffa205d0f5cbdb50fedf7c6c689d733aef6fcca79fe8886b7a5aacd9c0fbc0f979f2fafccb00b98a58eaf41915111d35ec40526b438cc1963dc9886d17470f8a099087a9ce59cd66a2ba9beb8d8f02c65db6b89e62bfec52897732b7772f399a60d097458436be345bb33cc15d9e1aa3ac952e8b11d755c2030130b4d02a3c39465133e8ef739a0a55d5f8c9d30f14516995b1a35efb3b9015190db8a3d749e1234a94bae5119a544647b5731cbdb900d4f70d442bac96541bbe3572534e386ddbf38139e5a7c4dd2e4e9754f3948835c7f8a18ecb6325271c9d6edb843585f3c0f5cf5d5548449e30f273a39fd8c1afbca13abc6a822625914d8c978b0cdc0215e123622a615341725054688e705c7ac6f5c5bedb4770cd515062be0b5e8118af93840d62951f4fb079aab96f63be8b2dba03d4b63a144a19e3a39458d1d4a87268600391f8bcc421bc2eebb8cfd31b8ccc06bf70bfc32556657f55370420dc2c2d1d1f54e8fc09830ca9d436cdce3b2b78a073e9927aef09b489e2797e88601980e46045fd48c03a49f04030d539026955b5714240ac8c1fc365b098850853ed4a7b5e007a9074248560463fd38b2574d32010e42e429268a214e72feb94787c8d68265c84445842bad1707ced031707d73a1c66aad256c89b65abea4cc0bb947981f551e70915b48a019a5934e05469eef989e419594a1b2059ae101347b048c69278cbe4a31ccd6bd51452c36e35d08f5df0f17e114a72611d36ddce70ecd01b626af2691ad8c9cbd6a7308ce71bacd3531f5cbb5b272483b86db75263a10e57a5f6c2ec6d1f87f73eb734f4a50d3e1f30275d5945886d61eeb7a71890327f00b29eb6ec83eb18b4be5fa20461a58fb8aefedf4c0f952cb820d2bf9d1998b07ba89c8fbb274e7e13bdf80912bc84ac860f9bd850a2c28a633a95753abb79e3a95f7ccc7cb8befc00319babb9745da1f1468578dd77ef151e37a31e1078693314ff64692672d6a562649b4611f13ffa99095483aa506c3463d2b4d619033b3e19051705f7b1f3e8b1884eb79e012e0b860c651f8b59b494ed63fa4670cbec6fd187593fa4cc236c5c061d0be01621c38804ec4f952447c9a00bd10e3049a11e8271ef4d047dd333a85ce6ddf91c38ab72832a4d1a47a9e7581b98a35e2386e1f2b8b4b713ad26ea6c74b62a1cbfd082879f724a0318da5dff165def4f0f67b48a207a051d0ad5400815c23cdfe24c3eab3cdf2d95594e8c4500e563ac52d6ce4ff7f8f7f804dc596ac52c3e3b64d6fbaf8cfd1a0a3bb6337e4d163fb5406627552d223fef2f6d955220b1f588efb6df3857fec24c58a4e47fc76e2af634aeb5348a178d5a75ebcc9cfe3142cb72e41cdab8aeb883f891856809ea2c4c7627d7d452c553283ddb20fa71ce7ad742cfaf1479daa3f252ebf19e20f95c274542b97056e3dda8889a0b7af671ee4283f42ed4ccbd98ae8a738007b65190e78226cf4760b8939d163a0de0dd95934eefe74c8ba0160bca7557722089bb8a6050e676a803fbaad42a18606a15bd7791751be8c249504a917206a2d9c9119eaf72d1ac6aec469f4a256383ab19be1c613f530b71245420e6c8032d597de89cf1a686e436a309f73ffa0d3f8488d5cb50572f4dc350d9ae38ee15fd8ba0f63b7c36b6ba345b0124b8594e8c061241e84923735e1fac01ccf3b30cbc10acdc4d52a8fb15cf9f5667197e56da2fbca6831b7afc3bfc66d37bda291b922600a6e5dbd4a59bcaf5204335f187c7791a3ba91bb8f62e0e097234c1e81beb18eb0941f9df11dc8747be827a959b3d699a7f3eec848572c386c8fa5feb0adda4325c749f7addf24733680c6f37a762fd0e130048ea5aa8b6f980230def40ca8e8bf228a27c3fb21cd5927d28e5a81ba06e3354aa8324acb3b288ac6805075553943dd322623303ec09a842354427f6106ee0375c8ef6a8aba2a29735d9cdabd6395a8352c8b92c8a13752ce733b25458b27e8f1930c54b0dd0cbb156e8d8399fc4e729a5f7d32ebd438692263267f536677df6b4e6acc94e601c995ecfd8b929c3add2f2b5cd805bad91f4a47ad5fa87cb944fa2d2c42aa90f1c8591f6b0f9cfaebdb215a4251fb96e708a0bbdd7b4f1ae059af38db0bc13339a5a9ca11442f812a39ed8124392ee8753faafdda3d30e9b979c720b72c5b2efcb852322582a1e77b92960672bf7f1d498843db866989069d5f4023b8564bc33bd8390db17066e9e9feda33b01c31c764aff128277b66a53a3428eb2170608e8db631ae6cdc8648ff745601b936778dc047085dcea17d59bfcbffa2203b15aae6b7958ebb4a934695a7fdc803b20f27e1ca9bcc7e434cd476268ad9f0c42576e4e7ad256cfe70f662a0ce8861b716fe67e0edf8c5d6fb9cac27bc23d6cee3850eef05b47b7fd072f5e5e996d65ecf11dfe2d8f215be12b96e4a0621976c2c37f2730ee4d24f110b8879e5c12da38b0acb768d9f99d14d4a6c49c24e684bc81e315ce958274f0f1b06d6868f304d60cacf41e6c62a8819f137f9097084f60fc2730e9741f955cec3e457afc1fa49f9f29d68a9ff449ad642166ed70f00fc52882796b068d7d82b40c51bc658485e979d16a9a18f3b81eac1285049fc58b8b738b92197d72a62b30edb75e5576cc2de38ee3dcda1a0e3c8ceb435e8f3202cf7773e7ab2b1c43b9bd1ed15a0073feee1bf0b6f333fd103fdc555a766b1ad0d4b402eeaa636d2e30b36f6e80d36fc5e2c3738248ecb007f0e754ba14dc7043a58d70335389a21e38950c1d794f80763a518b466beb99d48864989acbddf61b22d12f64ae876170e363097b4ff6de18ef366a267261d3bb6bd868f1a7f7d7c23d598891e9781ebe696ed40d011eea2093dcfd7a25c7a8ec73ea26a27c6fe3c54dcc5af958ace6a492fdb4e84dac5d753c3301d0c2347753bc0f206adc18da1be67947515ec036874a2a2e114cc95c31a5f174ec435c39eb31cb7f83d8bef16e4123cabbc49c6098a80ee4af39f534b3abb79869bff9bc3af1a88258218fc348dbe9e3aebe421cbb08c94986e4045e88e6c46f7b94b4855f1156df0d08e2ab07c8386493820636cfd7f3707587d4ad94333b36e90b83012aba8400b74e17d30b4bede2475f2479bc011b6077e316066980a91c35dcee607419a1f2092f84bb355891195dd379a8fa998e69b2e299664f225867734228f315dfd171fb565d4c2dd71778c6b4408f2b0442a0513bbdf0dc1c24b1951dc9f7fe40f6d3dbb5bee494acf7859bfc0119c75dc204d18336b63c49f29d806cfc458b52e92b9522474ff37a18a64a22e263d534b57728ca3c7c3ddac41ab2a2492ba8c13164bde05b23549177e7751fae230f2ad017de37c0d40507549085b472863ec6b222d18567a3bd5dc145a3e04eaba92b3a87f4b055fb3fff2c0b2205bf3dbe82cefc18f3c30757c7e81722f3135d58073c65f72c69571b0fedd22d73cbd13d5baa0a1a5fd20d4d7da0d132c8405162ea36f3ab30bbd39a3af5fbbc6c6c9e53b888881364976f341abd36d1ccfae748797ecdca597c6d76a6659735a8d79d1fa824958dbd27f9cbc2ae6d64ff667583fbf585d96f553e3c2f6935d949ef0bc1baeee22ff72481fe387010ba72c8c37c9fe7cdc7ca97e3097188acd603e2aeaf98183ce3c6ad66996b5269dc6d9f89f96088c9fa11c29bdf8c7fb7867438e121d5bca5460ddb3d6f19c4d68be7019c2654dddcd4c3a84696c9a155e11d7242450209bbe2a8a69bc9ffd7950b64cd43173f707167f62baf61e9f6ad62684516e8601623c9f6c7e0505b0ad90695ffde064f8b52128e5e4273d683b41b9146b66174c6b0253a21e873373b6297b3b529a12b79802d29288e6457fc6db73ec59d2c49b2c2e4ea3b5ef52a25cf1e478dd109edc67fe3319969f5fd1e1d4d37db61bddb49cc9c75f84758273b048aadc2b577855b83b55b4ab7783bc6777c2018cc5281940659510dfcfeb6f8fdd8fa62158dd685c8c0003291f9c87408368d97758279bb2b0b87436ddda40734a049a9bc37266d772c2e8e2bba466fdbf99ee67568daf505930a90ad94485a2ab819998bd13d4ff84ad715e29b6652e99d60bb51ddf5eb89848ce356f513048e7ba233da05300d93c3b10f4abde46323d9f4815ff326873dbe2a732f9f730630369bb3679c682ae4ef25e70c34afd7f7bf79b32a04c6864aa557e0eb456da33df8fd0e6e30ef6fb75b3712956ba8155fd3bf50a137f1c830f31a799d858f740c890bcb272b0cf9203e8828d3e4f46a49d60da6b207db5c6b42ab0c33403b0aa14445e812916fa23999ae2b1a07ea0ea537f330eeea3d35f2a4a26f5ecef46c18d65ab4065c719266be22de00538a4c0c7be495a16aa034e465deaf34b3bacb0849db6e2a50bd5457ea3f6179002adcf4967b4bc473750647874ce7c0077fd9d1a1b03e28f336c5ed020d5908de56674c79a0748d0c47fc71f1739bd2bc98b99ee133bc4f3f53b63e34792c6c5a683efba48257eb22b4068d3ab3445629383d199ff00abb8bc759791e0b7344406cb3582b1ef402471fcb105b297137ae5d010bfff5ebaf1da793da87a9a05ca866864f4dd931805d7716f128d422b93240aa4d165350f63a713202354776cd84663ce50acd3f0774d2058263276f2793a39583c3d687de60a44b3d822379b20e91354982b200d437c1f93755a8012aac48a91e433f684002916b22f0c03f017dcbf69ee21cd932de9e21549dbfe0149b120fb437156504b003b181c39a8c2fa672b161774221c4cf499e77b62ff32cfd431c39511e20a1fb70e708bf4947c05840da459fb3b3d5da0fa6def6609fa1d392a44a7964325f834e3df7f4072c5b78fd20bd56449c81fc1a639e1ed808224ab9044bc1953c9b8c4237223d211d48edc31a24641e7aaf288d848b8b75bdbfaa2fb3be4b28856c58a3947f4477768397fa749ed76bd69e5065760f04787d945c72ade989ea8a09b8ae80f8325e57018865ac4c48390101b6972241f6e5b83a788c04b569de2967ac72110f7e03bc5d5ab0aa9840ac30be7627156d8689ebff5e8caa1609baa5c4ee8f495127f3eb08d7f80a65e822e7f36a80e342474e8d9227f54c3194b29c778e7fd8538e5a0548f2dcfe28fc38bec30c23c3b95a6732b74b2f21a05bc0b7f1182c252771f196c978d09f08c55f1b91a4982cf62915375c1d4dde7eae9337a729fa5047874c14065bef7cdfc7f0605d90de0aaafa021c59bd4668260e50c278c7820a7b116910d5147112fd33f2ec93f1019e056854b2b17116cd5d72d2f3249298ab943e1f2642b8158b7d18d8929d11b1590e6e47e8118b0e74baed25c52fdabe2c24720f117449630284d3d73ad18941f7bdf2f0654077f575133ab9d0de471227a82b925d300ae5985d1820791700bf9f3ea8c0c80edcdf207e98320cf8c65b19275e01a130785ee2cc976f0ccca233cce6d3b3fa5633073e0ae91295ce3000a9810c19d2a22b1486fd5f2b145932144c069893b0cb8cb9d2e1ab0980c1c8789e318ffa1f8053cb980c84c08d8451b252c3c9d6274bd4fc09c7139bb2e8f058e74cf150d2078a8f4a3e2537515dc4cbabca20c72ca35f0620b45c85842cc17c5fd60f34eabdd40131566c914304e02f5d45923ac6ce6a17d156282cf42e415e3bfdb052bfcbbba7999f7560e8b25d15227f0d4fdbe8fc518d49c50ee0e24862fc8f0750747c7d5595234714287bdc1366747b251ed2265caddb5c8ddbcc1a1cc7a807a8ac9c3dca2d951e98f129500e67c9566264521a6f797c7fa0f051fe6ff94feb5c62de2e76093124a0cfc7bf68ec79cbddeab5b4dca6b5e3b4444d8b9cd7d8cc324343a07cd7e47db14f6832f2962a9c39be5b2e8519a1295bb12451c149f2a56f5156b44302ea4e7f84e894b3d93f100ebed07833235d0c0e0506d5734f7177e403027a6981508855b7fa9f184a32b8c1a0584ccb49b0af6e23c5aac5b3ccdc95fcc8fbd2e5c32ad5a4ad6cc4cb7d4bcea7fa2a91a1e6c4fd4fde26ef8b91cc71bb5fdbaa8f66ef7bea1b3207e1f0c5e6ba977b8a4028ae656ad963e2fee33426980c3dd6d251e3fa431471b339ba2c372a426e889dcc660aa0b0e25bfbfd6268df164ea5ae437f26348123353369aed5ad5697d9ed5a252a46936b25f72ea1637a04fb2954f8c832ed8264fa1bc8c54a2468830acf27da0aa4a7d6d7cb590f1e0403e6502af79c12550d3fdd6f6291154290df54a4a3b1ccf5401726096e5b33e56d29708b13d5a188042db3722ed0ff0f45fdc404c3a1c58d08b879a11903641b9e4b8c9e4a0eaa891f722988a17a8d390928594d0fd4717c2d60df4410e6abc357f6a98cffb9871498a22347fb66e928b4645030b42b0ecfba624871c2f10594362a3ae119d65e755652dc6f4e2b1b41989ec593c02ecae2742daff5af8915ea4731d3de02d22c57515363e75a1b59ac4294e49b8448a9975b0feba40e990e97acbc015ec666ba2ae4f660c6bfa3d5df716dd90041c26232adaab7fed16f7bde2a36938e3644d41f8eea6169a72b9d62168a1043cbf2e8d3be69afbdc5fa8aa4efb6faeec975d80dc7f0e52709d3d3151423596f1592927bfc59d9f2cf3925e39193efb3e16ae3fbe4f46537a1428148e6ff123bc28718a5d6ea6703eacd910ca4d7581a286a15828d213b5f0188dbe953fe17bd9bc4079526292853bf444dcbc91ffd1049ac31b311cd619559bf9b2b936cda1c32c64fb9b6c243db166f4b9afe11878370c9aea3d0a2c09cb96af00b5c29042618ccdd4084420672c957b56fcf12b630d6b838fd39a7881651b5d86c74e8017cee9f6dcef3fd19bebddfe07612928054a9481aa9b6c08bb01150c189ef798ce21a29342df5c454ff1ff2b0285287f0c42dd71bc72bda928812ad2c7a53b798c967e469347b864b486f6063ba21b02b12718de525a571c397e37952d4e2364d0a755a610c37977d82b3cb655a03bafce22ea7d7624044243cf743d7c43f3d1d226e9d3d2b9142d2640fd29001ad56bbcbfef7b0074a8d62daf67066b402a99d10373497440a2e75a70b649bc6598d2e303487bb36c6d5898e2317590f6a64aac75be68f67d39c6493f4b28b8144b1d3f026bcf3a4fc9b7bb8d64b02ce8d3c8da02559642000f421dad52b21113118bc9d3c5bc430b982a05f4bac0e35640bcb0c5c37f631e15ecec7baf72f5eed933d9bb48b88ffa01f14294306f32a877285ef601190bfaabf7a4a5dd9622b16ac0516d76ad196bf7a7ad27a2058f6818bfcdb0d6cebf91ffb32da0d10d32f739485c06d84fa17a3417e045e5fe395a7c7b07049f5722e23514aa85217c7c0aeab0618135f6c412e26f6ad45a135e5fee588fe3a9ad8c4d370dc90d44ccd53b2338c89fe057a20ac4e3688b7f054e1fc4d12a932bd5f8c3413c2032d5275ba9679ff674d8ed97c438773b08474d43c27853c2ef2cbd2404e9d4f3b7556bb154cd5d58b022c88d80fa82bad8a3e15c7e388632433f73d55ab8548a2827e2437b15f5c285935d3efb6efe774ec1987c351dfa7e1d531a4edd27c817956de5c3e19eaedd677d93cbc824006f18097ab61b1b18b9af9fb3c79260d15c6fae9e9862075abb0f8cc5bda2cc0faa0813392576eb63e206518054e5c557298c54658d9b20d3b21f4c241e27c9d3ebe7373640292212b430a3af48e90b4c288e26607b4774e04c316005e0478401f7fb310050ab0c83e5c7266b834ed8f6711e14424c5adf84e6f3e853f36b99c1cef398180c25c327596713b4be87c65deabec165da2fe288caed7068637a63af9837fea60883c2ecd9b6962e7288ae0bdd5de831cc9f75b99d2e1fea201213a36323dcb21026dd89363fa2f116c2c007c0e5e85ff5c1004b651b8f3b1bb56259f222bdd2f1f9d27510a3067ff6a52e12175d465d66f92d9548d77da5e7365aabf1b7b0b216d33aaea974ebecb78072a487899d5a63bfdb5dd80dc067bba8830ae8f361a881c8b71e5f7504d4994eac152143f205290f0f6c42a492152872a397c98cb157191480e1638d67e052525e58d05c83759bf9c6ffcac944dacdd93bdd64ec0542f2bc52a9f4e36d34943700429e1dc27c3a62720222606c9aae0d1579dc1258c31c29b48229b62cbde340d4c51695b534e317aff7606fc72fd90f31f75e037cac997f74afd754434437406547975da09cdf8fbd020a72c61a3f5b7c98a393b12476341c3cc96874366b302754b33f41e0fd79dc040a12f96c6b9913ab971120eac8f3aa79689c0cec6aa592fb617a4a9c01e27fe657723ebea1252273751ffd659c6506f2dafb4198b6d8b48078deaba65164fcbe203f892774e650657be89ae4c964312920ac9e8cce883daca7d8e5d4bcc3b4ea1b9ca783918e680d3b4a03b46b4c2dd333c4122d34cb1934571d5b54142286e60c192a0f72b5c968118e464d7497943d13cf7086fa13c7d1b4a2e4aa432f076d341e596ee78f3a656519be3b06ab56b3caf621874f0ca00d459bcba5271ec05e94a7e4d7c44a3ba7a3f51a6f19c1b38eb218ce18227cdde86b0ec7c085181d91000965e2154466252cad97d1bd18e3fdfe1fc65cf5a644436ed3318093d7acc1c8abf71f780e5a331d05282908fc0b7be81e9131fca4f10108139c0b9471c7a643f18e84af4ad07efd54d3c229929b0c4f95c252ea8bd49a96e2f45eea69dcb8cf16080ffd29feed6271c6f46a44492356260a6c7db8914aafb7350a2688b14c3f39a9acb4ccad5280d5d2f17b61390874048d3d0662b0bc668f819249e452ea7f6f68395fb1d20ad4047a98bcecc077071dd4e90cf9178468699791094307e2a0d868d387f3c7147eedbfe64bb865a81f1287f3ab44f4840e06f9afbb89e574ae15cc94e19a6c4f73e52b823e93887d86940a7646ca0982edc55ee3c8113b5e443423a59a5eb7cbb17bdf4371f9eecbbb6c9432ef413662720b9857a4051b869d7476385b3fbce4fdc5eac58a34f41cb4f2f0df62024a0cb5afcc4bc3498bc0d170a5b3964bccea494074753395bc510e01d1acc230ad9eb66032447f067b04e155ba5cfc34c15e73d5842347ac103c3610fff63faa9a670037c475343aaf150c124820107b95892133cd16fb886c40a3bb945fe994181cdfe590850eaad6405b5566405d49c44cdea0fa9fe14304427f6110c337f9a7d72c46a34194ef9c32df2fca3e2cfdf47eb019cc357e0b7bde5960d7e20b7b4bf60e70be929666484ea1887595ca769df53ca64e16e400d3260b60fd9385fe5e6d70ef9165fe89f571e6b087c2ebe444a6638b054167aa93d9eef2762fed3633ba838a853eee40a12501753df7fa7e1f20632a82f308c57249e9e88cc3a2034b17ec27cc6b339f3056a111e634a17d313c87080c811052f3e6961fdc251a1f66193cb7adaa8e8849917cc0baeb3c374dca77efcee6c378014b090e1d9adae93eaea564cc4cfb65ac0a70dca305e773d23a301a10505d17a2e69d393c03a9d488ebfc3a819982f87a6835818261466a556272aba899d228c3c8ab1ab4ce201c602d20c0ff58f2a93b89606170773cd80bc03b5874e6c3a1185f99bedde0a63d117668a11f6b87f0287f0a3901beb8fe592e3069a3f1866f7f16804eb756ea80ae8218143ad693635d0a71205380a490ac634098f81aded9543e786008e87792538cd71eb2df35070d48a2b34d007549ab9e1bf01815d0120f7a53da75a8cd6d8c2084c73da8036803c842e3db77503a0a6487bd4bb9623c76714269c2d5a5ec170a338e32367b9dc64e14c141f1a82e8df5046395cb4dd103c92a84853012ef4bec304ba1eec15f895eca84bae3494e0093a3fec95f7bc949c46d04ce439fb9fbad3590b15c946c858e89bc0400498e4b42596dbf0d715a3aea0be8eeb4ecccbd4178809e14590776f90b098a1ae2c9a5b50bdc9a3048bb71b4e20daedf92d7b9c6a5f4e6944b43c070aab232cd1561ed5574b98eda4434abbc9435cfbeda731a756166bf8d7bc83e20e4e7fbf97b508449461cd99748a2111628f3dc472ab5efef2a421dafb47a8166ce4dbab6495d2aa877b63f8983e380d3a98c17b0b80739c99aa356922b42c309fef9bf11885cebfecd98ba35249b4fcb0b791334d9df4ee75041c3a59c819aaed7e3a2e88061367f8572399bf0c34141441504f31947cedaee82f552383875aa4af4f56ed77578b27a251e08116e020b90d41adda37e699625d3d9e777727f841fca3873a3c36f986398e614044424640e3128ce67b30b43538510636c6d7299ae299192c94715af379149404e7d47e47a0ec5e960b8e64f0132f03a0a45589ed68905dd8237640f4c0d051beccded27a80cdb40fa938469d81a4f16353cc42f5a65ec05c52b1b7ebee831e0974323e05553739f853d616e452626a3b617d1ff39cf12a063ef745908966141fa5feeaa0a105912674421d871a96fa05bc4627eefbfe2a44fff8642da36d152c69b63dc193e7a32d0ff2206c7e967f3b250a200af0a7b94e6877338f8db562eefcdbf8132345b8ac9ef404a3a3ad68e2411f1270cab744e10226b23b4c34699af6d7c8308bd516433d2a6eaef877f27d5ceb7406c3d27afa87af2e25fe9580dfd9225b7cab9dfe7dac0730b372cb8bb29fa2fcfe4a54b339639f480f44d211a7190f6d0548edb1440418bd8991f18a34e06e07e417122ab16f449384248c8515b2342af8003c3a23de9e5e7ac9c1bdbd73bf8fe8106882120dd99ddda8c8f5b0b025b7651d5cb1481a359686ce158dfda76443f51e67932808e0bdb100c3b90689e10d7e9d44bb0918e27f4467d2f02f04240d9510111aa4bdb969a561116e610bf9da83dd63700e44ec0bbfc8d0297dc9bef189ac0f79abec8d99b34c4821383c9f564adb57dc2f213f60a31e0acb6bb0cdd3f3b85f017c25ededf708a1e82cc08ab9ef5be1daf291d99ea10153b84034453d72457d9214e336d2b</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="55282324ae51b8d01d7fc7a6822180ab54067dd409675268eca033d2460996a7">8221007b37e27603cb9fed6d1c0ac3e4a2ab0d43b56764150513a3a03e1bdf9242e49fb7e48398f3e036fff1161da7567ebafc00aaa2a8e4b950d235db3518f3992b3b9be11e6b8c45265a003390e789fcb5aabc97ca360f2b8ae590330e887eb46798f6e78f8c24f7c2ab158c2036270deb7ac29d48ab54446e757f7f70bf39d7d24f8d4757ffb778d6b07a6ab55ff03fb79744b7372bcbf0a2f32a8e06f3dd8fd3c4244f7a48b9946339c9ee02da8ca16297651e999ae371864ae4a1a5aa03d5729345c0d3e976fb8275dbfdac04f904794cf9743678e8d8247edba248840d43216e8845aca6a595cd3ae14cff0168d3e93811e9f942931b532dc61fe8905cc58635ec522272e8d5b1fc8112dc83935a0db063d1f60a1cf686d6dc298642efa7247ab8e5871cc732a057a2fce5241d41e23dee7c5edad1e6d67225845fda0170b54c8ad944b720d25c31579b1fd871409805d818067ff47b1e85c72e2a4ef0a51ce504d84db395912d0d35df10d44820846ae1bf02ebe590e9c166a4472f088058d56ea88c53aea6440bbb3b3630f8d5a7794d4a8e9bcccc46ef4f0400314bf8c970ce561399e1f09bf5811b4bb21da18a560add424a39ce648f0d6b48d5518a1ce0e7ede9bf4ad99f55c9aaa5beefc7b2aa891cc3b04de31d310af84e0eb186a8b6a93915388e89a4d33cfdb95fd6c1300643b87f71adbc840c6625a3acfddbabdb0138a3d84545eea39cf877a6abfb4443457f469cef13afed95490f09dc29dd9fbbbb7066ad9e878e4e1835e9f751ede63774038ba1673235a3ed3659a8a6372ed362f8cc7dc3e83f51cda5ce3ca0c729ec06a68239589d19a3ca26a19034b48173940afea8c02c8935a2aec53a2d4d67a45b2d0bffbba160cf4369b534ee28ac2b19a18b6dba05b2e8b8b1996ff045ac9f6316b862868cec84b653ca7b94be3cd8d091c52bcb7778a79b17511454f60570e9fe0070f1e24c5082d846de97fc64617ccc4ddd72d20696251894cf0da4e506a8f9dfd4ac83997bf93bd7cd0395cc6a0ae200ef87c7f21b1997d637bf5d97dacfdd4a6853b604be56b3921b83b3903c64d59f46ab19368b50a56d07649c1a055ea590e79b8a7841c6b8c872d2362fa986be2d20f9cbc4a72887a7d69123f2b9a77a9888975e0619e19bf1a5bf58b93beb21babcf840fbcf5446e0e40c45a71858fa30a4ef63b5c1cb53741d55c70dae6dc04f8c526be40354d72367c76820203e6b89c0e2f2019c44dc5ef21316d9019a26b30b7159ea9a5e9cee0b8f1a5dc05e11abff79a88f3eb03b77b2b7afe85da6cc0790f68b1545662bf9ecfc45456999eceb4312815678c9f0c894ff6b42596ea7514517af2ae2ae3ffd819264c3b31f7ede445ad509797721640dbd7e140300deadefb1eaee0b70943b6e3204b3c2650676a9033c987910eafb755bff151003fecb173d9286ea97f17fcf1feff9289b06d5a9106adc8811d1558fed7e479acb4102032a554a9eafa86d1f2cbd73ed57a32379b3e81fca540b60745588f40395fba7aee414409dbbf2dd80b791680f49472f7b7975494d31b70c9de56772642cba654a8e46719ef5f2eee85903a887ad79355cdc1fa18e587ff753bd794bff0ea0e40f2b1581374cc6d5c50e03cc2f7e2678a635224c680b354b8e7f073aad610689e00fe65ac6a7aa848839e4b0a3a423c10b02d6c495480e4087cc85a6dd3dbc29f43cd0ab51fffc398908e5a93911f86ced3e7de63e27c0c42e677e09305733492e893e5e396779c85e3e525a68e3ee99d2dcd01862b21cb52f5c71ab47ec1fff9e6c8c2998c56d91cc53c37c1f44a0c1757ce156ea0217672a7a50a3385a9f4462592eeb1fe156202851948ab0afe96a87eb6ee07b6107d2e662203e6e74ccff4f4087b741c839525586c7e614b07f468081a16e20caffccfe5f7d45ba86370ed0ac14fbc54c5248579f939ef891432b7d71d6805df874aea9f515779fa212368ca212ec838c14dbad8c351ffa8402673b077b76113850f5b7ba9503bcf2cd0fa6a63ac904d0d0fb3231250ddc29bd9d3cfa64e1ea391e416f0932247cf3ac031a0f82275e85ac93ca28030375eeb8faf6329f8903e09be4d8b9e554c5f73a28438df840a7d5e7549f6ad0a2e99fc8c5bb4a30037fc7a30f19d123fd76638530855b6c5668186bf298cfa5d428eea6da6e33ce0352ccf5f7c920390095bd255339d73330b13a3292de04b6f44d1494fc765f03e7dc288cf8722daab23c026e6c481e5dcc6a294f788b514dfb79711dc6b3b5d9675eae5b9ccdc13d6c397f6dd80e6206a96a6fc5cdffeee8d7edd210e95953548d309159d05b2119ad3945ec7968fc82552c231c54212e43a8f39297cc0f76ec551136d6aa09e7d6bee81b94b7466c3659e7c8a33a48ea3a1d30ddcd53205936c071ad13e5f10b6d8690b2950e2198fa62793b08458648b1644c29e28c397ea08d8269b80204bd4556d92487ee2a4b1326728f2333410b613a158d004d38da3fb08dc522dc1ce2ba67c5f7ee0b9937864e8ab2a41a13a6a177d43cf33dcf99956b97ef13d3469a223f1d786aed3fac739c3d732fc01b3411f9b4dbc61608a605b6e356956ee9bd0aaa294e165efe889df93ecde975f54e1d007936319248bfeb0315e16812b85b810e2fe21b741e04ed066f0f9cc848d6486bbbc131d629586abfb38e564f1418e5f4149019c9ebe9aa3e87e1df31a5ae3b9ead108591512238abe38b5dc2956954d3ab2a43311a3a8a60f2f11fb5afb161da1aff08a4d41177d08194e329299521ba89dbcff7c635b47121df0feb0f7bb8b0227c77544ba5288872fb80fc9de100e5b74594b27f064ddbf750578720b7b9fe7934be0798f3cbfb26ab9cbd9cfa037b7c3aa20ae55ca4a5bc3b66e0c042a26bac34c834eabef2e29729b9b852c84c55bd59e80d812096decea9ef36f005db7cd4cbc9f93ac9062d041a6a9328b6c16f9a8bd9dac0256f3f22984c328ca8755c8411535db76a22087e0e5de7e99b98debc359640ee7a82705cc7d1bc1bee350781faa73b7c61242f52308aa851cbabaa3b0b6b5c2e07ede0f6b6d08d474e2c043abbd1b54bce6e1429533c445cf2fcac8f8c54b6c8f8677ae920b5fe3589307d97d14cd71d04b49f86b276ed120bb41fdcf00ba1b2f01b6edae0063b8dba518067fdeaaeaea07a331b1e52cea893fc0bf2c70bb1d097e68526984b034030f12e57671cfdb58b134f9b8d30b63f8d9e9bdd5bc08eef849fa37a18a95ad4b984ecdcab11898cb5dd6b3ac2f9a42ef2cd35b107e0fa60fc614d1d593cc9b0a76074b1eef549b5018669ebd2b11baf941b5b5ff1b64d293e4b3c9bc5f708f4596553060d0122f4aeaf11b76bff50b1b03fc9e7564154d70e45ff920bbec54f4adcce929ea918471b76d755486d93369b3cc86e47238dc11eaede3291a16497acdab3bfcdf07e6f950ec53957cb4736750c817f778dfaeb99035d33d75131b43e28e680cb778b97f35be0de85670c1f9569a43f1810020716542525d41b748f56cac81b98aa96f9d7b36873295edbe55a03eb4c8080ce5911c890a4348030245b0027c42f6e7012916d7d9dfdb38c7de33cfa0cccd690462bb42344df4186d64005cb6ca0bf9338cbca9f96c737bed9553213dca5c6b3459ce29b5cb968756620df65a33b5f196d20c8498b7bb4050d155d2a5ab3a72f12b45150ad2d0961d846796a281db29db94e61143a48de2aa44a15a34b1d11b0ff175532417c48eeb3eadfb3cbc9391007cd280c97f7bdc18737d8bcf22d2581c02404987b3e9955eef235c5ffb84bbf06218b01fb245e34d1f40db57331ee70ed4f2162d4abe3557680951de8d75c3b2ba566da0735eeb67d909ea16cd3e0d2b13dac0bcca142cb84ff9e643bb159e6d1c68a0aad19f644f7854b71d2a644b98d930fe2f27b3b52e8d33c15e747b13ffcf7fe3a98bb0d0a16cfce45cf434e5026eb93ffb4994ad95e9e0ae23cc7847d1f167c9eb357fd9664cc8b92423c2c268920460b6ca1231b0b30f3e46d9217dedde3f79462d64580a89ffb93ec1b7bb1f0360a6a256fcd59012f658c1db56f2ba91f7e786e94d2162f9d89a74506cdf44fbb5674f3c475131f04f56fa0ebf7d983ea380ac3baeff507e53a1e3e493dc09b4e6c347465741897a192b1f5fe481f9bb7e71382b15795767bfb694609a4c0e47f3c6f7d8bfec9c2bdcee161d8db74e208b7e44ee5529603e8524e23b75883bb804d7b9670d959c26c79121162c4a4d89d75622214902947717e9b4872001283dc1988642228eb78ded73218da70fe3b101a5721df7711f362c99980dda15223d38896b80b4598ff6fd13009d477981b5b9d4c1ed7c7505ff5319ec706305001b51e6fc856b727865b228fe3e7dc2502f1cfe4a468fc75b8ff97800f4506dbcb8e979c18c0d3e2afb472b9d87cb3c6d9c6090639c71b11bd7284c1b9a58186d3478b74851bf39c269c217fda330cfdd3efdba7ce0a29cf3a889fe3bd9471e85e60d1f1423f1f9ac42a331ba8de90ff444c1ee4c1770d9e8c8b7b23db27877669332c559549758a59a9b2d19bd0a324e3a0777e74cedfd1cdd86b830e3687f89c844f35cf9c20b9073608521183a8eb8aa68b1d27904321999855fc52ac7d4f66151e8eaf7c2ee49b066d4eb550d22581cc302cbe10826ac6ff6ecaf3ec852787d61c316640fb2da17505c9fe7f3934cceaac3a93952f70f62c98c0450f00e6495e3ea4cae8b3c20826210f897fa8eb198bd85ae4d37c9ded862ee5fd65121ba839176923b86d1f65729cb364ba828948905994d55474bf7cab5431c71f194bae6fba1fbdc08cae1e0d4e23ec6423f97707b6a8dfb2a54ae3ae23762c8e1e7cd2398470212741b1f4b46e60a8be038a385aaeaeff8c4a29d9cf82f2758df24435a6fe44d8b427a66b0db3726d764b5e72e503c5418b850603d1617f81812873fa4ceae8b4ed0771d887e068fc81acac7fbcd28edc5b1ba79e48df1fd951e4f3275bfc97beeec87903ee15e1241370797235b5197b348983a8e19543e20d5617e0bb5a57bb6ed947bea9e178154cf4cd2e40b70508078b9d8aca0a64bd20f6460a4caaa0dcfc296fcd2e445fbadf138ce809bef7d4427a9ff8fa50a0deb0951ad752c2be2c978384bf1d3c50f28a4033d665ffe6547ae5951ead075907c2707f3e79042592abd357c239855fa3bbe99dc61cefe9b906ef7ff7dc1013141c41ded033787eef1bf3dee2d20dda7e7df35a54bc2f6c48065fe041c58c20f8ebd164978676c5a2ef0eb6f82ea5b67b8631996d21836c562595c88b13380a083e1943b25f9c2eae6f1db28fd9fef5ababce286de8a521d82a1a7fff95108939a45a3423d343c13a5c904c61260d51c34316b2a584e356cffcc8a359ce7d301257122ded6854aeff85be4c4a9623f269f171405be4ecb304ecd07e1a7566a81599122c4043f90034fa81e3664fba0e7d951cb54fabd119d846181c2ada93b8a7d8dd7ea8435890d221fd09b2f0a0cfa22478ed92e7afb0b40994c3b2e8121e9baae180408d31199d52963b01e3015d88f3305cc1536e3b9939bcc7fc6be1bb12b7028c1b0d46e5279bbbd0eda8dba4bd7d5c274d93084ea13e3d98f2a6ec61fb6f99579af6eb5de696547a65b7f2eba74d55acd165c652ecccfac2a088091406113a151504ddbed67f618f14a2853c766fee90b191f823cda6ad80b05987b6224f3a84ca29bf4138876cbfddd9d86f6a2ef3f44ace859d513f205f859aac306570a97e886959a3485811178cdbe0c1105d9a86ec0eadcc3adbd667f33e87080f4b05e7aad3de96321b4126352c88de312c4c46ee582b45823fac38e2f5ebfddace9352e146422e3ca245112dfe8ad49233d9db5090a5329ec98b515995635fe3eacd4c20d73fcc094141488c2d5f59ed29992fc4712b4aa41e03e73331808293f0cb7167bdec9f8ee47df3b8cb4d1af0f5359b336bc2f6cffe02c099e18b307c4b67da947e78f7ebca8e93dd51a8977baab3f5d4e44b057b848ac7dde9090170c1dd8c530a00aa5a4782d8b67f5a7374ea36bae4e160760d4748299bd145195647c1bff39bab5e06102507d2b01ddec3207e504b7d0ebc3e0c06c98b8df7f9d814733ffa35d97197ee0f2e25ce9a0a00d8c8f5ce2c112330edb0429d0c3c1182d1dc01c45bfa547a3666b8de416a2de2fed44227a22332dec7e03845b9d3ec8885a60bbf6fd546b3de02fa7d5673ab738c0ceab018f7cba5e4d96bbfb1311cc178ad8ad37c7fe1856d8563f487de1bef2d704d61bf45671ab1f1398c5eb87076e9d019d83953f2ee8844775693b90e85032b071560267f70614b1b62fedd5dff3e802c87f9a6108c4df2b61d726e8d1af490ad0033efee662b0d667704267b1a4416e8777e2ecb3549d38fe3b2799e39d0ca320ab71d628fa8d976c99914262966e0080dacf2b9f9df37492004f7437a0660b6a0ac86e85d4ad46b330e0155229a10ebebcedf5b4b4951f9a74183cea1476eb77f55f8a1607f88e71c581d95bd1adede206a6a601eb3f743510d3cf2b21a8b0d73017029fe752002ceda4a37ad4263e1a960aa4aea893ec20ff914571f93b22e59f0f56e1481bfdf2e4beb1a62a6d4493c3d273bc19a3ab1846836406b233f44eb550fab28261c5e2269564befc1c3dd85c9bc3c1f63cc8318b5ba314f4f5916eb7274379c1520b1440b31c7d2b4913da479cfd3e107ee96ae60de4c31b9bbe5ee6b2f638ecdefa370e7a4eeff9435191018938859573f790d0235d9a82e87683b02825ac027c7351e6dc27cd5c03095a6d8a3a4105f0b65423c4f8332c0a4db94117771796379c10b4bcf69da62781f14c8cdcb8ed37787f3479c99957e70279cfed3465f08df2c303c0c71f94d736d4c803571961515169f7074da7a4cb40bf845e11c576e30f914ceba3df9a04e98e2d4f680570998d2b3f9e23bfef46502bcdfab013e2e90d69293a3bce11fc409e0f03c66194ce0a74535f95c2dc09dd8fec81a2d0d1142b7a05809d1770b59f2a535a7ababb7d2bd1aa9f5d1a3ffd61b5b45d90a393c22907e0744042ee07469b2a795be4359965e02a58a06a07ea394c98861d11b9780c155616db1241be772d4d33beb83a524704b4261c5574d5d715ec16b657bade10a51941f8d3ad139eec9b6d8a9014f54c7b35918afe3f954fe21468a4dd9057e7b15a88ee565360590bd1956ef29340826f3ae92e1c09360b222e9335a985a92d9fbf7f9e30cfb59d99e34313bf1274a4daf23b5aadb2a038c522d38de626e7ca6c7cf2adf5938a6b23455c638d0e1969e65a34096b553d69693daf611234a1ed98527812fb07c20cb2c135ce9b44a908ab23ad4706ca6936d7bcb0342f653469eaa4b93c814916c8cb7f0dc34125b90ca86779fe0a47213b847604831b4d73bf90d07abb3e38f28432f84edc6470c2aacca09353a83ca08a0954a0619633b501b7fd18cf8b2798496a3e1b5ce3561b13e9ddb58914cd1fee174f9c66ce6462bfa8f1f1a122e14578c6be97a629be98c9de80d08ca4e7faee10768f3c2efaa58100a0929181e2dd44a2ca4ae5b18cc8dcfa24e2f167d8453ee016a87a440d0e059611930dc74400aecdf723633117e07baaaa3250868f30842fdf59781e36498d51d3764b16d671b4f3ad66432f05d805fad8977ada4fd8f67b2f24b761ccdd50350ef0126541f333fc5b59ae9a2c5cb6f405de51e9b1af46ae0d9b9203def0299c76ba83779a5ad3cb5527c147e465fd58fd3e5e1ce6f7d0a4fc167abf7f049d0ac97740ed1deb70edb4a83bc9ed9f72ca54bf25705f17ad157fa83612744cd1cccf4b8c91e62388450081ea4271ad17644325cb860ebc0d59d8e6312484834a01e89fb96e718c6e06bc6a770da0cdfdfca071bcc46924d2d66aa61d97c86e690369421a459ed33afe34979448d885ef0a32b822339b7309c4c2f3053179a3a140d8e1fbefc409924a4cedfff4116c30269f54c0c074f481c090fab68029fddbdfb2b18115749d056adc8b7ec435a9703dc33e97549031ce5f13bb5c538316c0643a09bb62431cb11b78457d7964f9ce288f89ec63ad519a1d32870cf18fac3fe97240e2219b685e34df5d943530db0ad1a96cf8246da7a66187dac6fb34921b66ccac027c9b422852d045ab9bfb3ebb18ca69d28e546f81a342479affa03072ccfe178e9ce101b6697dfb22a9d9bb59f81eeefc9c4b5b662120f0662571597249dbff966eef2db8599c4efe6cedbc8dec7f6a95759db2e3a9c094950aa46a09ccad7cf753cb3fb75285fdbb6aefc2bdfce521b8c6b2c42245c30f819cc3f40946de6f183e1c184b574f2a72631f6aa2a19d91dd2ba9e856bc25b5134cfd53dc4b1430eb89bb5f04eccf84c063a480945e0b412a69b79e13205f7a7a6ccdec5a963db30d05b9fab042f7ac2977bf1aa8f455477cedcf479943dc8c60a4d16ad7a19b02ba4d7c1d50f41e74498e8281d15462dca22ba629a07531bd7e54defb590d2b240f5d113d4b6a7c7b1b2c3f4917d632461d3001523ddc93212585b3cc106e3730c1172af3c6d0274acbf5aa4b9e75be00b49baa8f31bb440fc2c9c4fe1f341375332d60793e83c0b2e67938fb993ee4a5df134d6630445a8b5188d9bb96ca2dabb71b501f4f0b928f849f3660572e5274c1c8e71380241e2d6cf1357276b8ab3c95cc53a10fe390d26db880719de5278cb3c44888203482eab89f8845cdacb1586d643b0f2170b386a3dcfdfec370d538493fff6d5fe4dc14ea7633d5c60ff637cf53aaac5e570c2964f2dfff4b77be951c0bc98802df4fe34117711a1538c2d043619f1e3bc6308c7855e84974b1d0248849f2fd099cf22a28faad5e3f94188c59771489315319457d35e1850cb6b33a82b540a5dd592513ce149d17e6c9be36cfd260fd1ad7967acbdbe3dfd4898785dbda738df7afbdd6c3693d30a2b2246379698c296dfb60f7351801bdf5cba1e19fa5f45535fd3cf2abbf592341f68f39482171716570197e1932afca23a276e781d4a3cc4a21cea98fed16838426e47cd7b890c28f9bad8e2c67a7eeb3a9015e2bd0460160dcbc417e5f3887440ebd2130f4bc2e14c946fdeb73bf0a5fed6435848e35e07b5de58ecaf7b96b3ca37076b46a3b78129a023fdd3135dfa3287cb5c096750f6e08f25cc0fd9b7f71c4e842141f9b640da321cba5a0c7c02350efdb5ca914f8a22a7b7af5a5c5ad8580b75f7f957624cd557312ebd7f745d72f265c8ffb3f702ea255101b19e1783b8f6e8779df290574356c23ddab33083635b65ee52800e68596982dd322f90e165873b49d10715cfa2ae1f24e31f426ba6fbf108b5b62d66a25b86ff46a0402065eb29fa36c3e51c2f1ffdea527a6875dbea24e305848914b135b6e9d60bcd4319fdf2e40f92bdbc65c4aa393e1c4581aaedc2041ea4efd1a43edbfa3d537c4934fe84cf73893b9c216235962fddf49987a0c7237211150dd58a635b8340fdbd35b42398df96c171c6d8c3d6cd05c3bd31c5111c4075a02c8adeb2afd71d73493820449e08b9b1551492d63a5aad14686203bceb34f5ac8888820bd8a885cd804e377e21baaf4f8d97ffd22b0b82ca80c57f033fedbd84db2e13d974236060ec023f6f05d4ebc44b1557f484df12a22556bac80a0cf48a033045bd71ede12cd3a41bab263b18e8606cb72d6d3e199b6ff8010a0a3bb6080a89ffc4438d14d7dc1c8c8b4f060469a537a45e955f0dca7fe6a298e6540146b6b48e2706042e28079a432a09b3472b227d602f1cf73476930a8825c0380e75d22b1c79f5c6c50b09411baa03087492b3f65e9ff778ff62963f8d95c8c3bdb72075f6a21db704ad074f8126ede55230e4e99f0e80bf7b2b1f218c4322df9eae85fbe98ab00f884be2805759557306c15de3821786ebda12a8c29394bf04575b4bf929eb44fd49b9a2831c6ab00a9efc35f63c428b7de904172ec059f03282fe31f3141d96abcd4e3278c666fe81db2c7b0e141a6732692e087f3405fb3dec4d7ca312fa47c73c8a2e6329c03b0e78209b07a315ccfa86b79d314904f3320e2b213f8f9b31ee204f71bd62ddc0cb57515085888f7c8aa939474f15b9faa9d956c828be1b69e9be55352755f2aba295189d2ec95faf7bbdcbbb5c9a9742c87fe75b991b99e5052c5f857995f522ec44d161a1186d7f9151b077ee30bd44699bced541e9c46f63bb0da861cb0910ddd10d7ea006ac421c5b0623439f124e98ea48a91153b486518fc1eb347d3d7fd1330c1779379c8e24e38cbe1125dae50a3b07dbd8128c611ad86992a859fd30921daf808300b7360271d62fd4a40be3b17dfdb8110fb6d28c35117a049017fbadcbf7b8e8b9ed2c77384f99cfce150099d3d2a80d358c7d7fec111abb80e15495bbc7f325631fafc12ce2e262d3e7613860d84a472d5b827cbd19cafb826c76b3ebb0f61cc87951ded660103693bfff69e682a8ba7d184f4fb1c4301aa957ad584c01f98daff5876ef88dea12d07d07afd9419de510b0532ade62abe2ce49b799a72476094af210bb15a95ef291a97a696083235f47db442ea721a661420680658189b42fe75598793984856f27f2b895cec2a79fbff85b07ec23abbebef96adbea039a759136301c018dddcdec532e10aff4694c73168c7f1fff68e8aeb790803825d49f4ef6845caa0ac1f99d5b6b3f02ed27344d5461c7e64a77fde54743e88ecc985f1af090f1e11515243d371e40d1db24575fed24727294812071f9a1f1faf91d696f0af8ad84ae460b0c53f6fc7b50e2377d8aaead438a925cc7e7fec81ecc41784f222a013d95d15f03598d1af931331fda490791d2fe12b97cc95dba72d90f15926ec815aff8fb30496532c0c0f4ca6c251aacdf899cc091819e8fe2466257f87b4dc36e108409fff439ec56aa5d20bb19f1a964dc33d160cc659fa000f2a5a8f8e8c45e6ad9a7540d62e3a58cc0d1facecb2ee8975b1c28eb5cab1f8194c31ca3ccbd7d06b75f93e11140513c2c2e60103603085cf7498f7a7871e8f71ccaf6a668bf1558c8e59a3e7166ab07651b23cde33d52acadbbbb99cab9a7165223d4a6f32b11c2064c447b02be53392ca7433f9ba232ebcdbb7c9c9d5ad5aafd707414d0884f9c49a1d8f87d12fa11974a616502ca9848af9278d1b2698a8a631b480bf6e05d860e32f0a5450aacecb7a25a9b65bbd2cbe08f0940673f276583b66f446068d402a28c34552ad5b6e97a99b22c02d2455ab0dce71bf76b2d546d7cb98dde394558042ab7aca7f086e8ace53af761f8444d06f1e5353cc6ce2afba12b309e4cc1671eb97a34a51b08398206c5565576923326b8dec65816344e67df8b9b392572dec1d5a750520212e9653736a5890d10703a367b9fe16039d38eee0aa8028cc6c3c011e2bbf2bd51567de6431944c19402b09883efabe38fef4f388ddd9fecf5fce02a9dc1c826c11a548f8d65ad78a8b673c0ec22a4628cd0c333da4b880fe1de08aa96b97d2bcf30fea9cd6cea3ac77c3c4422bd9902b9e6c2d14bddfd37a0405ae3a60e9e7641445410c43cad2808bd00c6f088e41463bb08751e57e0db186a77139baa06e0154f34eeee2626cde7753dcd1b18f56a988ca02ab4f7550e2ffbcea488c3bb3ea74c773f770bf5527b04638146b12d6ce9c81a9d753d520dedf1059a71e20113119d76989219df3e2693ebe630801dad971c2c36a465321b01ab1e420a0a90f000e6696702d0a6777cdc2e503e489343249539b580f3c6daf5dca76ed6a2c02e5ada88bab61b6840a3fb05186953520f4750ff83a09909012b2fe66dbc5f0f8507852f7d2780c8bc3f0cd9ed591f3451e5e02bb21a6805dc06c3da09b0f319e50088989dde1a802eb376f83f7319ec1674c4e5efc18246dca36a620675effd62ad5eea68cff8121b55268f6755dcf4a9b071a16cee8d9427bef1cac5e94f769d886f873cfb81b41f4809c5e54df7c37b64fb2e57c940f73304c4b696ae0043afeb93f7ae1c46ffa86d7c2fc544d2ae3154271bf906b0d734cbf1e45256bedeece0a29458062d852884f82af91ee1ba64fb86929c021ec5a7e43f5e974596684f7c85bfc361bbab677f8fa45c735346ac5f3dbc9e4901d331b4efd35705dde8b47ec2d5b956fae78023aea060fa6b33cb669b69fb16f72a61eb0ed1f317e1c7e629676216f71004211000af06cc33efa31a0c7fe2c3e27bd083edc62dfdbac284606578ba21f4538cc2ed18b4da9960e00ba1b2b6cc140c2f6b97bbb8f23f2323150a2cad73cf052de4dc1ada9621420dbb209973f7f2cafca187ab1eb39fd332503e92a75c9e1224f3b88eb4270f79f202eda913114a5dd7d5cf667a5246a3a7459422146ea6dda957e7a7e8d61fc32a7ebb7e6a36c2f7284c436a0012596241ab5d3e2af8bfa366490b74a5472da208ce971ab05e3b00cb4e85fa84ff14f18c06d83d3b493583ea9bc018629609cc4d386604d3f15e66e10d9ad2f19c5d4fe7dcb43bf8833e3a26f5df1f639300bf684657d60f4b25a7096321dcddf709f6b5e73e5036464e0429490c4b096569145a0f2ca94979e52246d40c3345f44b2384bfb8d5e600b4128c9047cdfd5c1e347ba17ccee66defda2a352d311c6496f878871957caa7e072b45070038494b107ce95ddccd8dfe0be7317e809ec3d08f36e066666a1e76692acf12ca55197091ce68cc0aa3b1bfc2605863f9202ba1783de2d2bec281830312f4ebbde2f353a8aba45c1a35cff9a0fb37e61598af292d317d9b38e111b9489ad5283720daaa7d11c3e92f8e3bd198a3195bf8f6332956b74a19088d9f7a93c87cef7542524af92a31db92bb48782faaa3eda7d7cc71c857ee691758f7849d460866bbc4d4a47cd7b38993313a74bbaec77fdaa4f1129b0c4d7a1cbb1061c427f215a458ee14edc5a04fb66ae90c447592dbdd11098462feec599962b6e56385527e2001beccb8c6cf46bb37b35f46ca0b25412af563f4836469550862a27b8e59a687e5a38ca2a4118c983c1f97bf87d794f5349b0ed0fcf2199a4aa43b4645cd016836166a7585d14a82b63cb9e3f800ab1c42678b09e625d83d141db028146f1655bb478ba9bbd7ce70a49852c20091cd353d2389b0de91cf286868f86dfafec10672612d7383ca0680a2e10758e502e88f0c8351744566cf020615847cbf79ec8c9037c5f7853a6fd6204b76bb6b61addf208b22b103e4088d31f2fcc51c978808ff6014e20257a45a07ddf49fbc71f548d6de4617e645810ca05c7a3316150871f152933bea75671d661bd535ed273a83649ebdd68f621ac8459bde465a0366b86fee37241248641a9d5c9d6ca173b1ead66b9e0633b085836324d1fea05b2955af1fd20d96a25c5f68a6459beb4f67c97d4af080f7047b3102d6d0350dfa7180d3c3bf8546f71af0fdb83a99e0a481851c9eaa55578ff75ff0226083f7cc0a2b88c93f1f9ad94ae544dfee816e45aacef03b5535414c50efd895beee17a24cd421bac04151538c1f06875a489a3446e1c15db63b7275d2e0eda89124fb9dfe2b7283ec496f84b68ddff1b953fbe771befe82712e1c84b99b3d7dd7d7143a36024a927e9c3b9d1d792e078b9db8f41bf42ee45a3dc842f6d63c94ccbbdf7316aaa9f02c67091940171a78dc6e288219046aa1e99ff33a94d91b82dfceedc1ad692d6b6f4383ac6d93202a22990eac399a03a430f2a3c6e12e4f309156d7a231df09c584918defe82c649222a7304dc14f587e4e2a84a731a2f2b82f85bd47978804210cc5e10cc2300c298312a2310b76b21ac2cf3269cf97956770d13e543570c3c4aaa0626ba194e54f0c887c4570d31ba70ff334638daf35c23fdd5428597ed046cc25055b65eca26997fb69917572c13b18994512f120a96a99f7e6a5dec084bbb5084123a4abf6d9892fd4477c754ebf6d1056a1e21da39c25b6f0dfeda81497fbdcbfd9cba6ea94ff4eff9ada66d1edc072baea96ac39cd9b9646571594729020b78d461a654968a79d0961ce6d538533e27dd766c78934cbaeabd0bb1e7a5e014938e466b9a05aff73fc6fb92706507c4c735b8cd5d1a93a2111e6003b15a012b18092fbd285fb5755969d33c65d34924197be1b681f124c58855d3b1fa3a25dcafc659fd2be52f1196b3eb4f66ca53353aa1cb8dfd7a85a4cf1faa4ca353c19a0860754518f6206da94106183073349fd51b76e4677acef1dfbbe8a014fd8af77a13bf57db4ac820cb02dca5fefd56e3c657d477df4b4a397d878c1e7df0db89ae2231dc6e9978e863d1d01dc33ee3166122e4770069d8b1beecdc267ef3b0c698cef8c4521e2af2de4abacd355e350f48a23ed4dd6d748680dfa82bb5cf2bd0381ab0e52c0636b307cca5b8251439baaa883ba7e09f0a2dfe18bb9246204cc051936b70256bccdf0aa1639f8259562d1c6b40f655a7980349828b52a3ff755dc815aa0f4852b539ae646bb0b536a3e5bd0938377f5ac9a974d87434687f26db3ef383e00df1e98c90641b7adaf1ee1f190d59ba4468eb7f8310686518dffc3b6273a6fa013dbdd9d3f26fea8992afa43691f165159afcae2b79702faa4ea1ba0c0be50f4401c35105daf9ffc7a23c0c0f15e73971f8d20764e94b10a5d5bdae64e0ed5f4c8e581045c827803493fb625bfab868fc5cd562d18d0f263c7031ed38de3bcb1859df0a3a1c599ca093dd6de3f80d2e872764ecfd073a05a555e2ed9e888480164be5b393d75e75fd47e04b912c1899dda5dfcd2837c042d7872b69baae079dddec4f417f4b83b62beaeace0734910074e7ba7f8d7399cc56594d276bba74d10978a913d936d597a65cabadbfc67329042818ad93641ecdb6843e6849f3ca570529462b6bb0bbefa91daefc537422d5463b99a25ad32b325494163ab2a2a3a064f53d558f7ee93c74fbe7f94def6b8878d4bb7c56884808497a11aa1d8e20d7d5a67256b26666a48fb28d3b318e3e77f58971d6a2de31867169d801cca769b9000f2c207943f8cd4367a6fbfba535d17754e74034565840d20c964d405bc8599fabdd05a6254d2df8c20a92609258bd7b04a120b1cf4afe73ecd1e8eab911723a959d888d8ebfdda1bf4476a3c0059f6e9153e28cb3df3eafb63349a4691e843aca6f0d59bf28364cdb1ecffdeebd2e66c709ebed491d8316e38ebcaa071a5f0237bda322e498f1812981b5617840ac96399d650573ee5666fd3a89aa31b6b7969d176361a65bcdd1515469adaa27ba55ae25a9fb81ac9ea5424bdc630c4d3abb4765f94d0f79ed7386a2c167b77d7e1d062f1fb1466ed19a060895b523053b61ac7befd4f74ff17192b6e0a585e3eb555d7746014ba9ae0c9b420070721d4b7fcc6c04eaa8f825bf0997a332f7a630a2ed3279a40329a523dab967ce32cfbf66d6030f6e218ed893d9dd54c2fdc04c42be17f6f46a7f1dbeafe131f712c4eb0c617f39431d27515af9b01667f3905bd222ece02cbf2b43f76c520956d85efdc25e9296c0e362bc32860d7334278ef6d47f1f7735086fd4e6e4866765972b2f29f8cf8e637529bdd087e255f38ce607b445c745d26719591236f3d7b50f310b6f6d29f8ac200332878bd1c2418ad5259e4f8d429c38eb9d8739eb703d29572ad61a493b0560c5c47c480a6e9b3360cb12dd206d36214de0be5e1a17ec491df909c4c79b99d5c82e9912998e997bf55e6ba3ecc5ac1447731a08afd54f2e7bfa4b0372750515b857e855c7b5e9a4339a714985ab6624e397077d484363d3decb91304d69444c4999b92c1abf06420386619647885fbe2c2d603eab6d48baf40a6c4580e664965abd5ca61095682488844c80b9eec0b616d1e58e34b6d53efb0f95f6cd23a585f64e49fd3618b0ce5b7d08e0badeb64ee567203a857a6b4cd00a30f9f6abc8fe1a5574a6c180c5710cdd13b3c89eb7a1ca384df036f46f463bf5e20029c3831d3bffa65870416f73e139498370317c1bd542bfa5c4a5054b8b494f2a5785c7dd726f5961fe345d4a933617d77eda767a331f228df7ee40d1ef4325ae13f63fd1b05f0985a26bc733a400eee6c5dc8afebf9d228a13a9100818edbdabb88f1b9f6d4a68dcf8d75aa1fd85a71ba2b6cfbb4f9cec2c434ce80a43f3bbc21576eb20d718ce145bbb0e0b0577d97827b280844e90c4846080c48f10e9e6b536455f072e1505ca0b9968b822b22b3943ffe8278e25d288a79bec32d65c0e36fd17e7692bb98e4cb10d7e658563318c49cc480a8f03f3171b86a095585db27457e7bbc72f89cf4d76f5abf8762746c6e6d47db60f60f1d8b17bfc8c6c7b30f30e79ddb259b11a7e262e4ea14fe678285f659ae8b6c51fa1ef5d533e8e5e85dff63bd362d2e1b3bc57672172f7e4386601492d40acf4c2adbc64c76d79ab50a963555e045ff053bb1a0bed92e0077b73447cc8f2d666ca885f1bba568774fa2ef6f878555da24f888518ead34797e8f0b8cda9f39708038e7732bdcd5d3d6229dc54ce41fb4ea378632e9e36bb2dc56e381c305a5f7c6a250f64fbd62b8a1e3100c6269efb226f05519ee8bbb7fb8491d12708703e68c5950d4ee506862c0d6fc1cf7eaef008ca8c8032f71350c69272ac3f0e191dd6353e0cf81602b9d14d28ce7690374d99d3fc72a5636f81169855efdaa1850d7b04072e0ab4b07f261df42dfd5c532a067adec2ff2c5abb0e965958258d03c6fddd5d57a04174376ffcf770b0855039a944a1748357a30a69f569825feb2e88c24497c7b00fffff335952dd59db9f45af7166c263ec77676c84f28e7b2ce8cad84f6e5ca08cdb5bb931ad448c1dcd7d6d2d07a93619c662336c3499b6fafaf70493e78fb2a6ac9731467a5e15f102ccf60bdb8de6eb7804b3bd615f79532ff0460bebf3fe34f1b529c9a55458c082eed3229fb9d00bc0ac708e098d9ebf843e5a03c0a321346cc6fc3d63be91da42b0e167b5bc6c299a70546baa5a3e0e9f2198ad713cb637cbeca23eb8cd2d4a6cec2ffa2b59ffef3100317e096e6197b83e51da8c12f4a3609f55d3a62efbdadbcc38f89a77bf221b02b93a4a058964fa75bc288a0b8da0f29dd60ca843e3e3870e6125d7014c1bc6986b42f99e0b35333421e855263b9586069a4cfcdb983c6a55041127981e0f44c8c2e19ac36eda0e3105fbab7644ec55caa6e824ce0c234de911f87ce6d51587a6dc899fcea241ac8a04d5065e086c507ed20b26b92d1fb46dfac1481f9683c2f5ddeae440412885bd84fc88a8cbc5908d6815951f2a21997bce2533b3ec6c4fc577d24f04e09f4981b967b8af599e61278841708e7910f4c5f1aad0802ecef6f7d363ae370d2963eb100c7751a1ed4ca5a8d1012a65697da55303fe7270c0f8b77d6dd33d989f35bc888830ea56dc859b5ef3879e26d835f2b179ec54d853115ed853cbd0f09eac476e1532b09f4f1975838cd62c685f7c809bf6a69f9981c2131b64c1c2a8839af8da6e6848f42b3e61fdff8ecba990473417cbd4e07672527bed93d7804a187a842e3340282c39e82327e995b27960d78562a47d320fc73637868e83ea009fc4f9cf87969dd0d7feae093cdd275331cafff0f9c3d8023894db89eaf2114b49b78544916582c09e17b11999b6402e36b17387d83786a18a941501731c0bcc2d9787720722a60ede2125371c5e47091a62cd38af0ab3958eb6bf1731c78b1ee33ff8fc8a37511ac567190a16631be2056f3e2ecc00e11f9842987bb5dfbdb3664c6e2f72810af3976c9d301fa17131811ab3cda815331156f8081456207dc91bef5d4869c0c251a9659c54df493c21927b9f7c46a7259e1dcfb874c9285e1c2c23ee7d6f9dfeb20ef819e90c74a404a366c49d0def463ca57113d028f5eb7566ffdc72ce8b5b58dfade8dcd3bcf2e845991501166f49d53b684fe8d113592bf8d7e09ad979e8ab7525a1082d7f0cc44cdd55f9656b9056448077e6dad19baef53aa838692d1569f9e1607c7aa01432ff081f32379a55872eda62534653298fc30c7d5db6fb235efd263fac0871e502687a3754631fc68ded8ec87cd1fd6142b4901a2de0e02298f73c6d4979bd1374619d4d3dc6413b50f5bf83e83c5dc5bb200422d609e64b3dc8aaafdb946e9f087058cff4562d4aae0aa0d4a85300b5d36209df49aecd5b9408e8b6b1200abd02b51e9f1a1f05c238a7ffc01de8d9c6ba7f5f7e14e55269e58876fb89b8fc8cae31db3760cabbcdf7d1c2ad539ec658e09659f16c2dff35e4dec4c0df59d46d9ba0e1b2413a0d18a5860af258ade8a2d1d2537702ae5f190c807064c39671a4423192979c36992afba6cdc02ead5a4773cbfca5f69cce1abaeed04503659ef5201334df9d77fbc9c1605376fa860af82aa0c0a65076acbc91bf1e240805bcfe06cd5568c6009fbe272d99d65fee473bc7eab70dce4cdcf398bc8444af7d54033d89741dc49a5feff503e5556eff18561c5029e3e64930960e634d0526b162c1ef8d6528f94101c8bf3947875dd3ee5f13c9d980d217dfd9bd6f21198340763e89e2134a70f11c0b5b0d7015ac276c822e1cf9b1941dfe76757c314b0c8ab92831df14c2f7f4071aa0498c48a59c407ac2b16b9161486ea43dc7791882d1dfa54e30adf3fabdf8ed3cd2cf12c0ecf97041c8de98b98540c80e8e39050511d9426beea584e35b757e8bbec046832ef5a8d96c5edf77e8ffa13d2bf1569e08e9b506fd31508a1fb4c9446e4da1c994d606983ce465d92a22eb891928e94098ecd65934c1290b0313ee72ecf37c88177ca575d56a4a952541a93a174ebe1dfc5b2ad4d6d6691b18676087fb82868ac12b9e84b531ccd3dc1610a6737ceea5447eb11cf2e1404d0b8bc9d55356b288e465664a93432804f7f853d503819fee58b95c48f8fa10dcd530f58e9a59c2a1f5f9be9d641184ef9138e33dd6a93336ad4f8a9df1c7a1e455d8fb24b629d086fd3737ff1115c8f15617808bfd2cc5a894a243c87b6a2585e672c237bed688b27e4b13f9e0d34e03d35e4e032a96e4855470d5542367c741e4deb7656de972fe24d25e43f0d87ed35f9afd928517a1d0c5e7de3a5faaa45fd3020ac50a27ba34300fb98c82039b6c377df79307dd36af6a3f64aa001c10f8df12a8f49527ccd8c7d528a394384f9a7cf4deb9389dab31f1a5264f7207531bc197611d9568fb632344ea77e8dce4c8ed225f885bdb807f6dc5109c4f24d2df3b9dc9a13e6389cf1d6fb0b2faba9a42c5aa59c875ae33a2a7aa538ffdb2bb7e7bc457bf8b0a175596695e7f5011e2fd6220e6f6898019ae6d1edc38049c508239022fd271677c05da8e00083cf3d5deb395b99495d1da6eede2498f22d30d69c10e48d5d2d6b0b1d5b5dfaec29beab0d2b36871f1959b28f78b885df43c1ca6075e31694ddde0b8770c45e94435c406542b18f383f674cc9536b345ca0e24b3459ae95ce40f8d0c9bab53a9e999ca83236742abc49fa2dc68658a3212eaaa9a756c9ee025441bb88439c5cc89b9851df053525056cfa7762a21439dc2ef461b751667ae783efd2d14ced685b5095b991b8f0ee799cb4e5205f5a0267c6a427341bebdef9cee62e1c8b663b86f646365e9c44de98865016bfb711d7caca7760d9b5922dcbd6701116dd5adc2f4126c8019b88ec5c785ad6b20b4a077e0e6f90a5e5c614e2cc670b603440c883ada805029714ea156efee015a0c6614341d9bce6ada98acea287d937f67160a902448fffecfc8424dd6329076d07b63a01f08d22f9cd7d6af5a327943075bd1eef7ce8989ad4b5cfae96592d58e779bcb7eb5a7f924fc58763f3bbf76a5398ebf43c30cd56d69fc33914faeb8d912679aaf95820641a3bc0d27ab8e751fdad22cbbfb7b24dee149f1071e52ba7d89541682da1c48260a2c0979645af11cbf1958183e010d5c9316510aa559467142fe3bae81d9f4bc453300f8daa883ae28447b50bde746aec679b3d6719868d5ebcce8b904f22a3e556b17340a2363199b860d8af23d63e31904b924fad8a4bf427211068403a3eccd3285f12f9704b0d0d5c112cc23ef68f341332418d785ce2a3d55cc8fb5fb66b1d9d0a7eabbde251e859918eb6b51d3bb54be9dead8779a5d34c52c4df9c539c813245c710e51a8ae67831ec90c86ed609385418e33f760aecef3fecb5c52319486aadc5a635f83c0c0dfd0ecb054eb40d875a57443862c70c2b5f67c6efa82cd53882e4c5d00e6647dd0ea6cf95ee17113399f38a7e4d659076706159071e944c2d84802ff25bfc68cde148f01a4a111a11f9b5757763d54a2485f0bda1e0392b91edda45778d47dc0de44aea02216934010efa8b824bc57158ffe0fb34a380bd141c5e845d5b9ca83a0af87f4f66fd767bc1c15accd5dd4b2347fd83ce4fcbd447269b7d8a86c4274f902d8363fca657c6212bae4ffd2fe051f53ce97d330b5d09899b36c8b655de9ded35723e8d30c149b969e710f066569de7717a40ba543c2d78bd0ab96e8b5f66853ff5ec7a2bc208b9d1b8e13b3b93fe7849b622c1b643092c42ecd16c8e2dfe2f4d8a52ceeb23792306fe0ef83f2a881a150add97d6ca7a84b4b958a65ab5e24544ed95177edd845c44422d35ba50100d8219dc34d00869e988bd6520b5478c1d855f50a8d43c2b3801949d2455396eff6e3e471e323625e93ecdf96888912880a51a9a260596521026255df1db9991fcefe5e355f27efa9cbe70df19536547753db4f68ce5dc6a105090cd7070d857e888b69c56140d9c2a6130d5606430c5ce17e14d8da9b0e5207e4b7f85cbf9b34e78a24385d4941882cc31c542d8878eebb92b2326d7d2cffe32830603b665ad756bd23c601e154084d1156e1decb723c43f584d5c69a2064c6cb5f235cfd66c809b32e747b69debb2652ba9ba799fac1b61db61238ee9d94411661fa305c80e310ce138aa0214d33ad28a3b3c4a5cfbab84796df4d3ae9ec1cf524596ed0a138ce49a16665575062713f802579d9a3733ea6e5b33a7cdca7b26c8a952341663115eb8981bd26e82e046166c133f86f18db92fc3ded101a92bcc831b0706c1f607fcb97c665de924a1f04caeee6909f14225f3d866641b1cf034cadb0e6d49af5371bec4abf2f00cef4c1ab3937fbbc188dd91534b1e3edf54120e1a3f8c02b88a20f774eda6cc162c185eb2abd2e96c479e1fe1d17d03ce99db6ae2dc872071c4bb85831cb5596963d37c67d77e62339cdfbcf6616dc1786c47637a9010fb54f7ff7dde6347e8ecf80b0f1d7063b0305eab794c01c00c4c4f525dd068f5051780dba51143b8fd749c0c21d1991b3851cb6738c379611b09d4d411617948a5d0c0e319e7b1e1a52e64641244f11c2162666058db0702e2dc4a96c99066baf67f8396f58c568a4ba07229b677815b9bb0384505ab4c84dfa511b2ffb80b2784a14efb89216aa27921bc720879b6580633ae80c5dc0cb4825e5bb244bae014c79ad176c068b6e76d8155d237c69d4301c262fadce3801d9343005066f9ba72eab013062dae8dc0b88acbe4f4217d4f9dba80d5f7fa3a84faf9c1c3c9df8ea5e3f49e9e49faa019b361c1bacc36d4487eb9cdfa538f734d3c80a70a5f3a743187a0e8cc4f0e44c7aa42d1bb57aa0317106d9e89a09087f50702f9b8c70f2c22ef0f8c101e5128090e1e270cfa24b8423473392259015c6564788144883545c2d2b3481b59ab2c4e2fefafa87ad3ef560524a77ec0efd8c054a5d5324318f3ce90ca28fc0de96cd786fa065d57d03c3225bb450fe0454ac11086831d0a6217d6dda388931d8eb2bad10f3d5ccea46c0558b274ccb330851796ee52079693989b5aae300b3f6a44e139f303f6884edd74ce8a6b04bf883df25d64642298a6fb6da680644a81f2ae5fb171bbe75e43d143d36130ac07c487e9afb869a76f20fcdfb17ce7f98fb65642cd42c9c1ccbf0bcceed9fecc1ddfc0d5fc47f144a45ad8f9ad317ab1e1e6e65c50afa442b3e52a0a92a7444f885c9272bc4a32907b52cfc0f50bf9a702e8c378c103e2f561cb35be3c6f436275a066c52468afc9fb923f6bd43e22bb47bc249557fb64adf12136a52bcab0973cf66dede7f1e09c7dfd7d325045045a2a1c93553e99599e7f2c07b56496ba92a6ed15d1a34cc4cfa20cb4cfd15ef7e620f9d6bfb942af04c3a2238199bc63086c7cdaf94aaff5a6139e69368dcd190337ced0a81337645a30b0162c4e4a955881db01bc46c15a0951b037e6ad811b2a6a02e8db9faa5835dbbafbd40586d2cda9dbb538376e82ab9220522d47673a97348983599baa7101a72a21f13d63df9e95a3fb03b0019465ad448519a507c79c583e89979ce93b8cfa2bb774e4aef82709c91341ac660e8f4d1d17dfb71d49e5df7d1a71652cb5b58eb1784f6dba5c319d0fc09a3462e190b364e465ffab93a27058f5c3a906887edf96acca4f557f805b90851fd2dfa56bd7f62e2d3b97e4ee85450b9daa9f04f7d67cd70fc4fb835f68472ce9aadb57497d02165e441b579b5e25c3dda7fa5fb59b7ba0f08932c869dd6a12b6eebc301c636a614fd4ffd35843dc333b741f52f7f559588d0370b2e9b3d4c2342959752a8ec0ff1c467c5e6a66201838b3a245eb3919cc66bbf72d81312eb46c9e4add525d15db0ebae2dd80d900dcb28557abc124dfb72d3071713c17c65de0fde039dc194e367ec6a95395b59dc83887fb16a6048737d672addb8bfda3dea3589d854104d29f0b202fdcb48049ff5003b62d497dbac3ecd4075e9f6021ffe4f2103b4cbed60d0e6ad6023711354c0f83b2cd4720b7126093dcdfce31d6530c3adad803c314c0f96793ddfa1f0323bdf6d2e1663b156ebb70c59555f12b4b933feea88ea744f405d4a0e192ea82783bbbb9990831bf959c87c5f4f4199b47456ce3dc34e66e6782299f36612b85695beacc360aa5d234f9cb415bc7cd69e32c12778309f246d84cc467ed4eb9c7c1281351c80bd985b76715f8d0d1bba004646c26502f798259f5105f376e4efea2446edcab7d50964ac1064585dcc5b0005114fc9d2a67592810962ab6f0da71896730744ac7e0d44a154effd80413504048ce9c315e9ddb068ea8a3e456cfb99b0dcb60d183a23ad17555e069eadbb96616720418c14319c451c5cfd93e18c418c4fe9ce14167c123c4de1840742b9937831b5c07faa78475b8252972c9279a56b96f8a00bbe6d6b4588c9493c025bb54e6849d63064a90e77a0ab0eb8c972e9ef9e5cb445a2bfff2020c6aad21b9d5f244f5a4495fb2ab45b21048dc0b4f165dad083caf353c912c56093c734fce68fa6d3ab4262075aba4d570953c733220fd4888dafd887d09ea0d437364d7735a69caaa3c7221a858ed5eca4a239996a2cb1ffdeb772e2a948145a4d6defb4afe155c85bffe6bd41e8d56ecb755c0f700d0e2e793826888aa56a95b52d77dc3a97a5c4a32f6a6101efe0b101d1fef7c72efea1fe8da8eb84c6e2b3a86367d548fa4ad4dba30c6a7fa08fa1830e99eba7046c178e3364d0b77774be7d214c5a8367a4dc6e17dc67a5bf89ff280d5a3a5796e031cbba26aa891d5531f3a42e03881665be33403b0311ba0b357563d9283605daca31ade135618e07d2f405f5d6d18b269ce9a150df793980dab51a7ce14d5e588c06925c5e6d351d1df89c836710dda2df27798f4bfb55542565da437af42481a868f0324c81c8bdcf2f6b30351601275e36da524411d264db05350725756e92c902b677f8e12f58db723f6334eb9c89722e54f2aae273725d1c29999aaa33bcb96c3e1bc179f93a3aa8abf4df08ee91656e4ced819fbfd3b2402949941107bba0d8cd4df9be787b1b179ad63e75e2f5660f955e3b6c083a8affb5038e426764e55d04b7c0d593140dfe0b80d7745c457900dbfed9ce402ac28f84953d6b3298d4ebefd442634a054ca0b5948f0e782e1eb6c206a8f9270a1b3b58230674953e7f1b7c121b17c2f979701471d9625d4b9d427e58bf8b0e004ee6e51b5bfd4b8ab0eb49f15988b6ec8a8c8c5d2566c33a382fc7b3eb31ac78e7246926d95f8d178b3880e43e725ce7f3d9fbfce7519049c7b6a690c5103ea545e9cd16f3da8c59cce612f05dea2f280b5636fc2eb21c6451c06b6dfd97ef4ba4f3cec99f3b37f022326b5c2635d8450feab595bbd47ba3409030f70946fd329a6b3012b26df8770171ee39702d6407acfdbe215a6ace5091151c22e07bbf9f3cacb0d2f7e088b6be05878ec2ebb7d880f915fd3e2e7334a14e2e02be9ac4340813d27602b5fadbf3e988e5492eeb5185b70a406d6679c4f96ec74daed6101b849770b5ad5c5eaa631bcf14679a8f009fb763711a28970988a7e0d19091a392c95b76d24a5ddf28f5e03962cb496b5dab94e514f4b9a35d4033f7b07b40b1deae39c2d7fe47cef8cfb202df1881737be7c2bb1b4e632a7636a07d79a534ed7be4c44d8e613e5b33a697827349371f4c9f2aabe16f96584205f779acee3b039494903a88ad57f60fcd3a679ab211b511f4c2b348f31352f5d0dff17f85c827242dbcceb4c5df63ef9a42c1ae4ff9f0f69880f4e4600eecc57a7899f0dbe2ff526dfa567097cf97df17ed5d49bc06eb11d9a5ff82678ba49a02ddd1ba1f6deeb3d148f519c8da20cc76e85b734fb3becdd1c5806f4e9a6dc80d0446c8e268b35aeb572b892fd1cae0a03e5c9ec23bc9aa204186956ae91daaa71453c9108d8e7c95b26527b5e2db5d9f3d235229678380712e9361d96bfd3a4da3294ff7f5ed9cf69f44f374d7eec94265f5f13383cb219d23e1a8a213b755f40a19af273092e0b85110f2c7b172f9b47ff098b99df2a6fe69a27620cc38f03d861250b11deb0109acd7c6883e5eca247429b01a84b3bccd8445b31f744045195fb5075fbb318502c19bcc7dbae177da07c11a521149693d69df221f6327cc6dcb97a9420ec84b1e96bdb2d40dd97dfdb03af821c3cc1ca68bb2bf8d19ab52a1b9c6447e1b478454c2bd3eaf42a5f4529396708bd12d70dd00091f98c719c35940cf26cbf63b8a3d6579c7bc8d949c94b7d82a23e35428c78e595d0a128b98095618ff49f138d23759c1509a946c308e8ae3e1e528afda6d18f4edf579c6a9fe51d7e78b264b4f1fd81d2e35c62ada923024ac66856a7ff8ac1775f657dcde331acdf546dfde01a35d9ad310cca811b045ecf74a20bbda9d5c4908111022715169e999697a5ba7b0bfc17659bbd5a729d840e4e3660c954ae0fcea006ffa1800a606da276327c44e2c2a57ff06c9f6ea5b61f141429d86b39f9300b0f8e83a759827308a4efc7c671e3d1edc7f012208dffb7876de0c0354caf3902e2cce08271df223da3c8594ae58f0833946292425db915ac0439c2fe26569aea40895df4b1aef8d3a2eb72c4a0fe905b5712143babd89d7d88f3b54d9edbac204635aa622d6ef197cf5c306c7df40ecb39ec5d24da82358fd218d26027ae15d48e37ff56e9924d38cc6edfa502e3b1b537681f45ba6ed3fd9f9394629b420b7a138cb58e1887834a4127d23997ecc643da6867f70ade16294fbf06c5e003e40e7d9e0f5566961185302139affcad6cc78f1070d899326e6a81e0d22033fc4ce363dff296250275b1bb02e3ee133d720691a97d0f67c856b81f11c3e294841108511631c962b76dc59946dfabac1df743b6948a8904c49849735f773c6f70f9c5e627c3bfefe681e6d03ea59173c69a105e0caf12b76e77a15882765bac7575d19493ed5238ea334da3285094adb5b41b953daa4b1002e76ce218de0b16fe0e40132c75e676ba66231bd1562978e28600a77330c257df10a4bf23cff0781c0e633318e48c7d90cfe79b992343117b3be4c7765dc1b0d09399902069767c30b8e09fdef170f3660658dec5bc92100a598ceeb39c30f1f692294c92573da8932cb84f658b72515f3ba2f7a0a3c504c86cd85ca61c84f1f33ed1fae76c005f6a4caabae6e943d3797ee75b33bc3bbeac5314eb3ce69927574a3e35763c022096797f1c4eeb430c15d4c5f279a5875ce803fc6a179a065c3b54d1dc2acdb51788b589db769d667348c00f8cb739a1346d4ec6143bfbef46aa7038904befde33898e8baef96f29be94e4c5db62beec745f267df934ac6c8dc63fa97ad5377a4113f4b822fee3df9da078125f0f021e66f3ace62a0f643b907dd94cc0714bb7321e42c892e54e42349ac557389aeea5f8d9a22c61d78f727c2f67f8ee0f903c4c4a683b3452efa1a6de06a6c4cc2bc398c41387391ba655ffe2fcc4efcc6d10e4d07e706dd84c31573612913a1db1c1068a87e6d8d156a8e63fbd2b2e5b5dbd440986d5fd948381623043d775656d83a359cd363ca29eebcf774fefc71dc29f0518d19904461af2cbbaf3305260feab45528b4eaf3c81cf19472f7c794e0c06656e8c81468ac876e6aa6d29d6a65f892a459f74163d16b417bdda57670e126aa41a2a96720bcb349753f4efe6ba0f0d30b98f2327cb4f344bcaf85f2309b5d6333e85fce8ca9260ed95171c3a4637e81ef33fb2cb5d9c6b09e838f1d483120e9c22bcf5aec8f16f875a9c12811d5cd6c1203191745244f66614efa820ca61a4dbd0a60484964f21340c2df00d837a04b945da419185c9fe9e7f520da44cc80fc36e37f6daeb6ec4f4e7ca5ad5ba87e2fbe742c3ba956ecceaf2e4990ff4c43de851a9970242e988c56d973a36caeb9f5c92654bedb4b1f12f38b46853fbd6f6ac1c6f11a5ca77afcbdee53a2f69366c9d761c7d85389cbe35b279f515ad0d89547bb7838e56efcf63b912b9a449edf3a5f1476b6ba15796bddeeea40c99abd4e0fc28fd7b0268d825f7e8dd3b48e60dd59384b43eaff7128f6d03aefb3eaa13724e43b3adb269fccdc53c527382cd21d4bf8cd05234d152612</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -4812,17 +4073,6 @@ $ systemctl status loki<span aria-hidden="true" class="line-numbers-rows"><span>
       <tags>
         <tag>go</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>//post/CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9A%E4%B9%89v1.0%E8%AF%B4%EF%BC%9A.html</url>
-    <content><![CDATA[<p>CNCF云原生定义v1.0说：</p>
-<p>云原生技术使组织能够在现代动态环境（如公共云、私有云和混合云）中构建和运行可扩展的应用程序。容器、服务网格、微服务、不可变基础结构和声明性 API 就是这种方法的例证。</p>
-<p>理解：</p>
-<p>云原生（Cloud Native）是一套技术体系和方法论，它由2个词组成，云（Cloud）和原生（Native）。云（Cloud）表示应用程序位于云中，而不是传统的数据中心；原生（Native）表示应用程序从设计之初即考虑到云的环境，原生为云而设计，在云上以最佳状态运行，充分利用和发挥云平台的弹性和分布式优势。</p>
-<p>云原生的代表技术包括容器、服务网格（Service Mesh）、微服务（Microservice）、不可变基础设施和声明式API</p>
-<p>4514617511506976</p>
-]]></content>
   </entry>
   <entry>
     <title>布尔类型</title>
@@ -5543,11 +4793,6 @@ systemctl restart container<span aria-hidden="true" class="line-numbers-rows"><s
       </tags>
   </entry>
   <entry>
-    <title>pointer</title>
-    <url>//post/pointer.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>protobuf系列-安装</title>
     <url>//post/proto01.html</url>
     <content><![CDATA[<h2 id="protobuf安装"><a href="#protobuf安装" class="headerlink" title="protobuf安装"></a>protobuf安装</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">&#x2F;&#x2F;下载protobuf
@@ -5922,28 +5167,34 @@ func main() &#123;
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>kubectl获取内存使用率不同</title>
     <url>//post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</url>
     <content><![CDATA[<p>kubectl top pod 内存使用量container_memory_working_set_bytes</p>
+<span id="more"></span>
+
 <p>计算方式：</p>
 <p>container_memory_working_set_bytes = container_memory_usage_bytes – total_inactive_file（未激活的匿名缓存页）</p>
 <p>cadvisor 内存使用量 container_memory_usage_bytes</p>
 <p>计算公式：</p>
 <p>container_memory_usage_bytes = container_memory_rss + container_memory_cache + kernel memory</p>
 <p>container_memory_working_set_bytes 是容器真实使用的内存量，也是 limit限制时的 oom 判断依据</p>
-<p>  apiVersion: networking.k8s.io/v1<br>  kind: Ingress<br>  metadata:<br>    name: example<br>    namespace: foo<br>  spec:<br>    ingressClassName: ops<br>    rules:<br>      - host: <a href="http://www.example.com/">www.example.com</a><br>        http:<br>          paths:<br>            - pathType: Prefix<br>              backend:<br>                service:<br>                  name: exampleService<br>                  port:<br>                    number: 80<br>              path: /<br>    # This section is only required if TLS is to be enabled for the Ingress<br>​    tls:<br>      - hosts:<br>        - <a href="http://www.example.com/">www.example.com</a><br>        secretName: example-tls</p>
-<p>If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:</p>
-<p>  apiVersion: v1<br>  kind: Secret<br>  metadata:<br>    name: example-tls<br>    namespace: foo<br>  data:<br>    tls.crt: <base64 encoded cert><br>    tls.key: <base64 encoded key><br>  type: kubernetes.io/tls</base64></base64></p>
-<pre class="line-numbers language-ruby" data-language="ruby"><code class="language-ruby">curl -k -H &quot;Content-Type: application&#x2F;json&quot; -X PUT --data-binary @ingress-nginx.json http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;ingress-nginx&#x2F;finalize<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>k8s</tag>
+      </tags>
   </entry>
   <entry>
     <title>makevsnew</title>
     <url>//post/makevsnew.html</url>
     <content><![CDATA[<p>make 和new的区别</p>
 <p>首先，两个都是初始化内存</p>
+<span id="more"></span>
+
 <p>1、new：多用来为基本数据类型（string、int、bool、struct等）初始化内存，返回的是指针</p>
 <p>2、make：多用来为slice、map、channel的内存，返回对应类型</p>
-<p>10.8.0.3</p>
 ]]></content>
       <tags>
         <tag>go</tag>
@@ -5952,7 +5203,947 @@ func main() &#123;
   <entry>
     <title>kubeadm高可用部署K8S1.22.2-istio（五）</title>
     <url>//post/k8s-istio.html</url>
-    <content><![CDATA[<img data-v-95a65aae data-src="https://thumb.qschou.com/files/qschou.com/project/020ef8cfb5ee342a571a0fecadc681e0ef3a819c16615927486654add8a.jpg@!homemiddle2.png" onerror="this.src='//static2.qschou.com/img/v7/grey-1.5.png'" class="swiper_img">
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>consul集群</title>
+    <url>//post/consul.html</url>
+    <content><![CDATA[<h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点</p>
+<p>但是，如果只使用Consul的Server模式有以下2个问题：</p>
+<ul>
+<li><p>因为Consul Server数量受到控制所以压力承载（扩展性）是个问题。</p>
+</li>
+<li><p>Server很少导致一个Server下会注册很多微服务，当Server挂掉，这个Server节点下注册的微服务都会视为无效。</p>
+  <span id="more"></span>
+
+</li>
+</ul>
+<p>基于上述问题我们在架构中加入Consul Client模式，Client因为加入了LAN gossip协议组成网络中（高速局域网），可以识别故障的Server节点并找到可用的Server节点继续工作，其实Server模式负责的是用WAN gossip协议组成的网络进行跨广域网的数据同步（多个数据中心），这点Client模式是做不到的，Client模式也提供服务的注册和查询，但Client模式不存储节点数据，Client将请求转发给Server进行处理，节点注册数据在Server端是持久化保存的，Client的数量可以无限多，Server的数量是受控制的。总之：Client模式+LAN gossip协议组成了一个数据中心中的各个节点，Server负责投票选出Leader进行数据中心内的数据同步，这个Leader还负责利用WAN gossip协议跨广域网的与其他数据中心进行数据同步。</p>
+<p>PS:默认情况下Server的数量建议是 3 ~ 5 台，Client 的数量建议2 ~ 5台，这能平衡故障情况下的可用性和集群性能。</p>
+<h4 id="架构示意图："><a href="#架构示意图：" class="headerlink" title="架构示意图："></a>架构示意图：</h4><p><img data-src="consul/image-20220921142207939.png" alt="server-client架构图"></p>
+<h3 id="数据中心设计"><a href="#数据中心设计" class="headerlink" title="数据中心设计"></a>数据中心设计</h3><p>用户可以在单个物理数据中心、或跨多个数据中心部署Consul集群。对于运行时高读写的大型集群，将服务器部署在同物理地址可以提高性能；在云环境中，用户可以跨多个可用区域（zone）部署一个数据中心，例如每个可用区域对应一台单一的主机。Consul还可以通过<a href>WAN</a>连接单独的集群组成多数据中心。</p>
+<h4 id="单数据中心"><a href="#单数据中心" class="headerlink" title="单数据中心"></a>单数据中心</h4><p>对于部署在同一个数据中心中的应用程序，我们建议使用一个Consul集群。Consul支持传统的三层架构应用，同样也支持微服务，搭建一个集群通常是3或5台机器，用户可以在可用性和性能间寻找平衡。<br> 单个数据中心的节点（node）数建议不超过5000个，对于读写频繁的集群，可能需要进一步减少最大节点数，这具体取决KV对的数量以及监控数据的数量。当用户添加更多的客户端机器时，Gossip协议执行的时间会更长、<br> 对于写负载高的集群，推荐使用硬件升级垂直扩展，并使用低延迟存储。<br> <code>服务标签（Service Tag）</code>可帮助用户对集群中的内容进行查询</p>
+<h4 id="多数据中心"><a href="#多数据中心" class="headerlink" title="多数据中心"></a>多数据中心</h4><p>用户可以通过WAN链接加入在不同数据中心中运行相同服务的Consul集群。集群间独立运行，仅通过8302端口上的WAN通信，除非通过命令行或者API明确配置，否则Consul服务器将仅从其本地数据中心返回结果。Consul不会在多个数据中心之间复制数据，但是用户可以使用consul-replicate工具定期同步KV数据。<br> 比较好的实践是启用TLS服务名称检查，以避免代理意外交叉连接。<br> Consul的<code>预查询（prepared queries）</code>允许客户端在某一数据中心发生故障后，去另一个数据中心发现服务。例如本地数据中心dc1中的payment服务下线了，则预查询使用户能能访问到离该数据中心地理位置最近的其他正常服务。<br> 默认情况下，预查询首先会在本地数据中心解析。它们不支持查询KV数据，但是可以使用ACLs。</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><table>
+<thead>
+<tr>
+<th align="center"><strong>节点名称</strong></th>
+<th><strong>节点IP</strong></th>
+<th align="center"><strong>Agent类型</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">consul-01</td>
+<td>10.181.0.147</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-02</td>
+<td>10.181.0.148</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-03</td>
+<td>10.181.0.149</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-client</td>
+<td>10.181.0.152</td>
+<td align="center">client</td>
+</tr>
+</tbody></table>
+<h4 id="1、安装-Consul"><a href="#1、安装-Consul" class="headerlink" title="1、安装 Consul"></a>1、安装 Consul</h4><p>配置主机名，命令示例：（以下操作在所有节点配置）</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hostnamectl set-hostname consul-01
+hostnamectl set-hostname consul-02
+hostnamectl set-hostname consul-03
+hostnamectl set-hostname consul-client<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>下载consul</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export VER&#x3D;&quot;1.12.3&quot;
+wget https:&#x2F;&#x2F;releases.hashicorp.com&#x2F;consul&#x2F;$&#123;VER&#125;&#x2F;consul_$&#123;VER&#125;_linux_amd64.zip
+unzip consul_$&#123;VER&#125;_linux_amd64.zip -d &#x2F;usr&#x2F;local&#x2F;bin&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>创建consul用户和组</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">groupadd --system consul
+useradd -s &#x2F;sbin&#x2F;nologin --system -g consul consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>创建consul安装目录</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir -p &#x2F;data&#x2F;consul&#x2F;&#123;config,data,logs&#125;
+chown -R consul:consul &#x2F;data&#x2F;consul
+chmod -R 775 &#x2F;data&#x2F;consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>设置 DNS 或编辑/etc/hosts 文件以配置所有服务器的主机名，替换<code>example.com</code>为您的实际域名。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;etc&#x2F;hosts&lt;&lt;EOF
+10.181.0.147 consul-01.example.com consul-01
+10.181.0.148 consul-02.example.com consul-02
+10.181.0.149 consul-03.example.com consul-03
+10.181.0.152 consul-client.example.com consul-client
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2、Server-节点配置"><a href="#2、Server-节点配置" class="headerlink" title="2、Server 节点配置"></a>2、Server 节点配置</h4><p>生成Consul secret</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">consul keygen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>为server节点创建json配置文件，其他节点配置修改IP地址及节点名称即可</p>
+<p>consul-01节点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF
+&#123;
+    &quot;advertise_addr&quot;: &quot;10.181.0.147&quot;,
+    &quot;bind_addr&quot;: &quot;10.181.0.147&quot;,
+    &quot;bootstrap_expect&quot;: 3,
+    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,
+    &quot;datacenter&quot;: &quot;DC1&quot;,
+    &quot;node_name&quot;: &quot;consul-01&quot;,
+    &quot;data_dir&quot;: &quot;&#x2F;opt&#x2F;consul&#x2F;data&quot;,
+    &quot;domain&quot;: &quot;consul&quot;,
+    &quot;enable_script_checks&quot;: true,
+    &quot;dns_config&quot;: &#123;
+        &quot;enable_truncate&quot;: true,
+        &quot;only_passing&quot;: true
+    &#125;,
+    &quot;enable_syslog&quot;: true,
+    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,#将上门的srcret替换
+    &quot;leave_on_terminate&quot;: true,
+    &quot;log_level&quot;: &quot;INFO&quot;,
+    &quot;rejoin_after_leave&quot;: true,
+    &quot;retry_join&quot;: [
+     &quot;consul-01&quot;,
+     &quot;consul-02&quot;,
+     &quot;consul-03&quot;
+    ],
+    &quot;server&quot;: true,
+    &quot;start_join&quot;: [
+        &quot;consul-01&quot;,
+        &quot;consul-02&quot;,
+        &quot;consul-03&quot;
+    ],
+    &quot;ui&quot;: true
+&#125;
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>配置参数说明：</p>
+<p>datacenter：此标志控制运行代理的数据中心。如果未提供，则默认为dc1。Consul 对多个数据中心有一流的支持，但它依赖于正确的配置。同一数据中心中的节点应位于单个 LAN 上。</p>
+<p>data_dir：该标志为代理提供了一个数据目录来存储状态。</p>
+<p>node_name：节点名字，一般为主机名。</p>
+<p>server：指定是否为server节点。</p>
+<p>bootstrap_expect：在一个datacenter中期望提供的server节点数目，当提供该值的时候，consul一直等到达到指定sever数目才会引导整个集群，该标记不能和bootstrap公用。</p>
+<p>bind_addr：该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0。</p>
+<p>client_addr：Consul 将绑定客户端接口的地址，包括 HTTP 和 DNS 服务器。默认情况下，这是127.0.0.1，仅允许环回连接。在 Consul 1.0 及更高版本中，这可以设置为要绑定到的以空格分隔的地址列表。</p>
+<p>log_json：此标志使代理能够以 JSON 格式输出日志。默认为false。</p>
+<p>log_level:在 Consul 代理启动后显示的日志级别。默认为 info 。可用的日志级别是trace、debug、info、warn和err。</p>
+<p>retry_join：指定将要置入集群的IP列表，如果失败，会自动重试，知道直到成功加入。</p>
+<p>start_join：启动时加入集群的地址</p>
+<p>ui_config：此对象允许设置多个子键，用于控制 UI 中可用的显示或功能。</p>
+<p>rejoin_after_leave ：允许重新加入集群</p>
+<p>3、Client 节点配置</p>
+<p>client是consul客户端，客户端不保存数据，客户端将接收到的请求转发给Server端。Server之间通过局域网或广域网通信实现数据一致性。每个Server或Client都是一个consul agent。</p>
+<p>创建consul-client节点配置文件</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF
+&#123;
+    &quot;advertise_addr&quot;: &quot;10.181.0.152&quot;,
+    &quot;bind_addr&quot;: &quot;10.181.0.152&quot;,
+    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,
+    &quot;datacenter&quot;: &quot;DC1&quot;,
+    &quot;node_name&quot;: &quot;consul-client&quot;, 
+    &quot;data_dir&quot;: &quot;&#x2F;data&#x2F;consul&#x2F;data&quot;,
+    &quot;domain&quot;: &quot;consul&quot;,
+    &quot;enable_script_checks&quot;: true,
+    &quot;dns_config&quot;: &#123;
+        &quot;enable_truncate&quot;: true,
+        &quot;only_passing&quot;: true
+    &#125;,
+    &quot;enable_syslog&quot;: true,
+    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,
+    &quot;leave_on_terminate&quot;: true,
+    &quot;log_level&quot;: &quot;INFO&quot;,
+    &quot;rejoin_after_leave&quot;: true,
+    &quot;retry_join&quot;: [
+     &quot;consul-01&quot;,
+     &quot;consul-02&quot;,
+     &quot;consul-03&quot;
+    ],
+    &quot;server&quot;: false,
+    &quot;start_join&quot;: [
+        &quot;consul-01&quot;,
+        &quot;consul-02&quot;,
+        &quot;consul-03&quot;
+    ],
+    &quot;ui&quot;: true
+&#125;
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>4、systemd 启动文件</p>
+<p>所有节点创建systemd 服务文件<code>/etc/systemd/system/consul.service</code>，所有节点具有相同内容，配置如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &gt;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;consul.service&lt;&lt;EOF
+[Unit]
+Description&#x3D;Consul Service Discovery Agent
+Documentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;
+After&#x3D;network-online.target
+Wants&#x3D;network-online.target
+
+
+[Service]
+Type&#x3D;simple
+User&#x3D;consul
+Group&#x3D;consul
+ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json
+
+
+ExecReload&#x3D;&#x2F;bin&#x2F;kill -HUP $MAINPID
+KillSignal&#x3D;SIGINT
+TimeoutStopSec&#x3D;5
+Restart&#x3D;on-failure
+SyslogIdentifier&#x3D;consul
+
+
+[Install]
+WantedBy&#x3D;multi-user.target
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所有节点启动consul服务</p>
+<pre class="line-numbers language-none"><code class="language-none">systemctl enable --now consul.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="端口介绍"><a href="#端口介绍" class="headerlink" title="端口介绍"></a>端口介绍</h4><p><img data-src="consul/image-20220921143904555.png" alt="consul-port"></p>
+<p>这5个端口的作用：</p>
+<ul>
+<li>8300：集群内数据的读写和复制</li>
+<li>8301：单个数据中心gossip协议通讯</li>
+<li>8302：跨数据中心gossip协议通讯</li>
+<li>8500：提供获取服务列表、注册服务、注销服务等HTTP接口；提供UI服务</li>
+<li>8600：采用DNS协议提供服务发现功能</li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>查看成员</p>
+<pre class="line-numbers language-none"><code class="language-none">consul members<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看版本号</p>
+<pre class="line-numbers language-none"><code class="language-none">consul  version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>列出所有服务</p>
+<pre class="line-numbers language-none"><code class="language-none">consul catalog services -http-addr&#x3D;localhost:8500<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
 ]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ISP</title>
+    <url>//post/ISP.html</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>互联网服务提供商（Internet Service Provider），简称ISP，指的是面向公众提供下列信息服务的经营者：一是接入服务，即帮助用户接入Internet；二是导航服务，即帮助用户在Internet上找到所需要的信息；三是信息服务，即建立数据服务系统，收集、加工、存储信息，定期维护更新，并通过网络向用户提供信息内容服务。</p>
+<span id="more"></span>
+<h1 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h1><p>在互联网的定义部分就已经接触到，互联网是连接了众多网络的世界级规模的网络。并且，所连接的网络不是杂乱的表现，是通过主干网的互联网服务提供商（ISP）之间的相互连接而构成的互联网。<br>ISP是具有与互联网间保持连续连接的环境，并且将该环境向一般大众提供的行为，我们通过访问ISP能够实现与互联网的连接（而不同的ISP提供的访问环境会有所不同）。<br>并且有根据ISP是直接与主干网连接，还是通过与主干网直接连接的ISP间接与主干网连接来进行分类的。前者称为一级提供商，而后者称为二级提供商（也有三级提供商）。<br>调制解调器（Modem，俗称“猫”）接入方式。<br>Modem是MOdulatorDEModulator两个英文的缩写合并而成。译成中文就是“调制解调器”，台湾地区也称其为“数据机”或“魔电”。Modem的主要功能就是将数据在数字信号和模拟信号之间的转换，以实现在电话线上的传输。<br>这种接入方式就是通常所说的拨号上网方式，是大家最熟悉和家庭上网应用最多的一种上网方式。主机通过调制解调器和电话线路与ISP（互联网服务提供商）网络服务器的调制解调器相连，实现主机与网络服务器的连接。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NGINX禁止解析IP访问</title>
+    <url>//post/NGINX-Prohibit-IP-access.html</url>
+    <content><![CDATA[<p>nginx配置禁止ip访问，只能域名访问，这样可以增加一定的安全性，并且在nginx内配置80跳转443，或者在公有云负载均衡配置。</p>
+<span id="more"></span>
+
+
+<h1 id="配置如下"><a href="#配置如下" class="headerlink" title="配置如下"></a>配置如下</h1><pre class="line-numbers language-none"><code class="language-none">server&#123; 
+listen 80 default; 
+server_name _; 
+return 404; 
+&#125;
+
+server &#123;
+listen 80;
+server_name xxx;
+rewrite ^(.*)$ https:&#x2F;&#x2F;$&#123;server_name&#125;$1 permanent;
+&#125;
+
+server &#123;
+listen 443;
+server_name xxx;
+    #ssl_certificate ;
+    #ssl_certificate_key ;
+
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Write-Ahead Log（WAL）的工作原理</title>
+    <url>//post/WAL.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在存储系统的运行过程中，每时每刻都发生着数据的更新，背后意味着诸如创建，删除，修改文件等数据的操作。抛开物理文件数据的改变，对于中心控制节点而言，这些都会涉及到元数据的更新操作。而为了保持系统元数据和物理数据间的状态一致性，系统所有的数据操作对应的元数据变更都需要持久化到元数据db内，但其实这里有一个性能问题，我们的每次变更如果都要实时同步到外部db内，是否意味着高频的io操作？是否有延时写入的手段呢？本文将要阐述的预写式日志Write Ahead Log(WAL),正是对此的优化。</p>
+<span id="more"></span>
+
+<h2 id="Write-Ahead-Log概述"><a href="#Write-Ahead-Log概述" class="headerlink" title="Write Ahead Log概述"></a>Write Ahead Log概述</h2><p>Write Ahead Log简称WAL，在分布式存储系统中的元数据更新中应用得十分广泛。WAL的主要意思是说在将元数据的变更操作写入到持久稳定的db之前，先预先写入到一个log中，然后再由另外的操作将log apply到外部的持久db里去。这种模式会减少掉每次的db写入操作，尤其当系统要处理大量的transaction操作的时候，WAL的方式相比较于实时同步db的方式有着更高的效率。</p>
+<p>WAL还有一点很重要的帮助是可以在disaster recovery过程中起到状态恢复的作用，系统在load完元数据db后，再把未来得及提交的WAL apply进来，就能恢复成和之前最终一致的状态。</p>
+<h2 id="WAL的执行机理"><a href="#WAL的执行机理" class="headerlink" title="WAL的执行机理"></a>WAL的执行机理</h2><p>上面只介绍了WAL的概述内容，本小节我们来深入了解WAL的内部执行细节。</p>
+<p>首先我们要搞清楚一点的是，WAL不记录元数据的本身，而是变更的record。那么何为”变更的record“？一个删除操作记录，一个添加记录，至于每个记录会包含有什么信息呢，大家可以参考audit log的内容属性。不过WAL的log格式和audit log还是有所区别的。</p>
+<p>追本溯源，对于WAL来说，它是被谁写入的呢？答案是WAL buffer，当这个buffer满了的时候或者人工触发flush动作时，它就会将transaction数据写出到WAL的log内。当然，系统在每次完成一个操作时，同时会将改动应用到memory和WAL buffer内，然后自己再控制buffer flush出去的逻辑。</p>
+<p>当老的WAL已经被apply进元数据db之后，我们会用更新commitId来表明当前最新的transaction，理论上来说低于这个commitId的WAL已经可以被清除purge出去了。这个过程我们可以理解为checkpoint过程，当前db+WAL变更=新的db。</p>
+<p>上述WAL细节过程如下图:</p>
+<p><img data-src="WAL/image-20210520142356234.png" alt="image-20210520142356234"></p>
+<h2 id="WAL-apply的控制"><a href="#WAL-apply的控制" class="headerlink" title="WAL apply的控制"></a>WAL apply的控制</h2><p>在系统做disaster recovery中，对于WAL的应用过程，有时可能会出现应用出差的情况，包括一些局部WAL记录格式写异常的情况。这个时候用户可以选择是否中断WAL的apply过程或者是忽略异常，来完成尽可能的数据状态恢复。这些都是WAL内部的细节控制。</p>
+<p>以上就是本文主要阐述的关于WAL的内容了。<br>#引用<br>[1].<a href="https://pgadminedb.readthedocs.io/en/latest/module_02/">https://pgadminedb.readthedocs.io/en/latest/module_02/</a></p>
+]]></content>
+      <categories>
+        <category>分布式系统</category>
+      </categories>
+      <tags>
+        <tag>WAL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装php7.3.5</title>
+    <url>//post/centos-php7.3.5.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作需要使用php7.3.5做报表系统<br>本文采用编译安装</p>
+<span id="more"></span>
+<p>1、先安装依赖包</p>
+<pre class="line-numbers language-none"><code class="language-none">yum -y install epel-release libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel ncurses curl gdbm-devel db4-devel libXpm-devel libX11-devel gd-devel gmp-devel expat-devel xmlrpc-c xmlrpc-c-devel libicu-devel libmcrypt-devel libmemcached-devel libzip gcc-c++ sqlite-devel  oniguruma oniguruma-devel autoconf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>2、开始编译</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;configure \
+--prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
+--exec-prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;php \
+--bindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin \
+--sbindir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;sbin \
+--includedir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;include \
+--libdir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php \
+--mandir&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;php&#x2F;man \
+--with-config-file-path&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;etc \
+--with-mhash \
+--with-openssl \
+--with-mysqli&#x3D;shared,mysqlnd \
+--with-pdo-mysql&#x3D;shared,mysqlnd \
+--with-gd \
+--with-iconv \
+--with-zlib \
+--enable-zip \
+--enable-inline-optimization \
+--disable-debug \
+--disable-rpath \
+--enable-shared \
+--enable-xml \
+--enable-redis\
+--enable-bcmath \
+--enable-shmop \
+--enable-sysvsem \
+--enable-mbregex \
+--enable-mbstring \
+--enable-ftp \
+--enable-pcntl \
+--enable-calendar \
+--enable-exif \
+--enable-sockets \
+--with-xmlrpc \
+--with-libxml-dir \
+--enable-soap \
+--without-pear \
+--with-gettext \
+--enable-session \
+--with-curl \
+--with-jpeg-dir \
+--with-png-dir \
+--with-freetype-dir \
+--with-bz2 \
+--enable-opcache \
+--enable-fpm \
+--with-fpm-user&#x3D;nginx \
+--with-fpm-group&#x3D;nginx \
+--without-gdbm \
+--enable-fast-install \
+--disable-fileinfo
+
+make &amp;&amp; make install <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>添加配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc
+cp php-fpm.conf.default php-fpm.conf
+cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;etc&#x2F;php-fpm.d
+cp www.conf.default www.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>查找当前php使用ini的位置</p>
+<pre class="line-numbers language-none"><code class="language-none">php --ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>添加配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir &#x2F;usr&#x2F;local&#x2F;php&#x2F;conf
+vim php.ini
+[PHP]
+engine &#x3D; On
+short_open_tag &#x3D; Off
+precision &#x3D; 14
+output_buffering &#x3D; 4096
+zlib.output_compression &#x3D; Off
+implicit_flush &#x3D; Off
+unserialize_callback_func &#x3D;
+serialize_precision &#x3D; -1
+disable_functions &#x3D;
+disable_classes &#x3D;
+zend.enable_gc &#x3D; On
+zend.exception_ignore_args &#x3D; Off
+expose_php &#x3D; On
+max_execution_time &#x3D; 30
+max_input_time &#x3D; 60
+memory_limit &#x3D; 128M
+error_reporting &#x3D; E_ALL
+display_errors &#x3D; On
+display_startup_errors &#x3D; On
+log_errors &#x3D; On
+log_errors_max_len &#x3D; 1024
+ignore_repeated_errors &#x3D; Off
+ignore_repeated_source &#x3D; Off
+report_memleaks &#x3D; On
+variables_order &#x3D; &quot;GPCS&quot;
+request_order &#x3D; &quot;GP&quot;
+register_argc_argv &#x3D; Off
+auto_globals_jit &#x3D; On
+post_max_size &#x3D; 8M
+auto_prepend_file &#x3D;
+auto_append_file &#x3D;
+default_mimetype &#x3D; &quot;text&#x2F;html&quot;
+default_charset &#x3D; &quot;UTF-8&quot;
+doc_root &#x3D;
+user_dir &#x3D;
+enable_dl &#x3D; Off
+file_uploads &#x3D; On
+upload_max_filesize &#x3D; 2M
+max_file_uploads &#x3D; 20
+allow_url_fopen &#x3D; On
+allow_url_include &#x3D; Off
+default_socket_timeout &#x3D; 60
+extension&#x3D;ldap
+[CLI Server]
+cli_server.color &#x3D; On
+[Date]
+[filter]
+[iconv]
+[imap]
+[intl]
+[sqlite3]
+[Pcre]
+[Pdo]
+[Pdo_mysql]
+pdo_mysql.default_socket&#x3D;
+[Phar]
+[mail function]
+SMTP &#x3D; localhost
+smtp_port &#x3D; 25
+mail.add_x_header &#x3D; Off
+[ODBC]
+odbc.allow_persistent &#x3D; On
+odbc.check_persistent &#x3D; On
+odbc.max_persistent &#x3D; -1
+odbc.max_links &#x3D; -1
+odbc.defaultlrl &#x3D; 4096
+odbc.defaultbinmode &#x3D; 1
+[MySQLi]
+mysqli.max_persistent &#x3D; -1
+mysqli.allow_persistent &#x3D; On
+mysqli.max_links &#x3D; -1
+mysqli.default_port &#x3D; 3306
+mysqli.default_socket &#x3D;
+mysqli.default_host &#x3D;
+mysqli.default_user &#x3D;
+mysqli.default_pw &#x3D;
+mysqli.reconnect &#x3D; Off
+[mysqlnd]
+mysqlnd.collect_statistics &#x3D; On
+mysqlnd.collect_memory_statistics &#x3D; On
+[OCI8]
+[PostgreSQL]
+pgsql.allow_persistent &#x3D; On
+pgsql.auto_reset_persistent &#x3D; Off
+pgsql.max_persistent &#x3D; -1
+pgsql.max_links &#x3D; -1
+pgsql.ignore_notice &#x3D; 0
+pgsql.log_notice &#x3D; 0
+[bcmath]
+bcmath.scale &#x3D; 0
+[browscap]
+[Session]
+session.save_handler &#x3D; files
+session.use_strict_mode &#x3D; 0
+session.use_cookies &#x3D; 1
+session.use_only_cookies &#x3D; 1
+session.name &#x3D; PHPSESSID
+session.auto_start &#x3D; 0
+session.cookie_lifetime &#x3D; 0
+session.cookie_path &#x3D; &#x2F;
+session.cookie_domain &#x3D;
+session.cookie_httponly &#x3D;
+session.cookie_samesite &#x3D;
+session.serialize_handler &#x3D; php
+session.gc_probability &#x3D; 1
+session.gc_divisor &#x3D; 1000
+session.gc_maxlifetime &#x3D; 1440
+session.referer_check &#x3D;
+session.cache_limiter &#x3D; nocache
+session.cache_expire &#x3D; 180
+session.use_trans_sid &#x3D; 0
+session.sid_length &#x3D; 26
+session.trans_sid_tags &#x3D; &quot;a&#x3D;href,area&#x3D;href,frame&#x3D;src,form&#x3D;&quot;
+session.sid_bits_per_character &#x3D; 5
+[Assertion]
+zend.assertions &#x3D; 1
+[COM]
+[mbstring]
+[gd]
+[exif]
+[Tidy]
+tidy.clean_output &#x3D; Off
+[soap]
+soap.wsdl_cache_enabled&#x3D;1
+soap.wsdl_cache_dir&#x3D;&quot;&#x2F;tmp&quot;
+soap.wsdl_cache_ttl&#x3D;86400
+soap.wsdl_cache_limit &#x3D; 5
+[sysvshm]
+[ldap]
+ldap.max_links &#x3D; -1
+[dba]
+[opcache]
+[curl]
+[openssl]
+[ffi]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装php-redis</p>
+<pre class="line-numbers language-none"><code class="language-none">tar -zxvf owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
+cd owlient-phpredis-90ecd17
+&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
+.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config
+make &amp;&amp; make install
+cd &#x2F;usr&#x2F;local&#x2F;php&#x2F;&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;
+vim php.ini
+extension_dir &#x3D; &quot;&#x2F;usr&#x2F;local&#x2F;php&#x2F;lib&#x2F;php&#x2F;extensions&#x2F;no-debug-non-zts-20060613&#x2F;&quot;
+extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>安装php-grpc</p>
+<pre class="line-numbers language-none"><code class="language-none">wget http:&#x2F;&#x2F;pecl.php.net&#x2F;get&#x2F;grpc-1.20.0.tgz
+tar -xzvf grpc-1.20.0.tgz
+cd grpc-1.20.0
+&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;phpize
+.&#x2F;configure --with-php-config&#x3D;&#x2F;usr&#x2F;local&#x2F;php&#x2F;bin&#x2F;php-config 
+make &amp;&amp; make install
+vim php.ini
+extension &#x3D; redis.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>centos7 php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>du</title>
+    <url>//post/du-md.html</url>
+    <content><![CDATA[<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><p>du(Disk Usage) - 报告磁盘空间使用情况</p>
+<span id="more"></span>
+<pre class="line-numbers language-none"><code class="language-none">-a, --all
+    显示对所有文件的统计，而不只是包含子目录。
+-b, --bytes
+    输出以字节为单位的大小，替代缺省时1024字节的计数单位。
+--block-size&#x3D;size
+    输出以块为单位的大小，块的大小为 size 字节。( file- utils-4.0 的新选项)
+-c, --total
+    在处理完所有参数后给出所有这些参数的总计。这个选项被 用给出指定的一组文件或目录使用的空间的总和。
+-D, --dereference-args
+    引用命令行参数的符号连接。但不影响其他的符号连接。 这对找出象 &#x2F;usr&#x2F;tmp 这样的目录的磁盘使用量有用， &#x2F;usr&#x2F;tmp 等通常是符号连接。 译住：例如在 &#x2F;var&#x2F;tmp 下建立一个目录test, 而&#x2F;usr&#x2F;tmp 是指向 &#x2F;var&#x2F;tmp 的符号连接。du &#x2F;usr&#x2F;tmp 返回一项 &#x2F;usr&#x2F;tmp , 而 du - D &#x2F;usr&#x2F;tmp 返回两项 &#x2F;usr&#x2F;tmp，&#x2F;usr&#x2F;tmp&#x2F;test。
+--exclude&#x3D;pattern
+    在递归时，忽略与指定模式相匹配的文件或子目录。模式 可以是任何 Bourne shell 的文件 glob 模式。( file- utils-4.0 的新选项)
+-h, --human-readable
+    为每个数附加一个表示大小单位的字母，象用M表示二进制 的兆字节。
+-H, --si
+    与 -h 参数起同样的作用，只是使用法定的 SI 单位( 用 1000的幂而不是 1024 的幂，这样 M 代表的就是1000000 而不是 1048576)。(fileutils-4.0 的新选项)
+-k, --kilobytes
+    输出以1024字节为计数单位的大小。
+-l, --count-links
+    统计所有文件的大小，包括已经被统计过的(作为一个硬连接)。
+-L, --dereference
+    引用符号连接(不是显示连接点本身而是连接指向的文件或 目录所使用的磁盘空间)。
+-m, --megabytes
+    输出以兆字节的块为计数单位的大小(就是 1,048,576 字节)。
+--max-depth&#x3D;n
+    只输出命令行参数的小于等于第 n 层的目录的总计。 --max-depth&#x3D;0的作用同于-s选项。(fileutils-4.0的新选项)
+-s, --summarize
+    对每个参数只显示总和。
+-S, --separate-dirs
+    单独报告每一个目录的大小，不包括子目录的大小。
+-x, --one-file-system
+    忽略与被处理的参数不在同一个文件系统的目录。
+-X file, --exclude-from&#x3D;file
+    除了从指定的文件中得到模式之外与 --exclude 一样。 模式以行的形式列出。如果指定的文件是&#39;-&#39;,那么从标准输 入中读出模式。(fileutils-4.0 的新选项) GNU 标准选项
+--help
+    在标准输出上输出帮助信息后正常退出。
+--version
+    在标准输出上输出版本信息后正常退出。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>统计当前目录下，第一层的文件大小</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -ah --max-depth&#x3D;1 .&#x2F;cdn<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>统计当前目录大小，并安大小排序</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -sm * | sort -n<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>按大小排序目录(查看文件目录大小)</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --time --max-depth&#x3D;1 | sort -hr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>列出当前目录中的目录名不包括xyz字符串的目录的大小</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --exclude&#x3D;&#39;*xyz*&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>显示几个文件或目录各自占用磁盘空间的大小，并统计它们的总和</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -c log30.tar.gz log31.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>查看各文件夹大小命令</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">du -h --max-depth&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mac使用crt异常报错</title>
+    <url>//post/mac-crt.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>刚刚升级完mac系统：macOS Catalina，使用CRT就有报错，但是不影响我们使用，只是每次启动都会报错，很烦人。</p>
+<p>报错内容是The permissions on the “/cores” directory need to be changed to include write permission for “other”。</p>
+<span id="more"></span>
+
+<p>Please execute (or ask an admin to execute) the following from a terminal window:</p>
+<p>sudo chmod o+w /cores</p>
+<p>You can change this behavior by setting the “Create Core Files” parameter in your “Global.ini” to 0.</p>
+<img data-src="../img/image-20210520160622429.png" alt="报错截图" style="zoom:50%;">
+
+<p>见证一下mac系统</p>
+<img data-src="../img/image-20210520160642626.png" alt="mac截图" style="zoom:50%;">
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>根据提示执行：</p>
+<p>查看下我们本机的 cores 目录权限</p>
+<pre class="line-numbers language-none"><code class="language-none">ls -l &#x2F;
+...
+drwxr-xr-x    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发现缺少写权限，所以执行</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo chmod o+w &#x2F;cores
+Password:
+ls -l &#x2F;
+...
+drwxr-xrwx    2 root  wheel    64 12  14 2019 cores
+...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>然后再去启动CRT就正常了。</p>
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx禁止外部访问到隐藏文件（.git或.env）</title>
+    <url>//post/nginx-deny-git.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>安全部门说线上有域名可以直接下载到.env文件，这类文件中是有数据库等账号信息，所以需要隐藏掉</p>
+<span id="more"></span>
+
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>在server的配置中，加上以下这段，重新reload即可</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">location ~ &#x2F;\. &#123;
+        deny all;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>nginx</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php进程不及时释放进程导致CPU跑满</title>
+    <url>//post/php-cpu.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>公司一台服务器安装了php，很稳定的跑了3年，突然有一天CPU报警，排查为php-fpm进程CPU利用率为100%，遂排查原因</p>
+<span id="more"></span>
+<h1 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h1><p>php-fpm进程不但占用内存，也会占用cpu。实际服务器运行观察中，我们可能经常发现这种现象，内存占用很少，cpu却跑满了，导致运行堵塞。当然，出现这种情况的原因可能有多种，一种原因就是php进程没有得到及时释放。</p>
+<p>对于这种情况，可以设置最大请求数max_requests，即当一个 PHP-CGI 进程处理的请求数累积到 max_requests 个后，则自动重启该进程，这样达到了释放内存的目的了，当然cpu占用也同步降低了。</p>
+<p>以4G内存服务器为例进行设置，加入FPM配置文件：<br>pm.max_requests = 128<br>pm.max_children = 20 #表示 php-fpm 能启动的子进程的最大数量<br>当然，以上数值应该根据需要测试调整。</p>
+<p>以上参数可以参考这个文章 <a href="http://localhost:4000/2021/06/01/php-fpm-conf/">php-fpm的配置文件详解</a></p>
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>php-fpm配置文件详解</title>
+    <url>//post/php-fpm-conf.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php一直都搞不懂，今天彻底把php-fpm的配置文件解释一下</p>
+<span id="more"></span>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><pre class="line-numbers language-none"><code class="language-none">[www]
+user &#x3D; www
+group &#x3D; www
+
+;listen &#x3D; 127.0.0.1:9000
+listen.owner &#x3D; www
+listen.group &#x3D; www
+listen.mode &#x3D; 0660
+listen &#x3D; &#x2F;dev&#x2F;shm&#x2F;php-fpm.sock
+listen.allowed_clients &#x3D; 127.0.0.1
+
+;pm &#x3D; static
+pm &#x3D; dynamic
+
+pm.max_children &#x3D; 40
+pm.start_servers &#x3D; 20
+pm.min_spare_servers &#x3D; 20
+pm.max_spare_servers &#x3D; 40
+pm.max_requests &#x3D; 128
+;pm.max_requests &#x3D; 500<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><p>1、pm = dynamic 或 pm = static 表示使用哪种进程数量管理方式，dynamic表示php-fpm进程数是动态的，最开始是pm.start_servers指定的数量，如果请求较多，则会自动增加，保证空闲的进程数不小于pm.min_spare_servers，如果进程数较多，也会进行相应清理，保证多余的进程数不多于pm.max_spare_servers；</p>
+<p>2、pm.max_children：静态方式下开启的php-fpm进程数量，在动态方式下他限定php-fpm的最大进程数(<font color="red">这里要注意pm.max_spare_servers的值只能小于等于pm.max_children</font>）<br>pm.start_servers：动态方式下的起始php-fpm进程数量。<br>pm.min_spare_servers：动态方式空闲状态下的最小php-fpm进程数量。<br>pm.max_spare_servers：动态方式空闲状态下的最大php-fpm进程数量。</p>
+<p>区别：</p>
+<p>如果dm设置为static，那么其实只有pm.max_children这个参数生效。系统会开启设置数量的php-fpm进程。</p>
+<p>如果dm设置为dynamic，那么pm.max_children参数失效，后面3个参数生效。系统会在php-fpm运行开始的时候启动pm.start_servers个php-fpm进程，然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数。</p>
+<p>设置：</p>
+<p>数值设置，参考自己的实际硬件配置，可以参考 总内存/30M 来计算。</p>
+<h1 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h1><p>如何判断我选择“pm = dynamic”还是“pm = static”呢？哪一种更好呢？</p>
+<p>事实上，跟Apache一样，运行的PHP程序在执行完成后，或多或少会有内存泄露的问题。</p>
+<p>这也是为什么开始的时候一个php-fpm进程只占用3M左右内存，运行一段时间后就会上升到20-30M的原因了。</p>
+<p>对于内存大的服务器（比如8G以上）来说，用静态的max_children实际上更为妥当，因为这样不需要进行额外的进程数目控制，会提高效率。因为频繁开关php-fpm进程也会有时滞，所以内存够大的情况下开静态效果会更好。数量也可以根据 总内存/30M 得到，比如8GB内存可以设置为100，那么php-fpm耗费的内存就能控制在 2G-3G的样子。</p>
+<p>如果内存稍微小点，比如1~2G，那么指定静态的进程数量更加有利于服务器的稳定。这样可以保证php-fpm只获取够用的内存，将不多的内存分配给其他应用去使用，会使系统的运行更加畅通。</p>
+<p>对于小内存的服务器来说，比如256M内存的VPS，即使按照一个20M的内存量来算，10个php-cgi进程就将耗掉200M内存，那系统的崩溃就应该很正常了。</p>
+<p>因此应该尽量地控制php-fpm进程的数量，大体明确其他应用占用的内存后，给它指定一个静态的小数量，会让系统更加平稳一些。</p>
+<p>或者使用动态方式，因为动态方式会结束掉多余的进程，可以回收释放一些内存，所以推荐在内存较少的服务器或VPS上使用，具体最大数量根据 总内存/20M 得到。</p>
+<p>比如说512M的VPS，建议pm.max_spare_servers设置为20。至于pm.min_spare_servers，则建议根据服务器的负载情况来设置，比较合适的值在5~10之间。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总结：内存小的建议用动态（pm = dynamic），内存大的建议用静态（pm = static）</p>
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>swap分区介绍</title>
+    <url>//post/swap.html</url>
+    <content><![CDATA[<h2 id="wap交换分区概念"><a href="#wap交换分区概念" class="headerlink" title="wap交换分区概念"></a>wap交换分区概念</h2><p>什么是Linux swap space呢？我们先来看看下面两段关于Linux swap space的英文介绍资料:</p>
+<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
+<p>Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM is full, inactive pages in memory are moved to the swap space. While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space is located on hard drives, which have a slower access time than physical memory.Swap space can be a dedicated swap partition (recommended), a swap file, or a combination of swap partitions and swap files.</p>
+<span id="more"></span>
+<p>Linux内核为了提高读写效率与速度，会将文件在内存中进行缓存，这部分内存就是 Cache Memory（缓存内存）。即使你的程序运行结束后，Cache Memory 也不会自动释放。这就会导致你在Linux系统中程序频繁读写文件后，你会发现可用物理内存变少。当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到swap空间中，等到那些程序要运行时，再从 swap 分区中恢复保存的数据到内存中。这样，系统在物理内存不够时，才进行 swap 交换。</p>
+<p>关于 swap 分区，其实我们有很多疑问,如果能弄清楚这些疑问，那么你对 swap 的了解掌握就差不多了。如何查看 swap 分区大小？ swap 分区大小应该如何设置？系统在什么时候会使用 swap 分区? 是否可以调整？ 如何调整 swap 分区的大小？ swap 分区有什么优劣和要注意的地方？ swap 分区是否必要？那么我一个一个来看看这些疑问吧！</p>
+<h2 id="查看swap分区大小"><a href="#查看swap分区大小" class="headerlink" title="查看swap分区大小"></a>查看swap分区大小</h2><p>查看swap分区的大小以及使用情况，一般使用free -m命令即可，如下所示，swap大小为2015M，目前没有使用swap分区<img data-src="../img/image-20210520144425159.png" alt="未使用swap"></p>
+<h2 id="wap分区大小设置"><a href="#wap分区大小设置" class="headerlink" title="wap分区大小设置"></a><strong>wap分区大小设置</strong></h2><p>系统的swap分区大小设置多大才是最优呢？ 关于这个问题，应该说只能有一个统一的参考标准，具体还应该根据系统实际情况和内存的负荷综合考虑，像ORACLE的官方文档就推荐如下设置，这个是根据物理内存来做参考的。</p>
+<p><img data-src="../img/image-20210520144633150.png" alt="image-20210520144633150"></p>
+<p>另外在其它博客中看到下面一个推荐设置，当然我不清楚其怎么得到这个标准的。是否合理也无从考证。可以作为一个参考。</p>
+<p>4G以内的物理内存，SWAP 设置为内存的2倍。</p>
+<p>4-8G的物理内存，swap 等于内存大小。</p>
+<p>8-64G 的物理内存，swap 设置为8G。</p>
+<p>64-256G物理内存，swap 设置为16G。</p>
+<p>上下两个标准确实也很让人无所适从。我就有一次在一台ORACLE数据库服务器（64G的RAM），按照官方推荐设置了一个很大的swap分区，但是我发现其实这个swap几乎很少用到，其实是浪费了磁盘空间。所以如果根据系统实际情况和内存的负荷综合考虑，其实应该按照第二个参考标准设置为8G即可。当然这个只是个人的一些认知。</p>
+<h2 id="释放swap分区空间"><a href="#释放swap分区空间" class="headerlink" title="释放swap分区空间"></a><strong>释放swap分区空间</strong></h2><p>查看swap分区位置</p>
+<p><img data-src="../img/image-20210520144815788.png" alt="image-20210520144815788"></p>
+<p>用swapoff关闭交换分区</p>
+<p><code>swapoff /dev/mapper/VolGroup00-LogVol01</code></p>
+<p>使用swapon启用交换分区**，此时查看交换分区的使用情况，你会发现used为0了</p>
+<p><img data-src="../img/image-20210520144920381.png" alt="image-20210520144920381"></p>
+<h2 id="Swap分区空间什么时候使用"><a href="#Swap分区空间什么时候使用" class="headerlink" title="Swap分区空间什么时候使用"></a>Swap分区空间什么时候使用</h2><p>系统在什么情况或条件下才会使用swap分区的空间呢？ 其实是Linux通过一个参数swappiness来控制的。当然还涉及到复杂的算法。</p>
+<p>这个参数值可为 0-100，控制系统 swap 的使用程度。高数值可优先系统性能，在进程不活跃时主动将其转换出物理内存。低数值可优先互动性并尽量避免将进程转换处物理内存，并降低反应延迟。默认值为 60。注意：这个只是一个权值，不是一个百分比值，涉及到系统内核复杂的算法。下面是关于swappiness的相关资料：</p>
+<p>The Linux 2.6 kernel added a new kernel parameter called swappiness to let administrators tweak the way Linux swaps. It is a number from 0 to 100. In essence, higher values lead to more pages being swapped, and lower values lead to more applications being kept in memory, even if they are idle. Kernel maintainer Andrew Morton has said that he runs his desktop machines with a swappiness of 100, stating that “My point is that decreasing the tendency of the kernel to swap stuff out is wrong. You really don’t want hundreds of megabytes of BloatyApp’s untouched memory floating about in the machine. Get it out on the disk, use the memory for something useful.”</p>
+<p>Swappiness is a property of the Linux kernel that changes the balance between swapping out runtime memory, as opposed to dropping pages from the system page cache. Swappiness can be set to values between 0 and 100 inclusive. A low value means the kernel will try to avoid swapping as much as possible where a higher value instead will make the kernel aggressively try to use swap space. The default value is 60, and for most desktop systems, setting it to 100 may affect the overall performance, whereas setting it lower (even 0) may improve interactivity (by decreasing response latency.</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下设置swappiness参数来配置内存使用到多少才开始使用swap分区</title>
+    <url>//post/swappiness.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>阿里云 ECS的 CPU 使用率有时候到100%，top 命令查看进程发现是 kswapd0 进程占 cpu 达到70%。</p>
+<span id="more"></span>
+
+<p>swap分区的作用是当物理内存不足时，会将一部分硬盘当做虚拟内存来使用。</p>
+<p>kswapd0 占用过高是因为 物理内存不足，使用swap分区与内存换页操作交换数据，导致CPU占用过高。<br>swap分区的介绍可以看这个文章：<a href="https://running-dpf.github.io/2021/05/20/swap/">swap分区</a></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。linux的基本默认设置为60，具体如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#60<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>也就是说，你的内存在使用到 100-60=40% 的时候，就开始出现有交换分区的使用。大家知道，内存的速度会比磁盘快很多，这样子会加大系统IO，同时造的成大量页的换进换出，严重影响系统的性能，所以我们在操作系统层面，要尽可能使用内存，对该参数进行调整。</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>临时调整的方法如下，我们调成10：</p>
+<pre class="line-numbers language-none"><code class="language-none">sysctl vm.swappiness&#x3D;10
+#vm.swappiness&#x3D;10
+cat &#x2F;proc&#x2F;sys&#x2F;vm&#x2F;swappiness
+#10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这只是临时调整的方法，重启后会回到默认设置的.</p>
+<p>要想永久调整的话，需要在/etc/sysctl.conf修改，加上：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo vim &#x2F;etc&#x2F;sysctl.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>加上</p>
+<pre class="line-numbers language-none"><code class="language-none"># Controls the maximum number of shared memory segments, in pages
+kernel.shmall &#x3D; 4294967296 #这一个可以不用设置
+vm.swappiness &#x3D; 10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 生效</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo sysctl -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样便完成修改设置！</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshark合并多个pacp文件</title>
+    <url>//post/wireshark-merge.html</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当出现网络问题的时候，可能会抓很多个pcap包，当分析的时候时间点很不容易查找，所以要将多个pcap包合并为一个，方便我们运维人员查找</p>
+<span id="more"></span>
+
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>macos命令</p>
+<p>cd /Applications/Wireshark.app/Contents/MacOS</p>
+<p>./mergecap -w ~/Downloads/compare.pcap ~/Downloads/*.pcap</p>
+<p>这样，我们在Downloads文件夹能看到一个compare.pcap的文件，这就是整合的pacp文件</p>
+]]></content>
+      <categories>
+        <category>wireshark 网络</category>
+      </categories>
+      <tags>
+        <tag>wireshark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WAN</title>
+    <url>//post/WAN.html</url>
+    <content><![CDATA[<p><strong>广域网</strong>（英语：Wide Area Network，缩写为 WAN），又称<strong>外网</strong>、<strong>公网</strong>。是连接不同地区<a href="https://baike.baidu.com/item/%E5%B1%80%E5%9F%9F%E7%BD%91?fromModule=lemma_inlink">局域网</a>或<a href="https://baike.baidu.com/item/%E5%9F%8E%E5%9F%9F%E7%BD%91?fromModule=lemma_inlink">城域网</a>计算机通信的远程网。通常跨接很大的物理范围，所覆盖的范围从几十公里到几千公里，它能连接多个地区、城市和国家，或横跨几个洲并能提供远距离通信，形成国际性的远程网络。广域网并不等同于互联网。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>docker容器使用的资源</title>
+    <url>//post/docker-use-source.html</url>
+    <content><![CDATA[<h3 id="默认输出"><a href="#默认输出" class="headerlink" title="默认输出"></a>默认输出</h3><p>docker stats 命令用来显示容器使用的系统资源。不带任何选项执行 docker stats 命令：</p>
+<span id="more"></span>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+<p><img data-src="docker-use-source/image-20220926144505621.png" alt="image-20220926144505621"></p>
+<p>默认情况下，stats 命令会每隔 1 秒钟刷新一次输出的内容直到你按下 ctrl + c。下面是输出的主要内容：<br>[CONTAINER]：以短格式显示容器的 ID。<br>[NAME]：容器名字。<br>[[CPU %]：CPU 的使用情况。<br>[MEM USAGE / LIMIT]：当前使用的内存和最大可以使用的内存。<br>[MEM %]：以百分比的形式显示内存使用情况。<br>[NET I/O]：网络 I/O 数据。<br>[BLOCK I/O]：磁盘 I/O 数据。<br>[PIDS]：PID 号。</p>
+<h3 id="只返回当前的状态"><a href="#只返回当前的状态" class="headerlink" title="只返回当前的状态"></a>只返回当前的状态</h3><p>如果不想持续的监控容器使用资源的情况，可以通过 –no-stream 选项只输出当前的状态：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats --no-stream<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这样输出的结果就不会变化了，看起来省劲不少。</p>
+<h3 id="只输出指定的容器"><a href="#只输出指定的容器" class="headerlink" title="只输出指定的容器"></a>只输出指定的容器</h3><p>如果我们只想查看个别容器的资源使用情况，可以为 docker stats 命令显式的指定目标容器的名称或者是 ID：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats --no-stream b772f7b9b058<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="docker-use-source/image-20220926145442492.png" alt="image-20220926145442492"></p>
+<h3 id="格式化输出的结果"><a href="#格式化输出的结果" class="headerlink" title="格式化输出的结果"></a>格式化输出的结果</h3><p>docker stats 命令支持我们通过 –format 选项自定义输出的内容和格式：</p>
+<pre class="line-numbers language-none"><code class="language-none">docker stats --format &quot;table &#123;&#123;.Name&#125;&#125;\t&#123;&#123;.CPUPerc&#125;&#125;\t&#123;&#123;.MemUsage&#125;&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img data-src="docker-use-source/image-20220926145658398.png" alt="image-20220926145658398"></p>
+<p>上面的命令中我们只输出了 Name, CPUPerc 和 Memusage 三列。下面是自定义的格式中可以使用的所有占位符：</p>
+<p> 根据用户指定的名称显示容器的名称或 ID。<br>.Name           容器名称。<br>.ID                 容器 ID。<br>.CPUPerc       CPU 使用率。<br>.MemUsage  内存使用量。<br>.NetIO           网络 I/O。<br>.BlockIO        磁盘 I/O。<br>.MemPerc     内存使用率。<br>.PIDs             PID 号。</p>
+<p>有了这些信息我们就可以完全按照自己的需求或者是偏好来控制 docker stats 命令输出的内容了。</p>
+<p>除了以 table 格式输出结果，还可以通过 format 选项输出 json 格式的结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">docker stats --no-stream --format \
+    &quot;&#123;\&quot;container\&quot;:\&quot;&#123;&#123; .Container &#125;&#125;\&quot;,\&quot;memory\&quot;:&#123;\&quot;raw\&quot;:\&quot;&#123;&#123; .MemUsage &#125;&#125;\&quot;,\&quot;percent\&quot;:\&quot;&#123;&#123; .MemPerc &#125;&#125;\&quot;&#125;,\&quot;cpu\&quot;:\&quot;&#123;&#123; .CPUPerc &#125;&#125;\&quot;&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 docker stats 命令我们可以看到容器使用系统资源的情况。这为我们进一步的约束容器可用资源或者是调查与资源相关的问题提供了依据。除了 docker 自带的命令，像 glances 等工具也已经支持查看容器使用的资源情况了。</p>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mtr</title>
+    <url>//post/mtr.html</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>一般情况，我们使用ping，traceroute，nslookup测试网络的连通性，今天我们介绍一个Linux下判断网络连通性的工具：mtr，mtr的全称：my traceroute，是一个集ping和traceroute功能的网络诊断工具。</p>
+<span id="more"></span>
+
+<h3 id="MTR基本原理"><a href="#MTR基本原理" class="headerlink" title="MTR基本原理"></a>MTR基本原理</h3><p>ping、traceroute、mtr都可以使用“ICMP” 包来测试 网络中两点之间的网络连接状况。当使用 ping 命令 ping 网络上的主机后， ICMP 包将会发送到目的主机，然后在目的主机返回响应。这样，就可以得知本机到目的主机 ICMP 包传输所使用的往返时间。</p>
+<p>mtr 相对于 traceroute 命令只会做一次链路跟踪测试，mtr 命令会对链路上的相关节点做持续探测并给出相应的统计信息。所以，mtr命令能避免节点波动对测试结果的影响，所以其测试结果更正确，建议优先使用。</p>
+<h3 id="安装mtr"><a href="#安装mtr" class="headerlink" title="安装mtr"></a>安装mtr</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#linux
+yum -y install mtr
+
+#macOS
+brew install mtr
+
+#alpine
+apk add --no-cache mtr<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="运行mtr"><a href="#运行mtr" class="headerlink" title="运行mtr"></a>运行mtr</h3><pre class="line-numbers language-none"><code class="language-none">mtr www.baidu.com
+ 
+# r 参数表示向目标主机发送 10 个 ICMP 数据包，然后输出报告。
+# 如果不带参数，则会不间断运行，取消按 q 键退出。
+  mtr -r www.baidu.com
+  
+第一列：HOST，显示IP地址或者主机名。
+
+第二列：Loss%，该Host的丢包率。
+
+第三列：Snt，该Host每秒发送数据包数，默认值是10，可以通过参数“-c”指定。
+
+第四列：Last，该Host的最近一次的延时，单位是毫秒ms。
+
+第五列：Avg，该Host的平均延时，单位是毫秒ms。
+
+第六列：Best，该Host的最低延时，单位是毫秒ms。
+
+第七列：Wrst，该Host的最高延时，单位是毫秒ms。
+
+第八列：StDev，该Host的标准偏差，稳定性的体现。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">另外，也可以在mtr命令运行过程中，输入相应字母来快速切换模式。
+？或 h：显示帮助菜单。
+d：切换显示模式。
+n：切换启用或禁用DNS域名解析。
+u：切换使用ICMP或UDP数据包进行探测。
+q：退出探测<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="mtr参数详解"><a href="#mtr参数详解" class="headerlink" title="mtr参数详解"></a>mtr参数详解</h3><p>常见可选参数说明:<br>-r 或 -report：以报告模式显示输出，而不是一直运行。<br>-p 或 -split：将每次追踪的结果分别列出来。<br>-s 或 -psize：指定ping数据包的大小。<br>-i：发送数据包的时间间隔，默认为 1 秒，小于 1 秒需要 sudo 提权运行<br>-n 或 -no-dns：参数禁用反向 DNS 查找，这样就会始终显示 IP。<br>-c ：指定发送数据包的数量，例如发送 20 个数据包（发送数据包后会自动退出，因此可不必添加 r 参数）。<br>-a 或 -address：设置发送数据包的IP地址。用于主机有多个IP时。<br>-u：发送 UDP 数据包探测而非默认 ICMP ECHO 数据包。<br>-4：只使用IPv4协议。<br>-6：只使用IPv6协议。</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
 </search>

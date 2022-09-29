@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"running-dpf.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8144939565768363"
+     crossorigin="anonymous"></script>
+
+  <meta name="description" content="概述：Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点 但是，如果只使用Consul的Server模式有以下2个问题：  因为Consul Server数量受到控制所以压力承">
+<meta property="og:type" content="article">
+<meta property="og:title" content="consul集群">
+<meta property="og:url" content="https://running-dpf.github.io/post/consul.html">
+<meta property="og:site_name" content="Nayaur&#39;s blog">
+<meta property="og:description" content="概述：Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点 但是，如果只使用Consul的Server模式有以下2个问题：  因为Consul Server数量受到控制所以压力承">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://running-dpf.github.io/post/consul/image-20220921142207939.png">
+<meta property="og:image" content="https://running-dpf.github.io/post/consul/image-20220921143904555.png">
+<meta property="article:published_time" content="2022-09-21T06:14:04.000Z">
+<meta property="article:modified_time" content="2022-09-26T08:21:48.031Z">
+<meta property="article:author" content="岩羊">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://running-dpf.github.io/post/consul/image-20220921142207939.png">
+
+<link rel="canonical" href="https://running-dpf.github.io/post/consul.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>consul集群 | Nayaur's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Nayaur's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Nayaur's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我走的很慢，但我从不后退</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://running-dpf.github.io/post/consul.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+      <meta itemprop="name" content="岩羊">
+      <meta itemprop="description" content="不要等到明天,明天太遥远,今天就行动">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nayaur's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          consul集群
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-21 14:14:04" itemprop="dateCreated datePublished" datetime="2022-09-21T14:14:04+08:00">2022-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-26 16:21:48" itemprop="dateModified" datetime="2022-09-26T16:21:48+08:00">2022-09-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点</p>
+<p>但是，如果只使用Consul的Server模式有以下2个问题：</p>
+<ul>
+<li><p>因为Consul Server数量受到控制所以压力承载（扩展性）是个问题。</p>
+</li>
+<li><p>Server很少导致一个Server下会注册很多微服务，当Server挂掉，这个Server节点下注册的微服务都会视为无效。</p>
+  <span id="more"></span>
+
+</li>
+</ul>
+<p>基于上述问题我们在架构中加入Consul Client模式，Client因为加入了LAN gossip协议组成网络中（高速局域网），可以识别故障的Server节点并找到可用的Server节点继续工作，其实Server模式负责的是用WAN gossip协议组成的网络进行跨广域网的数据同步（多个数据中心），这点Client模式是做不到的，Client模式也提供服务的注册和查询，但Client模式不存储节点数据，Client将请求转发给Server进行处理，节点注册数据在Server端是持久化保存的，Client的数量可以无限多，Server的数量是受控制的。总之：Client模式+LAN gossip协议组成了一个数据中心中的各个节点，Server负责投票选出Leader进行数据中心内的数据同步，这个Leader还负责利用WAN gossip协议跨广域网的与其他数据中心进行数据同步。</p>
+<p>PS:默认情况下Server的数量建议是 3 ~ 5 台，Client 的数量建议2 ~ 5台，这能平衡故障情况下的可用性和集群性能。</p>
+<h4 id="架构示意图："><a href="#架构示意图：" class="headerlink" title="架构示意图："></a>架构示意图：</h4><p><img data-src="consul/image-20220921142207939.png" alt="server-client架构图"></p>
+<h3 id="数据中心设计"><a href="#数据中心设计" class="headerlink" title="数据中心设计"></a>数据中心设计</h3><p>用户可以在单个物理数据中心、或跨多个数据中心部署Consul集群。对于运行时高读写的大型集群，将服务器部署在同物理地址可以提高性能；在云环境中，用户可以跨多个可用区域（zone）部署一个数据中心，例如每个可用区域对应一台单一的主机。Consul还可以通过<a href>WAN</a>连接单独的集群组成多数据中心。</p>
+<h4 id="单数据中心"><a href="#单数据中心" class="headerlink" title="单数据中心"></a>单数据中心</h4><p>对于部署在同一个数据中心中的应用程序，我们建议使用一个Consul集群。Consul支持传统的三层架构应用，同样也支持微服务，搭建一个集群通常是3或5台机器，用户可以在可用性和性能间寻找平衡。<br> 单个数据中心的节点（node）数建议不超过5000个，对于读写频繁的集群，可能需要进一步减少最大节点数，这具体取决KV对的数量以及监控数据的数量。当用户添加更多的客户端机器时，Gossip协议执行的时间会更长、<br> 对于写负载高的集群，推荐使用硬件升级垂直扩展，并使用低延迟存储。<br> <code>服务标签（Service Tag）</code>可帮助用户对集群中的内容进行查询</p>
+<h4 id="多数据中心"><a href="#多数据中心" class="headerlink" title="多数据中心"></a>多数据中心</h4><p>用户可以通过WAN链接加入在不同数据中心中运行相同服务的Consul集群。集群间独立运行，仅通过8302端口上的WAN通信，除非通过命令行或者API明确配置，否则Consul服务器将仅从其本地数据中心返回结果。Consul不会在多个数据中心之间复制数据，但是用户可以使用consul-replicate工具定期同步KV数据。<br> 比较好的实践是启用TLS服务名称检查，以避免代理意外交叉连接。<br> Consul的<code>预查询（prepared queries）</code>允许客户端在某一数据中心发生故障后，去另一个数据中心发现服务。例如本地数据中心dc1中的payment服务下线了，则预查询使用户能能访问到离该数据中心地理位置最近的其他正常服务。<br> 默认情况下，预查询首先会在本地数据中心解析。它们不支持查询KV数据，但是可以使用ACLs。</p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><table>
+<thead>
+<tr>
+<th align="center"><strong>节点名称</strong></th>
+<th><strong>节点IP</strong></th>
+<th align="center"><strong>Agent类型</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">consul-01</td>
+<td>10.181.0.147</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-02</td>
+<td>10.181.0.148</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-03</td>
+<td>10.181.0.149</td>
+<td align="center">server</td>
+</tr>
+<tr>
+<td align="center">consul-client</td>
+<td>10.181.0.152</td>
+<td align="center">client</td>
+</tr>
+</tbody></table>
+<h4 id="1、安装-Consul"><a href="#1、安装-Consul" class="headerlink" title="1、安装 Consul"></a>1、安装 Consul</h4><p>配置主机名，命令示例：（以下操作在所有节点配置）</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hostnamectl set-hostname consul-01
+hostnamectl set-hostname consul-02
+hostnamectl set-hostname consul-03
+hostnamectl set-hostname consul-client<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>下载consul</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export VER&#x3D;&quot;1.12.3&quot;
+wget https:&#x2F;&#x2F;releases.hashicorp.com&#x2F;consul&#x2F;$&#123;VER&#125;&#x2F;consul_$&#123;VER&#125;_linux_amd64.zip
+unzip consul_$&#123;VER&#125;_linux_amd64.zip -d &#x2F;usr&#x2F;local&#x2F;bin&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>创建consul用户和组</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">groupadd --system consul
+useradd -s &#x2F;sbin&#x2F;nologin --system -g consul consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>创建consul安装目录</p>
+<pre class="line-numbers language-none"><code class="language-none">mkdir -p &#x2F;data&#x2F;consul&#x2F;&#123;config,data,logs&#125;
+chown -R consul:consul &#x2F;data&#x2F;consul
+chmod -R 775 &#x2F;data&#x2F;consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>设置 DNS 或编辑/etc/hosts 文件以配置所有服务器的主机名，替换<code>example.com</code>为您的实际域名。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;etc&#x2F;hosts&lt;&lt;EOF
+10.181.0.147 consul-01.example.com consul-01
+10.181.0.148 consul-02.example.com consul-02
+10.181.0.149 consul-03.example.com consul-03
+10.181.0.152 consul-client.example.com consul-client
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="2、Server-节点配置"><a href="#2、Server-节点配置" class="headerlink" title="2、Server 节点配置"></a>2、Server 节点配置</h4><p>生成Consul secret</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">consul keygen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>为server节点创建json配置文件，其他节点配置修改IP地址及节点名称即可</p>
+<p>consul-01节点</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF
+&#123;
+    &quot;advertise_addr&quot;: &quot;10.181.0.147&quot;,
+    &quot;bind_addr&quot;: &quot;10.181.0.147&quot;,
+    &quot;bootstrap_expect&quot;: 3,
+    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,
+    &quot;datacenter&quot;: &quot;DC1&quot;,
+    &quot;node_name&quot;: &quot;consul-01&quot;,
+    &quot;data_dir&quot;: &quot;&#x2F;opt&#x2F;consul&#x2F;data&quot;,
+    &quot;domain&quot;: &quot;consul&quot;,
+    &quot;enable_script_checks&quot;: true,
+    &quot;dns_config&quot;: &#123;
+        &quot;enable_truncate&quot;: true,
+        &quot;only_passing&quot;: true
+    &#125;,
+    &quot;enable_syslog&quot;: true,
+    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,#将上门的srcret替换
+    &quot;leave_on_terminate&quot;: true,
+    &quot;log_level&quot;: &quot;INFO&quot;,
+    &quot;rejoin_after_leave&quot;: true,
+    &quot;retry_join&quot;: [
+     &quot;consul-01&quot;,
+     &quot;consul-02&quot;,
+     &quot;consul-03&quot;
+    ],
+    &quot;server&quot;: true,
+    &quot;start_join&quot;: [
+        &quot;consul-01&quot;,
+        &quot;consul-02&quot;,
+        &quot;consul-03&quot;
+    ],
+    &quot;ui&quot;: true
+&#125;
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>配置参数说明：</p>
+<p>datacenter：此标志控制运行代理的数据中心。如果未提供，则默认为dc1。Consul 对多个数据中心有一流的支持，但它依赖于正确的配置。同一数据中心中的节点应位于单个 LAN 上。</p>
+<p>data_dir：该标志为代理提供了一个数据目录来存储状态。</p>
+<p>node_name：节点名字，一般为主机名。</p>
+<p>server：指定是否为server节点。</p>
+<p>bootstrap_expect：在一个datacenter中期望提供的server节点数目，当提供该值的时候，consul一直等到达到指定sever数目才会引导整个集群，该标记不能和bootstrap公用。</p>
+<p>bind_addr：该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0。</p>
+<p>client_addr：Consul 将绑定客户端接口的地址，包括 HTTP 和 DNS 服务器。默认情况下，这是127.0.0.1，仅允许环回连接。在 Consul 1.0 及更高版本中，这可以设置为要绑定到的以空格分隔的地址列表。</p>
+<p>log_json：此标志使代理能够以 JSON 格式输出日志。默认为false。</p>
+<p>log_level:在 Consul 代理启动后显示的日志级别。默认为 info 。可用的日志级别是trace、debug、info、warn和err。</p>
+<p>retry_join：指定将要置入集群的IP列表，如果失败，会自动重试，知道直到成功加入。</p>
+<p>start_join：启动时加入集群的地址</p>
+<p>ui_config：此对象允许设置多个子键，用于控制 UI 中可用的显示或功能。</p>
+<p>rejoin_after_leave ：允许重新加入集群</p>
+<p>3、Client 节点配置</p>
+<p>client是consul客户端，客户端不保存数据，客户端将接收到的请求转发给Server端。Server之间通过局域网或广域网通信实现数据一致性。每个Server或Client都是一个consul agent。</p>
+<p>创建consul-client节点配置文件</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF
+&#123;
+    &quot;advertise_addr&quot;: &quot;10.181.0.152&quot;,
+    &quot;bind_addr&quot;: &quot;10.181.0.152&quot;,
+    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,
+    &quot;datacenter&quot;: &quot;DC1&quot;,
+    &quot;node_name&quot;: &quot;consul-client&quot;, 
+    &quot;data_dir&quot;: &quot;&#x2F;data&#x2F;consul&#x2F;data&quot;,
+    &quot;domain&quot;: &quot;consul&quot;,
+    &quot;enable_script_checks&quot;: true,
+    &quot;dns_config&quot;: &#123;
+        &quot;enable_truncate&quot;: true,
+        &quot;only_passing&quot;: true
+    &#125;,
+    &quot;enable_syslog&quot;: true,
+    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,
+    &quot;leave_on_terminate&quot;: true,
+    &quot;log_level&quot;: &quot;INFO&quot;,
+    &quot;rejoin_after_leave&quot;: true,
+    &quot;retry_join&quot;: [
+     &quot;consul-01&quot;,
+     &quot;consul-02&quot;,
+     &quot;consul-03&quot;
+    ],
+    &quot;server&quot;: false,
+    &quot;start_join&quot;: [
+        &quot;consul-01&quot;,
+        &quot;consul-02&quot;,
+        &quot;consul-03&quot;
+    ],
+    &quot;ui&quot;: true
+&#125;
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>4、systemd 启动文件</p>
+<p>所有节点创建systemd 服务文件<code>/etc/systemd/system/consul.service</code>，所有节点具有相同内容，配置如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">cat &gt;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;consul.service&lt;&lt;EOF
+[Unit]
+Description&#x3D;Consul Service Discovery Agent
+Documentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;
+After&#x3D;network-online.target
+Wants&#x3D;network-online.target
+
+
+[Service]
+Type&#x3D;simple
+User&#x3D;consul
+Group&#x3D;consul
+ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json
+
+
+ExecReload&#x3D;&#x2F;bin&#x2F;kill -HUP $MAINPID
+KillSignal&#x3D;SIGINT
+TimeoutStopSec&#x3D;5
+Restart&#x3D;on-failure
+SyslogIdentifier&#x3D;consul
+
+
+[Install]
+WantedBy&#x3D;multi-user.target
+EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所有节点启动consul服务</p>
+<pre class="line-numbers language-none"><code class="language-none">systemctl enable --now consul.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 id="端口介绍"><a href="#端口介绍" class="headerlink" title="端口介绍"></a>端口介绍</h4><p><img data-src="consul/image-20220921143904555.png" alt="consul-port"></p>
+<p>这5个端口的作用：</p>
+<ul>
+<li>8300：集群内数据的读写和复制</li>
+<li>8301：单个数据中心gossip协议通讯</li>
+<li>8302：跨数据中心gossip协议通讯</li>
+<li>8500：提供获取服务列表、注册服务、注销服务等HTTP接口；提供UI服务</li>
+<li>8600：采用DNS协议提供服务发现功能</li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>查看成员</p>
+<pre class="line-numbers language-none"><code class="language-none">consul members<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看版本号</p>
+<pre class="line-numbers language-none"><code class="language-none">consul  version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>列出所有服务</p>
+<pre class="line-numbers language-none"><code class="language-none">consul catalog services -http-addr&#x3D;localhost:8500<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+	
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束 <i class="fa fa-heart"></i> 感谢阅读-------------</div>
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8144939565768363"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8144939565768363"
+     data-ad-slot="3427536127"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>岩羊
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://running-dpf.github.io/post/consul.html" title="consul集群">https://running-dpf.github.io/post/consul.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/k8s-istio.html" rel="prev" title="kubeadm高可用部署K8S1.22.2-istio（五）">
+      <i class="fa fa-chevron-left"></i> kubeadm高可用部署K8S1.22.2-istio（五）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/WAN.html" rel="next" title="WAN">
+      WAN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8144939565768363"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-8144939565768363"
+     data-ad-slot="7333269342"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0%EF%BC%9A"><span class="nav-text">概述：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E7%A4%BA%E6%84%8F%E5%9B%BE%EF%BC%9A"><span class="nav-text">架构示意图：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E8%AE%BE%E8%AE%A1"><span class="nav-text">数据中心设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="nav-text">单数据中心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="nav-text">多数据中心</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85-Consul"><span class="nav-text">1、安装 Consul</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81Server-%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-text">2、Server 节点配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E4%BB%8B%E7%BB%8D"><span class="nav-text">端口介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-text">常用命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="岩羊"
+      src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp0.ifengimg.com%2Fpmop%2F2018%2F1101%2F7409E37F2034030679875B53DEC03A840030C40C_size13_w343_h292.jpeg&refer=http%3A%2F%2Fp0.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622973118&t=dbf132a51454119ce3e2a5a8a7556bcc">
+  <p class="site-author-name" itemprop="name">岩羊</p>
+  <div class="site-description" itemprop="description">不要等到明天,明天太遥远,今天就行动</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Running-dpf" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Running-dpf" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/please_dpf@163.com" title="E-Mail → please_dpf@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8144939565768363"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="auto"
+     data-ad-client="ca-pub-8144939565768363"
+     data-ad-slot="7333269342"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </div>
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">岩羊</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">141k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:08</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span> 
+    <script>
+        var now = new Date();
+        function createtime() {
+            var grt= new Date("01/04/2017 00:00:00");//此处修改你的建站时间或者网站上线时间
+            now.setTime(now.getTime()+250);
+            days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+            hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+            if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+            mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+            seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+            snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+            document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+            document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()",250);
+    </script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

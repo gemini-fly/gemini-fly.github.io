@@ -6,7 +6,7 @@
   <link href="https://running-dpf.github.io/atom.xml" rel="self"/>
   
   <link href="https://running-dpf.github.io/"/>
-  <updated>2022-09-08T09:36:51.816Z</updated>
+  <updated>2022-09-29T11:00:46.150Z</updated>
   <id>https://running-dpf.github.io/</id>
   
   <author>
@@ -17,19 +17,98 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>mtr</title>
+    <link href="https://running-dpf.github.io/post/mtr.html"/>
+    <id>https://running-dpf.github.io/post/mtr.html</id>
+    <published>2022-09-26T07:21:21.000Z</published>
+    <updated>2022-09-29T11:00:46.150Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>一般情况，我们使用ping，traceroute，nslookup测试网络的连通性，今天我们介绍一个Linux下判断网络连通性的工具：mtr，mtr的全称：my traceroute，是一个集ping和traceroute功能的网络诊断工具。</p><span id="more"></span><h3 id="MTR基本原理"><a href="#MTR基本原理" class="headerlink" title="MTR基本原理"></a>MTR基本原理</h3><p>ping、traceroute、mtr都可以使用“ICMP” 包来测试 网络中两点之间的网络连接状况。当使用 ping 命令 ping 网络上的主机后， ICMP 包将会发送到目的主机，然后在目的主机返回响应。这样，就可以得知本机到目的主机 ICMP 包传输所使用的往返时间。</p><p>mtr 相对于 traceroute 命令只会做一次链路跟踪测试，mtr 命令会对链路上的相关节点做持续探测并给出相应的统计信息。所以，mtr命令能避免节点波动对测试结果的影响，所以其测试结果更正确，建议优先使用。</p><h3 id="安装mtr"><a href="#安装mtr" class="headerlink" title="安装mtr"></a>安装mtr</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">#linuxyum -y install mtr#macOSbrew install mtr#alpineapk add --no-cache mtr<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="运行mtr"><a href="#运行mtr" class="headerlink" title="运行mtr"></a>运行mtr</h3><pre class="line-numbers language-none"><code class="language-none">mtr www.baidu.com # r 参数表示向目标主机发送 10 个 ICMP 数据包，然后输出报告。# 如果不带参数，则会不间断运行，取消按 q 键退出。  mtr -r www.baidu.com  第一列：HOST，显示IP地址或者主机名。第二列：Loss%，该Host的丢包率。第三列：Snt，该Host每秒发送数据包数，默认值是10，可以通过参数“-c”指定。第四列：Last，该Host的最近一次的延时，单位是毫秒ms。第五列：Avg，该Host的平均延时，单位是毫秒ms。第六列：Best，该Host的最低延时，单位是毫秒ms。第七列：Wrst，该Host的最高延时，单位是毫秒ms。第八列：StDev，该Host的标准偏差，稳定性的体现。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">另外，也可以在mtr命令运行过程中，输入相应字母来快速切换模式。？或 h：显示帮助菜单。d：切换显示模式。n：切换启用或禁用DNS域名解析。u：切换使用ICMP或UDP数据包进行探测。q：退出探测<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="mtr参数详解"><a href="#mtr参数详解" class="headerlink" title="mtr参数详解"></a>mtr参数详解</h3><p>常见可选参数说明:<br>-r 或 -report：以报告模式显示输出，而不是一直运行。<br>-p 或 -split：将每次追踪的结果分别列出来。<br>-s 或 -psize：指定ping数据包的大小。<br>-i：发送数据包的时间间隔，默认为 1 秒，小于 1 秒需要 sudo 提权运行<br>-n 或 -no-dns：参数禁用反向 DNS 查找，这样就会始终显示 IP。<br>-c ：指定发送数据包的数量，例如发送 20 个数据包（发送数据包后会自动退出，因此可不必添加 r 参数）。<br>-a 或 -address：设置发送数据包的IP地址。用于主机有多个IP时。<br>-u：发送 UDP 数据包探测而非默认 ICMP ECHO 数据包。<br>-4：只使用IPv4协议。<br>-6：只使用IPv6协议。</p>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;一般情况，我们使用ping，traceroute，nslookup测试网络的连通性，今天我们介绍一个Linux下判断网络连通性的工具：mtr，mtr的全称：my traceroute，是一个集ping和traceroute功能的网络诊断工具。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="linux" scheme="https://running-dpf.github.io/categories/linux/"/>
+    
+    
+    <category term="linux" scheme="https://running-dpf.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker容器使用的资源</title>
+    <link href="https://running-dpf.github.io/post/docker-use-source.html"/>
+    <id>https://running-dpf.github.io/post/docker-use-source.html</id>
+    <published>2022-09-26T06:37:47.000Z</published>
+    <updated>2022-09-26T06:57:59.367Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="默认输出"><a href="#默认输出" class="headerlink" title="默认输出"></a>默认输出</h3><p>docker stats 命令用来显示容器使用的系统资源。不带任何选项执行 docker stats 命令：</p><span id="more"></span><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img data-src="docker-use-source/image-20220926144505621.png" alt="image-20220926144505621"></p><p>默认情况下，stats 命令会每隔 1 秒钟刷新一次输出的内容直到你按下 ctrl + c。下面是输出的主要内容：<br>[CONTAINER]：以短格式显示容器的 ID。<br>[NAME]：容器名字。<br>[[CPU %]：CPU 的使用情况。<br>[MEM USAGE / LIMIT]：当前使用的内存和最大可以使用的内存。<br>[MEM %]：以百分比的形式显示内存使用情况。<br>[NET I/O]：网络 I/O 数据。<br>[BLOCK I/O]：磁盘 I/O 数据。<br>[PIDS]：PID 号。</p><h3 id="只返回当前的状态"><a href="#只返回当前的状态" class="headerlink" title="只返回当前的状态"></a>只返回当前的状态</h3><p>如果不想持续的监控容器使用资源的情况，可以通过 –no-stream 选项只输出当前的状态：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats --no-stream<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>这样输出的结果就不会变化了，看起来省劲不少。</p><h3 id="只输出指定的容器"><a href="#只输出指定的容器" class="headerlink" title="只输出指定的容器"></a>只输出指定的容器</h3><p>如果我们只想查看个别容器的资源使用情况，可以为 docker stats 命令显式的指定目标容器的名称或者是 ID：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">docker stats --no-stream b772f7b9b058<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img data-src="docker-use-source/image-20220926145442492.png" alt="image-20220926145442492"></p><h3 id="格式化输出的结果"><a href="#格式化输出的结果" class="headerlink" title="格式化输出的结果"></a>格式化输出的结果</h3><p>docker stats 命令支持我们通过 –format 选项自定义输出的内容和格式：</p><pre class="line-numbers language-none"><code class="language-none">docker stats --format &quot;table &#123;&#123;.Name&#125;&#125;\t&#123;&#123;.CPUPerc&#125;&#125;\t&#123;&#123;.MemUsage&#125;&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img data-src="docker-use-source/image-20220926145658398.png" alt="image-20220926145658398"></p><p>上面的命令中我们只输出了 Name, CPUPerc 和 Memusage 三列。下面是自定义的格式中可以使用的所有占位符：</p><p> 根据用户指定的名称显示容器的名称或 ID。<br>.Name           容器名称。<br>.ID                 容器 ID。<br>.CPUPerc       CPU 使用率。<br>.MemUsage  内存使用量。<br>.NetIO           网络 I/O。<br>.BlockIO        磁盘 I/O。<br>.MemPerc     内存使用率。<br>.PIDs             PID 号。</p><p>有了这些信息我们就可以完全按照自己的需求或者是偏好来控制 docker stats 命令输出的内容了。</p><p>除了以 table 格式输出结果，还可以通过 format 选项输出 json 格式的结果：</p><pre class="line-numbers language-none"><code class="language-none">docker stats --no-stream --format \    &quot;&#123;\&quot;container\&quot;:\&quot;&#123;&#123; .Container &#125;&#125;\&quot;,\&quot;memory\&quot;:&#123;\&quot;raw\&quot;:\&quot;&#123;&#123; .MemUsage &#125;&#125;\&quot;,\&quot;percent\&quot;:\&quot;&#123;&#123; .MemPerc &#125;&#125;\&quot;&#125;,\&quot;cpu\&quot;:\&quot;&#123;&#123; .CPUPerc &#125;&#125;\&quot;&#125;&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 docker stats 命令我们可以看到容器使用系统资源的情况。这为我们进一步的约束容器可用资源或者是调查与资源相关的问题提供了依据。除了 docker 自带的命令，像 glances 等工具也已经支持查看容器使用的资源情况了。</p>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;默认输出&quot;&gt;&lt;a href=&quot;#默认输出&quot; class=&quot;headerlink&quot; title=&quot;默认输出&quot;&gt;&lt;/a&gt;默认输出&lt;/h3&gt;&lt;p&gt;docker stats 命令用来显示容器使用的系统资源。不带任何选项执行 docker stats 命令：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="docker" scheme="https://running-dpf.github.io/categories/docker/"/>
+    
+    
+    <category term="docker" scheme="https://running-dpf.github.io/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WAN</title>
+    <link href="https://running-dpf.github.io/post/WAN.html"/>
+    <id>https://running-dpf.github.io/post/WAN.html</id>
+    <published>2022-09-23T03:37:44.000Z</published>
+    <updated>2022-09-23T04:22:39.778Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>广域网</strong>（英语：Wide Area Network，缩写为 WAN），又称<strong>外网</strong>、<strong>公网</strong>。是连接不同地区<a href="https://baike.baidu.com/item/%E5%B1%80%E5%9F%9F%E7%BD%91?fromModule=lemma_inlink">局域网</a>或<a href="https://baike.baidu.com/item/%E5%9F%8E%E5%9F%9F%E7%BD%91?fromModule=lemma_inlink">城域网</a>计算机通信的远程网。通常跨接很大的物理范围，所覆盖的范围从几十公里到几千公里，它能连接多个地区、城市和国家，或横跨几个洲并能提供远距离通信，形成国际性的远程网络。广域网并不等同于互联网。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;广域网&lt;/strong&gt;（英语：Wide Area Network，缩写为 WAN），又称&lt;strong&gt;外网&lt;/strong&gt;、&lt;strong&gt;公网&lt;/strong&gt;。是连接不同地区&lt;a href=&quot;https://baike.baidu.com/item</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>consul集群</title>
+    <link href="https://running-dpf.github.io/post/consul.html"/>
+    <id>https://running-dpf.github.io/post/consul.html</id>
+    <published>2022-09-21T06:14:04.000Z</published>
+    <updated>2022-09-26T08:21:48.031Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点</p><p>但是，如果只使用Consul的Server模式有以下2个问题：</p><ul><li><p>因为Consul Server数量受到控制所以压力承载（扩展性）是个问题。</p></li><li><p>Server很少导致一个Server下会注册很多微服务，当Server挂掉，这个Server节点下注册的微服务都会视为无效。</p>  <span id="more"></span></li></ul><p>基于上述问题我们在架构中加入Consul Client模式，Client因为加入了LAN gossip协议组成网络中（高速局域网），可以识别故障的Server节点并找到可用的Server节点继续工作，其实Server模式负责的是用WAN gossip协议组成的网络进行跨广域网的数据同步（多个数据中心），这点Client模式是做不到的，Client模式也提供服务的注册和查询，但Client模式不存储节点数据，Client将请求转发给Server进行处理，节点注册数据在Server端是持久化保存的，Client的数量可以无限多，Server的数量是受控制的。总之：Client模式+LAN gossip协议组成了一个数据中心中的各个节点，Server负责投票选出Leader进行数据中心内的数据同步，这个Leader还负责利用WAN gossip协议跨广域网的与其他数据中心进行数据同步。</p><p>PS:默认情况下Server的数量建议是 3 ~ 5 台，Client 的数量建议2 ~ 5台，这能平衡故障情况下的可用性和集群性能。</p><h4 id="架构示意图："><a href="#架构示意图：" class="headerlink" title="架构示意图："></a>架构示意图：</h4><p><img data-src="consul/image-20220921142207939.png" alt="server-client架构图"></p><h3 id="数据中心设计"><a href="#数据中心设计" class="headerlink" title="数据中心设计"></a>数据中心设计</h3><p>用户可以在单个物理数据中心、或跨多个数据中心部署Consul集群。对于运行时高读写的大型集群，将服务器部署在同物理地址可以提高性能；在云环境中，用户可以跨多个可用区域（zone）部署一个数据中心，例如每个可用区域对应一台单一的主机。Consul还可以通过<a href>WAN</a>连接单独的集群组成多数据中心。</p><h4 id="单数据中心"><a href="#单数据中心" class="headerlink" title="单数据中心"></a>单数据中心</h4><p>对于部署在同一个数据中心中的应用程序，我们建议使用一个Consul集群。Consul支持传统的三层架构应用，同样也支持微服务，搭建一个集群通常是3或5台机器，用户可以在可用性和性能间寻找平衡。<br> 单个数据中心的节点（node）数建议不超过5000个，对于读写频繁的集群，可能需要进一步减少最大节点数，这具体取决KV对的数量以及监控数据的数量。当用户添加更多的客户端机器时，Gossip协议执行的时间会更长、<br> 对于写负载高的集群，推荐使用硬件升级垂直扩展，并使用低延迟存储。<br> <code>服务标签（Service Tag）</code>可帮助用户对集群中的内容进行查询</p><h4 id="多数据中心"><a href="#多数据中心" class="headerlink" title="多数据中心"></a>多数据中心</h4><p>用户可以通过WAN链接加入在不同数据中心中运行相同服务的Consul集群。集群间独立运行，仅通过8302端口上的WAN通信，除非通过命令行或者API明确配置，否则Consul服务器将仅从其本地数据中心返回结果。Consul不会在多个数据中心之间复制数据，但是用户可以使用consul-replicate工具定期同步KV数据。<br> 比较好的实践是启用TLS服务名称检查，以避免代理意外交叉连接。<br> Consul的<code>预查询（prepared queries）</code>允许客户端在某一数据中心发生故障后，去另一个数据中心发现服务。例如本地数据中心dc1中的payment服务下线了，则预查询使用户能能访问到离该数据中心地理位置最近的其他正常服务。<br> 默认情况下，预查询首先会在本地数据中心解析。它们不支持查询KV数据，但是可以使用ACLs。</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><table><thead><tr><th align="center"><strong>节点名称</strong></th><th><strong>节点IP</strong></th><th align="center"><strong>Agent类型</strong></th></tr></thead><tbody><tr><td align="center">consul-01</td><td>10.181.0.147</td><td align="center">server</td></tr><tr><td align="center">consul-02</td><td>10.181.0.148</td><td align="center">server</td></tr><tr><td align="center">consul-03</td><td>10.181.0.149</td><td align="center">server</td></tr><tr><td align="center">consul-client</td><td>10.181.0.152</td><td align="center">client</td></tr></tbody></table><h4 id="1、安装-Consul"><a href="#1、安装-Consul" class="headerlink" title="1、安装 Consul"></a>1、安装 Consul</h4><p>配置主机名，命令示例：（以下操作在所有节点配置）</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hostnamectl set-hostname consul-01hostnamectl set-hostname consul-02hostnamectl set-hostname consul-03hostnamectl set-hostname consul-client<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>下载consul</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export VER&#x3D;&quot;1.12.3&quot;wget https:&#x2F;&#x2F;releases.hashicorp.com&#x2F;consul&#x2F;$&#123;VER&#125;&#x2F;consul_$&#123;VER&#125;_linux_amd64.zipunzip consul_$&#123;VER&#125;_linux_amd64.zip -d &#x2F;usr&#x2F;local&#x2F;bin&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>创建consul用户和组</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">groupadd --system consuluseradd -s &#x2F;sbin&#x2F;nologin --system -g consul consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>创建consul安装目录</p><pre class="line-numbers language-none"><code class="language-none">mkdir -p &#x2F;data&#x2F;consul&#x2F;&#123;config,data,logs&#125;chown -R consul:consul &#x2F;data&#x2F;consulchmod -R 775 &#x2F;data&#x2F;consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>设置 DNS 或编辑/etc/hosts 文件以配置所有服务器的主机名，替换<code>example.com</code>为您的实际域名。</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;etc&#x2F;hosts&lt;&lt;EOF10.181.0.147 consul-01.example.com consul-0110.181.0.148 consul-02.example.com consul-0210.181.0.149 consul-03.example.com consul-0310.181.0.152 consul-client.example.com consul-clientEOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="2、Server-节点配置"><a href="#2、Server-节点配置" class="headerlink" title="2、Server 节点配置"></a>2、Server 节点配置</h4><p>生成Consul secret</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">consul keygen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>为server节点创建json配置文件，其他节点配置修改IP地址及节点名称即可</p><p>consul-01节点</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF&#123;    &quot;advertise_addr&quot;: &quot;10.181.0.147&quot;,    &quot;bind_addr&quot;: &quot;10.181.0.147&quot;,    &quot;bootstrap_expect&quot;: 3,    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,    &quot;datacenter&quot;: &quot;DC1&quot;,    &quot;node_name&quot;: &quot;consul-01&quot;,    &quot;data_dir&quot;: &quot;&#x2F;opt&#x2F;consul&#x2F;data&quot;,    &quot;domain&quot;: &quot;consul&quot;,    &quot;enable_script_checks&quot;: true,    &quot;dns_config&quot;: &#123;        &quot;enable_truncate&quot;: true,        &quot;only_passing&quot;: true    &#125;,    &quot;enable_syslog&quot;: true,    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,#将上门的srcret替换    &quot;leave_on_terminate&quot;: true,    &quot;log_level&quot;: &quot;INFO&quot;,    &quot;rejoin_after_leave&quot;: true,    &quot;retry_join&quot;: [     &quot;consul-01&quot;,     &quot;consul-02&quot;,     &quot;consul-03&quot;    ],    &quot;server&quot;: true,    &quot;start_join&quot;: [        &quot;consul-01&quot;,        &quot;consul-02&quot;,        &quot;consul-03&quot;    ],    &quot;ui&quot;: true&#125;EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>配置参数说明：</p><p>datacenter：此标志控制运行代理的数据中心。如果未提供，则默认为dc1。Consul 对多个数据中心有一流的支持，但它依赖于正确的配置。同一数据中心中的节点应位于单个 LAN 上。</p><p>data_dir：该标志为代理提供了一个数据目录来存储状态。</p><p>node_name：节点名字，一般为主机名。</p><p>server：指定是否为server节点。</p><p>bootstrap_expect：在一个datacenter中期望提供的server节点数目，当提供该值的时候，consul一直等到达到指定sever数目才会引导整个集群，该标记不能和bootstrap公用。</p><p>bind_addr：该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0。</p><p>client_addr：Consul 将绑定客户端接口的地址，包括 HTTP 和 DNS 服务器。默认情况下，这是127.0.0.1，仅允许环回连接。在 Consul 1.0 及更高版本中，这可以设置为要绑定到的以空格分隔的地址列表。</p><p>log_json：此标志使代理能够以 JSON 格式输出日志。默认为false。</p><p>log_level:在 Consul 代理启动后显示的日志级别。默认为 info 。可用的日志级别是trace、debug、info、warn和err。</p><p>retry_join：指定将要置入集群的IP列表，如果失败，会自动重试，知道直到成功加入。</p><p>start_join：启动时加入集群的地址</p><p>ui_config：此对象允许设置多个子键，用于控制 UI 中可用的显示或功能。</p><p>rejoin_after_leave ：允许重新加入集群</p><p>3、Client 节点配置</p><p>client是consul客户端，客户端不保存数据，客户端将接收到的请求转发给Server端。Server之间通过局域网或广域网通信实现数据一致性。每个Server或Client都是一个consul agent。</p><p>创建consul-client节点配置文件</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF&#123;    &quot;advertise_addr&quot;: &quot;10.181.0.152&quot;,    &quot;bind_addr&quot;: &quot;10.181.0.152&quot;,    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,    &quot;datacenter&quot;: &quot;DC1&quot;,    &quot;node_name&quot;: &quot;consul-client&quot;,     &quot;data_dir&quot;: &quot;&#x2F;data&#x2F;consul&#x2F;data&quot;,    &quot;domain&quot;: &quot;consul&quot;,    &quot;enable_script_checks&quot;: true,    &quot;dns_config&quot;: &#123;        &quot;enable_truncate&quot;: true,        &quot;only_passing&quot;: true    &#125;,    &quot;enable_syslog&quot;: true,    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,    &quot;leave_on_terminate&quot;: true,    &quot;log_level&quot;: &quot;INFO&quot;,    &quot;rejoin_after_leave&quot;: true,    &quot;retry_join&quot;: [     &quot;consul-01&quot;,     &quot;consul-02&quot;,     &quot;consul-03&quot;    ],    &quot;server&quot;: false,    &quot;start_join&quot;: [        &quot;consul-01&quot;,        &quot;consul-02&quot;,        &quot;consul-03&quot;    ],    &quot;ui&quot;: true&#125;EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>4、systemd 启动文件</p><p>所有节点创建systemd 服务文件<code>/etc/systemd/system/consul.service</code>，所有节点具有相同内容，配置如下：</p><pre class="line-numbers language-none"><code class="language-none">cat &gt;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;consul.service&lt;&lt;EOF[Unit]Description&#x3D;Consul Service Discovery AgentDocumentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;After&#x3D;network-online.targetWants&#x3D;network-online.target[Service]Type&#x3D;simpleUser&#x3D;consulGroup&#x3D;consulExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.jsonExecReload&#x3D;&#x2F;bin&#x2F;kill -HUP $MAINPIDKillSignal&#x3D;SIGINTTimeoutStopSec&#x3D;5Restart&#x3D;on-failureSyslogIdentifier&#x3D;consul[Install]WantedBy&#x3D;multi-user.targetEOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>所有节点启动consul服务</p><pre class="line-numbers language-none"><code class="language-none">systemctl enable --now consul.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="端口介绍"><a href="#端口介绍" class="headerlink" title="端口介绍"></a>端口介绍</h4><p><img data-src="consul/image-20220921143904555.png" alt="consul-port"></p><p>这5个端口的作用：</p><ul><li>8300：集群内数据的读写和复制</li><li>8301：单个数据中心gossip协议通讯</li><li>8302：跨数据中心gossip协议通讯</li><li>8500：提供获取服务列表、注册服务、注销服务等HTTP接口；提供UI服务</li><li>8600：采用DNS协议提供服务发现功能</li></ul><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>查看成员</p><pre class="line-numbers language-none"><code class="language-none">consul members<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看版本号</p><pre class="line-numbers language-none"><code class="language-none">consul  version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>列出所有服务</p><pre class="line-numbers language-none"><code class="language-none">consul catalog services -http-addr&#x3D;localhost:8500<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;概述：&quot;&gt;&lt;a href=&quot;#概述：&quot; class=&quot;headerlink&quot; title=&quot;概述：&quot;&gt;&lt;/a&gt;概述：&lt;/h3&gt;&lt;p&gt;Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点&lt;/p&gt;
+&lt;p&gt;但是，如果只使用Consul的Server模式有以下2个问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;因为Consul Server数量受到控制所以压力承载（扩展性）是个问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Server很少导致一个Server下会注册很多微服务，当Server挂掉，这个Server节点下注册的微服务都会视为无效。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="分布式" scheme="https://running-dpf.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>kubeadm高可用部署K8S1.22.2-istio（五）</title>
     <link href="https://running-dpf.github.io/post/k8s-istio.html"/>
     <id>https://running-dpf.github.io/post/k8s-istio.html</id>
     <published>2022-09-06T03:41:42.000Z</published>
-    <updated>2022-09-08T09:36:51.816Z</updated>
+    <updated>2022-09-29T10:41:23.870Z</updated>
     
-    <content type="html"><![CDATA[<img data-v-95a65aae data-src="https://thumb.qschou.com/files/qschou.com/project/020ef8cfb5ee342a571a0fecadc681e0ef3a819c16615927486654add8a.jpg@!homemiddle2.png" onerror="this.src='//static2.qschou.com/img/v7/grey-1.5.png'" class="swiper_img">]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;img data-v-95a65aae data-src=&quot;https://thumb.qschou.com/files/qschou.com/project/020ef8cfb5ee342a571a0fecadc681e0ef3a819c16615927486654add8a</summary>
-      
     
     
     
@@ -58,51 +137,6 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://running-dpf.github.io/post/CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9A%E4%B9%89v1.0%E8%AF%B4%EF%BC%9A.html"/>
-    <id>https://running-dpf.github.io/post/CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%9A%E4%B9%89v1.0%E8%AF%B4%EF%BC%9A.html</id>
-    <published>2022-09-05T08:04:48.388Z</published>
-    <updated>2022-09-05T09:10:58.176Z</updated>
-    
-    <content type="html"><![CDATA[<p>CNCF云原生定义v1.0说：</p><p>云原生技术使组织能够在现代动态环境（如公共云、私有云和混合云）中构建和运行可扩展的应用程序。容器、服务网格、微服务、不可变基础结构和声明性 API 就是这种方法的例证。</p><p>理解：</p><p>云原生（Cloud Native）是一套技术体系和方法论，它由2个词组成，云（Cloud）和原生（Native）。云（Cloud）表示应用程序位于云中，而不是传统的数据中心；原生（Native）表示应用程序从设计之初即考虑到云的环境，原生为云而设计，在云上以最佳状态运行，充分利用和发挥云平台的弹性和分布式优势。</p><p>云原生的代表技术包括容器、服务网格（Service Mesh）、微服务（Microservice）、不可变基础设施和声明式API</p><p>4514617511506976</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;CNCF云原生定义v1.0说：&lt;/p&gt;
-&lt;p&gt;云原生技术使组织能够在现代动态环境（如公共云、私有云和混合云）中构建和运行可扩展的应用程序。容器、服务网格、微服务、不可变基础结构和声明性 API 就是这种方法的例证。&lt;/p&gt;
-&lt;p&gt;理解：&lt;/p&gt;
-&lt;p&gt;云原生（Cloud N</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html"/>
-    <id>https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</id>
-    <published>2022-09-05T07:27:39.139Z</published>
-    <updated>2022-09-05T09:10:47.138Z</updated>
-    
-    <content type="html"><![CDATA[<p>kubectl top pod 内存使用量container_memory_working_set_bytes</p><p>计算方式：</p><p>container_memory_working_set_bytes = container_memory_usage_bytes – total_inactive_file（未激活的匿名缓存页）</p><p>cadvisor 内存使用量 container_memory_usage_bytes</p><p>计算公式：</p><p>container_memory_usage_bytes = container_memory_rss + container_memory_cache + kernel memory</p><p>container_memory_working_set_bytes 是容器真实使用的内存量，也是 limit限制时的 oom 判断依据</p><p>  apiVersion: networking.k8s.io/v1<br>  kind: Ingress<br>  metadata:<br>    name: example<br>    namespace: foo<br>  spec:<br>    ingressClassName: ops<br>    rules:<br>      - host: <a href="http://www.example.com/">www.example.com</a><br>        http:<br>          paths:<br>            - pathType: Prefix<br>              backend:<br>                service:<br>                  name: exampleService<br>                  port:<br>                    number: 80<br>              path: /<br>    # This section is only required if TLS is to be enabled for the Ingress<br>​    tls:<br>      - hosts:<br>        - <a href="http://www.example.com/">www.example.com</a><br>        secretName: example-tls</p><p>If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:</p><p>  apiVersion: v1<br>  kind: Secret<br>  metadata:<br>    name: example-tls<br>    namespace: foo<br>  data:<br>    tls.crt: <base64 encoded cert><br>    tls.key: <base64 encoded key><br>  type: kubernetes.io/tls</base64></base64></p><pre class="line-numbers language-ruby" data-language="ruby"><code class="language-ruby">curl -k -H &quot;Content-Type: application&#x2F;json&quot; -X PUT --data-binary @ingress-nginx.json http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;ingress-nginx&#x2F;finalize<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;kubectl top pod 内存使用量container_memory_working_set_bytes&lt;/p&gt;
-&lt;p&gt;计算方式：&lt;/p&gt;
-&lt;p&gt;container_memory_working_set_bytes = container_memory_usage_b</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>kubeadm初始化集群报错</title>
     <link href="https://running-dpf.github.io/post/kubeadm-join-fatal.html"/>
     <id>https://running-dpf.github.io/post/kubeadm-join-fatal.html</id>
@@ -117,6 +151,27 @@
 [ERROR CRI]: container runtime is not running: output: E0905 15:24:41.698370   29432 remote_runtime.go:925] &amp;quot;Status from runtime service failed&amp;quot; err&amp;#x3D;&amp;quot;rpc error: code &amp;#x3D; Unimplemented desc &amp;#x3D; unknown service runtime.v1alpha2.RuntimeService&amp;quot;
 time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal msg&amp;#x3D;&amp;quot;getting status of runtime: rpc error: code &amp;#x3D; Unimplemented desc &amp;#x3D; unknown service runtime.v1alpha2.RuntimeService&amp;quot;
 , error: exit status 1&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;</summary>
+    
+    
+    
+    <category term="k8s" scheme="https://running-dpf.github.io/categories/k8s/"/>
+    
+    
+    <category term="k8s" scheme="https://running-dpf.github.io/tags/k8s/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kubectl获取内存使用率不同</title>
+    <link href="https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html"/>
+    <id>https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</id>
+    <published>2022-09-05T07:27:02.000Z</published>
+    <updated>2022-09-29T11:01:58.309Z</updated>
+    
+    <content type="html"><![CDATA[<p>kubectl top pod 内存使用量container_memory_working_set_bytes</p><span id="more"></span><p>计算方式：</p><p>container_memory_working_set_bytes = container_memory_usage_bytes – total_inactive_file（未激活的匿名缓存页）</p><p>cadvisor 内存使用量 container_memory_usage_bytes</p><p>计算公式：</p><p>container_memory_usage_bytes = container_memory_rss + container_memory_cache + kernel memory</p><p>container_memory_working_set_bytes 是容器真实使用的内存量，也是 limit限制时的 oom 判断依据</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;kubectl top pod 内存使用量container_memory_working_set_bytes&lt;/p&gt;</summary>
     
     
     
@@ -151,18 +206,13 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     <link href="https://running-dpf.github.io/post/makevsnew.html"/>
     <id>https://running-dpf.github.io/post/makevsnew.html</id>
     <published>2022-08-16T02:49:29.000Z</published>
-    <updated>2022-09-05T09:10:47.143Z</updated>
+    <updated>2022-09-29T11:02:25.164Z</updated>
     
-    <content type="html"><![CDATA[<p>make 和new的区别</p><p>首先，两个都是初始化内存</p><p>1、new：多用来为基本数据类型（string、int、bool、struct等）初始化内存，返回的是指针</p><p>2、make：多用来为slice、map、channel的内存，返回对应类型</p><p>10.8.0.3</p>]]></content>
+    <content type="html"><![CDATA[<p>make 和new的区别</p><p>首先，两个都是初始化内存</p><span id="more"></span><p>1、new：多用来为基本数据类型（string、int、bool、struct等）初始化内存，返回的是指针</p><p>2、make：多用来为slice、map、channel的内存，返回对应类型</p>]]></content>
     
     
-      
-      
     <summary type="html">&lt;p&gt;make 和new的区别&lt;/p&gt;
-&lt;p&gt;首先，两个都是初始化内存&lt;/p&gt;
-&lt;p&gt;1、new：多用来为基本数据类型（string、int、bool、struct等）初始化内存，返回的是指针&lt;/p&gt;
-&lt;p&gt;2、make：多用来为slice、map、channel的内存，返回对应</summary>
-      
+&lt;p&gt;首先，两个都是初始化内存&lt;/p&gt;</summary>
     
     
     
@@ -371,75 +421,6 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     <category term="JavaScript" scheme="https://running-dpf.github.io/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu16.04设置Pycharm桌面快捷键</title>
-    <link href="https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html"/>
-    <id>https://running-dpf.github.io/post/Ubuntu16-04-pycharm-icon-setting.html</id>
-    <published>2022-08-08T06:30:12.720Z</published>
-    <updated>2022-08-08T06:30:12.720Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Ubuntu下所有的快捷方式都在："><a href="#Ubuntu下所有的快捷方式都在：" class="headerlink" title="Ubuntu下所有的快捷方式都在："></a>Ubuntu下所有的快捷方式都在：</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h2><p>这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下</p><p>这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标</p><span id="more"></span><h2 id="终端打开"><a href="#终端打开" class="headerlink" title="终端打开"></a>终端打开</h2><p>使用Ubuntu终端进行打开：<br>方法一（使用vim）：</p><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo vi  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>方法二（使用gedit）：</p><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo gedit  <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>然后就会弹出一个新框：</p><h2 id="张贴"><a href="#张贴" class="headerlink" title="张贴"></a>张贴</h2><p>我们将下面的内容贴上去：</p><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">[</span>Desktop Entry<span class="token punctuation">]</span>Type<span class="token operator">=</span>ApplicationName<span class="token operator">=</span>PycharmGenericName<span class="token operator">=</span>Pycharm3Comment<span class="token operator">=</span>Pycharm3<span class="token operator">:</span>The Python <span class="token constant">IDE</span>Exec<span class="token operator">=</span><span class="token string">"/home/snakeson/developer/pycharm-community-2017.2.3/bin/pycharm.sh"</span> <span class="token operator">%</span>fIcon<span class="token operator">=</span><span class="token operator">/</span>home<span class="token operator">/</span>snakeson<span class="token operator">/</span>developer<span class="token operator">/</span>pycharm<span class="token operator">-</span>community<span class="token operator">-</span><span class="token number">2017.2</span><span class="token number">.3</span><span class="token operator">/</span>bin<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>pngTerminal<span class="token operator">=</span>pycharmCategories<span class="token operator">=</span>Pycharm<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>注意一定要将Desktop Entry复制进去，也就是上面的全部都要复制进去，这里我们需要替换掉两个地方：<strong>Exec=”xx”<strong>和</strong>Icon=</strong>,这里要替换掉我们的pycharm解压的目录，当然了，我已经替换好了，如果你的目录跟我的目录不一样的话，你得把路径给换了，不管你是pycharm2017还是pycharm2016,，例如Comment什么的都不要改变，只变上面提到的两个路径就可以了。</p><h2 id="添加可执行权限"><a href="#添加可执行权限" class="headerlink" title="添加可执行权限"></a>添加可执行权限</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">sudo chmod <span class="token operator">+</span>x <span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="拷贝到桌面"><a href="#拷贝到桌面" class="headerlink" title="拷贝到桌面"></a>拷贝到桌面</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">将<span class="token operator">/</span>usr<span class="token operator">/</span>share<span class="token operator">/</span>applications<span class="token operator">/</span>pycharm<span class="token punctuation">.</span>desktop文件拷贝到桌面，双击即可运行。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;Ubuntu下所有的快捷方式都在：&quot;&gt;&lt;a href=&quot;#Ubuntu下所有的快捷方式都在：&quot; class=&quot;headerlink&quot; title=&quot;Ubuntu下所有的快捷方式都在：&quot;&gt;&lt;/a&gt;Ubuntu下所有的快捷方式都在：&lt;/h2&gt;&lt;pre class=&quot;line-numbers language-js&quot; data-language=&quot;js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;usr&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;share&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;applications&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;解压&quot;&gt;&lt;a href=&quot;#解压&quot; class=&quot;headerlink&quot; title=&quot;解压&quot;&gt;&lt;/a&gt;解压&lt;/h2&gt;&lt;p&gt;这里我将pycharm下载并解压到了/home/snakeson/developer文件夹下&lt;/p&gt;
-&lt;p&gt;这里的pycharm.sh是批处理执行文件，prcharm.png是快捷方式图标&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="python" scheme="https://running-dpf.github.io/categories/python/"/>
-    
-    
-    <category term="Ubuntu Python" scheme="https://running-dpf.github.io/tags/Ubuntu-Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>win10 关闭更新</title>
-    <link href="https://running-dpf.github.io/post/close-win10-update.html"/>
-    <id>https://running-dpf.github.io/post/close-win10-update.html</id>
-    <published>2022-08-08T06:30:12.661Z</published>
-    <updated>2022-08-08T06:30:12.661Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p><span id="more"></span><p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>2 在运行处输入 “services.msc”   点击确定。</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>3 在弹出来的服务中，找到“Windows Update”</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>4 选择禁用</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>会多出这两个位置，这样子就设置成功了。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="win10" scheme="https://running-dpf.github.io/categories/win10/"/>
-    
-    
-    <category term="win10 工具软件" scheme="https://running-dpf.github.io/tags/win10-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git 如何 clone 非 master 分支的代码</title>
-    <link href="https://running-dpf.github.io/post/git-clone-not-master-branch.html"/>
-    <id>https://running-dpf.github.io/post/git-clone-not-master-branch.html</id>
-    <published>2022-08-08T06:30:12.624Z</published>
-    <updated>2022-08-08T06:30:12.625Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我们每次使用命令</p><pre class="line-numbers language-none"><code class="language-none">git clone git@gitlab.xxx.com:xxxxx.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在<code>daily/1.4.1</code>分支上，我们希望拿到这个分支上的代码。</p><span id="more"></span><p><img data-src="https://ooo.0o0.ooo/2016/07/07/577e349ab42ed.png" alt="7f07c8f6deef169ef6be5103bbd3e932f8676bb1.png"></p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><strong>刚刚开周会的时候，自己洋洋得意的分享我的解决方案，但是……经过与团队成员的的讨论，自己的方法弱爆了，现在把更优雅的方法写一下。原来写的方法并不太适合用在这个场景里。</strong> 我之前写的方法在文章后面。</p><p>直接使用命令</p><pre class="line-numbers language-none"><code class="language-none">git branch -r #查看远程分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>或</p><pre class="line-numbers language-none"><code class="language-none">git branch -a #查看所有分支<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>会显示</p><pre class="line-numbers language-none"><code class="language-none">origin&#x2F;HEAD -&gt; origin&#x2F;masterorigin&#x2F;daily&#x2F;1.2.2origin&#x2F;daily&#x2F;1.3.0origin&#x2F;daily&#x2F;1.4.1origin&#x2F;developorigin&#x2F;feature&#x2F;daily-1.0.0origin&#x2F;master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后直接</p><pre class="line-numbers language-none"><code class="language-none">git checkout origin&#x2F;daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>就好了。。。</p><h2 id="原来的解决方案"><a href="#原来的解决方案" class="headerlink" title="原来的解决方案"></a>原来的解决方案</h2><p><strong>其实我原来写的这个方法更多的是：设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支。</strong></p><p>我们在本地先建立一个分支，建议名称和远程的想要同步的分支名称一样。</p><pre class="line-numbers language-none"><code class="language-none">git branch daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>在切换到这个本地分支</p><pre class="line-numbers language-none"><code class="language-none">git checkout daily&#x2F;1.4.1# Switched to branch &#39;daily&#x2F;1.4.1&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>接下来就可以去建立上游分支的关联了，但是这个命令比较长，不好记，我们可以直接先<code>pull</code>一下，git 会提示我们相应的操作和命令。</p><pre class="line-numbers language-none"><code class="language-none">git pullThere is no tracking information for the current branch.Please specify which branch you want to merge with.See git-pull(1) for details.    git pull &lt;remote&gt; &lt;branch&gt;If you wish to set tracking information for this branch you can do so with:    git branch --set-upstream-to&#x3D;origin&#x2F;&lt;branch&gt; daily&#x2F;1.4.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>我们看到最后一行，执行这个命令，即可完成与上游分支的关联。</p><pre class="line-numbers language-none"><code class="language-none">git branch --set-upstream-to&#x3D;origin&#x2F;daily&#x2F;1.4.1 daily&#x2F;1.4.1# Branch daily&#x2F;1.4.1 set up to track remote branch daily&#x2F;1.4.1 from origin.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>然后再<code>pull</code>一下就好了！</p><pre class="line-numbers language-none"><code class="language-none">git pull<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;我们每次使用命令&lt;/p&gt;
-&lt;pre class=&quot;line-numbers language-none&quot;&gt;&lt;code class=&quot;language-none&quot;&gt;git clone git@gitlab.xxx.com:xxxxx.git&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;默认 clone 的是这个仓库的 master 分支。如果最新的代码不在 master 分支上，该如何拿到呢？如下图所示，最新的代码可能在&lt;code&gt;daily/1.4.1&lt;/code&gt;分支上，我们希望拿到这个分支上的代码。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="GitHub" scheme="https://running-dpf.github.io/categories/GitHub/"/>
-    
-    
-    <category term="GitHub" scheme="https://running-dpf.github.io/tags/GitHub/"/>
     
   </entry>
   
