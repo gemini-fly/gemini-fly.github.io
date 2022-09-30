@@ -4276,11 +4276,6 @@ Leadership transferred from 6f33c9a8402dd6ab to 219637592b6b26a7<span aria-hidde
       </tags>
   </entry>
   <entry>
-    <title>etcd-Overview</title>
-    <url>//post/etcd-Overview.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>浮点类型</title>
     <url>//post/float-type.html</url>
     <content><![CDATA[<h1 id="1-浮点类型"><a href="#1-浮点类型" class="headerlink" title="1.浮点类型"></a>1.浮点类型</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>小数类型就是用于存放小数的，比如 1.2 0.23 -1.91</p>
