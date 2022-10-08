@@ -2,7 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://running-dpf.github.io/post/mtr.html</loc>
+    <loc>https://gemini-fly.github.io/post/Three-layer-network.html</loc>
+    
+    <lastmod>2022-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://gemini-fly.github.io/post/swappiness.html</loc>
+    
+    <lastmod>2022-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://gemini-fly.github.io/404.html</loc>
+    
+    <lastmod>2022-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://gemini-fly.github.io/post/consul.html</loc>
+    
+    <lastmod>2022-10-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://gemini-fly.github.io/post/mtr.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -11,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/docker-use-source.html</loc>
+    <loc>https://gemini-fly.github.io/post/docker-use-source.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -20,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/WAN.html</loc>
+    <loc>https://gemini-fly.github.io/post/WAN.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -29,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</loc>
+    <loc>https://gemini-fly.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -38,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/makevsnew.html</loc>
+    <loc>https://gemini-fly.github.io/post/makevsnew.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -47,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/k8s-istio.html</loc>
+    <loc>https://gemini-fly.github.io/post/k8s-istio.html</loc>
     
     <lastmod>2022-09-29</lastmod>
     
@@ -56,16 +92,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/consul.html</loc>
-    
-    <lastmod>2022-09-26</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/post/k8s-calico.html</loc>
+    <loc>https://gemini-fly.github.io/post/k8s-calico.html</loc>
     
     <lastmod>2022-09-23</lastmod>
     
@@ -74,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/k8s-kubeadm.html</loc>
+    <loc>https://gemini-fly.github.io/post/k8s-kubeadm.html</loc>
     
     <lastmod>2022-09-14</lastmod>
     
@@ -83,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/kubeadm-join-fatal.html</loc>
+    <loc>https://gemini-fly.github.io/post/kubeadm-join-fatal.html</loc>
     
     <lastmod>2022-09-06</lastmod>
     
@@ -92,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/kubeadm-cert-expired.html</loc>
+    <loc>https://gemini-fly.github.io/post/kubeadm-cert-expired.html</loc>
     
     <lastmod>2022-09-05</lastmod>
     
@@ -101,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/proto01.html</loc>
+    <loc>https://gemini-fly.github.io/post/proto01.html</loc>
     
     <lastmod>2022-09-05</lastmod>
     
@@ -110,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/go-context.html</loc>
+    <loc>https://gemini-fly.github.io/post/go-context.html</loc>
     
     <lastmod>2022-09-05</lastmod>
     
@@ -119,7 +146,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/loki.html</loc>
+    <loc>https://gemini-fly.github.io/post/loki.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -128,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/bool-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/bool-type.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -137,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/string-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/string-type.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -146,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/etcd-ops-order.html</loc>
+    <loc>https://gemini-fly.github.io/post/etcd-ops-order.html</loc>
     
     <lastmod>2022-08-12</lastmod>
     
@@ -155,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/gin-template.html</loc>
+    <loc>https://gemini-fly.github.io/post/gin-template.html</loc>
     
     <lastmod>2022-08-09</lastmod>
     
@@ -164,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/gin-method.html</loc>
+    <loc>https://gemini-fly.github.io/post/gin-method.html</loc>
     
     <lastmod>2022-08-09</lastmod>
     
@@ -173,7 +200,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/go-routine-cpu.html</loc>
+    <loc>https://gemini-fly.github.io/post/go-routine-cpu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -182,7 +209,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/go-goroutine.html</loc>
+    <loc>https://gemini-fly.github.io/post/go-goroutine.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -191,7 +218,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/about/index.html</loc>
+    <loc>https://gemini-fly.github.io/about/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -200,7 +227,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/404.html</loc>
+    <loc>https://gemini-fly.github.io/post/Interconversion-of-basic-data-types.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -209,7 +236,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/Interconversion-of-basic-data-types.html</loc>
+    <loc>https://gemini-fly.github.io/post/byte-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -218,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/byte-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/data-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -227,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/data-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/float-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -236,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/float-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/go-%E5%8F%98%E9%87%8F.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -245,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/go-%E5%8F%98%E9%87%8F.html</loc>
+    <loc>https://gemini-fly.github.io/post/values-for-primitive-data-types.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -254,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/values-for-primitive-data-types.html</loc>
+    <loc>https://gemini-fly.github.io/post/variable-type.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -263,7 +290,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/variable-type.html</loc>
+    <loc>https://gemini-fly.github.io/post/History-API.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -272,7 +299,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/History-API.html</loc>
+    <loc>https://gemini-fly.github.io/post/ISP.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -281,7 +308,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/ISP.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-Object-Oriented.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -290,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-Object-Oriented.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-good-parts-note1.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -299,7 +326,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note1.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-function.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -308,7 +335,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-function.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-good-parts-note2.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -317,7 +344,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note2.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-closure.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -326,7 +353,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-closure.html</loc>
+    <loc>https://gemini-fly.github.io/post/NGINX-Prohibit-IP-access.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -335,7 +362,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/NGINX-Prohibit-IP-access.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-this.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -344,7 +371,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-this.html</loc>
+    <loc>https://gemini-fly.github.io/post/JavaScript-good-parts-note3.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -353,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/JavaScript-good-parts-note3.html</loc>
+    <loc>https://gemini-fly.github.io/post/arrays-similar.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -362,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/arrays-similar.html</loc>
+    <loc>https://gemini-fly.github.io/post/WAL.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -371,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/WAL.html</loc>
+    <loc>https://gemini-fly.github.io/post/centos-php7.3.5.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -380,7 +407,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/centos-php7.3.5.html</loc>
+    <loc>https://gemini-fly.github.io/post/close-win10-update.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -389,7 +416,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/close-win10-update.html</loc>
+    <loc>https://gemini-fly.github.io/post/git-clone-not-master-branch.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -398,7 +425,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/git-clone-not-master-branch.html</loc>
+    <loc>https://gemini-fly.github.io/post/du-md.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -407,7 +434,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/du-md.html</loc>
+    <loc>https://gemini-fly.github.io/post/how-to-use-babel.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -416,7 +443,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/how-to-use-babel.html</loc>
+    <loc>https://gemini-fly.github.io/post/how-to-write-a-count-down.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -425,7 +452,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/how-to-write-a-count-down.html</loc>
+    <loc>https://gemini-fly.github.io/post/jekyll-theme-version-2-0.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -434,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/jekyll-theme-version-2-0.html</loc>
+    <loc>https://gemini-fly.github.io/post/js-create-file-and-download.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -443,7 +470,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/js-create-file-and-download.html</loc>
+    <loc>https://gemini-fly.github.io/post/centos-crontab.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -452,7 +479,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/centos-crontab.html</loc>
+    <loc>https://gemini-fly.github.io/post/nginx-deny-git.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -461,7 +488,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/nginx-deny-git.html</loc>
+    <loc>https://gemini-fly.github.io/post/mac-crt.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -470,7 +497,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/mac-crt.html</loc>
+    <loc>https://gemini-fly.github.io/post/php-cpu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -479,7 +506,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/php-cpu.html</loc>
+    <loc>https://gemini-fly.github.io/post/php-fpm-conf.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -488,7 +515,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/php-fpm-conf.html</loc>
+    <loc>https://gemini-fly.github.io/post/python-crawl-words.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -497,7 +524,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/python-crawl-words.html</loc>
+    <loc>https://gemini-fly.github.io/post/reate-my-blog-with-jekyll.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -506,7 +533,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/reate-my-blog-with-jekyll.html</loc>
+    <loc>https://gemini-fly.github.io/post/scrapy-setup-in-win.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -515,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/scrapy-setup-in-win.html</loc>
+    <loc>https://gemini-fly.github.io/post/scope.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -524,7 +551,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/scope.html</loc>
+    <loc>https://gemini-fly.github.io/post/setup-mysql-inubuntu.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -533,7 +560,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/setup-mysql-inubuntu.html</loc>
+    <loc>https://gemini-fly.github.io/post/sublimeLinter.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -542,7 +569,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/sublimeLinter.html</loc>
+    <loc>https://gemini-fly.github.io/post/swap.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -551,7 +578,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/swap.html</loc>
+    <loc>https://gemini-fly.github.io/post/web-app.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -560,7 +587,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/swappiness.html</loc>
+    <loc>https://gemini-fly.github.io/post/shuffle-algorithm.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -569,7 +596,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/web-app.html</loc>
+    <loc>https://gemini-fly.github.io/post/weinre.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -578,7 +605,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/shuffle-algorithm.html</loc>
+    <loc>https://gemini-fly.github.io/post/wireshark-merge.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -587,7 +614,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/weinre.html</loc>
+    <loc>https://gemini-fly.github.io/categories/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -596,7 +623,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/post/wireshark-merge.html</loc>
+    <loc>https://gemini-fly.github.io/schedule/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -605,7 +632,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/index.html</loc>
+    <loc>https://gemini-fly.github.io/tags/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -614,7 +641,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/schedule/index.html</loc>
+    <loc>https://gemini-fly.github.io/sitemap/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -623,7 +650,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/index.html</loc>
+    <loc>https://gemini-fly.github.io/contact/index.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -632,7 +659,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/sitemap/index.html</loc>
+    <loc>https://gemini-fly.github.io/lib/canvas-ribbon/README.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -641,7 +668,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/contact/index.html</loc>
+    <loc>https://gemini-fly.github.io/lib/three/README.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -650,7 +677,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/lib/canvas-ribbon/README.html</loc>
+    <loc>https://gemini-fly.github.io/lib/three/package.json</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -659,7 +686,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/lib/three/README.html</loc>
+    <loc>https://gemini-fly.github.io/lib/three/renovate.json</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -668,25 +695,7 @@
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/lib/three/package.json</loc>
-    
-    <lastmod>2022-08-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/lib/three/renovate.json</loc>
-    
-    <lastmod>2022-08-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://running-dpf.github.io/google34ebd7ac08fbf8db.html</loc>
+    <loc>https://gemini-fly.github.io/google34ebd7ac08fbf8db.html</loc>
     
     <lastmod>2022-08-08</lastmod>
     
@@ -696,226 +705,233 @@
   
 
   <url>
-    <loc>https://running-dpf.github.io/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://running-dpf.github.io/tags/JavaScript/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/JavaScript/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/%E7%BB%A7%E6%89%BF-%E5%AF%B9%E8%B1%A1-%E5%8E%9F%E5%9E%8B-Array-%E6%AD%A3%E5%88%99/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%BB%A7%E6%89%BF-%E5%AF%B9%E8%B1%A1-%E5%8E%9F%E5%9E%8B-Array-%E6%AD%A3%E5%88%99/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/centos7-crontab-linux-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/nginx/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/win10-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/GitHub/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/GitHub/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/centos7-crontab-linux-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/ES2015-ES6-ES5-babel/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/centos7-php/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/jekyll/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/WAL/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/scrapy/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/win10-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/linux-ubuntu16-04-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/linux/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/%E7%AE%97%E6%B3%95-shuffle-%E4%B9%B1%E5%BA%8F-%E6%B4%97%E7%89%8C/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/ES2015-ES6-ES5-babel/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/Sublime-jshint-csslint/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/jekyll/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7-JavaScript/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/mac/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/php/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/nginx/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/scrapy/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/WAL/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/linux-ubuntu16-04-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/centos7-php/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/Sublime-jshint-csslint/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/linux/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E7%AE%97%E6%B3%95-shuffle-%E4%B9%B1%E5%BA%8F-%E6%B4%97%E7%89%8C/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/k8s-calico/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7-JavaScript/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/k8s1-22-2/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/wireshark/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/ops/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/k8s-calico/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/mac/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/k8s/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/php/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/ops/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/wireshark/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/go/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/go/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/etcd/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/consul/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/go-gin/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/docker/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/go-context/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/etcd/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/gin-go/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/go-gin/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/k8s1-22-2/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/gin-go/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/tags/docker/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/tags/go-context/</loc>
+    <lastmod>2022-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://gemini-fly.github.io/tags/k8s/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -923,134 +939,134 @@
 
   
   <url>
-    <loc>https://running-dpf.github.io/categories/JavaScript/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/JavaScript/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/linux/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/nginx/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/win10/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/GitHub/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/GitHub/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/linux/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/jekyll/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/%E7%88%AC%E8%99%AB/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/win10/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/Sublime/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/jekyll/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/Mac/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/nginx/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/php/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E7%88%AC%E8%99%AB/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/k8s/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/Sublime/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/k8s1-22-2/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/wireshark-%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/ops/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/k8s/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/Mac/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/ops/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/php/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/go/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/wireshark-%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/k8s1-22-2/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/go/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://running-dpf.github.io/categories/docker/</loc>
-    <lastmod>2022-09-30</lastmod>
+    <loc>https://gemini-fly.github.io/categories/docker/</loc>
+    <lastmod>2022-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

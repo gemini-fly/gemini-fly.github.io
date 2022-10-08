@@ -3,11 +3,11 @@
   <title>Nayaur&#39;s blog</title>
   <icon>https://www.gravatar.com/avatar/3d942ec2e3778107ccc80fb56434e192</icon>
   <subtitle>我走的很慢，但我从不后退</subtitle>
-  <link href="https://running-dpf.github.io/atom.xml" rel="self"/>
+  <link href="https://gemini-fly.github.io/atom.xml" rel="self"/>
   
-  <link href="https://running-dpf.github.io/"/>
-  <updated>2022-09-29T11:03:31.617Z</updated>
-  <id>https://running-dpf.github.io/</id>
+  <link href="https://gemini-fly.github.io/"/>
+  <updated>2022-10-08T10:37:17.353Z</updated>
+  <id>https://gemini-fly.github.io/</id>
   
   <author>
     <name>岩羊</name>
@@ -17,9 +17,22 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Three-layer-network</title>
+    <link href="https://gemini-fly.github.io/post/Three-layer-network.html"/>
+    <id>https://gemini-fly.github.io/post/Three-layer-network.html</id>
+    <published>2022-09-30T09:57:09.000Z</published>
+    <updated>2022-10-08T10:37:17.353Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>mtr</title>
-    <link href="https://running-dpf.github.io/post/mtr.html"/>
-    <id>https://running-dpf.github.io/post/mtr.html</id>
+    <link href="https://gemini-fly.github.io/post/mtr.html"/>
+    <id>https://gemini-fly.github.io/post/mtr.html</id>
     <published>2022-09-26T07:21:21.000Z</published>
     <updated>2022-09-29T11:03:31.617Z</updated>
     
@@ -30,17 +43,17 @@
     
     
     
-    <category term="linux" scheme="https://running-dpf.github.io/categories/linux/"/>
+    <category term="linux" scheme="https://gemini-fly.github.io/categories/linux/"/>
     
     
-    <category term="linux" scheme="https://running-dpf.github.io/tags/linux/"/>
+    <category term="linux" scheme="https://gemini-fly.github.io/tags/linux/"/>
     
   </entry>
   
   <entry>
     <title>docker容器使用的资源</title>
-    <link href="https://running-dpf.github.io/post/docker-use-source.html"/>
-    <id>https://running-dpf.github.io/post/docker-use-source.html</id>
+    <link href="https://gemini-fly.github.io/post/docker-use-source.html"/>
+    <id>https://gemini-fly.github.io/post/docker-use-source.html</id>
     <published>2022-09-26T06:37:47.000Z</published>
     <updated>2022-09-29T11:03:31.616Z</updated>
     
@@ -51,17 +64,17 @@
     
     
     
-    <category term="docker" scheme="https://running-dpf.github.io/categories/docker/"/>
+    <category term="docker" scheme="https://gemini-fly.github.io/categories/docker/"/>
     
     
-    <category term="docker" scheme="https://running-dpf.github.io/tags/docker/"/>
+    <category term="docker" scheme="https://gemini-fly.github.io/tags/docker/"/>
     
   </entry>
   
   <entry>
     <title>WAN</title>
-    <link href="https://running-dpf.github.io/post/WAN.html"/>
-    <id>https://running-dpf.github.io/post/WAN.html</id>
+    <link href="https://gemini-fly.github.io/post/WAN.html"/>
+    <id>https://gemini-fly.github.io/post/WAN.html</id>
     <published>2022-09-23T03:37:44.000Z</published>
     <updated>2022-09-29T11:03:31.613Z</updated>
     
@@ -79,11 +92,11 @@
   </entry>
   
   <entry>
-    <title>consul集群</title>
-    <link href="https://running-dpf.github.io/post/consul.html"/>
-    <id>https://running-dpf.github.io/post/consul.html</id>
+    <title>consul(一)集群部署</title>
+    <link href="https://gemini-fly.github.io/post/consul.html"/>
+    <id>https://gemini-fly.github.io/post/consul.html</id>
     <published>2022-09-21T06:14:04.000Z</published>
-    <updated>2022-09-26T08:21:48.031Z</updated>
+    <updated>2022-10-08T05:37:28.398Z</updated>
     
     <content type="html"><![CDATA[<h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Consul是HashiCorp公司推出的开源软件，基于 GO 语言编写，提供服务注册和发现、配置、多数据中心的高可用方案等能力，分布式一致方面采用 raft 算法实现，并且很容易和 Spring Cloud 等微服务框架集成，使用起来非常简单，具有简单、易用、可插排等特点</p><p>但是，如果只使用Consul的Server模式有以下2个问题：</p><ul><li><p>因为Consul Server数量受到控制所以压力承载（扩展性）是个问题。</p></li><li><p>Server很少导致一个Server下会注册很多微服务，当Server挂掉，这个Server节点下注册的微服务都会视为无效。</p>  <span id="more"></span></li></ul><p>基于上述问题我们在架构中加入Consul Client模式，Client因为加入了LAN gossip协议组成网络中（高速局域网），可以识别故障的Server节点并找到可用的Server节点继续工作，其实Server模式负责的是用WAN gossip协议组成的网络进行跨广域网的数据同步（多个数据中心），这点Client模式是做不到的，Client模式也提供服务的注册和查询，但Client模式不存储节点数据，Client将请求转发给Server进行处理，节点注册数据在Server端是持久化保存的，Client的数量可以无限多，Server的数量是受控制的。总之：Client模式+LAN gossip协议组成了一个数据中心中的各个节点，Server负责投票选出Leader进行数据中心内的数据同步，这个Leader还负责利用WAN gossip协议跨广域网的与其他数据中心进行数据同步。</p><p>PS:默认情况下Server的数量建议是 3 ~ 5 台，Client 的数量建议2 ~ 5台，这能平衡故障情况下的可用性和集群性能。</p><h4 id="架构示意图："><a href="#架构示意图：" class="headerlink" title="架构示意图："></a>架构示意图：</h4><p><img data-src="consul/image-20220921142207939.png" alt="server-client架构图"></p><h3 id="数据中心设计"><a href="#数据中心设计" class="headerlink" title="数据中心设计"></a>数据中心设计</h3><p>用户可以在单个物理数据中心、或跨多个数据中心部署Consul集群。对于运行时高读写的大型集群，将服务器部署在同物理地址可以提高性能；在云环境中，用户可以跨多个可用区域（zone）部署一个数据中心，例如每个可用区域对应一台单一的主机。Consul还可以通过<a href>WAN</a>连接单独的集群组成多数据中心。</p><h4 id="单数据中心"><a href="#单数据中心" class="headerlink" title="单数据中心"></a>单数据中心</h4><p>对于部署在同一个数据中心中的应用程序，我们建议使用一个Consul集群。Consul支持传统的三层架构应用，同样也支持微服务，搭建一个集群通常是3或5台机器，用户可以在可用性和性能间寻找平衡。<br> 单个数据中心的节点（node）数建议不超过5000个，对于读写频繁的集群，可能需要进一步减少最大节点数，这具体取决KV对的数量以及监控数据的数量。当用户添加更多的客户端机器时，Gossip协议执行的时间会更长、<br> 对于写负载高的集群，推荐使用硬件升级垂直扩展，并使用低延迟存储。<br> <code>服务标签（Service Tag）</code>可帮助用户对集群中的内容进行查询</p><h4 id="多数据中心"><a href="#多数据中心" class="headerlink" title="多数据中心"></a>多数据中心</h4><p>用户可以通过WAN链接加入在不同数据中心中运行相同服务的Consul集群。集群间独立运行，仅通过8302端口上的WAN通信，除非通过命令行或者API明确配置，否则Consul服务器将仅从其本地数据中心返回结果。Consul不会在多个数据中心之间复制数据，但是用户可以使用consul-replicate工具定期同步KV数据。<br> 比较好的实践是启用TLS服务名称检查，以避免代理意外交叉连接。<br> Consul的<code>预查询（prepared queries）</code>允许客户端在某一数据中心发生故障后，去另一个数据中心发现服务。例如本地数据中心dc1中的payment服务下线了，则预查询使用户能能访问到离该数据中心地理位置最近的其他正常服务。<br> 默认情况下，预查询首先会在本地数据中心解析。它们不支持查询KV数据，但是可以使用ACLs。</p><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><table><thead><tr><th align="center"><strong>节点名称</strong></th><th><strong>节点IP</strong></th><th align="center"><strong>Agent类型</strong></th></tr></thead><tbody><tr><td align="center">consul-01</td><td>10.181.0.147</td><td align="center">server</td></tr><tr><td align="center">consul-02</td><td>10.181.0.148</td><td align="center">server</td></tr><tr><td align="center">consul-03</td><td>10.181.0.149</td><td align="center">server</td></tr><tr><td align="center">consul-client</td><td>10.181.0.152</td><td align="center">client</td></tr></tbody></table><h4 id="1、安装-Consul"><a href="#1、安装-Consul" class="headerlink" title="1、安装 Consul"></a>1、安装 Consul</h4><p>配置主机名，命令示例：（以下操作在所有节点配置）</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hostnamectl set-hostname consul-01hostnamectl set-hostname consul-02hostnamectl set-hostname consul-03hostnamectl set-hostname consul-client<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>下载consul</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export VER&#x3D;&quot;1.12.3&quot;wget https:&#x2F;&#x2F;releases.hashicorp.com&#x2F;consul&#x2F;$&#123;VER&#125;&#x2F;consul_$&#123;VER&#125;_linux_amd64.zipunzip consul_$&#123;VER&#125;_linux_amd64.zip -d &#x2F;usr&#x2F;local&#x2F;bin&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>创建consul用户和组</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">groupadd --system consuluseradd -s &#x2F;sbin&#x2F;nologin --system -g consul consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>创建consul安装目录</p><pre class="line-numbers language-none"><code class="language-none">mkdir -p &#x2F;data&#x2F;consul&#x2F;&#123;config,data,logs&#125;chown -R consul:consul &#x2F;data&#x2F;consulchmod -R 775 &#x2F;data&#x2F;consul<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>设置 DNS 或编辑/etc/hosts 文件以配置所有服务器的主机名，替换<code>example.com</code>为您的实际域名。</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;etc&#x2F;hosts&lt;&lt;EOF10.181.0.147 consul-01.example.com consul-0110.181.0.148 consul-02.example.com consul-0210.181.0.149 consul-03.example.com consul-0310.181.0.152 consul-client.example.com consul-clientEOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="2、Server-节点配置"><a href="#2、Server-节点配置" class="headerlink" title="2、Server 节点配置"></a>2、Server 节点配置</h4><p>生成Consul secret</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">consul keygen<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>为server节点创建json配置文件，其他节点配置修改IP地址及节点名称即可</p><p>consul-01节点</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF&#123;    &quot;advertise_addr&quot;: &quot;10.181.0.147&quot;,    &quot;bind_addr&quot;: &quot;10.181.0.147&quot;,    &quot;bootstrap_expect&quot;: 3,    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,    &quot;datacenter&quot;: &quot;DC1&quot;,    &quot;node_name&quot;: &quot;consul-01&quot;,    &quot;data_dir&quot;: &quot;&#x2F;opt&#x2F;consul&#x2F;data&quot;,    &quot;domain&quot;: &quot;consul&quot;,    &quot;enable_script_checks&quot;: true,    &quot;dns_config&quot;: &#123;        &quot;enable_truncate&quot;: true,        &quot;only_passing&quot;: true    &#125;,    &quot;enable_syslog&quot;: true,    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,#将上门的srcret替换    &quot;leave_on_terminate&quot;: true,    &quot;log_level&quot;: &quot;INFO&quot;,    &quot;rejoin_after_leave&quot;: true,    &quot;retry_join&quot;: [     &quot;consul-01&quot;,     &quot;consul-02&quot;,     &quot;consul-03&quot;    ],    &quot;server&quot;: true,    &quot;start_join&quot;: [        &quot;consul-01&quot;,        &quot;consul-02&quot;,        &quot;consul-03&quot;    ],    &quot;ui&quot;: true&#125;EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>配置参数说明：</p><p>datacenter：此标志控制运行代理的数据中心。如果未提供，则默认为dc1。Consul 对多个数据中心有一流的支持，但它依赖于正确的配置。同一数据中心中的节点应位于单个 LAN 上。</p><p>data_dir：该标志为代理提供了一个数据目录来存储状态。</p><p>node_name：节点名字，一般为主机名。</p><p>server：指定是否为server节点。</p><p>bootstrap_expect：在一个datacenter中期望提供的server节点数目，当提供该值的时候，consul一直等到达到指定sever数目才会引导整个集群，该标记不能和bootstrap公用。</p><p>bind_addr：该地址用来在集群内部的通讯，集群内的所有节点到地址都必须是可达的，默认是0.0.0.0。</p><p>client_addr：Consul 将绑定客户端接口的地址，包括 HTTP 和 DNS 服务器。默认情况下，这是127.0.0.1，仅允许环回连接。在 Consul 1.0 及更高版本中，这可以设置为要绑定到的以空格分隔的地址列表。</p><p>log_json：此标志使代理能够以 JSON 格式输出日志。默认为false。</p><p>log_level:在 Consul 代理启动后显示的日志级别。默认为 info 。可用的日志级别是trace、debug、info、warn和err。</p><p>retry_join：指定将要置入集群的IP列表，如果失败，会自动重试，知道直到成功加入。</p><p>start_join：启动时加入集群的地址</p><p>ui_config：此对象允许设置多个子键，用于控制 UI 中可用的显示或功能。</p><p>rejoin_after_leave ：允许重新加入集群</p><p>3、Client 节点配置</p><p>client是consul客户端，客户端不保存数据，客户端将接收到的请求转发给Server端。Server之间通过局域网或广域网通信实现数据一致性。每个Server或Client都是一个consul agent。</p><p>创建consul-client节点配置文件</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cat &gt;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.json&lt;&lt;EOF&#123;    &quot;advertise_addr&quot;: &quot;10.181.0.152&quot;,    &quot;bind_addr&quot;: &quot;10.181.0.152&quot;,    &quot;client_addr&quot;: &quot;0.0.0.0&quot;,    &quot;datacenter&quot;: &quot;DC1&quot;,    &quot;node_name&quot;: &quot;consul-client&quot;,     &quot;data_dir&quot;: &quot;&#x2F;data&#x2F;consul&#x2F;data&quot;,    &quot;domain&quot;: &quot;consul&quot;,    &quot;enable_script_checks&quot;: true,    &quot;dns_config&quot;: &#123;        &quot;enable_truncate&quot;: true,        &quot;only_passing&quot;: true    &#125;,    &quot;enable_syslog&quot;: true,    &quot;encrypt&quot;: &quot;Ao8dtyz2Clor34Zxh8zviWZECboXeM+mBj97kq2mxtk&#x3D;&quot;,    &quot;leave_on_terminate&quot;: true,    &quot;log_level&quot;: &quot;INFO&quot;,    &quot;rejoin_after_leave&quot;: true,    &quot;retry_join&quot;: [     &quot;consul-01&quot;,     &quot;consul-02&quot;,     &quot;consul-03&quot;    ],    &quot;server&quot;: false,    &quot;start_join&quot;: [        &quot;consul-01&quot;,        &quot;consul-02&quot;,        &quot;consul-03&quot;    ],    &quot;ui&quot;: true&#125;EOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>4、systemd 启动文件</p><p>所有节点创建systemd 服务文件<code>/etc/systemd/system/consul.service</code>，所有节点具有相同内容，配置如下：</p><pre class="line-numbers language-none"><code class="language-none">cat &gt;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;consul.service&lt;&lt;EOF[Unit]Description&#x3D;Consul Service Discovery AgentDocumentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;After&#x3D;network-online.targetWants&#x3D;network-online.target[Service]Type&#x3D;simpleUser&#x3D;consulGroup&#x3D;consulExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;data&#x2F;consul&#x2F;config&#x2F;consul.jsonExecReload&#x3D;&#x2F;bin&#x2F;kill -HUP $MAINPIDKillSignal&#x3D;SIGINTTimeoutStopSec&#x3D;5Restart&#x3D;on-failureSyslogIdentifier&#x3D;consul[Install]WantedBy&#x3D;multi-user.targetEOF<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>所有节点启动consul服务</p><pre class="line-numbers language-none"><code class="language-none">systemctl enable --now consul.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="端口介绍"><a href="#端口介绍" class="headerlink" title="端口介绍"></a>端口介绍</h4><p><img data-src="consul/image-20220921143904555.png" alt="consul-port"></p><p>这5个端口的作用：</p><ul><li>8300：集群内数据的读写和复制</li><li>8301：单个数据中心gossip协议通讯</li><li>8302：跨数据中心gossip协议通讯</li><li>8500：提供获取服务列表、注册服务、注销服务等HTTP接口；提供UI服务</li><li>8600：采用DNS协议提供服务发现功能</li></ul><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>查看成员</p><pre class="line-numbers language-none"><code class="language-none">consul members<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>查看版本号</p><pre class="line-numbers language-none"><code class="language-none">consul  version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>列出所有服务</p><pre class="line-numbers language-none"><code class="language-none">consul catalog services -http-addr&#x3D;localhost:8500<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
     
@@ -97,15 +110,17 @@
     
     
     
-    <category term="分布式" scheme="https://running-dpf.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    <category term="分布式" scheme="https://gemini-fly.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
+    
+    <category term="consul" scheme="https://gemini-fly.github.io/tags/consul/"/>
     
   </entry>
   
   <entry>
     <title>kubeadm高可用部署K8S1.22.2-istio（五）</title>
-    <link href="https://running-dpf.github.io/post/k8s-istio.html"/>
-    <id>https://running-dpf.github.io/post/k8s-istio.html</id>
+    <link href="https://gemini-fly.github.io/post/k8s-istio.html"/>
+    <id>https://gemini-fly.github.io/post/k8s-istio.html</id>
     <published>2022-09-06T03:41:42.000Z</published>
     <updated>2022-09-29T10:41:23.870Z</updated>
     
@@ -117,8 +132,8 @@
   
   <entry>
     <title>kubeadm-cert-expired</title>
-    <link href="https://running-dpf.github.io/post/kubeadm-cert-expired.html"/>
-    <id>https://running-dpf.github.io/post/kubeadm-cert-expired.html</id>
+    <link href="https://gemini-fly.github.io/post/kubeadm-cert-expired.html"/>
+    <id>https://gemini-fly.github.io/post/kubeadm-cert-expired.html</id>
     <published>2022-09-05T08:42:37.000Z</published>
     <updated>2022-09-05T09:38:42.646Z</updated>
     
@@ -129,17 +144,17 @@
     
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>kubeadm初始化集群报错</title>
-    <link href="https://running-dpf.github.io/post/kubeadm-join-fatal.html"/>
-    <id>https://running-dpf.github.io/post/kubeadm-join-fatal.html</id>
+    <link href="https://gemini-fly.github.io/post/kubeadm-join-fatal.html"/>
+    <id>https://gemini-fly.github.io/post/kubeadm-join-fatal.html</id>
     <published>2022-09-05T07:27:02.000Z</published>
     <updated>2022-09-06T01:21:37.010Z</updated>
     
@@ -154,17 +169,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>kubectl获取内存使用率不同</title>
-    <link href="https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html"/>
-    <id>https://running-dpf.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</id>
+    <link href="https://gemini-fly.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html"/>
+    <id>https://gemini-fly.github.io/post/kubectl%20top%20pod%20%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8Fcontainer_memory_working_set_bytes.html</id>
     <published>2022-09-05T07:27:02.000Z</published>
     <updated>2022-09-29T11:03:31.609Z</updated>
     
@@ -175,17 +190,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/categories/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/categories/k8s/"/>
     
     
-    <category term="k8s" scheme="https://running-dpf.github.io/tags/k8s/"/>
+    <category term="k8s" scheme="https://gemini-fly.github.io/tags/k8s/"/>
     
   </entry>
   
   <entry>
     <title>go-context</title>
-    <link href="https://running-dpf.github.io/post/go-context.html"/>
-    <id>https://running-dpf.github.io/post/go-context.html</id>
+    <link href="https://gemini-fly.github.io/post/go-context.html"/>
+    <id>https://gemini-fly.github.io/post/go-context.html</id>
     <published>2022-08-17T02:48:35.000Z</published>
     <updated>2022-09-05T09:10:47.135Z</updated>
     
@@ -197,14 +212,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go context" scheme="https://running-dpf.github.io/tags/go-context/"/>
+    <category term="go context" scheme="https://gemini-fly.github.io/tags/go-context/"/>
     
   </entry>
   
   <entry>
     <title>makevsnew</title>
-    <link href="https://running-dpf.github.io/post/makevsnew.html"/>
-    <id>https://running-dpf.github.io/post/makevsnew.html</id>
+    <link href="https://gemini-fly.github.io/post/makevsnew.html"/>
+    <id>https://gemini-fly.github.io/post/makevsnew.html</id>
     <published>2022-08-16T02:49:29.000Z</published>
     <updated>2022-09-29T11:02:25.164Z</updated>
     
@@ -217,14 +232,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>protobuf系列-安装</title>
-    <link href="https://running-dpf.github.io/post/proto01.html"/>
-    <id>https://running-dpf.github.io/post/proto01.html</id>
+    <link href="https://gemini-fly.github.io/post/proto01.html"/>
+    <id>https://gemini-fly.github.io/post/proto01.html</id>
     <published>2022-08-16T01:49:56.000Z</published>
     <updated>2022-09-05T09:10:47.140Z</updated>
     
@@ -238,17 +253,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/categories/go/"/>
     
     
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>etcd06-运维命令</title>
-    <link href="https://running-dpf.github.io/post/etcd-ops-order.html"/>
-    <id>https://running-dpf.github.io/post/etcd-ops-order.html</id>
+    <link href="https://gemini-fly.github.io/post/etcd-ops-order.html"/>
+    <id>https://gemini-fly.github.io/post/etcd-ops-order.html</id>
     <published>2022-08-12T09:57:18.000Z</published>
     <updated>2022-08-12T10:13:11.005Z</updated>
     
@@ -260,14 +275,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="etcd" scheme="https://running-dpf.github.io/tags/etcd/"/>
+    <category term="etcd" scheme="https://gemini-fly.github.io/tags/etcd/"/>
     
   </entry>
   
   <entry>
     <title>gin中模板的配置</title>
-    <link href="https://running-dpf.github.io/post/gin-template.html"/>
-    <id>https://running-dpf.github.io/post/gin-template.html</id>
+    <link href="https://gemini-fly.github.io/post/gin-template.html"/>
+    <id>https://gemini-fly.github.io/post/gin-template.html</id>
     <published>2022-08-09T07:12:08.000Z</published>
     <updated>2022-08-09T07:19:38.188Z</updated>
     
@@ -279,14 +294,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="gin go" scheme="https://running-dpf.github.io/tags/gin-go/"/>
+    <category term="gin go" scheme="https://gemini-fly.github.io/tags/gin-go/"/>
     
   </entry>
   
   <entry>
     <title>gin-method</title>
-    <link href="https://running-dpf.github.io/post/gin-method.html"/>
-    <id>https://running-dpf.github.io/post/gin-method.html</id>
+    <link href="https://gemini-fly.github.io/post/gin-method.html"/>
+    <id>https://gemini-fly.github.io/post/gin-method.html</id>
     <published>2022-08-09T05:52:46.000Z</published>
     <updated>2022-08-09T05:54:09.124Z</updated>
     
@@ -298,14 +313,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go gin" scheme="https://running-dpf.github.io/tags/go-gin/"/>
+    <category term="go gin" scheme="https://gemini-fly.github.io/tags/go-gin/"/>
     
   </entry>
   
   <entry>
     <title>Golang并行运行时设置占用cpu数量</title>
-    <link href="https://running-dpf.github.io/post/go-routine-cpu.html"/>
-    <id>https://running-dpf.github.io/post/go-routine-cpu.html</id>
+    <link href="https://gemini-fly.github.io/post/go-routine-cpu.html"/>
+    <id>https://gemini-fly.github.io/post/go-routine-cpu.html</id>
     <published>2022-08-08T10:42:15.000Z</published>
     <updated>2022-08-08T10:56:29.346Z</updated>
     
@@ -317,14 +332,14 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>go-协程说明</title>
-    <link href="https://running-dpf.github.io/post/go-goroutine.html"/>
-    <id>https://running-dpf.github.io/post/go-goroutine.html</id>
+    <link href="https://gemini-fly.github.io/post/go-goroutine.html"/>
+    <id>https://gemini-fly.github.io/post/go-goroutine.html</id>
     <published>2022-08-08T07:23:26.000Z</published>
     <updated>2022-08-08T10:10:39.831Z</updated>
     
@@ -335,17 +350,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="go" scheme="https://running-dpf.github.io/categories/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/categories/go/"/>
     
     
-    <category term="go" scheme="https://running-dpf.github.io/tags/go/"/>
+    <category term="go" scheme="https://gemini-fly.github.io/tags/go/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript 语言精粹笔记1-语法、对象、函数</title>
-    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note1.html"/>
-    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note1.html</id>
+    <link href="https://gemini-fly.github.io/post/JavaScript-good-parts-note1.html"/>
+    <id>https://gemini-fly.github.io/post/JavaScript-good-parts-note1.html</id>
     <published>2022-08-08T06:30:13.142Z</published>
     <updated>2022-08-08T06:30:13.145Z</updated>
     
@@ -360,17 +375,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="JavaScript" scheme="https://running-dpf.github.io/categories/JavaScript/"/>
+    <category term="JavaScript" scheme="https://gemini-fly.github.io/categories/JavaScript/"/>
     
     
-    <category term="对象 函数 this 闭包 面向对象 作用域" scheme="https://running-dpf.github.io/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/"/>
+    <category term="对象 函数 this 闭包 面向对象 作用域" scheme="https://gemini-fly.github.io/tags/%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0-this-%E9%97%AD%E5%8C%85-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E4%BD%9C%E7%94%A8%E5%9F%9F/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript 语言精粹笔记2-继承、数组、正则表达式</title>
-    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note2.html"/>
-    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note2.html</id>
+    <link href="https://gemini-fly.github.io/post/JavaScript-good-parts-note2.html"/>
+    <id>https://gemini-fly.github.io/post/JavaScript-good-parts-note2.html</id>
     <published>2022-08-08T06:30:13.066Z</published>
     <updated>2022-08-08T06:30:13.067Z</updated>
     
@@ -382,17 +397,17 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="JavaScript" scheme="https://running-dpf.github.io/categories/JavaScript/"/>
+    <category term="JavaScript" scheme="https://gemini-fly.github.io/categories/JavaScript/"/>
     
     
-    <category term="继承 对象 原型 Array 正则" scheme="https://running-dpf.github.io/tags/%E7%BB%A7%E6%89%BF-%E5%AF%B9%E8%B1%A1-%E5%8E%9F%E5%9E%8B-Array-%E6%AD%A3%E5%88%99/"/>
+    <category term="继承 对象 原型 Array 正则" scheme="https://gemini-fly.github.io/tags/%E7%BB%A7%E6%89%BF-%E5%AF%B9%E8%B1%A1-%E5%8E%9F%E5%9E%8B-Array-%E6%AD%A3%E5%88%99/"/>
     
   </entry>
   
   <entry>
     <title>JavaScript 语言精粹笔记3-方法、毒瘤等</title>
-    <link href="https://running-dpf.github.io/post/JavaScript-good-parts-note3.html"/>
-    <id>https://running-dpf.github.io/post/JavaScript-good-parts-note3.html</id>
+    <link href="https://gemini-fly.github.io/post/JavaScript-good-parts-note3.html"/>
+    <id>https://gemini-fly.github.io/post/JavaScript-good-parts-note3.html</id>
     <published>2022-08-08T06:30:12.907Z</published>
     <updated>2022-08-08T06:30:12.908Z</updated>
     
@@ -404,31 +419,10 @@ time&amp;#x3D;&amp;quot;2022-09-05T15:24:41+08:00&amp;quot; level&amp;#x3D;fatal
     
     
     
-    <category term="JavaScript" scheme="https://running-dpf.github.io/categories/JavaScript/"/>
+    <category term="JavaScript" scheme="https://gemini-fly.github.io/categories/JavaScript/"/>
     
     
-    <category term="JavaScript" scheme="https://running-dpf.github.io/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>win10 关闭更新</title>
-    <link href="https://running-dpf.github.io/post/close-win10-update.html"/>
-    <id>https://running-dpf.github.io/post/close-win10-update.html</id>
-    <published>2022-08-08T06:30:12.661Z</published>
-    <updated>2022-08-08T06:30:12.661Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。</p><span id="more"></span><p>我就忍受不了自动更新，会拉取网络，影响我们的上网体验，但是我们不要他自动更新，那怎么办呢，其实还是有解决方法的，下面就介绍怎么关闭自动更新功能！（ps：百度有些人写的其实是win8的自动更新，根本就不是win10的，我这个才是win10的处理方法）希望能帮到你们。</p><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><p>1 右键点击左下角微软按钮，找到“运行”   也可用键盘的win+R     </p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-07f3d54cc3ce1538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>2 在运行处输入 “services.msc”   点击确定。</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-2df616c88439415a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>3 在弹出来的服务中，找到“Windows Update”</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-403c9d7761ad60b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>4 选择禁用</p><p><img data-src="http://upload-images.jianshu.io/upload_images/2577413-1728ba13ad50acfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>5 点击确定或者启动就可以了，这时候我们可以看到：<br><img data-src="http://upload-images.jianshu.io/upload_images/2577413-8d901951002a4bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片.png"></p><p>会多出这两个位置，这样子就设置成功了。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;因为自己的电脑装了双系统（win10 跟Ubuntu16.04），在win10下，有时候每次关机的时候都说要进行更新后进行关机，就是自动更新功能，现在的选项中没有关闭自动更新的选项了，这是一个bug，微软要强制更新。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="win10" scheme="https://running-dpf.github.io/categories/win10/"/>
-    
-    
-    <category term="win10 工具软件" scheme="https://running-dpf.github.io/tags/win10-%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/"/>
+    <category term="JavaScript" scheme="https://gemini-fly.github.io/tags/JavaScript/"/>
     
   </entry>
   
